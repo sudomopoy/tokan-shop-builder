@@ -1,0 +1,254 @@
+/* Serva theme CSS (scoped by data-theme). */
+
+:root[data-theme="serva"] {
+  --primary-color: #2563eb;
+  --secondary-color: #10b981;
+  --accent-color: #f59e0b;
+  --dark-color: #111827;
+  --serva-shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --serva-shadow-card: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Fix: center container and add horizontal padding (RTL-safe).
+   Without margin-inline: auto, Tailwind's container aligns to "start" which in
+   dir="rtl" = right, causing all widgets to appear "gathered to the right". */
+:root[data-theme="serva"] .container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Common template helper classes (avoid Tailwind config changes). */
+
+:root[data-theme="serva"] .bg-dark {
+  background-color: var(--dark-color);
+}
+
+:root[data-theme="serva"] .text-dark {
+  color: var(--dark-color);
+}
+
+:root[data-theme="serva"] .text-primary {
+  color: var(--primary-color);
+}
+
+:root[data-theme="serva"] .bg-primary {
+  background-color: var(--primary-color);
+}
+
+:root[data-theme="serva"] .text-secondary {
+  color: var(--secondary-color);
+}
+
+:root[data-theme="serva"] .bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+:root[data-theme="serva"] .text-accent {
+  color: var(--accent-color);
+}
+
+:root[data-theme="serva"] .bg-accent {
+  background-color: var(--accent-color);
+}
+
+:root[data-theme="serva"] .shadow-soft {
+  box-shadow: var(--serva-shadow-soft);
+}
+
+:root[data-theme="serva"] .shadow-card {
+  box-shadow: var(--serva-shadow-card);
+}
+
+:root[data-theme="serva"] .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+:root[data-theme="serva"] .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root[data-theme="serva"] .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+:root[data-theme="serva"] .scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root[data-theme="serva"] .tab-active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  font-weight: 700;
+}
+
+:root[data-theme="serva"] .step-completed {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+:root[data-theme="serva"] .step-active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Range slider basic styling used in category filters. */
+:root[data-theme="serva"] .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+:root[data-theme="serva"] .range-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+/* FAQ collapse defaults */
+:root[data-theme="serva"] .faq-answer {
+  display: none;
+}
+:root[data-theme="serva"] .faq-item[data-open="true"] .faq-answer {
+  display: block;
+}
+:root[data-theme="serva"] .faq-item[data-open="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+/* Smooth back-to-top button */
+:root[data-theme="serva"] .serva-back-to-top {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Serva theme CSS (scoped by data-theme). */
+
+:root[data-theme="serva"] {
+  --primary-color: #2563eb;
+  --secondary-color: #10b981;
+  --accent-color: #f59e0b;
+  --dark-color: #111827;
+  --serva-shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --serva-shadow-card: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Fix: center container and add horizontal padding (RTL-safe).
+   Without margin-inline: auto, Tailwind's container aligns to "start" which in
+   dir="rtl" = right, causing all widgets to appear "gathered to the right". */
+:root[data-theme="serva"] .container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Common template helper classes (avoid Tailwind config changes). */
+
+:root[data-theme="serva"] .bg-dark {
+  background-color: var(--dark-color);
+}
+
+:root[data-theme="serva"] .text-dark {
+  color: var(--dark-color);
+}
+
+:root[data-theme="serva"] .text-primary {
+  color: var(--primary-color);
+}
+
+:root[data-theme="serva"] .bg-primary {
+  background-color: var(--primary-color);
+}
+
+:root[data-theme="serva"] .text-secondary {
+  color: var(--secondary-color);
+}
+
+:root[data-theme="serva"] .bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+:root[data-theme="serva"] .text-accent {
+  color: var(--accent-color);
+}
+
+:root[data-theme="serva"] .bg-accent {
+  background-color: var(--accent-color);
+}
+
+:root[data-theme="serva"] .shadow-soft {
+  box-shadow: var(--serva-shadow-soft);
+}
+
+:root[data-theme="serva"] .shadow-card {
+  box-shadow: var(--serva-shadow-card);
+}
+
+:root[data-theme="serva"] .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+:root[data-theme="serva"] .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root[data-theme="serva"] .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+:root[data-theme="serva"] .scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root[data-theme="serva"] .tab-active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  font-weight: 700;
+}
+
+:root[data-theme="serva"] .step-completed {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+:root[data-theme="serva"] .step-active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Range slider basic styling used in category filters. */
+:root[data-theme="serva"] .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+:root[data-theme="serva"] .range-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+/* FAQ collapse defaults */
+:root[data-theme="serva"] .faq-answer {
+  display: none;
+}
+:root[data-theme="serva"] .faq-item[data-open="true"] .faq-answer {
+  display: block;
+}
+:root[data-theme="serva"] .faq-item[data-open="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+/* Smooth back-to-top button */
+:root[data-theme="serva"] .serva-back-to-top {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+

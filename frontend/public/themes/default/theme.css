@@ -1,0 +1,5 @@
+/* Default theme overrides (optional). */
+
+:root[data-theme="default"] {
+  /* Add theme-specific CSS variables here when needed. */
+}

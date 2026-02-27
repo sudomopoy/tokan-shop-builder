@@ -1,0 +1,90 @@
+@import "./vazirmatn-font.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* جلوگیری از font-synthesis: مرورگر با font-black/font-bold به فونت fallback نمی‌رود */
+@layer base {
+  html, body {
+    font-synthesis: none;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-blue text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity;
+  }
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors;
+  }
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+}
+
+/* Rich text editor (react-quill) - RTL support */
+.rich-text-editor-wrapper {
+  direction: rtl;
+}
+.rich-text-editor-wrapper .ql-container {
+  min-height: 200px;
+  border-radius: 0 0 0.5rem 0.5rem;
+  border-color: rgb(229 231 235);
+  font-family: inherit;
+}
+.rich-text-editor-wrapper .ql-toolbar {
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-color: rgb(229 231 235);
+  background: rgb(249 250 251);
+}
+.rich-text-editor-wrapper .ql-editor {
+  min-height: 200px;
+  text-align: right;
+}
+.rich-text-editor-wrapper .ql-editor.ql-blank::before {
+  font-style: normal;
+  color: #9ca3af;
+  right: 15px;
+  left: auto;
+}
+
+/* Notification bell blink when unread */
+@keyframes notification-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-notification-blink {
+  animation: notification-blink 1.5s ease-in-out infinite;
+}
+
+/* Dashboard sidebar menu - beautiful scrollbar, system design compatible */
+.dashboard-sidebar-nav {
+  scrollbar-gutter: stable;
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(107 114 128) transparent;
+}
+/* WebKit (Chrome, Safari, Edge) */
+.dashboard-sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard-sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgb(107 114 128);
+  border-radius: 9999px;
+}
+.dashboard-sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgb(156 163 175);
+}
+.dashboard-sidebar-nav::-webkit-scrollbar-thumb:active {
+  background: rgb(75 85 99);
+}
+/* Respect reduced motion - no transitions on scrollbar */
+@media (prefers-reduced-motion: no-preference) {
+  .dashboard-sidebar-nav::-webkit-scrollbar-thumb {
+    transition: background 0.15s ease;
+  }
+}

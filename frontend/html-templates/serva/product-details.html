@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گوشی موبایل سامسونگ Galaxy A54 | فروشگاه سِروا</title>
+    <!-- Tailwind CSS -->
+    <script src="libs/tailwind/tailwind.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="libs/fontawesome/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Tailwind Config -->
+    <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-700 font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Top Bar -->
+    <div class="bg-dark text-gray-300 text-xs py-2.5 hidden md:block border-b border-white/5">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="hover:text-white transition cursor-pointer"><i class="fas fa-phone-alt ml-2 text-primary"></i>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                <span class="hover:text-white transition cursor-pointer"><i class="fas fa-envelope ml-2 text-primary"></i>info@shop.ir</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-telegram text-lg"></i></a>
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-whatsapp text-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-soft transition-all duration-300 border-b border-gray-100" id="mainHeader">
+        <div class="container py-4">
+            <div class="flex items-center justify-between gap-8">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-black text-primary flex items-center gap-2 tracking-tight">
+                        <i class="fas fa-cube text-3xl"></i>
+                        <span>سِروا</span>
+                    </a>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="hidden lg:flex flex-1 max-w-2xl relative group">
+                    <input type="text" 
+                           placeholder="جستجو در بین هزاران محصول..." 
+                           class="w-full py-3.5 px-5 pr-12 rounded-2xl bg-gray-100 border-transparent focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder-gray-400 text-sm">
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition group-focus-within:text-primary">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3 md:gap-4">
+                    <a href="login.html" class="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-primary transition font-bold text-sm border border-transparent hover:border-gray-100">
+                        <i class="far fa-user text-lg"></i>
+                        <span>ورود | ثبت‌نام</span>
+                    </a>
+                    
+                    <div class="h-8 w-px bg-gray-200 hidden md:block mx-1"></div>
+
+                    <a href="wishlist.html" class="relative w-12 h-12 rounded-xl bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-500 flex items-center justify-center transition hidden sm:flex group">
+                        <i class="far fa-heart text-xl group-hover:scale-110 transition"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">2</span>
+                    </a>
+
+                    <a href="cart.html" class="relative w-12 h-12 rounded-xl bg-gray-50 hover:bg-primary/10 text-gray-700 hover:text-primary flex items-center justify-center transition group">
+                        <i class="fas fa-shopping-bag text-xl group-hover:scale-110 transition"></i>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">3</span>
+                    </a>
+
+                    <button id="mobileMenuBtn" class="md:hidden w-12 h-12 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-700 flex items-center justify-center transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="hidden md:block">
+            <div class="container">
+                <ul class="flex items-center gap-8 text-sm font-bold text-gray-600">
+                    <li class="group py-3 relative">
+                         <a href="category.html" class="flex items-center gap-2 hover:text-primary transition py-1">
+                            <i class="fas fa-layer-group"></i>
+                            دسته‌بندی کالاها
+                            <i class="fas fa-chevron-down text-[10px] opacity-50 group-hover:opacity-100 transition"></i>
+                        </a>
+                        <!-- Mega Menu -->
+                        <div class="absolute top-full right-0 w-[800px] bg-white shadow-2xl rounded-2xl p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-gray-100">
+                             <!-- Mega Menu Content Same as Index -->
+                             <div class="grid grid-cols-4 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-dark mb-4 border-b pb-2 text-base">کالای دیجیتال</h4>
+                                    <ul class="space-y-2.5 text-gray-500 font-medium">
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">موبایل</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">لپ‌تاپ</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">تبلت</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">دوربین</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark mb-4 border-b pb-2 text-base">خانه و آشپزخانه</h4>
+                                    <ul class="space-y-2.5 text-gray-500 font-medium">
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">تلویزیون</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">یخچال</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">لباسشویی</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">ظروف</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark mb-4 border-b pb-2 text-base">مد و پوشاک</h4>
+                                    <ul class="space-y-2.5 text-gray-500 font-medium">
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">مردانه</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">زنانه</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">بچگانه</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">کفش</a></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                                    <img src="images/products/product-1.jpg" alt="Offer" class="w-32 mx-auto mb-3 mix-blend-multiply">
+                                    <h5 class="font-bold text-dark mb-1">تخفیف ویژه</h5>
+                                    <p class="text-xs text-gray-500 mb-3">فروش ویژه محصولات سامسونگ</p>
+                                    <a href="#" class="text-primary text-xs font-bold hover:underline">مشاهده <i class="fas fa-arrow-left mr-1"></i></a>
+                                </div>
+                             </div>
+                        </div>
+                    </li>
+                    <li class="py-3"><a href="#" class="hover:text-primary transition py-1 relative group">پرفروش‌ترین‌ها <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a></li>
+                    <li class="py-3"><a href="#" class="hover:text-primary transition py-1 relative group">تخفیف‌ها <i class="fas fa-fire text-red-500 ml-1"></i><span class="absolute bottom-0 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a></li>
+                    <li class="py-3"><a href="blog.html" class="hover:text-primary transition py-1 relative group">مجله خبری <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-100">
+        <div class="container py-4">
+            <nav class="flex items-center gap-2 text-sm font-medium text-gray-500 overflow-x-auto whitespace-nowrap pb-1">
+                <a href="index.html" class="hover:text-primary transition">خانه</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <a href="category.html" class="hover:text-primary transition">کالای دیجیتال</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <a href="category.html" class="hover:text-primary transition">موبایل</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <a href="category.html" class="hover:text-primary transition">سامسونگ</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <span class="text-dark font-bold">گوشی موبایل سامسونگ Galaxy A54 5G</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="container py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
+            
+            <!-- Product Images - Right Side -->
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-3xl p-6 sticky top-28 border border-gray-100 shadow-sm">
+                    <!-- Main Image -->
+                    <div class="zoom-container rounded-2xl overflow-hidden mb-6 bg-gray-50 border border-gray-100 relative group">
+                        <img id="mainImage" src="images/products/product-1.jpg" 
+                             alt="محصول" class="zoom-image w-full h-auto mix-blend-multiply transition duration-500">
+                        <div class="absolute top-4 right-4 z-10">
+                             <span class="bg-red-500 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow-sm">پیشنهاد ویژه</span>
+                        </div>
+                        <div class="absolute bottom-4 left-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition">
+                            <button class="w-10 h-10 bg-white text-gray-600 rounded-xl shadow-md hover:text-primary transition flex items-center justify-center"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Thumbnail Images -->
+                    <div class="grid grid-cols-5 gap-3">
+                        <button class="thumbnail-active border-2 rounded-xl overflow-hidden p-1 bg-white hover:border-primary transition" 
+                                onclick="changeImage('images/products/product-1.jpg', this)">
+                            <img src="images/products/product-1.jpg" alt="تصویر 1" class="w-full rounded-lg mix-blend-multiply">
+                        </button>
+                        <button class="border-2 border-transparent rounded-xl overflow-hidden p-1 bg-gray-50 hover:bg-white hover:border-gray-300 transition" 
+                                onclick="changeImage('images/products/product-2.jpg', this)">
+                            <img src="images/products/product-2.jpg" alt="تصویر 2" class="w-full rounded-lg mix-blend-multiply">
+                        </button>
+                        <button class="border-2 border-transparent rounded-xl overflow-hidden p-1 bg-gray-50 hover:bg-white hover:border-gray-300 transition" 
+                                onclick="changeImage('images/products/product-1.jpg', this)">
+                            <img src="images/products/product-1.jpg" alt="تصویر 3" class="w-full rounded-lg mix-blend-multiply">
+                        </button>
+                        <button class="border-2 border-transparent rounded-xl overflow-hidden p-1 bg-gray-50 hover:bg-white hover:border-gray-300 transition" 
+                                onclick="changeImage('images/products/product-2.jpg', this)">
+                            <img src="images/products/product-2.jpg" alt="تصویر 4" class="w-full rounded-lg mix-blend-multiply">
+                        </button>
+                        <button class="border-2 border-transparent rounded-xl overflow-hidden p-1 bg-gray-50 hover:bg-white hover:border-gray-300 transition relative" 
+                                onclick="changeImage('images/products/product-1.jpg', this)">
+                            <img src="images/products/product-1.jpg" alt="تصویر 5" class="w-full rounded-lg mix-blend-multiply opacity-50">
+                            <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-dark">+2</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info - Left Side -->
+            <div class="lg:col-span-7">
+                <div class="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm">
+                    <!-- Title & Brand -->
+                    <div class="mb-6 border-b border-gray-100 pb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-sm text-gray-500 font-medium">برند:</span>
+                            <a href="#" class="text-primary text-sm font-bold hover:underline flex items-center gap-1">سامسونگ <i class="fas fa-chevron-left text-[10px]"></i></a>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-black text-dark mb-4 leading-snug">
+                            گوشی موبایل سامسونگ مدل Galaxy A54 5G دو سیم‌کارت ظرفیت 256 گیگابایت و رم 8 گیگابایت
+                        </h1>
+                        <div class="flex flex-wrap items-center gap-4 md:gap-6">
+                            <div class="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg">
+                                <div class="flex text-amber-400 text-sm">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm font-bold text-dark">4.5</span>
+                                <span class="text-xs text-gray-400">(از 234 رای)</span>
+                            </div>
+                            <a href="#reviews" class="text-sm text-gray-500 hover:text-primary transition font-medium flex items-center gap-1">
+                                <i class="far fa-comment"></i>
+                                234 دیدگاه کاربران
+                            </a>
+                            <a href="#questions" class="text-sm text-gray-500 hover:text-primary transition font-medium flex items-center gap-1">
+                                <i class="far fa-question-circle"></i>
+                                156 پرسش و پاسخ
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Attributes Selection -->
+                        <div class="space-y-6">
+                             <!-- Color -->
+                            <div>
+                                <h3 class="font-bold text-dark mb-3 text-sm">رنگ: <span class="text-gray-500 font-normal">بنفش</span></h3>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <button class="w-10 h-10 rounded-full border-2 border-white ring-2 ring-primary bg-purple-600 shadow-sm relative transition transform hover:scale-110" title="بنفش">
+                                        <i class="fas fa-check text-white text-xs absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></i>
+                                    </button>
+                                    <button class="w-10 h-10 rounded-full border-2 border-white ring-2 ring-gray-200 hover:ring-gray-400 bg-gray-800 shadow-sm transition transform hover:scale-110" title="مشکی"></button>
+                                    <button class="w-10 h-10 rounded-full border-2 border-white ring-2 ring-gray-200 hover:ring-gray-400 bg-white shadow-sm transition transform hover:scale-110" title="سفید"></button>
+                                    <button class="w-10 h-10 rounded-full border-2 border-white ring-2 ring-gray-200 hover:ring-gray-400 bg-green-400 shadow-sm transition transform hover:scale-110" title="سبز"></button>
+                                </div>
+                            </div>
+
+                            <!-- Storage -->
+                            <div>
+                                <h3 class="font-bold text-dark mb-3 text-sm">حافظه داخلی:</h3>
+                                <div class="flex flex-wrap gap-3">
+                                    <button class="px-4 py-2 border-2 border-gray-200 rounded-xl text-sm font-bold text-gray-500 hover:border-gray-400 transition bg-white">
+                                        128 گیگابایت
+                                    </button>
+                                    <button class="px-4 py-2 border-2 border-primary bg-primary/5 text-primary rounded-xl text-sm font-bold shadow-sm relative overflow-hidden">
+                                        256 گیگابایت
+                                        <div class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-bl-md"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Key Features Summary -->
+                            <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                                <h3 class="font-bold text-dark mb-3 text-sm flex items-center gap-2">
+                                    <i class="fas fa-list-ul text-primary"></i>
+                                    ویژگی‌های بارز
+                                </h3>
+                                <ul class="space-y-2 text-xs font-medium text-gray-600">
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                                        حافظه داخلی 256 گیگابایت
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                                        رم 8 گیگابایت
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                                        دوربین 50 مگاپیکسل
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Seller & Price Box -->
+                        <div class="bg-gray-50 rounded-2xl p-5 border border-gray-200/60">
+                             <!-- Seller -->
+                             <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-200">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-store text-xl text-primary"></i>
+                                    <div>
+                                        <h4 class="font-bold text-dark text-sm">فروشنده: دیجی استایل</h4>
+                                        <div class="flex items-center gap-1 mt-1 text-xs text-green-600 font-medium">
+                                            <span>98% رضایت</span>
+                                            <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                            <span>عملکرد عالی</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="text-primary text-xs font-bold hover:underline">مشاهده</a>
+                             </div>
+
+                             <!-- Warranty -->
+                             <div class="flex items-start gap-3 mb-6">
+                                <i class="fas fa-shield-alt text-gray-400 mt-0.5"></i>
+                                <div>
+                                    <p class="text-sm font-bold text-dark">گارانتی ۱۸ ماهه رسمی</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">اصالت و سلامت فیزیکی کالا</p>
+                                </div>
+                             </div>
+                             
+                             <!-- Stock -->
+                             <div class="flex items-center gap-2 mb-6 text-sm text-green-600 font-bold bg-green-50 px-3 py-2 rounded-lg inline-flex">
+                                <i class="fas fa-check-circle"></i>
+                                موجود در انبار سِروا
+                             </div>
+
+                             <!-- Price -->
+                             <div class="mb-6">
+                                 <span class="text-gray-400 text-sm line-through block mb-1">18,500,000</span>
+                                 <div class="flex items-center gap-2">
+                                    <span class="text-3xl font-black text-dark">14,990,000</span>
+                                    <span class="text-sm font-bold text-gray-500">تومان</span>
+                                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md mr-auto">19%</span>
+                                 </div>
+                             </div>
+
+                             <!-- Actions -->
+                             <div class="flex flex-col gap-3">
+                                <button class="w-full bg-primary text-white py-4 rounded-xl font-bold hover:bg-primary/90 transition shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transform active:scale-95">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    افزودن به سبد خرید
+                                </button>
+                                <div class="flex gap-3">
+                                    <button class="flex-1 border border-gray-300 text-gray-600 py-2.5 rounded-xl font-bold hover:border-red-500 hover:text-red-500 transition text-sm flex items-center justify-center gap-2">
+                                        <i class="far fa-heart"></i> علاقه‌مندی
+                                    </button>
+                                    <button class="flex-1 border border-gray-300 text-gray-600 py-2.5 rounded-xl font-bold hover:border-primary hover:text-primary transition text-sm flex items-center justify-center gap-2">
+                                        <i class="fas fa-share-alt"></i> اشتراک
+                                    </button>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Services -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-gray-100">
+                        <div class="flex flex-col items-center text-center gap-2">
+                            <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-600 mb-1">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <span class="text-xs font-bold text-dark">ارسال سریع</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                             <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-primary mb-1">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <span class="text-xs font-bold text-dark">ضمانت اصل بودن</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                             <div class="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-orange-500 mb-1">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                            <span class="text-xs font-bold text-dark">۷ روز بازگشت</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center gap-2">
+                             <div class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-500 mb-1">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <span class="text-xs font-bold text-dark">پرداخت در محل</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Tabs Section -->
+        <div class="mt-16">
+            <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                <!-- Tab Headers -->
+                <div class="border-b border-gray-100 bg-gray-50/50">
+                    <div class="container px-6">
+                        <div class="flex gap-8 overflow-x-auto no-scrollbar">
+                            <button class="tab-button tab-active py-5 font-bold text-base border-b-2 border-transparent whitespace-nowrap transition relative text-gray-500 hover:text-primary" 
+                                    onclick="switchTab('description')">
+                                توضیحات محصول
+                            </button>
+                            <button class="tab-button py-5 font-bold text-base border-b-2 border-transparent whitespace-nowrap transition relative text-gray-500 hover:text-primary" 
+                                    onclick="switchTab('specifications')">
+                                مشخصات فنی
+                            </button>
+                            <button class="tab-button py-5 font-bold text-base border-b-2 border-transparent whitespace-nowrap transition relative text-gray-500 hover:text-primary" 
+                                    onclick="switchTab('reviews')">
+                                نظرات کاربران <span class="bg-gray-200 text-gray-600 text-[10px] px-2 py-0.5 rounded-full mr-1">234</span>
+                            </button>
+                            <button class="tab-button py-5 font-bold text-base border-b-2 border-transparent whitespace-nowrap transition relative text-gray-500 hover:text-primary" 
+                                    onclick="switchTab('questions')">
+                                پرسش و پاسخ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="p-6 md:p-10">
+                    <!-- Description Tab -->
+                    <div id="description" class="tab-content animate-fade-in">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            <div class="lg:col-span-2">
+                                <h3 class="text-2xl font-black text-dark mb-6">نقد و بررسی تخصصی Galaxy A54</h3>
+                                <div class="prose max-w-none text-gray-600 leading-loose space-y-6">
+                                    <p>
+                                        سامسونگ گلکسی A54 5G یکی از جدیدترین میان‌رده‌های سامسونگ در سال ۲۰۲۳ است که با طراحی مشابه پرچمداران سری S23 و ویژگی‌های جذاب، جایگزین مدل موفق A53 شده است. این گوشی با بدنه‌ای شیشه‌ای و باکیفیت، حس یک گوشی پریمیوم را به کاربر منتقل می‌کند.
+                                    </p>
+                                    <h4 class="text-lg font-bold text-dark mt-6 mb-3">طراحی و ساختار</h4>
+                                    <p>
+                                        یکی از مهم‌ترین تغییرات A54 نسبت به نسل قبل، استفاده از شیشه در پنل پشتی است که ظاهر آن را بسیار مدرن و جذاب کرده است. فریم گوشی همچنان پلاستیکی است اما کیفیت ساخت بالایی دارد. همچنین استاندارد ضدآب IP67 همچنان در این گوشی حضور دارد که آن را در برابر نفوذ آب تا عمق ۱ متری به مدت ۳۰ دقیقه مقاوم می‌کند.
+                                    </p>
+                                    <div class="bg-blue-50 border-r-4 border-primary p-6 rounded-r-none rounded-lg my-6">
+                                        <h5 class="font-bold text-primary mb-2">نکته مثبت</h5>
+                                        <p class="text-sm font-medium">صفحه‌نمایش Super AMOLED این گوشی با روشنایی ۱۰۰۰ نیت، حتی در زیر نور مستقیم خورشید نیز خوانایی بسیار خوبی دارد و یکی از بهترین نمایشگرها در این بازه قیمتی محسوب می‌شود.</p>
+                                    </div>
+                                    <h4 class="text-lg font-bold text-dark mt-6 mb-3">دوربین و عکاسی</h4>
+                                    <p>
+                                        دوربین اصلی ۵۰ مگاپیکسلی این گوشی با لرزشگیر اپتیکال (OIS) بهبود یافته، تصاویر بسیار باکیفیتی را ثبت می‌کند. عکس‌های گرفته شده در نور روز دارای جزئیات بالا، کنتراست عالی و رنگ‌های زنده هستند. همچنین عکاسی در شب نیز نسبت به نسل قبل پیشرفت قابل توجهی داشته است.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <div class="bg-gray-50 rounded-2xl p-6 sticky top-28">
+                                    <h4 class="font-bold text-dark mb-4">نقاط قوت و ضعف</h4>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <h5 class="text-green-600 font-bold text-sm mb-2 flex items-center gap-2"><i class="fas fa-plus-circle"></i> نقاط قوت</h5>
+                                            <ul class="space-y-2 text-sm text-gray-600 list-disc list-inside marker:text-green-500">
+                                                <li>طراحی زیبا و باکیفیت شیشه‌ای</li>
+                                                <li>نمایشگر Super AMOLED 120Hz عالی</li>
+                                                <li>عمر باتری بسیار خوب</li>
+                                                <li>دوربین اصلی باکیفیت</li>
+                                                <li>پشتیبانی نرم‌افزاری طولانی مدت</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-t border-gray-200 pt-4">
+                                            <h5 class="text-red-500 font-bold text-sm mb-2 flex items-center gap-2"><i class="fas fa-minus-circle"></i> نقاط ضعف</h5>
+                                            <ul class="space-y-2 text-sm text-gray-600 list-disc list-inside marker:text-red-500">
+                                                <li>سرعت شارژ ۲۵ وات (نسبتاً پایین)</li>
+                                                <li>حاشیه‌های نسبتاً زیاد نمایشگر</li>
+                                                <li>عدم وجود شارژر در جعبه</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Specifications Tab (Hidden by default) -->
+                    <div id="specifications" class="tab-content hidden animate-fade-in">
+                        <h3 class="text-xl font-black text-dark mb-8">مشخصات فنی کامل</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                            <!-- Spec Group -->
+                            <div>
+                                <h4 class="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                                    <i class="fas fa-mobile-alt"></i> مشخصات کلی
+                                </h4>
+                                <ul class="space-y-4">
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">ابعاد</span>
+                                        <span class="text-dark font-bold col-span-2">158.2 x 76.7 x 8.2 میلی‌متر</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">وزن</span>
+                                        <span class="text-dark font-bold col-span-2">202 گرم</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">ساختار بدنه</span>
+                                        <span class="text-dark font-bold col-span-2">جلوی شیشه‌ای (Gorilla Glass 5)، پشت شیشه‌ای (Gorilla Glass 5)، فریم پلاستیکی</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Spec Group -->
+                            <div>
+                                <h4 class="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                                    <i class="fas fa-microchip"></i> پردازنده
+                                </h4>
+                                <ul class="space-y-4">
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">تراشه</span>
+                                        <span class="text-dark font-bold col-span-2">Exynos 1380 (5 nm)</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">پردازنده مرکزی</span>
+                                        <span class="text-dark font-bold col-span-2">8 هسته‌ای</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">پردازنده گرافیکی</span>
+                                        <span class="text-dark font-bold col-span-2">Mali-G68 MP5</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Spec Group -->
+                             <div>
+                                <h4 class="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                                    <i class="fas fa-memory"></i> حافظه
+                                </h4>
+                                <ul class="space-y-4">
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">حافظه داخلی</span>
+                                        <span class="text-dark font-bold col-span-2">256 گیگابایت</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">مقدار RAM</span>
+                                        <span class="text-dark font-bold col-span-2">8 گیگابایت</span>
+                                    </li>
+                                </ul>
+                            </div>
+                             <!-- Spec Group -->
+                             <div>
+                                <h4 class="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                                    <i class="fas fa-camera"></i> دوربین
+                                </h4>
+                                <ul class="space-y-4">
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">دوربین اصلی</span>
+                                        <span class="text-dark font-bold col-span-2">50 + 12 + 5 مگاپیکسل</span>
+                                    </li>
+                                    <li class="grid grid-cols-3 text-sm">
+                                        <span class="text-gray-400 col-span-1">دوربین سلفی</span>
+                                        <span class="text-dark font-bold col-span-2">32 مگاپیکسل</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Tab (Hidden by default) -->
+                    <div id="reviews" class="tab-content hidden animate-fade-in">
+                         <!-- Keep existing reviews content but styled better if needed, for brevity relying on standard HTML text -->
+                         <div class="flex flex-col md:flex-row gap-10">
+                            <!-- Stats -->
+                            <div class="md:w-1/3 space-y-6">
+                                <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100">
+                                    <div class="text-5xl font-black text-dark mb-2">4.5</div>
+                                    <div class="flex justify-center text-amber-400 text-lg mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <p class="text-gray-500 text-sm font-medium">از مجموع ۲۳۴ امتیاز</p>
+                                </div>
+                                <button class="w-full bg-white border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition">
+                                    ثبت دیدگاه جدید
+                                </button>
+                            </div>
+                            
+                            <!-- Comments List -->
+                            <div class="md:w-2/3 space-y-6">
+                                <div class="border-b border-gray-100 pb-6">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex gap-3">
+                                            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold">AR</div>
+                                            <div>
+                                                <h5 class="font-bold text-dark text-sm">امیررضا</h5>
+                                                <span class="text-xs text-gray-400">۲ روز پیش</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded font-bold border border-green-100">پیشنهاد می‌کنم</div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm leading-relaxed">
+                                        واقعا گوشی خوش دست و زیبایی هست. دوربینش نسبت به نسل قبل خیلی بهتر شده مخصوصا تو شب. باتریش هم راحت یک روز کامل رو جواب میده.
+                                    </p>
+                                </div>
+                                <!-- More comments... -->
+                            </div>
+                         </div>
+                    </div>
+                    
+                    <!-- Questions Tab (Hidden) -->
+                    <div id="questions" class="tab-content hidden animate-fade-in">
+                        <!-- Placeholder -->
+                         <div class="text-center py-10 text-gray-500">
+                            <i class="far fa-question-circle text-4xl mb-4 opacity-50"></i>
+                            <p>هنوز پرسشی ثبت نشده است.</p>
+                         </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="container pb-16">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-black text-dark">محصولات مشابه</h2>
+             <a href="#" class="text-primary font-bold hover:gap-2 transition-all flex items-center gap-1 text-sm">
+                مشاهده همه <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            <!-- Simple Product Card for related -->
+            <div class="group bg-white rounded-2xl p-4 border border-transparent hover:border-primary/20 hover:shadow-lg transition-all duration-300">
+                <div class="relative aspect-square mb-3 bg-gray-50 rounded-xl overflow-hidden">
+                    <img src="images/products/product-1.jpg" alt="Related" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition">
+                </div>
+                <h3 class="font-bold text-dark text-xs md:text-sm line-clamp-2 mb-2 group-hover:text-primary transition">گوشی سامسونگ Galaxy A34 5G</h3>
+                <div class="flex items-center gap-1 text-primary font-bold text-sm">
+                    <span>10,625,000</span>
+                    <span class="text-xs text-gray-500">تومان</span>
+                </div>
+            </div>
+            <div class="group bg-white rounded-2xl p-4 border border-transparent hover:border-primary/20 hover:shadow-lg transition-all duration-300">
+                <div class="relative aspect-square mb-3 bg-gray-50 rounded-xl overflow-hidden">
+                    <img src="images/products/product-2.jpg" alt="Related" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition">
+                </div>
+                <h3 class="font-bold text-dark text-xs md:text-sm line-clamp-2 mb-2 group-hover:text-primary transition">گوشی سامسونگ Galaxy S21 FE</h3>
+                <div class="flex items-center gap-1 text-primary font-bold text-sm">
+                    <span>19,200,000</span>
+                    <span class="text-xs text-gray-500">تومان</span>
+                </div>
+            </div>
+            <!-- ... more related ... -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8 border-t border-white/5">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
+                <div class="lg:col-span-1">
+                    <a href="#" class="text-2xl font-black text-white flex items-center gap-2 mb-6">
+                        <i class="fas fa-cube text-primary text-3xl"></i>
+                        <span>سِروا</span>
+                    </a>
+                    <p class="text-gray-400 text-sm leading-7 mb-8 font-medium">
+                        فروشگاه اینترنتی سِروا با هدف ارائه بهترین محصولات دیجیتال با قیمتی رقابتی و خدماتی متمایز فعالیت خود را آغاز کرده است.
+                    </p>
+                </div>
+                <!-- Footer Links Same as Index -->
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">دسترسی سریع</h4>
+                     <ul class="space-y-2 text-sm text-gray-400">
+                         <li><a href="#" class="hover:text-primary">تماس با ما</a></li>
+                         <li><a href="#" class="hover:text-primary">درباره ما</a></li>
+                         <li><a href="#" class="hover:text-primary">قوانین</a></li>
+                     </ul>
+                </div>
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">راهنمای خرید</h4>
+                     <ul class="space-y-2 text-sm text-gray-400">
+                         <li><a href="#" class="hover:text-primary">نحوه ثبت سفارش</a></li>
+                         <li><a href="#" class="hover:text-primary">رویه ارسال</a></li>
+                     </ul>
+                </div>
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">تماس با ما</h4>
+                     <p class="text-sm text-gray-400">021-88776655</p>
+                </div>
+            </div>
+             <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+                © ۱۴۰۴ تمامی حقوق محفوظ است.
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="fixed left-6 bottom-6 w-12 h-12 bg-primary text-white rounded-2xl shadow-xl hover:bg-primary/90 hover:-translate-y-1 transition-all opacity-0 pointer-events-none z-50 flex items-center justify-center group">
+        <i class="fas fa-arrow-up group-hover:animate-bounce"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/product-details.js"></script>
+</body>
+</html>

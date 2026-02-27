@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود با کد یک‌بارمصرف - فروشگاهی سِروا</title>
+    <!-- Tailwind CSS -->
+    <script src="libs/tailwind/tailwind.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="libs/fontawesome/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/custom.css">
+    
+    <!-- Tailwind Config -->
+    <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Top Bar -->
+    <div class="bg-dark text-white text-sm py-2 hidden md:block">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span><i class="fas fa-phone-alt ml-2"></i>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                <span><i class="fas fa-envelope ml-2"></i>info@shop.ir</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-primary transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-primary transition"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="hover:text-primary transition"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">
+                        <i class="fas fa-store ml-2"></i>قالب فروشگاه سِروا
+                    </a>
+                </div>
+
+                <!-- Search Bar - Desktop -->
+                <div class="hidden md:flex flex-1 max-w-xl mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               placeholder="جستجو در محصولات..." 
+                               class="w-full py-3 px-4 pr-12 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition">
+                        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2 md:gap-4">
+                    <!-- User -->
+                    <a href="login.html" class="flex items-center gap-2 text-primary transition p-2">
+                        <i class="fas fa-user text-xl"></i>
+                        <span class="hidden lg:block text-sm">ورود / ثبت‌نام</span>
+                    </a>
+                    
+                    <!-- Wishlist -->
+                    <a href="wishlist.html" class="relative text-gray-600 hover:text-primary transition p-2 hidden sm:block">
+                        <i class="fas fa-heart text-xl"></i>
+                        <span class="absolute -top-1 -left-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۲</span>
+                    </a>
+                    
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-gray-600 hover:text-primary transition p-2">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="absolute -top-1 -left-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۳</span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Bar - Mobile -->
+            <div class="md:hidden pb-4">
+                <div class="relative">
+                    <input type="text" 
+                           placeholder="جستجو در محصولات..." 
+                           class="w-full py-2 px-4 pr-10 rounded-lg border border-gray-200 focus:border-primary outline-none text-sm">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="bg-gray-100 hidden md:block">
+            <div class="container mx-auto px-4">
+                <ul class="flex items-center gap-8 py-3 text-sm">
+                    <li class="relative group">
+                        <a href="category.html" class="flex items-center gap-2 text-dark hover:text-primary transition font-medium">
+                            <i class="fas fa-th-large"></i>
+                            دسته‌بندی‌ها
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </a>
+                        <!-- Mega Menu -->
+                        <div class="absolute top-full right-0 bg-white shadow-xl rounded-lg p-6 min-w-[600px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <div class="grid grid-cols-3 gap-6">
+                                <div>
+                                    <h4 class="font-bold text-dark mb-3 pb-2 border-b">موبایل و تبلت</h4>
+                                    <ul class="space-y-2 text-gray-600">
+                                        <li><a href="#" class="hover:text-primary transition">گوشی موبایل</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">تبلت</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">لوازم جانبی</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark mb-3 pb-2 border-b">کامپیوتر</h4>
+                                    <ul class="space-y-2 text-gray-600">
+                                        <li><a href="#" class="hover:text-primary transition">لپ‌تاپ</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">کامپیوتر رومیزی</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">قطعات کامپیوتر</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark mb-3 pb-2 border-b">پوشاک</h4>
+                                    <ul class="space-y-2 text-gray-600">
+                                        <li><a href="#" class="hover:text-primary transition">مردانه</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">زنانه</a></li>
+                                        <li><a href="#" class="hover:text-primary transition">بچگانه</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" class="text-dark hover:text-primary transition">پرفروش‌ترین‌ها</a></li>
+                    <li><a href="#" class="text-dark hover:text-primary transition">جدیدترین‌ها</a></li>
+                    <li><a href="#" class="text-red-500 hover:text-red-600 transition font-medium">تخفیف‌ها <i class="fas fa-fire text-xs"></i></a></li>
+                    <li><a href="about.html" class="text-dark hover:text-primary transition">درباره ما</a></li>
+                    <li><a href="contact.html" class="text-dark hover:text-primary transition">تماس با ما</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/50 z-50 hidden">
+        <div class="bg-white w-72 h-full overflow-y-auto">
+            <div class="p-4 border-b flex items-center justify-between">
+                <span class="font-bold text-lg">منو</span>
+                <button id="closeMobileMenu" class="text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-3">
+                    <li><a href="index.html" class="block py-2 text-dark hover:text-primary transition">صفحه اصلی</a></li>
+                    <li><a href="category.html" class="block py-2 text-dark hover:text-primary transition">دسته‌بندی‌ها</a></li>
+                    <li><a href="#" class="block py-2 text-dark hover:text-primary transition">پرفروش‌ترین‌ها</a></li>
+                    <li><a href="#" class="block py-2 text-dark hover:text-primary transition">جدیدترین‌ها</a></li>
+                    <li><a href="#" class="block py-2 text-red-500 hover:text-red-600 transition">تخفیف‌ها</a></li>
+                    <li><a href="about.html" class="block py-2 text-dark hover:text-primary transition">درباره ما</a></li>
+                    <li><a href="contact.html" class="block py-2 text-dark hover:text-primary transition">تماس با ما</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- OTP Login Section -->
+    <section class="container mx-auto px-4 py-12">
+        <div class="max-w-md mx-auto">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Step 1: Phone Number -->
+                <div id="phoneStep" class="p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-mobile-alt text-2xl text-primary"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-dark mb-2">ورود با کد یک‌بارمصرف</h2>
+                        <p class="text-gray-600 text-sm">شماره موبایل خود را وارد کنید</p>
+                    </div>
+                    <form id="phoneForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-dark mb-2">شماره موبایل</label>
+                            <input type="tel" id="phoneNumber" required 
+                                   class="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none"
+                                   placeholder="09123456789" dir="ltr">
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition">
+                            ارسال کد تأیید
+                        </button>
+                    </form>
+                    <div class="mt-4 text-center">
+                        <a href="login.html" class="text-sm text-primary hover:underline">ورود با رمز عبور</a>
+                    </div>
+                </div>
+
+                <!-- Step 2: OTP Code -->
+                <div id="otpStep" class="p-6 hidden">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-key text-2xl text-primary"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-dark mb-2">کد تأیید را وارد کنید</h2>
+                        <p class="text-gray-600 text-sm mb-1">کد ۶ رقمی به شماره <span id="displayPhone" class="font-medium text-dark"></span> ارسال شد</p>
+                    </div>
+                    <form id="otpForm" class="space-y-6">
+                        <div class="flex justify-center gap-3">
+                            <input type="text" maxlength="1" class="otp-input" data-index="0" pattern="[0-9]" required>
+                            <input type="text" maxlength="1" class="otp-input" data-index="1" pattern="[0-9]" required>
+                            <input type="text" maxlength="1" class="otp-input" data-index="2" pattern="[0-9]" required>
+                            <input type="text" maxlength="1" class="otp-input" data-index="3" pattern="[0-9]" required>
+                            <input type="text" maxlength="1" class="otp-input" data-index="4" pattern="[0-9]" required>
+                            <input type="text" maxlength="1" class="otp-input" data-index="5" pattern="[0-9]" required>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition">
+                            تأیید کد
+                        </button>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600 mb-2">کد را دریافت نکردید؟</p>
+                        <button id="resendBtn" class="text-sm text-primary hover:underline" disabled>
+                            ارسال مجدد کد (<span id="timer">120</span>)
+                        </button>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button onclick="backToPhone()" class="text-sm text-gray-600 hover:text-primary transition">
+                            <i class="fas fa-arrow-right ml-1"></i>تغییر شماره موبایل
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 - About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">فروشگاهی سِروا</h3>
+                    <p class="text-gray-400 text-sm leading-7 mb-4">
+                        ما بزرگترین فروشگاهی سِروا محصولات دیجیتال و الکترونیک هستیم. با بهترین قیمت‌ها و گارانتی معتبر در خدمت شما هستیم.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2 - Quick Links -->
+                <div>
+                    <h4 class="font-bold mb-4">دسترسی سریع</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <a href="about.html" class="text-gray-400 hover:text-primary transition">درباره ما</a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="text-gray-400 hover:text-primary transition">تماس با ما</a>
+                        </li>
+                        <li>
+                            <a href="terms.html" class="text-gray-400 hover:text-primary transition">قوانین و مقررات</a>
+                        </li>
+                        <li>
+                            <a href="privacy.html" class="text-gray-400 hover:text-primary transition">حریم خصوصی</a>
+                        </li>
+                        <li>
+                            <a href="faq.html" class="text-gray-400 hover:text-primary transition">سوالات متداول</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-primary transition">فرصت‌های شغلی</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 - Customer Service -->
+                <div>
+                    <h4 class="font-bold mb-4">خدمات مشتریان</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <a href="return-policy.html" class="text-gray-400 hover:text-primary transition">رویه‌های بازگرداندن کالا</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-primary transition">شرایط استفاده</a>
+                        </li>
+                        <li>
+                            <a href="shipping.html" class="text-gray-400 hover:text-primary transition">رویه ارسال سفارش</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-primary transition">راهنمای خرید</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-primary transition">ضمانت اصالت کالا</a>
+                        </li>
+                        <li>
+                            <a href="order-tracking.html" class="text-gray-400 hover:text-primary transition">پیگیری سفارش</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 - Contact Info -->
+                <div>
+                    <h4 class="font-bold mb-4">تماس با ما</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>تهران، خیابان ولیعصر، پلاک ۱۲۳۴</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone"></i>
+                            <span dir="ltr">021-1234-5678</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope"></i>
+                            <span dir="ltr">info@shop.com</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-clock"></i>
+                            <span>پاسخگویی: ۹ صبح تا ۹ شب</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="border-t border-white/10 pt-6 mb-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-2 text-sm text-gray-400">
+                        <span>روش‌های پرداخت:</span>
+                        <div class="flex gap-2">
+                            <div class="bg-white/10 px-3 py-1 rounded text-xs">کارت به کارت</div>
+                            <div class="bg-white/10 px-3 py-1 rounded text-xs">درگاه بانکی</div>
+                            <div class="bg-white/10 px-3 py-1 rounded text-xs">پرداخت در محل</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <img src="images/icons/enamad.png" alt="نماد اعتماد" class="h-16 bg-white rounded p-1">
+                        <img src="images/icons/samandehi.png" alt="ساماندهی" class="h-16 bg-white rounded p-1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-white/10 pt-6 text-center text-sm text-gray-400">
+                <p>تمامی حقوق این سایت متعلق به فروشگاهی سِروا می‌باشد © ۱۴۰۴</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed left-4 bottom-4 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition opacity-0 pointer-events-none z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        let countdown = 120;
+        let timerInterval;
+
+        // Phone form submission
+        document.getElementById('phoneForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('phoneNumber').value;
+            document.getElementById('displayPhone').textContent = phone;
+            document.getElementById('phoneStep').classList.add('hidden');
+            document.getElementById('otpStep').classList.remove('hidden');
+            startTimer();
+        });
+
+        // OTP input handling
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // OTP form submission
+        document.getElementById('otpForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = Array.from(otpInputs).map(input => input.value).join('');
+            if (code.length === 6) {
+                // Simulate OTP verification
+                alert('کد تأیید شد! در حال ورود...');
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Timer function
+        function startTimer() {
+            countdown = 120;
+            const timerElement = document.getElementById('timer');
+            const resendBtn = document.getElementById('resendBtn');
+            resendBtn.disabled = true;
+            
+            timerInterval = setInterval(() => {
+                countdown--;
+                timerElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(timerInterval);
+                    resendBtn.disabled = false;
+                    resendBtn.innerHTML = 'ارسال مجدد کد';
+                }
+            }, 1000);
+        }
+
+        // Resend code
+        document.getElementById('resendBtn').addEventListener('click', () => {
+            if (!document.getElementById('resendBtn').disabled) {
+                alert('کد جدید ارسال شد!');
+                startTimer();
+            }
+        });
+
+        // Back to phone step
+        function backToPhone() {
+            document.getElementById('phoneStep').classList.remove('hidden');
+            document.getElementById('otpStep').classList.add('hidden');
+            clearInterval(timerInterval);
+            otpInputs.forEach(input => input.value = '');
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,8 @@
+User-agent: *
+
+# Stop crawling user account and checkout pages by search engine robot:
+Disallow: /compare/
+Disallow: /basket/
+Disallow: /admin/*
+Disallow: /panel/*
+Disallow: /profile/

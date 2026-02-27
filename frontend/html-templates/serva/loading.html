@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>در حال بارگذاری - فروشگاهی سِروا</title>
+    <!-- Tailwind CSS -->
+    <script src="libs/tailwind/tailwind.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="libs/fontawesome/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/custom.css">
+    
+    <!-- Tailwind Config -->
+    <script src="js/tailwind-config.js"></script>
+    
+    <style>
+        /* Modern Loading Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes scale-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        @keyframes rotate-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            background-size: 400% 400%;
+            animation: gradient-shift 8s ease infinite;
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .scale-pulse {
+            animation: scale-pulse 2s ease-in-out infinite;
+        }
+        
+        .rotate-ring {
+            animation: rotate-ring 2s linear infinite;
+        }
+        
+        .progress-bar {
+            animation: progress 3s ease-in-out infinite;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.6);
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg flex items-center justify-center min-h-screen overflow-hidden relative">
+    
+    <!-- Animated Background Particles -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="particle w-4 h-4" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="particle w-6 h-6" style="top: 60%; left: 20%; animation-delay: 1s;"></div>
+        <div class="particle w-3 h-3" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
+        <div class="particle w-5 h-5" style="top: 80%; left: 70%; animation-delay: 1.5s;"></div>
+        <div class="particle w-4 h-4" style="top: 30%; left: 50%; animation-delay: 0.5s;"></div>
+        <div class="particle w-6 h-6" style="top: 70%; left: 90%; animation-delay: 2.5s;"></div>
+    </div>
+
+    <!-- Main Loading Content -->
+    <div class="text-center relative z-10 w-full max-w-md px-6">
+        <!-- Logo/Icon Container with Glow Effect -->
+        <div class="mb-8 float-animation">
+            <div class="relative inline-block">
+                <!-- Outer Rotating Ring -->
+                <div class="absolute inset-0 w-32 h-32 border-4 border-white/30 rounded-full rotate-ring"></div>
+                <!-- Middle Ring -->
+                <div class="absolute inset-2 w-28 h-28 border-4 border-white/50 rounded-full rotate-ring" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+                <!-- Inner Spinner -->
+                <div class="relative w-32 h-32 border-4 border-white/20 border-t-white rounded-full spinner glow-effect scale-pulse"></div>
+                <!-- Center Icon -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-store text-white text-4xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Name -->
+        <h1 class="text-4xl font-bold text-white mb-2 scale-pulse" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+            فروشگاه سِروا
+        </h1>
+
+        <!-- Loading Text -->
+        <h2 class="text-2xl font-semibold text-white/90 mb-4" style="text-shadow: 0 1px 5px rgba(0,0,0,0.2);">
+            در حال بارگذاری...
+        </h2>
+        
+        <p class="text-white/80 mb-8 text-lg">لطفاً صبر کنید</p>
+
+        <!-- Progress Bar -->
+        <div class="mb-6">
+            <div class="w-full h-2 bg-white/20 rounded-full overflow-hidden">
+                <div class="h-full bg-white rounded-full progress-bar" style="box-shadow: 0 0 10px rgba(255,255,255,0.8);"></div>
+            </div>
+        </div>
+
+        <!-- Animated Dots -->
+        <div class="flex justify-center gap-3">
+            <div class="w-4 h-4 bg-white rounded-full pulse-dot scale-pulse"></div>
+            <div class="w-4 h-4 bg-white rounded-full pulse-dot scale-pulse" style="animation-delay: 0.2s;"></div>
+            <div class="w-4 h-4 bg-white rounded-full pulse-dot scale-pulse" style="animation-delay: 0.4s;"></div>
+        </div>
+
+        <!-- Loading Percentage (Optional) -->
+        <div class="mt-6">
+            <span class="text-white/70 text-sm" id="loadingPercent">0%</span>
+        </div>
+    </div>
+
+    <script>
+        // Simulate loading progress
+        let progress = 0;
+        const progressBar = document.querySelector('.progress-bar');
+        const loadingPercent = document.getElementById('loadingPercent');
+        
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+                // Uncomment to redirect after loading
+                // setTimeout(() => {
+                //     window.location.href = 'index.html';
+                // }, 500);
+            }
+            progressBar.style.width = progress + '%';
+            loadingPercent.textContent = Math.floor(progress) + '%';
+        }, 200);
+        
+        // Reset progress bar animation
+        setTimeout(() => {
+            progressBar.style.animation = 'none';
+        }, 100);
+    </script>
+</body>
+</html>
+

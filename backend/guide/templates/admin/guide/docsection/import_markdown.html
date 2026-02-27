@@ -1,0 +1,67 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .markdown-import-form .vLargeTextField { width: 100%; max-width: 800px; font-family: monospace; }
+  .markdown-import-form .form-row { margin-bottom: 1rem; }
+  .markdown-import-form label { display: block; font-weight: bold; margin-bottom: 0.25rem; }
+  .markdown-import-form .help { font-size: 0.9em; color: #666; margin-top: 0.25rem; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumbs">
+  <li><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+  <li><a href="{% url 'admin:app_list' app_label='guide' %}">{% translate 'Guide' %}</a></li>
+  <li><a href="{% url 'admin:guide_docsection_changelist' %}">بخش‌های مستندات</a></li>
+  <li aria-current="page">{{ title }}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1>{{ title }}</h1>
+  <form method="post" enctype="multipart/form-data" class="markdown-import-form">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <ul class="errorlist">{{ form.non_field_errors }}</ul>
+    {% endif %}
+
+    <div class="form-row">
+      {{ form.markdown_file.errors }}
+      <label for="id_markdown_file">{{ form.markdown_file.label }}</label>
+      {{ form.markdown_file }}
+      <p class="help">{{ form.markdown_file.help_text }}</p>
+    </div>
+
+    <div class="form-row">
+      {{ form.content.errors }}
+      <label for="id_content">{{ form.content.label }}</label>
+      {{ form.content }}
+      <p class="help">{{ form.content.help_text }}</p>
+    </div>
+
+    <div class="form-row">
+      {{ form.default_tags.errors }}
+      <label for="id_default_tags">{{ form.default_tags.label }}</label>
+      {{ form.default_tags }}
+      <p class="help">{{ form.default_tags.help_text }}</p>
+    </div>
+
+    <div class="form-row">
+      {{ form.replace_existing.errors }}
+      <label>{{ form.replace_existing }} {{ form.replace_existing.label }}</label>
+      <p class="help">{{ form.replace_existing.help_text }}</p>
+    </div>
+
+    <div class="submit-row">
+      <input type="submit" value="{% translate 'Import' %}" class="default">
+      <a href="{% url 'admin:guide_docsection_changelist' %}" class="button cancel-link">{% translate 'Cancel' %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

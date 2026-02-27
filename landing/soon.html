@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توکان - فروشگاه ساز رایگان برای کسب و کارهای نوپا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- هدر -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-0.5 rounded-lg ml-2 shadow-md">
+                    <img width="30" src="tokan-logo.png" alt="فروشگاه ساز توکان">
+                </div>
+                <h1
+                    class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-800">
+                    توکان
+                </h1>
+            </div>
+            <a href="https://survey.porsline.ir/s/RVdJDInu" target="_blank"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">
+                پر کردن پرسشنامه
+                <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- بخش اصلی -->
+    <main class="flex-grow">
+        <!-- بخش هیرو -->
+        <section class="hero-gradient text-white py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">فروشگاه ساز رایگان توکان به زودی راه‌اندازی می‌شود!
+                    </h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        پلتفرمی که قراره به همه کسب و کارهای نوپا و کوچیک کمک کنه تا کسب و کار خودشون رو رشد بدن و وب
+                        سایت فروشگاهی خودشون رو داشته باشند.
+                    </p>
+
+                    <div class="bg-white/10 rounded-xl p-6 max-w-md mx-auto">
+                        <h3 class="text-xl font-bold mb-4">آماده‌سازی تا پایان تیرماه 1404</h3>
+
+                        <div class="flex justify-center space-x-2 mb-6">
+                            <div class="countdown-box rounded-lg p-2 ml-2 text-center w-16">
+                                <div class="text-2xl font-bold" id="seconds">--</div>
+                                <div class="text-xs">ثانیه</div>
+                            </div>
+                            <div class="countdown-box rounded-lg p-2 text-center w-16">
+                                <div class="text-2xl font-bold" id="minutes">--</div>
+                                <div class="text-xs">دقیقه</div>
+                            </div>
+                            <div class="countdown-box rounded-lg p-2 text-center w-16">
+                                <div class="text-2xl font-bold" id="hours">--</div>
+                                <div class="text-xs">ساعت</div>
+                            </div>
+                            <div class="countdown-box rounded-lg p-2 text-center w-16">
+                                <div class="text-2xl font-bold" id="days">--</div>
+                                <div class="text-xs">روز</div>
+                            </div>
+                        </div>
+
+                        <a href="#features"
+                            class="inline-block bg-white text-purple-600 hover:bg-gray-100 font-bold py-3 px-6 rounded-lg transition shadow-md">
+                            ویژگی‌های توکان
+                            <i class="fas fa-arrow-down mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ویژگی‌ها -->
+        <section id="features" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">توکان چطور به کسب و کار شما کمک
+                        می‌کند؟</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">همه ابزارهای مورد نیاز برای شروع فروش آنلاین در یک پلتفرم
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-bolt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">راه‌اندازی سریع</h3>
+                        <p class="text-gray-600">فروشگاه خود را در کمتر از 5 دقیقه راه‌اندازی کنید و شروع به فروش کنید
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-wallet text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">رایگان برای همیشه</h3>
+                        <p class="text-gray-600">پلن پایه توکان کاملا رایگان است و همیشه رایگان خواهد ماند</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-mobile-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">واکنش‌گرا</h3>
+                        <p class="text-gray-600">فروشگاهی که در همه دستگاه‌ها به بهترین شکل نمایش داده می‌شود</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-shield-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">امنیت بالا</h3>
+                        <p class="text-gray-600">اطلاعات شما و مشتریانتان با بالاترین استانداردهای امنیتی محافظت می‌شود
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-credit-card text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">درگاه پرداخت</h3>
+                        <p class="text-gray-600">پشتیبانی از کلیه درگاه‌های پرداخت معتبر ایرانی</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div
+                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-headset text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">پشتیبانی</h3>
+                        <p class="text-gray-600">پشتیبانی فنی در تمام ساعات شبانه‌روز و هفت روز هفته</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <a href="https://survey.porsline.ir/s/RVdJDInu" target="_blank"
+                        class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md">
+                        پر کردن پرسشنامه
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- فوتر -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div>
+            <a referrerpolicy='origin' target='_blank'
+                href='https://trustseal.enamad.ir/?id=624947&Code=Q4iDYEJWk7Gjtz2sxG7s1iNsFiqDXTdI'><img referrerpolicy='origin'
+                    src='https://trustseal.enamad.ir/logo.aspx?id=624947&Code=Q4iDYEJWk7Gjtz2sxG7s1iNsFiqDXTdI' alt=''
+                    style='cursor:pointer' code='Q4iDYEJWk7Gjtz2sxG7s1iNsFiqDXTdI'></a>
+            </div>
+        <div class="container mx-auto px-4 text-center">
+            <p>تمامی حقوق برای فروشگاه ساز توکان محفوظ است © 2025</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <!-- <a href="#" class="text-gray-400 hover:text-white transition">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a> -->
+                <a href="https://t.me/tokan_app" class="text-gray-400 hover:text-white transition">
+                    <i class="fab fa-telegram text-xl"></i>
+                </a>
+                <!-- <a href="#" class="text-gray-400 hover:text-white transition">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                </a> -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // شمارش معکوس تا 22 تیرماه 1402 (13 ژوئیه 2023)
+        function updateCountdown() {
+            const now = new Date();
+            const endDate = new Date(2025, 6, 22); // ماه در JS از 0 شروع می‌شود (6 = July)
+
+            // تنظیم به وقت ایران (UTC+3:30)
+            const timezoneOffset = 3.5 * 60 * 60 * 1000;
+            const nowIran = new Date(now.getTime() + timezoneOffset);
+            const endDateIran = new Date(endDate.getTime() + timezoneOffset);
+
+            const diff = endDateIran - nowIran;
+
+            // اگر تاریخ گذشته است
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // اسکرول نرم برای لینک‌های داخلی
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

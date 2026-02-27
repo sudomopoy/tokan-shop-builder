@@ -1,0 +1,1 @@
+npx swagger-typescript-api generate -p http://localhost:8080/swagger/?format=openapi -o ./api -n api.ts

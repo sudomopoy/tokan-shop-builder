@@ -1,0 +1,58 @@
+/* static/css/product_data_widget.css */
+.product-data-widget {
+    padding: 15px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.sizing-table th,
+.sizing-table td {
+    min-width: 100px;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+}
+
+.feature-item {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.feature-item input {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.remove-btn {
+    color: #dc3545;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.add-sizing-column,
+.add-sizing-row {
+    padding: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: #0097e9;
+    border-radius: 20px;
+    margin-inline: 10px;
+    color: #fff;
+}
+
+.add-sizing-row {
+    background: #e100e9;
+}

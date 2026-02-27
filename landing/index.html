@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8fafc" />
+  <meta name="description"
+    content="توکان؛ توسعه کسب‌وکار شما در کنار طراحی سایت و فروشگاه، سئو و رشد با بهره‌گیری از هوش مصنوعی." />
+  <meta property="og:title" content="توکان | توسعه کسب‌وکار دیجیتال" />
+  <meta property="og:description"
+    content="طراحی سایت و فروشگاه، سئو و رشد کسب‌وکار با کمک هوش مصنوعی. پلن‌های اشتراکی شفاف و پکیج‌های تکمیلی." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fa_IR" />
+  <title>توکان | توسعه کسب‌وکار دیجیتال (طراحی سایت، سئو و رشد با AI)</title>
+
+  <!-- Tailwind (local) + Icons (local) -->
+  <script src="/assets/3.4.17"></script>
+  <link rel="stylesheet" href="/assets/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#eef7ff",
+              100: "#d9efff",
+              200: "#b9e2ff",
+              300: "#86d1ff",
+              400: "#46b8ff",
+              500: "#1698ff",
+              600: "#0a7df4",
+              700: "#0963c8",
+              800: "#0b4f9a",
+              900: "#0b3f7a",
+              950: "#071f3d"
+            }
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(10, 125, 244, 0.15)",
+            glass: "0 4px 20px rgba(0, 0, 0, 0.08)"
+          },
+          keyframes: {
+            floaty: {
+              "0%,100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-10px)" }
+            },
+            shimmer: {
+              "0%": { backgroundPosition: "0% 50%" },
+              "50%": { backgroundPosition: "100% 50%" },
+              "100%": { backgroundPosition: "0% 50%" }
+            }
+          },
+          animation: {
+            floaty: "floaty 7s ease-in-out infinite",
+            shimmer: "shimmer 10s ease infinite"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --card-border: #e2e8f0;
+      --txt: #0f172a;
+      --muted: #64748b;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Vazirmatn", sans-serif;
+      background: var(--bg);
+      color: var(--txt);
+      overflow-x: hidden;
+    }
+
+    /* Light gradient background */
+    .hero-surface {
+      background:
+        radial-gradient(800px 500px at 20% 25%, rgba(22, 152, 255, 0.08), transparent 60%),
+        radial-gradient(700px 480px at 80% 35%, rgba(70, 184, 255, 0.05), transparent 62%),
+        radial-gradient(600px 450px at 40% 85%, rgba(9, 99, 200, 0.05), transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .glow-ring {
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(circle at 30% 30%, rgba(22, 152, 255, 0.06), transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(70, 184, 255, 0.04), transparent 52%);
+      filter: blur(30px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .grid-dots {
+      background-image:
+        radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 1), transparent 70%);
+    }
+
+    .focus-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(22, 152, 255, 0.2);
+    }
+
+    .btn-grad {
+      background: linear-gradient(135deg, #1698ff 0%, #0a7df4 45%, #46b8ff 100%);
+      background-size: 220% 220%;
+      animation: shimmer 10s ease infinite;
+    }
+
+    .link-underline {
+      position: relative;
+    }
+
+    .link-underline::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -8px;
+      width: 0;
+      height: 2px;
+      background: #0a7df4;
+      transition: width 220ms ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top nav -->
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-lg shadow-sm">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between py-4">
+        <a href="#top" class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl overflow-hidden glass flex items-center justify-center">
+            <img src="logo.jpg" alt="لوگوی توکان" class="h-9 w-9 object-contain" />
+          </div>
+          <div class="leading-tight">
+            <div class="text-lg md:text-xl font-extrabold tracking-tight text-slate-900">
+              توکان
+            </div>
+            <div class="text-xs text-slate-500 -mt-0.5">
+              توسعه کسب‌وکار دیجیتال
+            </div>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-7 text-sm text-slate-700">
+          <a class="hover:text-slate-900 transition link-underline" href="#services">خدمات</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#ai">رشد با AI</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#process">فرآیند همکاری</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#pricing">تعرفه‌ها</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#showcase">نمونه‌کار</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#faq">سوالات</a>
+          <a class="hover:text-slate-900 transition link-underline" href="#contact">تماس</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href="#contact"
+            class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white btn-grad hover:opacity-90 transition shadow-soft">
+            <i class="fa-solid fa-comment-dots"></i>
+            درخواست مشاوره
+          </a>
+          <button id="mobileMenuBtn"
+            class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl glass hover:bg-slate-100 transition text-slate-700"
+            aria-label="باز/بستن منو">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="hidden lg:hidden pb-4">
+        <div class="glass rounded-2xl p-4">
+          <div class="grid grid-cols-2 gap-3 text-sm text-slate-800">
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#services">خدمات</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#ai">رشد با AI</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#process">فرآیند همکاری</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#pricing">تعرفه‌ها</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#showcase">نمونه‌کار</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-slate-100 transition" href="#faq">سوالات</a>
+            <a class="col-span-2 mt-1 py-3 px-3 rounded-xl btn-grad text-center font-bold text-white" href="#contact">
+              شروع همکاری / درخواست مشاوره
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top">
+    <section class="hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-50"></div>
+      <div class="glow-ring"></div>
+
+      <div class="max-w-7xl mx-auto px-4 py-14 md:py-20 relative">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-slate-800">
+              <span class="h-2 w-2 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(22,152,255,0.5)]"></span>
+              تمرکز ما: رشد پایدار کسب‌وکارها با طراحی، سئو و هوش مصنوعی
+            </div>
+
+            <h1 class="mt-5 text-3xl md:text-5xl font-black leading-[1.3] text-slate-900">
+              توکان؛ شریک
+              <span class="text-transparent bg-clip-text bg-gradient-to-l from-brand-500 via-brand-600 to-brand-700">
+                توسعه کسب‌وکار
+              </span>
+              شما در دنیای دیجیتال
+            </h1>
+
+            <p class="mt-5 text-base md:text-lg text-slate-700 leading-8 max-w-xl">
+              از طراحی سایت و فروشگاه گرفته تا سئو، تولید محتوا و بهینه‌سازی نرخ تبدیل—همه‌چیز را با یک تیم منسجم و
+              داده‌محور جلو می‌بریم. در کنار آن، از هوش مصنوعی برای تصمیم‌های سریع‌تر و رشد هوشمندانه‌تر استفاده می‌کنیم.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+              <a href="#pricing"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad text-sm md:text-base font-extrabold text-white shadow-soft">
+                مشاهده تعرفه‌ها
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+              <a href="#contact"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl glass hover:bg-slate-50 transition text-sm md:text-base font-bold text-slate-700 border border-slate-200">
+                ثبت درخواست / مشاوره
+                <i class="fa-solid fa-sparkles"></i>
+              </a>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-2 text-sm text-slate-600">
+              <span class="px-3 py-2 rounded-xl glass border border-slate-200"><i class="fa-solid fa-lock ml-2 text-brand-500"></i> SSL و
+                امنیت</span>
+              <span class="px-3 py-2 rounded-xl glass border border-slate-200"><i class="fa-solid fa-chart-line ml-2 text-brand-500"></i> سئو و
+                رشد</span>
+              <span class="px-3 py-2 rounded-xl glass border border-slate-200"><i class="fa-solid fa-wand-magic-sparkles ml-2 text-brand-500"></i>
+                اتوماسیون با AI</span>
+              <span class="px-3 py-2 rounded-xl glass border border-slate-200"><i class="fa-solid fa-headset ml-2 text-brand-500"></i> پشتیبانی و
+                آموزش</span>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-6 rounded-[2.2rem] blur-2xl opacity-40"
+              style="background: radial-gradient(circle at 30% 30%, rgba(22,152,255,0.1), transparent 55%), radial-gradient(circle at 75% 65%, rgba(70,184,255,0.06), transparent 55%);">
+            </div>
+
+            <div class="relative glass rounded-[2.2rem] p-6 md:p-8 shadow-glass border border-slate-200">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-solid fa-rocket text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-slate-900">نقشه رشد توکان</div>
+                    <div class="text-sm text-slate-600">از طراحی تا فروش و لید</div>
+                  </div>
+                </div>
+                <span class="text-xs px-3 py-1.5 rounded-full glass text-slate-600 border border-slate-200">
+                  به‌روزرسانی ۱۴۰۴-۱۴۰۵
+                </span>
+              </div>
+
+              <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="text-sm text-slate-500 mb-2">مرحله ۱</div>
+                  <div class="font-bold text-slate-900">طراحی سایت/فروشگاه</div>
+                  <div class="text-sm text-slate-600 mt-1">UI/UX، پیاده‌سازی و راه‌اندازی</div>
+                </div>
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="text-sm text-slate-500 mb-2">مرحله ۲</div>
+                  <div class="font-bold text-slate-900">سئو و محتوا</div>
+                  <div class="text-sm text-slate-600 mt-1">بهینه‌سازی ساختار + تولید محتوا</div>
+                </div>
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="text-sm text-slate-500 mb-2">مرحله ۳</div>
+                  <div class="font-bold text-slate-900">رشد با هوش مصنوعی</div>
+                  <div class="text-sm text-slate-600 mt-1">تحلیل، پیشنهاد، اتوماسیون</div>
+                </div>
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="text-sm text-slate-500 mb-2">مرحله ۴</div>
+                  <div class="font-bold text-slate-900">اندازه‌گیری و بهبود</div>
+                  <div class="text-sm text-slate-600 mt-1">KPI، CRO و بهینه‌سازی مداوم</div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <span class="h-8 w-8 rounded-full bg-slate-100 border border-slate-200 inline-flex"></span>
+                  <span class="h-8 w-8 rounded-full bg-slate-100 border border-slate-200 inline-flex"></span>
+                  <span class="h-8 w-8 rounded-full bg-slate-100 border border-slate-200 inline-flex"></span>
+                </div>
+                <div class="text-sm text-slate-700">
+                  مناسب کسب‌وکارهای فروش فیزیکی، دیجیتال و خدماتی
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute -bottom-6 -right-3 glass rounded-2xl px-4 py-3 animate-floaty hidden md:flex border border-slate-200">
+              <i class="fa-solid fa-bolt text-brand-500 ml-2"></i>
+              <span class="text-sm text-slate-700">شروع سریع، رشد واقعی</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-16 md:py-20 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900">خدمات توکان برای توسعه کسب‌وکار</h2>
+            <p class="mt-3 text-slate-600 leading-8 max-w-2xl">
+              ما صرفاً «سایت» تحویل نمی‌دهیم؛ یک مسیر رشد می‌سازیم. از استراتژی تا اجرا و بهینه‌سازی.
+            </p>
+          </div>
+          <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl glass hover:bg-slate-50 transition font-bold text-slate-700 border border-slate-200">
+            دریافت پیشنهاد اختصاصی
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-palette text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">طراحی UI/UX و طراحی سایت</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              طراحی حرفه‌ای، تجربه کاربری روان، سازگار با موبایل و آماده برای رشد و سئو.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-bag-shopping text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">طراحی فروشگاه آنلاین</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              مناسب فروش محصولات فیزیکی و دیجیتال و حتی خدمات (رزرو/پیش‌خرید/ثبت‌نام).
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-magnifying-glass-chart text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">سئو و بهینه‌سازی</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              ساختار فنی سئو، محتوا، لینک‌سازی داخلی و گزارش‌دهی—با هدف رشد پایدار.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-wand-magic-sparkles text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">رشد با هوش مصنوعی</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              پیشنهادهای هوشمند، تحلیل رفتار کاربران، تولید محتوای کمک‌یار و اتوماسیون کارها.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-plug-circle-bolt text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">اتصال‌ها و زیرساخت</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              SSL، دامنه، پنل پیامکی، درگاه پرداخت، نماد اعتماد، اتصال به ترب و ابزارهای رشد.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-headset text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">پشتیبانی و آموزش</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              ویدیو آموزش پنل، پشتیبانی و همراهی برای اینکه تیم شما سریع‌تر به نتیجه برسد.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Growth -->
+    <section id="ai" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-40"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-slate-800 border border-slate-200">
+              <i class="fa-solid fa-brain text-brand-500"></i>
+              رشد با بهره‌گیری از AI
+            </div>
+            <h2 class="mt-5 text-2xl md:text-4xl font-black leading-[1.35] text-slate-900">
+              هوش مصنوعی در توکان یعنی
+              <span class="text-transparent bg-clip-text bg-gradient-to-l from-brand-500 via-brand-600 to-brand-700">
+                تصمیم سریع‌تر + اجرای دقیق‌تر
+              </span>
+            </h2>
+            <p class="mt-4 text-slate-700 leading-8">
+              ما از AI به عنوان «ابزار سرعت و کیفیت» استفاده می‌کنیم؛ نه شعار. نتیجه‌اش این است که کمپین‌ها و محتوا
+              سریع‌تر آماده می‌شوند، داده‌ها بهتر تحلیل می‌شوند و مسیر رشد روشن‌تر می‌شود.
+            </p>
+
+            <div class="mt-8 grid sm:grid-cols-2 gap-4">
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-extrabold text-slate-900"><i class="fa-solid fa-chart-simple ml-2 text-brand-500"></i> تحلیل و گزارش</div>
+                <div class="text-sm text-slate-600 mt-1">دید بهتر روی KPIها و رفتار کاربران</div>
+              </div>
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-extrabold text-slate-900"><i class="fa-solid fa-pen-nib ml-2 text-brand-500"></i> کمک‌یار محتوا</div>
+                <div class="text-sm text-slate-600 mt-1">ایده، ساختار و تولید محتوا سریع‌تر</div>
+              </div>
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-extrabold text-slate-900"><i class="fa-solid fa-user-check ml-2 text-brand-500"></i> بهبود نرخ تبدیل</div>
+                <div class="text-sm text-slate-600 mt-1">بهینه‌سازی صفحه‌ها بر اساس داده</div>
+              </div>
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-extrabold text-slate-900"><i class="fa-solid fa-gear ml-2 text-brand-500"></i> اتوماسیون کارها</div>
+                <div class="text-sm text-slate-600 mt-1">کارهای تکراری کمتر، تمرکز بیشتر روی رشد</div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <a href="#contact"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold text-white shadow-soft">
+                شروع رشد با توکان
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-6 rounded-[2.2rem] blur-2xl opacity-40"
+              style="background: radial-gradient(circle at 30% 30%, rgba(22,152,255,0.1), transparent 55%), radial-gradient(circle at 75% 65%, rgba(70,184,255,0.06), transparent 55%);">
+            </div>
+
+            <div class="relative glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
+              <div class="flex items-center justify-between">
+                <div class="font-extrabold text-slate-900">شاخص‌های عملکرد و گزارش‌دهی</div>
+                <span class="text-xs px-3 py-1.5 rounded-full glass text-slate-600 border border-slate-200">CRO • SEO • AI</span>
+              </div>
+              <div class="mt-6 grid gap-4">
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-800 font-bold">چک‌لیست سئوی فنی</span>
+                    <span class="text-xs text-slate-500">هفتگی</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div class="h-full w-[78%] btn-grad"></div>
+                  </div>
+                </div>
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-800 font-bold">بهبود تجربه خرید</span>
+                    <span class="text-xs text-slate-500">ماهانه</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div class="h-full w-[64%] btn-grad"></div>
+                  </div>
+                </div>
+                <div class="glass rounded-2xl p-4 border border-slate-200">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-800 font-bold">گزارش رشد و لید</span>
+                    <span class="text-xs text-slate-500">فصلی</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div class="h-full w-[82%] btn-grad"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-sm text-slate-600 leading-7">
+                گزارش‌ها و شاخص‌ها بر اساس صنعت، اهداف و KPIهای تعریف‌شده برای هر پروژه شخصی‌سازی می‌شوند.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="py-16 md:py-20 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black text-slate-900">فرآیند همکاری با توکان</h2>
+          <p class="mt-3 text-slate-600 leading-8">
+            شفاف، مرحله‌به‌مرحله و قابل پیگیری—برای اینکه پروژه هم «خوب» اجرا شود و هم «به نتیجه» برسد.
+          </p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-4 gap-6">
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <div class="text-sm text-slate-500">مرحله ۱</div>
+            <div class="mt-2 font-extrabold text-slate-900">نیازسنجی و استراتژی</div>
+            <div class="mt-2 text-slate-600 text-sm leading-7">اهداف، پرسونای مخاطب و KPIهای رشد</div>
+          </div>
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <div class="text-sm text-slate-500">مرحله ۲</div>
+            <div class="mt-2 font-extrabold text-slate-900">طراحی و پیاده‌سازی</div>
+            <div class="mt-2 text-slate-600 text-sm leading-7">UI/UX، توسعه، تست و راه‌اندازی</div>
+          </div>
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <div class="text-sm text-slate-500">مرحله ۳</div>
+            <div class="mt-2 font-extrabold text-slate-900">سئو و محتوا</div>
+            <div class="mt-2 text-slate-600 text-sm leading-7">بهینه‌سازی فنی، محتوا و ساختار صفحات</div>
+          </div>
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <div class="text-sm text-slate-500">مرحله ۴</div>
+            <div class="mt-2 font-extrabold text-slate-900">رشد و بهینه‌سازی</div>
+            <div class="mt-2 text-slate-600 text-sm leading-7">تحلیل داده، AI، CRO و بهبود مداوم</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-40"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black text-slate-900">تعرفه‌ها و پکیج‌ها</h2>
+          <p class="mt-3 text-slate-700 leading-8">
+            پلن رایگان نداریم؛ از همان ابتدا ساختار «حرفه‌ای و عملیاتی» را تحویل می‌گیرید.
+          </p>
+        </div>
+
+        <!-- Setup package -->
+        <div class="mt-10 glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-slate-800 border border-slate-200">
+                <i class="fa-solid fa-flag-checkered text-brand-500"></i>
+                پکیج شروع (راه‌اندازی)
+              </div>
+              <h3 class="mt-4 text-xl md:text-2xl font-extrabold text-slate-900">راه‌اندازی و پیاده‌سازی فروشگاه/سایت</h3>
+              <p class="mt-2 text-slate-600 leading-7">
+                شامل راه‌اندازی و پیاده‌سازی + اخذ گواهی SSL + ویدیو آموزش نحوه کار با پنل + ۱ ماه پشتیبانی رایگان
+              </p>
+            </div>
+            <div class="text-center md:text-left">
+              <div class="text-sm text-slate-600">هزینه شروع از</div>
+              <div class="mt-1 text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-l from-brand-500 via-brand-600 to-brand-700">
+                ۴,۹۹۰,۰۰۰ تومان
+              </div>
+              <a href="#contact" class="mt-4 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold text-white shadow-soft">
+                ثبت درخواست راه‌اندازی
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription plans -->
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-slate-600">پلن اشتراک</div>
+                <div class="mt-1 text-2xl font-black text-slate-900">عادی</div>
+              </div>
+              <span class="text-xs px-3 py-1.5 rounded-full glass text-slate-600 border border-slate-200">برای کسب‌وکارهای در حال رشد</span>
+            </div>
+            <div class="mt-6 grid gap-3">
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">۳ ماهه</span>
+                <span class="font-extrabold text-brand-600">۱,۸۹۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">۶ ماهه</span>
+                <span class="font-extrabold text-brand-600">۲,۹۹۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">یک‌ساله</span>
+                <span class="font-extrabold text-brand-600">۳,۹۹۰,۰۰۰ تومان</span>
+              </div>
+            </div>
+            <div class="mt-6 text-sm text-slate-600 leading-7">
+              مناسب برای شروع حرفه‌ای و مدیریت فروشگاه/سایت با هزینه منطقی.
+            </div>
+          </div>
+
+          <div class="glass rounded-[2.2rem] p-6 md:p-8 border-2 border-brand-400 shadow-soft">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-slate-600">پلن اشتراک</div>
+                <div class="mt-1 text-2xl font-black text-slate-900">طلایی</div>
+              </div>
+              <span class="text-xs px-3 py-1.5 rounded-full btn-grad text-white font-bold">پیشنهادی</span>
+            </div>
+            <div class="mt-6 grid gap-3">
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">۳ ماهه</span>
+                <span class="font-extrabold text-brand-600">۲,۹۹۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">۶ ماهه</span>
+                <span class="font-extrabold text-brand-600">۴,۹۹۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4 border border-slate-200">
+                <span class="font-bold text-slate-900">یک‌ساله</span>
+                <span class="font-extrabold text-brand-600">۶,۹۹۰,۰۰۰ تومان</span>
+              </div>
+            </div>
+            <div class="mt-6 text-sm text-slate-600 leading-7">
+              امکانات بیشتر + پشتیبانی ویژه—برای تیم‌هایی که می‌خواهند سریع‌تر رشد کنند.
+            </div>
+          </div>
+        </div>
+
+        <!-- Add-ons -->
+        <div class="mt-10 grid lg:grid-cols-3 gap-6">
+          <div class="glass rounded-3xl p-6 lg:col-span-2 border border-slate-200">
+            <h3 class="text-xl font-black text-slate-900">خدمات تکمیلی</h3>
+            <p class="mt-2 text-slate-600 leading-7">
+              این موارد در صورت نیاز به صورت جداگانه به پروژه اضافه می‌شوند.
+            </p>
+
+            <div class="mt-5 grid sm:grid-cols-2 gap-4">
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-bold text-slate-900"><i class="fa-solid fa-boxes-stacked ml-2 text-brand-500"></i> ورود محصولات</div>
+                <div class="text-sm text-slate-600 mt-1">اینستاگرام/تلگرام/دیجی‌کالا/باسلام/ووکامرس/...</div>
+                <div class="mt-2 font-extrabold text-brand-600">۹۹۰,۰۰۰ تومان (هر ۱۰۰ محصول)</div>
+              </div>
+              <div class="glass rounded-2xl p-4 border border-slate-200">
+                <div class="font-bold text-slate-900"><i class="fa-solid fa-badge-check ml-2 text-brand-500"></i> نماد + درگاه + ترب</div>
+                <div class="text-sm text-slate-600 mt-1">اخذ نماد اعتماد، درگاه پرداخت، اتصال ترب و پنل پیامکی</div>
+                <div class="mt-2 font-extrabold text-brand-600">۱,۹۹۰,۰۰۰ تومان</div>
+              </div>
+              <div class="glass rounded-2xl p-4 sm:col-span-2 border border-slate-200">
+                <div class="font-bold text-slate-900"><i class="fa-solid fa-swatchbook ml-2 text-brand-500"></i> طراحی اختصاصی</div>
+                <div class="text-sm text-slate-600 mt-1">طراحی کاملاً اختصاصی مطابق برند و نیازهای کسب‌وکار</div>
+                <div class="mt-2 font-extrabold text-brand-600">از ۲۴,۰۰۰,۰۰۰ تومان</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <h3 class="text-xl font-black text-slate-900">شرایط پرداخت</h3>
+            <ul class="mt-4 space-y-3 text-slate-700 leading-7 text-sm">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-500 mt-0.5"></i>
+                <span>پرداخت نقدی: <b>۱۰٪ تخفیف</b></span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-500 mt-0.5"></i>
+                <span>پرداخت اقساطی: <b>۴ قسط</b> (قسط اول نقدی) با ارسال چک صیادی بنفش</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-500 mt-0.5"></i>
+                <span>می‌توانید بخشی از مبلغ را از موجودی کیف پول (در صورت وجود) پرداخت کنید.</span>
+              </li>
+            </ul>
+            <a href="#contact" class="mt-6 inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold text-white shadow-soft">
+              دریافت مشاوره پرداخت
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase -->
+    <section id="showcase" class="py-16 md:py-20 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900">نمونه‌کار</h2>
+            <p class="mt-3 text-slate-600 leading-8 max-w-2xl">
+              پروژه‌های اجراشده روی بستر توکان؛ از فروشگاه‌های آنلاین تا وب‌سایت‌های خدماتی با تمرکز بر سئو، UX و نرخ تبدیل.
+            </p>
+          </div>
+          <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl glass hover:bg-slate-50 transition font-bold text-slate-700 border border-slate-200">
+            درخواست مشاوره رایگان
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <a href="https://ropomoda.tokan.app" target="_blank" rel="noreferrer"
+            class="group glass rounded-3xl overflow-hidden hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-48 overflow-hidden bg-slate-100">
+              <img
+                src="https://s3-public.ropomoda.com/files/2025/7/4/125e0e27-1107-4a6f-9493-843b1c2beca2..jpg"
+                alt="روپومدا" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-lg text-slate-900">فروشگاه روپومدا</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-500"></i>
+              </div>
+              <p class="mt-2 text-slate-600">فروشگاه تخصصی پوشاک</p>
+              <div class="mt-4 inline-flex items-center gap-2 text-brand-600 font-bold">
+                مشاهده
+                <i class="fa-solid fa-arrow-left"></i>
+              </div>
+            </div>
+          </a>
+
+          <a href="#contact"
+            class="group glass rounded-3xl overflow-hidden hover:bg-slate-50 transition border border-slate-200">
+            <div class="h-48 flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+              <div class="text-center p-6">
+                <div class="h-16 w-16 rounded-2xl btn-grad flex items-center justify-center shadow-soft mx-auto">
+                  <i class="fa-solid fa-store text-white text-2xl"></i>
+                </div>
+                <h3 class="mt-4 font-extrabold text-lg text-slate-900">فروشگاه یا سایت شما</h3>
+                <p class="mt-2 text-slate-600 text-sm">پروژه بعدی ما می‌تواند شما باشید</p>
+                <div class="mt-4 inline-flex items-center gap-2 text-brand-600 font-bold">
+                  درخواست مشاوره
+                  <i class="fa-solid fa-arrow-left"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div class="glass rounded-3xl p-6 border border-slate-200">
+            <div class="h-48 flex items-center justify-center">
+              <div class="text-center">
+                <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft mx-auto mb-4">
+                  <i class="fa-solid fa-bolt text-white"></i>
+                </div>
+                <h3 class="font-extrabold text-lg text-slate-900">سرعت و کیفیت</h3>
+                <p class="mt-2 text-slate-600 leading-7 text-sm">
+                  تمرکز ما روی سئو، تجربه کاربری و نرخ تبدیل است—نه صرفاً طراحی ظاهری.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-40"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black text-slate-900">سوالات پرتکرار</h2>
+          <p class="mt-3 text-slate-700 leading-8">
+            اگر سوال دیگری دارید، مستقیم پیام بدهید.
+          </p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <details class="glass rounded-3xl p-6 border border-slate-200">
+            <summary class="cursor-pointer font-extrabold text-slate-900">پلن رایگان ندارید؟</summary>
+            <p class="mt-3 text-slate-600 leading-7">
+              خیر. تمرکز ما ارائه راهکار عملیاتی و حرفه‌ای از روز اول است؛ به همین دلیل پلن‌ها به‌صورت اشتراکی ارائه
+              می‌شوند.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6 border border-slate-200">
+            <summary class="cursor-pointer font-extrabold text-slate-900">پکیج شروع دقیقاً شامل چه چیزهایی است؟</summary>
+            <p class="mt-3 text-slate-600 leading-7">
+              راه‌اندازی و پیاده‌سازی + SSL + ویدیو آموزشی پنل + ۱ ماه پشتیبانی رایگان. موارد تکمیلی مثل نماد/درگاه/ترب
+              جداگانه قابل اضافه شدن است.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6 border border-slate-200">
+            <summary class="cursor-pointer font-extrabold text-slate-900">آیا برای سئو هم پکیج دارید؟</summary>
+            <p class="mt-3 text-slate-600 leading-7">
+              بله. پکیج‌های سئو و بهینه‌سازی ارائه می‌شود و بر اساس صنعت و هدف شما پیشنهاد می‌دهیم.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6 border border-slate-200">
+            <summary class="cursor-pointer font-extrabold text-slate-900">پرداخت اقساطی چطور انجام می‌شود؟</summary>
+            <p class="mt-3 text-slate-600 leading-7">
+              پرداخت اقساطی ۴ قسطه است (قسط اول نقدی) و با ارسال چک صیادی بنفش انجام می‌شود. شرایط نهایی بعد از بررسی
+              پروژه اعلام می‌شود.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 md:py-20 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900">آماده‌ایم کسب‌وکار شما را توسعه بدهیم</h2>
+            <p class="mt-3 text-slate-600 leading-8">
+              سریع‌ترین راه تماس، پیام در تلگرام است. اگر ترجیح می‌دهید تماس بگیریم، فرم روبرو را پر کنید.
+            </p>
+
+            <div class="mt-8 grid sm:grid-cols-2 gap-4">
+              <a href="https://t.me/tokan_app" target="_blank" rel="noreferrer"
+                class="glass rounded-3xl p-5 hover:bg-slate-50 transition border border-slate-200">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-brands fa-telegram text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-slate-900">تلگرام</div>
+                    <div class="text-sm text-slate-600">t.me/tokan_app</div>
+                  </div>
+                </div>
+              </a>
+
+              <a href="#contact" class="glass rounded-3xl p-5 hover:bg-slate-50 transition border border-slate-200">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-solid fa-envelope text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-slate-900">فرم درخواست</div>
+                    <div class="text-sm text-slate-600">ثبت درخواست مشاوره و تماس</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-black text-slate-900">فرم درخواست</h3>
+              <span id="leadStatus" class="text-xs text-slate-600"></span>
+            </div>
+            <form id="leadForm" class="mt-6 space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-slate-700">نام و نام خانوادگی</label>
+                  <input id="leadName" class="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900"
+                    placeholder="مثلاً محمد رضایی" />
+                </div>
+                <div>
+                  <label class="text-sm text-slate-700">شماره تماس</label>
+                  <input id="leadPhone" dir="ltr"
+                    class="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900"
+                    placeholder="09xxxxxxxxx" />
+                </div>
+              </div>
+              <div>
+                <label class="text-sm text-slate-700">نوع کسب‌وکار</label>
+                <select id="leadType"
+                  class="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900">
+                  <option value="محصول فیزیکی">محصول فیزیکی</option>
+                  <option value="محصول دیجیتال">محصول دیجیتال</option>
+                  <option value="خدمات">خدمات (رزرو/ثبت‌نام/پیش‌خرید)</option>
+                  <option value="سایر">سایر</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm text-slate-700">توضیحات</label>
+                <textarea id="leadMessage" rows="4"
+                  class="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900"
+                  placeholder="کمی درباره نیاز و هدف‌تان بنویسید..."></textarea>
+              </div>
+
+              <button type="submit" class="w-full px-6 py-3 rounded-2xl btn-grad font-extrabold text-white shadow-soft">
+                ارسال درخواست (تلگرام)
+                <i class="fa-solid fa-paper-plane mr-2"></i>
+              </button>
+
+              <p class="text-xs text-slate-500 leading-6">
+                این فرم پیام را برای شما آماده می‌کند و به اشتراک‌گذاری تلگرام می‌برد. (بدون ارسال مستقیم به سرور)
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl overflow-hidden glass flex items-center justify-center border border-slate-200">
+            <img src="logo.jpg" alt="لوگوی توکان" class="h-9 w-9 object-contain" />
+          </div>
+          <div>
+            <div class="font-extrabold text-slate-900">توکان</div>
+            <div class="text-sm text-slate-500">توسعه کسب‌وکار دیجیتال</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="https://t.me/tokan_app" target="_blank" rel="noreferrer"
+            class="h-10 w-10 rounded-xl glass hover:bg-slate-100 transition flex items-center justify-center text-slate-700 border border-slate-200"
+            aria-label="تلگرام">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+          <a href="#top"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-slate-100 transition text-sm font-bold text-slate-700 border border-slate-200">
+            برگشت به بالا
+            <i class="fa-solid fa-arrow-up"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center text-sm text-slate-500">
+        © <span id="currentYear"></span> توکان — تمامی حقوق محفوظ است.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    mobileMenuBtn?.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Close mobile menu on navigation
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+    });
+
+    // Year
+    document.getElementById("currentYear").textContent = new Date().getFullYear().toString();
+
+    // Lead form → Telegram share
+    const leadForm = document.getElementById("leadForm");
+    const leadStatus = document.getElementById("leadStatus");
+
+    function validatePhone(phone) {
+      return /^(\+98|0)?9\d{9}$/.test((phone || "").trim());
+    }
+
+    leadForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("leadName").value.trim();
+      const phone = document.getElementById("leadPhone").value.trim();
+      const type = document.getElementById("leadType").value;
+      const msg = document.getElementById("leadMessage").value.trim();
+
+      if (!name || !phone || !validatePhone(phone)) {
+        leadStatus.textContent = "لطفاً نام و شماره تماس معتبر وارد کنید.";
+        return;
+      }
+
+      const text = [
+        "درخواست همکاری با توکان",
+        `نام: ${name}`,
+        `شماره تماس: ${phone}`,
+        `نوع کسب‌وکار: ${type}`,
+        msg ? `توضیحات: ${msg}` : null,
+        "",
+        "ارسال شده از لندینگ tokan.app"
+      ].filter(Boolean).join("\n");
+
+      const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent("https://tokan.app") + "&text=" + encodeURIComponent(text);
+
+      leadStatus.textContent = "در حال باز کردن تلگرام...";
+
+      try {
+        window.open(shareUrl, "_blank", "noopener,noreferrer");
+        leadStatus.textContent = "باز شد. اگر باز نشد، متن کپی می‌شود...";
+        await navigator.clipboard.writeText(text);
+        setTimeout(() => { leadStatus.textContent = "متن درخواست کپی شد."; }, 600);
+      } catch (err) {
+        leadStatus.textContent = "مشکل در اشتراک‌گذاری/کپی. لطفاً دستی پیام دهید.";
+      }
+    });
+  </script>
+</body>
+
+</html>

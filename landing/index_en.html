@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B1220" />
+  <meta name="description"
+    content="توکان؛ توسعه کسب‌وکار شما در کنار طراحی سایت و فروشگاه، سئو و رشد با بهره‌گیری از هوش مصنوعی." />
+  <meta property="og:title" content="توکان | توسعه کسب‌وکار دیجیتال" />
+  <meta property="og:description"
+    content="طراحی سایت و فروشگاه، سئو و رشد کسب‌وکار با کمک هوش مصنوعی. پلن‌های اشتراکی شفاف و پکیج‌های تکمیلی." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fa_IR" />
+  <title>توکان | توسعه کسب‌وکار دیجیتال (طراحی سایت، سئو و رشد با AI)</title>
+
+  <!-- Tailwind (local) + Icons (local) -->
+  <script src="/tokan-shop-builder/landing/assets/3.4.17"></script>
+  <link rel="stylesheet" href="/tokan-shop-builder/landing/assets/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#eef7ff",
+              100: "#d9efff",
+              200: "#b9e2ff",
+              300: "#86d1ff",
+              400: "#46b8ff",
+              500: "#1698ff",
+              600: "#0a7df4",
+              700: "#0963c8",
+              800: "#0b4f9a",
+              900: "#0b3f7a",
+              950: "#071f3d"
+            }
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(10, 125, 244, 0.18)",
+            glass: "0 10px 30px rgba(2, 6, 23, 0.22)"
+          },
+          keyframes: {
+            floaty: {
+              "0%,100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-10px)" }
+            },
+            shimmer: {
+              "0%": { backgroundPosition: "0% 50%" },
+              "50%": { backgroundPosition: "100% 50%" },
+              "100%": { backgroundPosition: "0% 50%" }
+            }
+          },
+          animation: {
+            floaty: "floaty 7s ease-in-out infinite",
+            shimmer: "shimmer 10s ease infinite"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap");
+
+    :root {
+      --bg: #0b1220;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --txt: #eaf3ff;
+      --muted: rgba(234, 243, 255, 0.78);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Vazirmatn", "Noto Sans", "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--txt);
+      overflow-x: hidden;
+    }
+    
+    html[lang="zh"] body {
+      font-family: "Noto Sans SC", "Vazirmatn", sans-serif;
+    }
+    
+    html[lang="ru"] body {
+      font-family: "Noto Sans", "Vazirmatn", sans-serif;
+    }
+
+    /* Subtle gradient background */
+    .hero-surface {
+      background:
+        radial-gradient(800px 500px at 20% 25%, rgba(22, 152, 255, 0.55), transparent 60%),
+        radial-gradient(700px 480px at 80% 35%, rgba(70, 184, 255, 0.35), transparent 62%),
+        radial-gradient(600px 450px at 40% 85%, rgba(9, 99, 200, 0.35), transparent 55%),
+        linear-gradient(135deg, #0b1220 0%, #071b3d 50%, #0b1220 100%);
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .glow-ring {
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(circle at 30% 30%, rgba(22, 152, 255, 0.20), transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(70, 184, 255, 0.16), transparent 52%);
+      filter: blur(30px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .grid-dots {
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 1), transparent 70%);
+    }
+
+    .focus-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(22, 152, 255, 0.22);
+    }
+
+    .btn-grad {
+      background: linear-gradient(135deg, #1698ff 0%, #0a7df4 45%, #46b8ff 100%);
+      background-size: 220% 220%;
+      animation: shimmer 10s ease infinite;
+    }
+
+    .link-underline {
+      position: relative;
+    }
+
+    .link-underline::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -8px;
+      width: 0;
+      height: 2px;
+      background: rgba(70, 184, 255, 0.9);
+      transition: width 220ms ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top nav -->
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-[#0b1220]/70 backdrop-blur-lg">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between py-4">
+        <a href="#top" class="flex items-center gap-3">
+          <!-- IMPORTANT: put your new logo next to index.html as `logo.jpg` -->
+          <div class="h-10 w-10 rounded-2xl overflow-hidden glass flex items-center justify-center">
+            <img src="logo.jpg" alt="لوگوی توکان" class="h-12 w-12 object-contain" />
+          </div>
+          <div class="leading-tight">
+            <div class="text-lg md:text-xl font-extrabold tracking-tight">
+              Tokan
+            </div>
+            <div class="text-xs text-white/60 -mt-0.5">
+              Digital Business Development
+            </div>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-7 text-sm text-white/80">
+          <a class="hover:text-white transition link-underline" href="#services" data-i18n="nav.services">Services</a>
+          <a class="hover:text-white transition link-underline" href="#ai" data-i18n="nav.ai">AI Growth</a>
+          <a class="hover:text-white transition link-underline" href="#process" data-i18n="nav.process">Process</a>
+          <a class="hover:text-white transition link-underline" href="#pricing" data-i18n="nav.pricing">Pricing</a>
+          <a class="hover:text-white transition link-underline" href="#showcase" data-i18n="nav.showcase">Portfolio</a>
+          <a class="hover:text-white transition link-underline" href="#faq" data-i18n="nav.faq">FAQ</a>
+          <a class="hover:text-white transition link-underline" href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href="#contact"
+            class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white glass hover:bg-white/10 transition">
+            <i class="fa-solid fa-comment-dots"></i>
+            Request Consultation
+          </a>
+          <button id="mobileMenuBtn"
+            class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl glass hover:bg-white/10 transition"
+            aria-label="Open/Close Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="hidden lg:hidden pb-4">
+        <div class="glass rounded-2xl p-4">
+          <div class="grid grid-cols-2 gap-3 text-sm text-white/85">
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#services" data-i18n="nav.services">Services</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#ai" data-i18n="nav.ai">AI Growth</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#process" data-i18n="nav.process">Process</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#pricing" data-i18n="nav.pricing">Pricing</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#showcase" data-i18n="nav.showcase">Portfolio</a>
+            <a class="py-2 px-3 rounded-xl hover:bg-white/10 transition" href="#faq" data-i18n="nav.faq">FAQ</a>
+            <a class="col-span-2 mt-1 py-3 px-3 rounded-xl btn-grad text-center font-bold" href="#contact" data-i18n="nav.consult">
+              Request Consultation
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top">
+    <section class="hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-70"></div>
+      <div class="glow-ring"></div>
+
+      <div class="max-w-7xl mx-auto px-4 py-14 md:py-20 relative">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-white/85">
+              <span class="h-2 w-2 rounded-full bg-brand-400 shadow-[0_0_18px_rgba(70,184,255,0.75)]"></span>
+              <span data-i18n="hero.focus">Our Focus: Sustainable business growth with design, SEO and AI</span>
+            </div>
+
+            <h1 class="mt-5 text-3xl md:text-5xl font-black leading-[1.3]">
+              <span data-i18n="hero.title">Tokan; Your</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-l from-brand-300 via-brand-400 to-brand-600" data-i18n="hero.titleHighlight">Business Development</span>
+              <span data-i18n="hero.titleEnd">Partner in the Digital World</span>
+            </h1>
+
+            <p class="mt-5 text-base md:text-lg text-white/80 leading-8 max-w-xl" data-i18n="hero.description">
+              From website and store design to SEO, content creation and conversion optimization—we advance everything with a cohesive, data-driven team. Alongside that, we use artificial intelligence for faster decisions and smarter growth.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+              <a href="#pricing"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad text-sm md:text-base font-extrabold shadow-soft">
+                <span data-i18n="hero.viewPricing">View Pricing</span>
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+              <a href="#contact"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl glass hover:bg-white/10 transition text-sm md:text-base font-bold">
+                <span data-i18n="hero.requestConsult">Submit Request / Consultation</span>
+                <i class="fa-solid fa-sparkles"></i>
+              </a>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-2 text-sm text-white/70">
+              <span class="px-3 py-2 rounded-xl glass"><i class="fa-solid fa-lock ml-2 text-brand-300"></i> <span data-i18n="hero.ssl">SSL & Security</span></span>
+              <span class="px-3 py-2 rounded-xl glass"><i class="fa-solid fa-chart-line ml-2 text-brand-300"></i> <span data-i18n="hero.seo">SEO & Growth</span></span>
+              <span class="px-3 py-2 rounded-xl glass"><i class="fa-solid fa-wand-magic-sparkles ml-2 text-brand-300"></i> <span data-i18n="hero.aiAuto">AI Automation</span></span>
+              <span class="px-3 py-2 rounded-xl glass"><i class="fa-solid fa-headset ml-2 text-brand-300"></i> <span data-i18n="hero.support">Support & Training</span></span>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-6 rounded-[2.2rem] blur-2xl opacity-60"
+              style="background: radial-gradient(circle at 30% 30%, rgba(22,152,255,0.38), transparent 55%), radial-gradient(circle at 75% 65%, rgba(70,184,255,0.28), transparent 55%);">
+            </div>
+
+            <div class="relative glass rounded-[2.2rem] p-6 md:p-8 shadow-glass">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-solid fa-rocket text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold" data-i18n="growth.title">Tokan Growth Roadmap</div>
+                    <div class="text-sm text-white/65" data-i18n="growth.subtitle">From design to sales and leads</div>
+                  </div>
+                </div>
+                <span class="text-xs px-3 py-1.5 rounded-full glass text-white/70">
+                  2025-2026
+                </span>
+              </div>
+
+              <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-sm text-white/70 mb-2" data-i18n="growth.stage1">Stage 1</div>
+                  <div class="font-bold" data-i18n="growth.stage1Title">Website/Store Design</div>
+                  <div class="text-sm text-white/70 mt-1" data-i18n="growth.stage1Desc">UI/UX, implementation and launch</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-sm text-white/70 mb-2" data-i18n="growth.stage2">Stage 2</div>
+                  <div class="font-bold" data-i18n="growth.stage2Title">SEO & Content</div>
+                  <div class="text-sm text-white/70 mt-1" data-i18n="growth.stage2Desc">Structure optimization + content creation</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-sm text-white/70 mb-2" data-i18n="growth.stage3">Stage 3</div>
+                  <div class="font-bold" data-i18n="growth.stage3Title">AI-Powered Growth</div>
+                  <div class="text-sm text-white/70 mt-1" data-i18n="growth.stage3Desc">Analysis, recommendations, automation</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-sm text-white/70 mb-2" data-i18n="growth.stage4">Stage 4</div>
+                  <div class="font-bold" data-i18n="growth.stage4Title">Measurement & Improvement</div>
+                  <div class="text-sm text-white/70 mt-1" data-i18n="growth.stage4Desc">KPI, CRO and continuous optimization</div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <span class="h-8 w-8 rounded-full bg-white/10 border border-white/15 inline-flex"></span>
+                  <span class="h-8 w-8 rounded-full bg-white/10 border border-white/15 inline-flex"></span>
+                  <span class="h-8 w-8 rounded-full bg-white/10 border border-white/15 inline-flex"></span>
+                </div>
+                <div class="text-sm text-white/75" data-i18n="growth.suitable">Suitable for physical, digital and service businesses</div>
+              </div>
+            </div>
+
+            <div class="absolute -bottom-6 -right-3 glass rounded-2xl px-4 py-3 animate-floaty hidden md:flex">
+              <i class="fa-solid fa-bolt text-brand-300 ml-2"></i>
+              <span class="text-sm text-white/80" data-i18n="growth.quickStart">Quick Start, Real Growth</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-16 md:py-20 bg-[#070d19]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black" data-i18n="services.title">Tokan Services for Business Development</h2>
+            <p class="mt-3 text-white/70 leading-8 max-w-2xl" data-i18n="services.subtitle">
+              We don't just deliver a 'website'; we build a growth path. From strategy to execution and optimization.
+            </p>
+          </div>
+          <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl glass hover:bg-white/10 transition font-bold">
+            <span data-i18n="services.getProposal">Get Custom Proposal</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-palette text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.uiux">UI/UX & Website Design</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.uiuxDesc">
+              Professional design, smooth user experience, mobile-friendly and ready for growth and SEO.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-bag-shopping text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.store">Online Store Design</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.storeDesc">
+              Suitable for physical and digital products and even services (booking/pre-order/registration).
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-magnifying-glass-chart text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.seo">SEO & Optimization</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.seoDesc">
+              Technical SEO structure, content, internal linking and reporting—aimed at sustainable growth.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-wand-magic-sparkles text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.ai">AI-Powered Growth</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.aiDesc">
+              Smart recommendations, user behavior analysis, content assistant and task automation.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-plug-circle-bolt text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.infra">Connections & Infrastructure</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.infraDesc">
+              SSL, domain, SMS panel, payment gateway, trust badge, Torob connection and growth tools.
+            </p>
+          </div>
+
+          <div class="glass rounded-3xl p-6 hover:bg-white/10 transition">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-headset text-white"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold" data-i18n="services.support">Support & Training</h3>
+            <p class="mt-2 text-white/70 leading-7" data-i18n="services.supportDesc">
+              Panel training videos, support and guidance so your team reaches results faster.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Growth -->
+    <section id="ai" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-60"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-white/85">
+              <i class="fa-solid fa-brain text-brand-300"></i>
+              <span data-i18n="aiSection.badge">Growth with AI</span>
+            </div>
+            <h2 class="mt-5 text-2xl md:text-4xl font-black leading-[1.35]">
+              <span data-i18n="aiSection.title">AI in Tokan means</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-l from-brand-300 via-brand-400 to-brand-600" data-i18n="aiSection.titleHighlight">
+                Faster Decisions + More Precise Execution
+              </span>
+            </h2>
+            <p class="mt-4 text-white/75 leading-8" data-i18n="aiSection.description">
+              We use AI as a 'speed and quality tool'; not a slogan. The result is that campaigns and content are prepared faster, data is analyzed better and the growth path becomes clearer.
+            </p>
+
+            <div class="mt-8 grid sm:grid-cols-2 gap-4">
+              <div class="glass rounded-2xl p-4">
+                <div class="font-extrabold"><i class="fa-solid fa-chart-simple ml-2 text-brand-300"></i> <span data-i18n="aiSection.analysis">Analysis & Reporting</span></div>
+                <div class="text-sm text-white/70 mt-1" data-i18n="aiSection.analysisDesc">Better insight into KPIs and user behavior</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="font-extrabold"><i class="fa-solid fa-pen-nib ml-2 text-brand-300"></i> <span data-i18n="aiSection.content">Content Assistant</span></div>
+                <div class="text-sm text-white/70 mt-1" data-i18n="aiSection.contentDesc">Ideas, structure and faster content creation</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="font-extrabold"><i class="fa-solid fa-user-check ml-2 text-brand-300"></i> <span data-i18n="aiSection.conversion">Conversion Rate Improvement</span></div>
+                <div class="text-sm text-white/70 mt-1" data-i18n="aiSection.conversionDesc">Data-driven page optimization</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="font-extrabold"><i class="fa-solid fa-gear ml-2 text-brand-300"></i> <span data-i18n="aiSection.automation">Task Automation</span></div>
+                <div class="text-sm text-white/70 mt-1" data-i18n="aiSection.automationDesc">Less repetitive work, more focus on growth</div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <a href="#contact"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold shadow-soft">
+                <span data-i18n="aiSection.startGrowth">Start Growing with Tokan</span>
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-6 rounded-[2.2rem] blur-2xl opacity-60"
+              style="background: radial-gradient(circle at 30% 30%, rgba(22,152,255,0.38), transparent 55%), radial-gradient(circle at 75% 65%, rgba(70,184,255,0.28), transparent 55%);">
+            </div>
+
+            <div class="relative glass rounded-[2.2rem] p-6 md:p-8">
+              <div class="flex items-center justify-between">
+                <div class="font-extrabold" data-i18n="aiSection.sampleOutputs">Sample Outputs (Symbolic)</div>
+                <span class="text-xs px-3 py-1.5 rounded-full glass text-white/70">CRO • SEO • AI</span>
+              </div>
+              <div class="mt-6 grid gap-4">
+                <div class="glass rounded-2xl p-4">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/85 font-bold" data-i18n="aiSection.techSeo">Technical SEO Checklist</span>
+                    <span class="text-xs text-white/60" data-i18n="aiSection.weekly">Weekly</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div class="h-full w-[78%] btn-grad"></div>
+                  </div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/85 font-bold" data-i18n="aiSection.shoppingExp">Shopping Experience Improvement</span>
+                    <span class="text-xs text-white/60" data-i18n="aiSection.monthly">Monthly</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div class="h-full w-[64%] btn-grad"></div>
+                  </div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/85 font-bold" data-i18n="aiSection.growthReport">Growth & Lead Report</span>
+                    <span class="text-xs text-white/60" data-i18n="aiSection.quarterly">Quarterly</span>
+                  </div>
+                  <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div class="h-full w-[82%] btn-grad"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-sm text-white/65 leading-7" data-i18n="aiSection.note">
+                This section is only for displaying output models; the exact plan is adjusted based on your industry and goals.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="py-16 md:py-20 bg-[#070d19]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black" data-i18n="process.title">Collaboration Process with Tokan</h2>
+          <p class="mt-3 text-white/70 leading-8" data-i18n="process.subtitle">
+            Transparent, step-by-step and trackable—so the project is both 'well executed' and 'achieves results'.
+          </p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-4 gap-6">
+          <div class="glass rounded-3xl p-6">
+            <div class="text-sm text-white/60" data-i18n="process.stage1">Stage 1</div>
+            <div class="mt-2 font-extrabold" data-i18n="process.stage1Title">Needs Assessment & Strategy</div>
+            <div class="mt-2 text-white/70 text-sm leading-7" data-i18n="process.stage1Desc">Goals, audience persona and growth KPIs</div>
+          </div>
+          <div class="glass rounded-3xl p-6">
+            <div class="text-sm text-white/60" data-i18n="process.stage2">Stage 2</div>
+            <div class="mt-2 font-extrabold" data-i18n="process.stage2Title">Design & Implementation</div>
+            <div class="mt-2 text-white/70 text-sm leading-7" data-i18n="process.stage2Desc">UI/UX, development, testing and launch</div>
+          </div>
+          <div class="glass rounded-3xl p-6">
+            <div class="text-sm text-white/60" data-i18n="process.stage3">Stage 3</div>
+            <div class="mt-2 font-extrabold" data-i18n="process.stage3Title">SEO & Content</div>
+            <div class="mt-2 text-white/70 text-sm leading-7" data-i18n="process.stage3Desc">Technical optimization, content and page structure</div>
+          </div>
+          <div class="glass rounded-3xl p-6">
+            <div class="text-sm text-white/60" data-i18n="process.stage4">Stage 4</div>
+            <div class="mt-2 font-extrabold" data-i18n="process.stage4Title">Growth & Optimization</div>
+            <div class="mt-2 text-white/70 text-sm leading-7" data-i18n="process.stage4Desc">Data analysis, AI, CRO and continuous improvement</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-60"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black">تعرفه‌ها و پکیج‌ها</h2>
+          <p class="mt-3 text-white/75 leading-8">
+            پلن رایگان نداریم؛ از همان ابتدا ساختار «حرفه‌ای و عملیاتی» را تحویل می‌گیرید.
+          </p>
+        </div>
+
+        <!-- Setup package -->
+        <div class="mt-10 glass rounded-[2.2rem] p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-sm text-white/85">
+                <i class="fa-solid fa-flag-checkered text-brand-300"></i>
+                پکیج شروع (راه‌اندازی)
+              </div>
+              <h3 class="mt-4 text-xl md:text-2xl font-extrabold">راه‌اندازی و پیاده‌سازی فروشگاه/سایت</h3>
+              <p class="mt-2 text-white/70 leading-7">
+                شامل راه‌اندازی و پیاده‌سازی + اخذ گواهی SSL + ویدیو آموزش نحوه کار با پنل + ۱ ماه پشتیبانی رایگان
+              </p>
+            </div>
+            <div class="text-center md:text-left">
+              <div class="text-sm text-white/70">هزینه شروع از</div>
+              <div class="mt-1 text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-l from-brand-300 via-brand-400 to-brand-600">
+19.99 $              </div>
+              <a href="#contact" class="mt-4 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold shadow-soft">
+                ثبت درخواست راه‌اندازی
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription plans -->
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="glass rounded-[2.2rem] p-6 md:p-8">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-white/70">پلن اشتراک</div>
+                <div class="mt-1 text-2xl font-black">عادی</div>
+              </div>
+              <span class="text-xs px-3 py-1.5 rounded-full glass text-white/70">برای کسب‌وکارهای در حال رشد</span>
+            </div>
+            <div class="mt-6 grid gap-3">
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">۳ ماهه</span>
+                <span class="font-extrabold text-brand-200">9.99 $</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">۶ ماهه</span>
+                <span class="font-extrabold text-brand-200">59.99 $</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">یک‌ساله</span>
+                <span class="font-extrabold text-brand-200">99.99 $</span>
+              </div>
+            </div>
+            <div class="mt-6 text-sm text-white/70 leading-7">
+              مناسب برای شروع حرفه‌ای و مدیریت فروشگاه/سایت با هزینه منطقی.
+            </div>
+          </div>
+
+          <div class="glass rounded-[2.2rem] p-6 md:p-8 border border-brand-400/40 shadow-soft">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-white/70">پلن اشتراک</div>
+                <div class="mt-1 text-2xl font-black">طلایی</div>
+              </div>
+              <span class="text-xs px-3 py-1.5 rounded-full btn-grad text-white font-bold">پیشنهادی</span>
+            </div>
+            <div class="mt-6 grid gap-3">
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">۳ ماهه</span>
+                <span class="font-extrabold text-brand-200">49.99 $</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">۶ ماهه</span>
+                <span class="font-extrabold text-brand-200">299.99 $</span>
+              </div>
+              <div class="flex items-center justify-between glass rounded-2xl p-4">
+                <span class="font-bold">یک‌ساله</span>
+                <span class="font-extrabold text-brand-200">449.99 $</span>
+              </div>
+            </div>
+            <div class="mt-6 text-sm text-white/70 leading-7">
+              امکانات بیشتر + پشتیبانی ویژه—برای تیم‌هایی که می‌خواهند سریع‌تر رشد کنند.
+            </div>
+          </div>
+        </div>
+
+        <!-- Add-ons -->
+        <div class="mt-10 grid lg:grid-cols-3 gap-6">
+          <div class="glass rounded-3xl p-6 lg:col-span-2">
+            <h3 class="text-xl font-black">خدمات تکمیلی</h3>
+            <p class="mt-2 text-white/70 leading-7">
+              این موارد در صورت نیاز به صورت جداگانه به پروژه اضافه می‌شوند.
+            </p>
+
+            <div class="mt-5 grid sm:grid-cols-2 gap-4">
+              <div class="glass rounded-2xl p-4">
+                <div class="font-bold"><i class="fa-solid fa-boxes-stacked ml-2 text-brand-300"></i> ورود محصولات</div>
+                <div class="text-sm text-white/70 mt-1">اینستاگرام/تلگرام/دیجی‌کالا/باسلام/ووکامرس/...</div>
+                <div class="mt-2 font-extrabold text-brand-200">۹۹۰,۰۰۰ تومان (هر ۱۰۰ محصول)</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="font-bold"><i class="fa-solid fa-badge-check ml-2 text-brand-300"></i> نماد + درگاه + ترب</div>
+                <div class="text-sm text-white/70 mt-1">اخذ نماد اعتماد، درگاه پرداخت، اتصال ترب و پنل پیامکی</div>
+                <div class="mt-2 font-extrabold text-brand-200">۱,۹۹۰,۰۰۰ تومان</div>
+              </div>
+              <div class="glass rounded-2xl p-4 sm:col-span-2">
+                <div class="font-bold"><i class="fa-solid fa-swatchbook ml-2 text-brand-300"></i> طراحی اختصاصی</div>
+                <div class="text-sm text-white/70 mt-1">طراحی کاملاً اختصاصی مطابق برند و نیازهای کسب‌وکار</div>
+                <div class="mt-2 font-extrabold text-brand-200">از ۲۴,۰۰۰,۰۰۰ تومان</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-xl font-black">شرایط پرداخت</h3>
+            <ul class="mt-4 space-y-3 text-white/75 leading-7 text-sm">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-300 mt-0.5"></i>
+                <span>پرداخت نقدی: <b>۱۰٪ تخفیف</b></span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-300 mt-0.5"></i>
+                <span>پرداخت اقساطی: <b>۴ قسط</b> (قسط اول نقدی) با ارسال چک صیادی بنفش</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-circle-check text-brand-300 mt-0.5"></i>
+                <span>می‌توانید بخشی از مبلغ را از موجودی کیف پول (در صورت وجود) پرداخت کنید.</span>
+              </li>
+            </ul>
+            <a href="#contact" class="mt-6 inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-2xl btn-grad font-extrabold shadow-soft">
+              دریافت مشاوره پرداخت
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase -->
+    <section id="showcase" class="py-16 md:py-20 bg-[#070d19]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black">نمونه‌کار</h2>
+            <p class="mt-3 text-white/70 leading-8 max-w-2xl">
+              چند نمونه از سایت/فروشگاه‌هایی که روی بستر توکان اجرا شده‌اند (نمونه‌ها قابل توسعه هستند).
+            </p>
+          </div>
+          <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl glass hover:bg-white/10 transition font-bold">
+            درخواست مشاهده نمونه‌های بیشتر
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <a href="https://ropomoda.tokan.app" target="_blank" rel="noreferrer"
+            class="group glass rounded-3xl overflow-hidden hover:bg-white/10 transition">
+            <div class="h-48 overflow-hidden bg-white/5">
+              <img
+                src="https://s3-public.ropomoda.com/files/2025/7/4/125e0e27-1107-4a6f-9493-843b1c2beca2..jpg"
+                alt="روپومدا" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-lg">فروشگاه روپومدا</h3>
+                <i class="fa-solid fa-arrow-up-right-from-square text-white/60"></i>
+              </div>
+              <p class="mt-2 text-white/70">فروشگاه تخصصی پوشاک</p>
+              <div class="mt-4 inline-flex items-center gap-2 text-brand-200 font-bold">
+                مشاهده
+                <i class="fa-solid fa-arrow-left"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- Placeholder cards to keep layout beautiful (can be replaced with real projects) -->
+          <div class="glass rounded-3xl p-6">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-seedling text-white"></i>
+            </div>
+            <h3 class="mt-4 font-extrabold text-lg">پروژه بعدی شما</h3>
+            <p class="mt-2 text-white/70 leading-7">
+              اگر نمونه‌های بیشتری دارید، لینک و تصویرش را بدهید تا این بخش را با کیس‌استادی واقعی تکمیل کنیم.
+            </p>
+            <a href="#contact" class="mt-4 inline-flex items-center gap-2 text-brand-200 font-bold">
+              ارسال نمونه
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+          </div>
+
+          <div class="glass rounded-3xl p-6">
+            <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+              <i class="fa-solid fa-chart-column text-white"></i>
+            </div>
+            <h3 class="mt-4 font-extrabold text-lg">تمرکز روی نتیجه</h3>
+            <p class="mt-2 text-white/70 leading-7">
+              طراحی زیبا کافی نیست؛ ما روی سرعت، سئو، تجربه کاربری و تبدیل تمرکز می‌کنیم.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 md:py-20 hero-surface relative overflow-hidden">
+      <div class="grid-dots absolute inset-0 opacity-60"></div>
+      <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="text-center max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-4xl font-black">سوالات پرتکرار</h2>
+          <p class="mt-3 text-white/75 leading-8">
+            اگر سوال دیگری دارید، مستقیم پیام بدهید.
+          </p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <details class="glass rounded-3xl p-6">
+            <summary class="cursor-pointer font-extrabold text-white/90">پلن رایگان ندارید؟</summary>
+            <p class="mt-3 text-white/70 leading-7">
+              خیر. تمرکز ما ارائه راهکار عملیاتی و حرفه‌ای از روز اول است؛ به همین دلیل پلن‌ها به‌صورت اشتراکی ارائه
+              می‌شوند.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6">
+            <summary class="cursor-pointer font-extrabold text-white/90">پکیج شروع دقیقاً شامل چه چیزهایی است؟</summary>
+            <p class="mt-3 text-white/70 leading-7">
+              راه‌اندازی و پیاده‌سازی + SSL + ویدیو آموزشی پنل + ۱ ماه پشتیبانی رایگان. موارد تکمیلی مثل نماد/درگاه/ترب
+              جداگانه قابل اضافه شدن است.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6">
+            <summary class="cursor-pointer font-extrabold text-white/90">آیا برای سئو هم پکیج دارید؟</summary>
+            <p class="mt-3 text-white/70 leading-7">
+              بله. پکیج‌های سئو و بهینه‌سازی ارائه می‌شود و بر اساس صنعت و هدف شما پیشنهاد می‌دهیم.
+            </p>
+          </details>
+          <details class="glass rounded-3xl p-6">
+            <summary class="cursor-pointer font-extrabold text-white/90">پرداخت اقساطی چطور انجام می‌شود؟</summary>
+            <p class="mt-3 text-white/70 leading-7">
+              پرداخت اقساطی ۴ قسطه است (قسط اول نقدی) و با ارسال چک صیادی بنفش انجام می‌شود. شرایط نهایی بعد از بررسی
+              پروژه اعلام می‌شود.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 md:py-20 bg-[#070d19]">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="text-2xl md:text-4xl font-black" data-i18n="contact.title">We're Ready to Develop Your Business</h2>
+            <p class="mt-3 text-white/70 leading-8" data-i18n="contact.subtitle">
+              The fastest way to contact is via Telegram. If you prefer us to call, fill out the form on the right.
+            </p>
+
+            <div class="mt-8 grid sm:grid-cols-2 gap-4">
+              <a href="https://t.me/tokan_app" target="_blank" rel="noreferrer"
+                class="glass rounded-3xl p-5 hover:bg-white/10 transition">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-brands fa-telegram text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold" data-i18n="contact.telegram">Telegram</div>
+                    <div class="text-sm text-white/70">t.me/tokan_app</div>
+                  </div>
+                </div>
+              </a>
+
+              <a href="tel:+989000000000" class="glass rounded-3xl p-5 hover:bg-white/10 transition">
+                <div class="flex items-center gap-3">
+                  <div class="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center shadow-soft">
+                    <i class="fa-solid fa-phone text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-extrabold" data-i18n="contact.call">Call</div>
+                    <div class="text-sm text-white/70" data-i18n="contact.phoneNote">Please set the number</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="mt-8 glass rounded-3xl p-6">
+              <h3 class="font-extrabold text-lg" data-i18n="contact.logoNote">Important Note About Logo</h3>
+              <p class="mt-2 text-white/70 leading-7 text-sm" data-i18n="contact.logoNoteDesc">
+                In this design, the logo loads from the path logo.jpg. Please place your new logo with this name in the path tokan-shop-builder/landing/ so it displays correctly in deployment as well.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass rounded-[2.2rem] p-6 md:p-8">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-black" data-i18n="contact.formTitle">Request Form</h3>
+              <span id="leadStatus" class="text-xs text-white/70"></span>
+            </div>
+            <form id="leadForm" class="mt-6 space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-sm text-white/75" data-i18n="contact.fullName">Full Name</label>
+                  <input id="leadName" class="mt-2 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus-ring"
+                    data-i18n="contact.fullNamePlaceholder" placeholder="e.g. John Doe" />
+                </div>
+                <div>
+                  <label class="text-sm text-white/75" data-i18n="contact.phone">Phone Number</label>
+                  <input id="leadPhone" dir="ltr"
+                    class="mt-2 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus-ring"
+                    data-i18n="contact.phonePlaceholder" placeholder="09xxxxxxxxx" />
+                </div>
+              </div>
+              <div>
+                <label class="text-sm text-white/75" data-i18n="contact.businessType">Business Type</label>
+                <select id="leadType"
+                  class="mt-2 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus-ring">
+                  <option value="physical" data-i18n="contact.physical">Physical Product</option>
+                  <option value="digital" data-i18n="contact.digital">Digital Product</option>
+                  <option value="services" data-i18n="contact.services">Services (Booking/Registration/Pre-order)</option>
+                  <option value="other" data-i18n="contact.other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-sm text-white/75" data-i18n="contact.description">Description</label>
+                <textarea id="leadMessage" rows="4"
+                  class="mt-2 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 focus-ring"
+                  data-i18n="contact.descriptionPlaceholder" placeholder="Write a bit about your needs and goals..."></textarea>
+              </div>
+
+              <button type="submit" class="w-full px-6 py-3 rounded-2xl btn-grad font-extrabold shadow-soft">
+                <span data-i18n="contact.submit">Submit Request (Telegram)</span>
+                <i class="fa-solid fa-paper-plane mr-2"></i>
+              </button>
+
+              <p class="text-xs text-white/60 leading-6" data-i18n="contact.formNote">
+                This form prepares the message for you and takes you to Telegram sharing. (No direct server submission)
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 bg-[#0b1220]">
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl overflow-hidden glass flex items-center justify-center">
+            <img src="logo.jpg" alt="لوگوی توکان" class="h-9 w-9 object-contain" />
+          </div>
+          <div>
+            <div class="font-extrabold">Tokan</div>
+            <div class="text-sm text-white/60" data-i18n="footer.tagline">Digital Business Development</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="https://t.me/tokan_app" target="_blank" rel="noreferrer"
+            class="h-10 w-10 rounded-xl glass hover:bg-white/10 transition flex items-center justify-center"
+            aria-label="Telegram">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+          <a href="#top"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 transition text-sm font-bold">
+            <span data-i18n="footer.backToTop">Back to Top</span>
+            <i class="fa-solid fa-arrow-up"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center text-sm text-white/55">
+        © <span id="currentYear"></span> <span data-i18n="footer.copyright">Tokan — All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Multilingual Translation System
+    const translations = {
+      en: {
+        nav: {
+          services: "Services",
+          ai: "AI Growth",
+          process: "Process",
+          pricing: "Pricing",
+          showcase: "Portfolio",
+          faq: "FAQ",
+          contact: "Contact",
+          consult: "Request Consultation"
+        },
+        hero: {
+          focus: "Our Focus: Sustainable business growth with design, SEO and AI",
+          title: "Tokan; Your",
+          titleHighlight: "Business Development",
+          titleEnd: "Partner in the Digital World",
+          description: "From website and store design to SEO, content creation and conversion optimization—we advance everything with a cohesive, data-driven team. Alongside that, we use artificial intelligence for faster decisions and smarter growth.",
+          viewPricing: "View Pricing",
+          requestConsult: "Submit Request / Consultation",
+          ssl: "SSL & Security",
+          seo: "SEO & Growth",
+          aiAuto: "AI Automation",
+          support: "Support & Training"
+        },
+        growth: {
+          title: "Tokan Growth Roadmap",
+          subtitle: "From design to sales and leads",
+          stage1: "Stage 1",
+          stage1Title: "Website/Store Design",
+          stage1Desc: "UI/UX, implementation and launch",
+          stage2: "Stage 2",
+          stage2Title: "SEO & Content",
+          stage2Desc: "Structure optimization + content creation",
+          stage3: "Stage 3",
+          stage3Title: "AI-Powered Growth",
+          stage3Desc: "Analysis, recommendations, automation",
+          stage4: "Stage 4",
+          stage4Title: "Measurement & Improvement",
+          stage4Desc: "KPI, CRO and continuous optimization",
+          suitable: "Suitable for physical, digital and service businesses",
+          quickStart: "Quick Start, Real Growth"
+        },
+        services: {
+          title: "Tokan Services for Business Development",
+          subtitle: "We don't just deliver a 'website'; we build a growth path. From strategy to execution and optimization.",
+          getProposal: "Get Custom Proposal",
+          uiux: "UI/UX & Website Design",
+          uiuxDesc: "Professional design, smooth user experience, mobile-friendly and ready for growth and SEO.",
+          store: "Online Store Design",
+          storeDesc: "Suitable for physical and digital products and even services (booking/pre-order/registration).",
+          seo: "SEO & Optimization",
+          seoDesc: "Technical SEO structure, content, internal linking and reporting—aimed at sustainable growth.",
+          ai: "AI-Powered Growth",
+          aiDesc: "Smart recommendations, user behavior analysis, content assistant and task automation.",
+          infra: "Connections & Infrastructure",
+          infraDesc: "SSL, domain, SMS panel, payment gateway, trust badge, Torob connection and growth tools.",
+          support: "Support & Training",
+          supportDesc: "Panel training videos, support and guidance so your team reaches results faster."
+        },
+        aiSection: {
+          badge: "Growth with AI",
+          title: "AI in Tokan means",
+          titleHighlight: "Faster Decisions + More Precise Execution",
+          description: "We use AI as a 'speed and quality tool'; not a slogan. The result is that campaigns and content are prepared faster, data is analyzed better and the growth path becomes clearer.",
+          analysis: "Analysis & Reporting",
+          analysisDesc: "Better insight into KPIs and user behavior",
+          content: "Content Assistant",
+          contentDesc: "Ideas, structure and faster content creation",
+          conversion: "Conversion Rate Improvement",
+          conversionDesc: "Data-driven page optimization",
+          automation: "Task Automation",
+          automationDesc: "Less repetitive work, more focus on growth",
+          startGrowth: "Start Growing with Tokan",
+          sampleOutputs: "Sample Outputs (Symbolic)",
+          techSeo: "Technical SEO Checklist",
+          weekly: "Weekly",
+          shoppingExp: "Shopping Experience Improvement",
+          monthly: "Monthly",
+          growthReport: "Growth & Lead Report",
+          quarterly: "Quarterly",
+          note: "This section is only for displaying output models; the exact plan is adjusted based on your industry and goals."
+        },
+        process: {
+          title: "Collaboration Process with Tokan",
+          subtitle: "Transparent, step-by-step and trackable—so the project is both 'well executed' and 'achieves results'.",
+          stage1: "Stage 1",
+          stage1Title: "Needs Assessment & Strategy",
+          stage1Desc: "Goals, audience persona and growth KPIs",
+          stage2: "Stage 2",
+          stage2Title: "Design & Implementation",
+          stage2Desc: "UI/UX, development, testing and launch",
+          stage3: "Stage 3",
+          stage3Title: "SEO & Content",
+          stage3Desc: "Technical optimization, content and page structure",
+          stage4: "Stage 4",
+          stage4Title: "Growth & Optimization",
+          stage4Desc: "Data analysis, AI, CRO and continuous improvement"
+        },
+        pricing: {
+          title: "Pricing & Packages",
+          subtitle: "We don't have a free plan; from the start you get a 'professional and operational' structure.",
+          setupBadge: "Startup Package (Setup)",
+          setupTitle: "Store/Website Setup & Implementation",
+          setupDesc: "Includes setup & implementation + SSL certificate + panel training video + 1 month free support",
+          startingFrom: "Starting from",
+          requestSetup: "Request Setup",
+          subscriptionPlan: "Subscription Plan",
+          normal: "Normal",
+          normalDesc: "For growing businesses",
+          gold: "Gold",
+          goldDesc: "Recommended",
+          months3: "3 months",
+          months6: "6 months",
+          months12: "1 year",
+          normalDesc2: "Suitable for professional start and store/website management at reasonable cost.",
+          goldDesc2: "More features + special support—for teams that want to grow faster.",
+          addons: "Additional Services",
+          addonsDesc: "These items are added to the project separately if needed.",
+          productImport: "Product Import",
+          productImportDesc: "Instagram/Telegram/Digikala/Basalam/WooCommerce/...",
+          trustBadge: "Trust Badge + Gateway + Torob",
+          trustBadgeDesc: "Trust badge acquisition, payment gateway, Torob connection and SMS panel",
+          customDesign: "Custom Design",
+          customDesignDesc: "Fully custom design matching brand and business needs",
+          paymentTerms: "Payment Terms",
+          cash: "Cash payment: 10% discount",
+          installments: "Installment payment: 4 installments (first installment cash) with purple Sayyadi check",
+          wallet: "You can pay part of the amount from wallet balance (if available).",
+          paymentConsult: "Get Payment Consultation"
+        },
+        showcase: {
+          title: "Portfolio",
+          subtitle: "Some examples of sites/stores implemented on the Tokan platform (examples are expandable).",
+          viewMore: "Request to See More Examples",
+          view: "View",
+          nextProject: "Your Next Project",
+          nextProjectDesc: "If you have more examples, provide the link and image so we can complete this section with real case studies.",
+          submitSample: "Submit Sample",
+          focusResult: "Focus on Results",
+          focusResultDesc: "Beautiful design isn't enough; we focus on speed, SEO, user experience and conversion."
+        },
+        faq: {
+          title: "Frequently Asked Questions",
+          subtitle: "If you have other questions, message us directly.",
+          q1: "Don't you have a free plan?",
+          a1: "No. Our focus is providing operational and professional solutions from day one; that's why plans are offered as subscriptions.",
+          q2: "What exactly does the startup package include?",
+          a2: "Setup & implementation + SSL + panel training video + 1 month free support. Additional items like badge/gateway/Torob can be added separately.",
+          q3: "Do you have SEO packages?",
+          a3: "Yes. SEO and optimization packages are offered and we recommend based on your industry and goals.",
+          q4: "How is installment payment done?",
+          a4: "Installment payment is 4 installments (first installment cash) and is done by sending a purple Sayyadi check. Final conditions are announced after project review."
+        },
+        contact: {
+          title: "We're Ready to Develop Your Business",
+          subtitle: "The fastest way to contact is via Telegram. If you prefer us to call, fill out the form on the right.",
+          telegram: "Telegram",
+          call: "Call",
+          phoneNote: "Please set the number",
+          logoNote: "Important Note About Logo",
+          logoNoteDesc: "In this design, the logo loads from the path logo.jpg. Please place your new logo with this name in the path tokan-shop-builder/landing/ so it displays correctly in deployment as well.",
+          formTitle: "Request Form",
+          fullName: "Full Name",
+          fullNamePlaceholder: "e.g. John Doe",
+          phone: "Phone Number",
+          phonePlaceholder: "09xxxxxxxxx",
+          businessType: "Business Type",
+          physical: "Physical Product",
+          digital: "Digital Product",
+          services: "Services (Booking/Registration/Pre-order)",
+          other: "Other",
+          description: "Description",
+          descriptionPlaceholder: "Write a bit about your needs and goals...",
+          submit: "Submit Request (Telegram)",
+          formNote: "This form prepares the message for you and takes you to Telegram sharing. (No direct server submission)"
+        },
+        footer: {
+          tagline: "Digital Business Development",
+          backToTop: "Back to Top",
+          copyright: "Tokan — All rights reserved."
+        },
+        form: {
+          invalid: "Please enter valid name and phone number.",
+          opening: "Opening Telegram...",
+          opened: "Opened. If it didn't open, text will be copied...",
+          copied: "Request text copied.",
+          error: "Problem with sharing/copying. Please message manually."
+        }
+      },
+      ru: {
+        nav: {
+          services: "Услуги",
+          ai: "Рост с ИИ",
+          process: "Процесс",
+          pricing: "Тарифы",
+          showcase: "Портфолио",
+          faq: "Вопросы",
+          contact: "Контакты",
+          consult: "Запросить консультацию"
+        },
+        hero: {
+          focus: "Наш фокус: Устойчивый рост бизнеса с дизайном, SEO и ИИ",
+          title: "Tokan; Ваш",
+          titleHighlight: "Партнер по развитию бизнеса",
+          titleEnd: "в цифровом мире",
+          description: "От дизайна сайта и магазина до SEO, создания контента и оптимизации конверсии—мы продвигаем все с помощью сплоченной, ориентированной на данные команды. Наряду с этим, мы используем искусственный интеллект для более быстрых решений и умного роста.",
+          viewPricing: "Посмотреть тарифы",
+          requestConsult: "Подать заявку / Консультация",
+          ssl: "SSL и безопасность",
+          seo: "SEO и рост",
+          aiAuto: "Автоматизация с ИИ",
+          support: "Поддержка и обучение"
+        },
+        growth: {
+          title: "Дорожная карта роста Tokan",
+          subtitle: "От дизайна до продаж и лидов",
+          stage1: "Этап 1",
+          stage1Title: "Дизайн сайта/магазина",
+          stage1Desc: "UI/UX, реализация и запуск",
+          stage2: "Этап 2",
+          stage2Title: "SEO и контент",
+          stage2Desc: "Оптимизация структуры + создание контента",
+          stage3: "Этап 3",
+          stage3Title: "Рост с ИИ",
+          stage3Desc: "Анализ, рекомендации, автоматизация",
+          stage4: "Этап 4",
+          stage4Title: "Измерение и улучшение",
+          stage4Desc: "KPI, CRO и постоянная оптимизация",
+          suitable: "Подходит для физического, цифрового и сервисного бизнеса",
+          quickStart: "Быстрый старт, реальный рост"
+        },
+        services: {
+          title: "Услуги Tokan для развития бизнеса",
+          subtitle: "Мы не просто доставляем 'сайт'; мы строим путь роста. От стратегии до исполнения и оптимизации.",
+          getProposal: "Получить индивидуальное предложение",
+          uiux: "UI/UX и дизайн сайта",
+          uiuxDesc: "Профессиональный дизайн, плавный пользовательский опыт, мобильная адаптация и готовность к росту и SEO.",
+          store: "Дизайн интернет-магазина",
+          storeDesc: "Подходит для физических и цифровых продуктов и даже услуг (бронирование/предзаказ/регистрация).",
+          seo: "SEO и оптимизация",
+          seoDesc: "Техническая структура SEO, контент, внутренняя перелинковка и отчетность—направленные на устойчивый рост.",
+          ai: "Рост с ИИ",
+          aiDesc: "Умные рекомендации, анализ поведения пользователей, помощник по контенту и автоматизация задач.",
+          infra: "Подключения и инфраструктура",
+          infraDesc: "SSL, домен, SMS-панель, платежный шлюз, знак доверия, подключение Torob и инструменты роста.",
+          support: "Поддержка и обучение",
+          supportDesc: "Обучающие видео по панели, поддержка и руководство, чтобы ваша команда быстрее достигла результатов."
+        },
+        aiSection: {
+          badge: "Рост с использованием ИИ",
+          title: "ИИ в Tokan означает",
+          titleHighlight: "Быстрые решения + Более точное исполнение",
+          description: "Мы используем ИИ как 'инструмент скорости и качества'; не лозунг. Результат в том, что кампании и контент готовятся быстрее, данные анализируются лучше, и путь роста становится яснее.",
+          analysis: "Анализ и отчетность",
+          analysisDesc: "Лучшее понимание KPI и поведения пользователей",
+          content: "Помощник по контенту",
+          contentDesc: "Идеи, структура и более быстрое создание контента",
+          conversion: "Улучшение конверсии",
+          conversionDesc: "Оптимизация страниц на основе данных",
+          automation: "Автоматизация задач",
+          automationDesc: "Меньше повторяющейся работы, больше фокуса на росте",
+          startGrowth: "Начать рост с Tokan",
+          sampleOutputs: "Примеры выходных данных (символические)",
+          techSeo: "Чек-лист технического SEO",
+          weekly: "Еженедельно",
+          shoppingExp: "Улучшение опыта покупок",
+          monthly: "Ежемесячно",
+          growthReport: "Отчет о росте и лидах",
+          quarterly: "Ежеквартально",
+          note: "Этот раздел предназначен только для отображения моделей выходных данных; точный план корректируется в зависимости от вашей отрасли и целей."
+        },
+        process: {
+          title: "Процесс сотрудничества с Tokan",
+          subtitle: "Прозрачный, пошаговый и отслеживаемый—чтобы проект был как 'хорошо выполнен', так и 'достигал результатов'.",
+          stage1: "Этап 1",
+          stage1Title: "Оценка потребностей и стратегия",
+          stage1Desc: "Цели, персоны аудитории и KPI роста",
+          stage2: "Этап 2",
+          stage2Title: "Дизайн и реализация",
+          stage2Desc: "UI/UX, разработка, тестирование и запуск",
+          stage3: "Этап 3",
+          stage3Title: "SEO и контент",
+          stage3Desc: "Техническая оптимизация, контент и структура страниц",
+          stage4: "Этап 4",
+          stage4Title: "Рост и оптимизация",
+          stage4Desc: "Анализ данных, ИИ, CRO и постоянное улучшение"
+        },
+        pricing: {
+          title: "Тарифы и пакеты",
+          subtitle: "У нас нет бесплатного плана; с самого начала вы получаете 'профессиональную и операционную' структуру.",
+          setupBadge: "Стартовый пакет (настройка)",
+          setupTitle: "Настройка и реализация магазина/сайта",
+          setupDesc: "Включает настройку и реализацию + сертификат SSL + обучающее видео по панели + 1 месяц бесплатной поддержки",
+          startingFrom: "Начиная с",
+          requestSetup: "Запросить настройку",
+          subscriptionPlan: "План подписки",
+          normal: "Обычный",
+          normalDesc: "Для растущего бизнеса",
+          gold: "Золотой",
+          goldDesc: "Рекомендуется",
+          months3: "3 месяца",
+          months6: "6 месяцев",
+          months12: "1 год",
+          normalDesc2: "Подходит для профессионального старта и управления магазином/сайтом по разумной цене.",
+          goldDesc2: "Больше функций + специальная поддержка—для команд, которые хотят расти быстрее.",
+          addons: "Дополнительные услуги",
+          addonsDesc: "Эти элементы добавляются в проект отдельно при необходимости.",
+          productImport: "Импорт продуктов",
+          productImportDesc: "Instagram/Telegram/Digikala/Basalam/WooCommerce/...",
+          trustBadge: "Знак доверия + Шлюз + Torob",
+          trustBadgeDesc: "Получение знака доверия, платежный шлюз, подключение Torob и SMS-панель",
+          customDesign: "Индивидуальный дизайн",
+          customDesignDesc: "Полностью индивидуальный дизайн, соответствующий бренду и потребностям бизнеса",
+          paymentTerms: "Условия оплаты",
+          cash: "Наличный платеж: 10% скидка",
+          installments: "Рассрочка: 4 платежа (первый платеж наличными) с фиолетовым чеком Sayyadi",
+          wallet: "Вы можете оплатить часть суммы с баланса кошелька (если доступно).",
+          paymentConsult: "Получить консультацию по оплате"
+        },
+        showcase: {
+          title: "Портфолио",
+          subtitle: "Некоторые примеры сайтов/магазинов, реализованных на платформе Tokan (примеры расширяемы).",
+          viewMore: "Запросить просмотр больше примеров",
+          view: "Просмотр",
+          nextProject: "Ваш следующий проект",
+          nextProjectDesc: "Если у вас есть больше примеров, предоставьте ссылку и изображение, чтобы мы могли дополнить этот раздел реальными кейсами.",
+          submitSample: "Отправить образец",
+          focusResult: "Фокус на результатах",
+          focusResultDesc: "Красивый дизайн недостаточен; мы фокусируемся на скорости, SEO, пользовательском опыте и конверсии."
+        },
+        faq: {
+          title: "Часто задаваемые вопросы",
+          subtitle: "Если у вас есть другие вопросы, напишите нам напрямую.",
+          q1: "У вас нет бесплатного плана?",
+          a1: "Нет. Наш фокус—предоставление операционных и профессиональных решений с первого дня; поэтому планы предлагаются как подписки.",
+          q2: "Что именно включает стартовый пакет?",
+          a2: "Настройка и реализация + SSL + обучающее видео по панели + 1 месяц бесплатной поддержки. Дополнительные элементы, такие как знак/шлюз/Torob, могут быть добавлены отдельно.",
+          q3: "У вас есть пакеты SEO?",
+          a3: "Да. Предлагаются пакеты SEO и оптимизации, и мы рекомендуем на основе вашей отрасли и целей.",
+          q4: "Как осуществляется рассрочка?",
+          a4: "Рассрочка составляет 4 платежа (первый платеж наличными) и осуществляется путем отправки фиолетового чека Sayyadi. Окончательные условия объявляются после проверки проекта."
+        },
+        contact: {
+          title: "Мы готовы развивать ваш бизнес",
+          subtitle: "Самый быстрый способ связаться—через Telegram. Если вы предпочитаете, чтобы мы позвонили, заполните форму справа.",
+          telegram: "Telegram",
+          call: "Звонок",
+          phoneNote: "Пожалуйста, установите номер",
+          logoNote: "Важное примечание о логотипе",
+          logoNoteDesc: "В этом дизайне логотип загружается из пути logo.jpg. Пожалуйста, поместите ваш новый логотип с этим именем в путь tokan-shop-builder/landing/, чтобы он правильно отображался при развертывании.",
+          formTitle: "Форма заявки",
+          fullName: "Полное имя",
+          fullNamePlaceholder: "например, Иван Иванов",
+          phone: "Номер телефона",
+          phonePlaceholder: "09xxxxxxxxx",
+          businessType: "Тип бизнеса",
+          physical: "Физический продукт",
+          digital: "Цифровой продукт",
+          services: "Услуги (Бронирование/Регистрация/Предзаказ)",
+          other: "Другое",
+          description: "Описание",
+          descriptionPlaceholder: "Напишите немного о ваших потребностях и целях...",
+          submit: "Отправить заявку (Telegram)",
+          formNote: "Эта форма подготавливает сообщение для вас и перенаправляет на общий доступ Telegram. (Без прямой отправки на сервер)"
+        },
+        footer: {
+          tagline: "Развитие цифрового бизнеса",
+          backToTop: "Вернуться наверх",
+          copyright: "Tokan — Все права защищены."
+        },
+        form: {
+          invalid: "Пожалуйста, введите действительное имя и номер телефона.",
+          opening: "Открытие Telegram...",
+          opened: "Открыто. Если не открылось, текст будет скопирован...",
+          copied: "Текст заявки скопирован.",
+          error: "Проблема с общим доступом/копированием. Пожалуйста, напишите вручную."
+        }
+      },
+      zh: {
+        nav: {
+          services: "服务",
+          ai: "AI增长",
+          process: "流程",
+          pricing: "定价",
+          showcase: "作品集",
+          faq: "常见问题",
+          contact: "联系",
+          consult: "请求咨询"
+        },
+        hero: {
+          focus: "我们的重点：通过设计、SEO和AI实现可持续业务增长",
+          title: "Tokan；您的",
+          titleHighlight: "业务发展",
+          titleEnd: "数字世界合作伙伴",
+          description: "从网站和商店设计到SEO、内容创建和转化优化—我们通过一个凝聚力强、数据驱动的团队推进一切。除此之外，我们使用人工智能进行更快的决策和更智能的增长。",
+          viewPricing: "查看定价",
+          requestConsult: "提交请求/咨询",
+          ssl: "SSL和安全",
+          seo: "SEO和增长",
+          aiAuto: "AI自动化",
+          support: "支持和培训"
+        },
+        growth: {
+          title: "Tokan增长路线图",
+          subtitle: "从设计到销售和潜在客户",
+          stage1: "第1阶段",
+          stage1Title: "网站/商店设计",
+          stage1Desc: "UI/UX、实施和启动",
+          stage2: "第2阶段",
+          stage2Title: "SEO和内容",
+          stage2Desc: "结构优化+内容创建",
+          stage3: "第3阶段",
+          stage3Title: "AI驱动的增长",
+          stage3Desc: "分析、建议、自动化",
+          stage4: "第4阶段",
+          stage4Title: "测量和改进",
+          stage4Desc: "KPI、CRO和持续优化",
+          suitable: "适用于实体、数字和服务业务",
+          quickStart: "快速启动，真正增长"
+        },
+        services: {
+          title: "Tokan业务发展服务",
+          subtitle: "我们不仅仅交付一个'网站'；我们构建一条增长路径。从战略到执行和优化。",
+          getProposal: "获取定制提案",
+          uiux: "UI/UX和网站设计",
+          uiuxDesc: "专业设计、流畅的用户体验、移动友好，并准备好增长和SEO。",
+          store: "在线商店设计",
+          storeDesc: "适用于实体和数字产品，甚至服务（预订/预购/注册）。",
+          seo: "SEO和优化",
+          seoDesc: "技术SEO结构、内容、内部链接和报告—旨在可持续增长。",
+          ai: "AI驱动的增长",
+          aiDesc: "智能建议、用户行为分析、内容助手和任务自动化。",
+          infra: "连接和基础设施",
+          infraDesc: "SSL、域名、短信面板、支付网关、信任徽章、Torob连接和增长工具。",
+          support: "支持和培训",
+          supportDesc: "面板培训视频、支持和指导，让您的团队更快地取得成果。"
+        },
+        aiSection: {
+          badge: "AI驱动的增长",
+          title: "Tokan中的AI意味着",
+          titleHighlight: "更快的决策+更精确的执行",
+          description: "我们将AI用作'速度和质量工具'；而不是口号。结果是活动 and 内容准备得更快，数据分析得更好，增长路径变得更清晰。",
+          analysis: "分析和报告",
+          analysisDesc: "更好地了解KPI和用户行为",
+          content: "内容助手",
+          contentDesc: "想法、结构和更快的内容创建",
+          conversion: "转化率改进",
+          conversionDesc: "基于数据的页面优化",
+          automation: "任务自动化",
+          automationDesc: "减少重复工作，更多关注增长",
+          startGrowth: "开始与Tokan一起增长",
+          sampleOutputs: "示例输出（象征性）",
+          techSeo: "技术SEO检查清单",
+          weekly: "每周",
+          shoppingExp: "购物体验改进",
+          monthly: "每月",
+          growthReport: "增长和潜在客户报告",
+          quarterly: "每季度",
+          note: "此部分仅用于显示输出模型；确切计划根据您的行业和目标进行调整。"
+        },
+        process: {
+          title: "与Tokan的合作流程",
+          subtitle: "透明、逐步且可跟踪—使项目既'执行良好'又'取得成果'。",
+          stage1: "第1阶段",
+          stage1Title: "需求评估和战略",
+          stage1Desc: "目标、受众角色和增长KPI",
+          stage2: "第2阶段",
+          stage2Title: "设计和实施",
+          stage2Desc: "UI/UX、开发、测试和启动",
+          stage3: "第3阶段",
+          stage3Title: "SEO和内容",
+          stage3Desc: "技术优化、内容和页面结构",
+          stage4: "第4阶段",
+          stage4Title: "增长和优化",
+          stage4Desc: "数据分析、AI、CRO和持续改进"
+        },
+        pricing: {
+          title: "定价和套餐",
+          subtitle: "我们没有免费计划；从一开始您就获得'专业和运营'结构。",
+          setupBadge: "启动套餐（设置）",
+          setupTitle: "商店/网站设置和实施",
+          setupDesc: "包括设置和实施+SSL证书+面板培训视频+1个月免费支持",
+          startingFrom: "起价",
+          requestSetup: "请求设置",
+          subscriptionPlan: "订阅计划",
+          normal: "普通",
+          normalDesc: "适用于成长中的企业",
+          gold: "黄金",
+          goldDesc: "推荐",
+          months3: "3个月",
+          months6: "6个月",
+          months12: "1年",
+          normalDesc2: "适用于专业启动和以合理成本管理商店/网站。",
+          goldDesc2: "更多功能+特殊支持—适用于希望更快增长的团队。",
+          addons: "附加服务",
+          addonsDesc: "这些项目在需要时单独添加到项目中。",
+          productImport: "产品导入",
+          productImportDesc: "Instagram/Telegram/Digikala/Basalam/WooCommerce/...",
+          trustBadge: "信任徽章+网关+Torob",
+          trustBadgeDesc: "获取信任徽章、支付网关、Torob连接和短信面板",
+          customDesign: "定制设计",
+          customDesignDesc: "完全定制设计，匹配品牌和业务需求",
+          paymentTerms: "付款条件",
+          cash: "现金付款：10%折扣",
+          installments: "分期付款：4期（首期现金）带紫色Sayyadi支票",
+          wallet: "您可以从钱包余额中支付部分金额（如果可用）。",
+          paymentConsult: "获取付款咨询"
+        },
+        showcase: {
+          title: "作品集",
+          subtitle: "在Tokan平台上实施的一些网站/商店示例（示例可扩展）。",
+          viewMore: "请求查看更多示例",
+          view: "查看",
+          nextProject: "您的下一个项目",
+          nextProjectDesc: "如果您有更多示例，请提供链接和图像，以便我们可以用真实案例研究完成此部分。",
+          submitSample: "提交示例",
+          focusResult: "专注于结果",
+          focusResultDesc: "美丽的设计还不够；我们专注于速度、SEO、用户体验和转化。"
+        },
+        faq: {
+          title: "常见问题",
+          subtitle: "如果您有其他问题，请直接给我们发消息。",
+          q1: "您没有免费计划吗？",
+          a1: "没有。我们的重点是从第一天起提供运营和专业解决方案；这就是为什么计划以订阅形式提供。",
+          q2: "启动套餐具体包括什么？",
+          a2: "设置和实施+SSL+面板培训视频+1个月免费支持。附加项目如徽章/网关/Torob可以单独添加。",
+          q3: "您有SEO套餐吗？",
+          a3: "是的。提供SEO和优化套餐，我们根据您的行业和目标进行推荐。",
+          q4: "分期付款如何完成？",
+          a4: "分期付款为4期（首期现金），通过发送紫色Sayyadi支票完成。最终条件在项目审查后宣布。"
+        },
+        contact: {
+          title: "我们准备好发展您的业务",
+          subtitle: "最快的联系方式是通过Telegram。如果您希望我们打电话，请填写右侧的表单。",
+          telegram: "Telegram",
+          call: "电话",
+          phoneNote: "请设置号码",
+          logoNote: "关于徽标的重要说明",
+          logoNoteDesc: "在此设计中，徽标从路径logo.jpg加载。请将您的新徽标以此名称放在路径tokan-shop-builder/landing/中，以便在部署时也能正确显示。",
+          formTitle: "请求表单",
+          fullName: "全名",
+          fullNamePlaceholder: "例如：张三",
+          phone: "电话号码",
+          phonePlaceholder: "09xxxxxxxxx",
+          businessType: "业务类型",
+          physical: "实体产品",
+          digital: "数字产品",
+          services: "服务（预订/注册/预购）",
+          other: "其他",
+          description: "描述",
+          descriptionPlaceholder: "写一些关于您的需求和目标...",
+          submit: "提交请求（Telegram）",
+          formNote: "此表单为您准备消息并带您到Telegram共享。（不直接提交到服务器）"
+        },
+        footer: {
+          tagline: "数字业务发展",
+          backToTop: "返回顶部",
+          copyright: "Tokan — 保留所有权利。"
+        },
+        form: {
+          invalid: "请输入有效的姓名和电话号码。",
+          opening: "正在打开Telegram...",
+          opened: "已打开。如果未打开，文本将被复制...",
+          copied: "请求文本已复制。",
+          error: "共享/复制出现问题。请手动发送消息。"
+        }
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+    
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      const htmlRoot = document.getElementById('htmlRoot');
+      htmlRoot.setAttribute('lang', lang);
+      htmlRoot.setAttribute('dir', 'rtl');
+      
+      document.getElementById('currentLang').textContent = lang.toUpperCase();
+      
+      const t = translations[lang];
+      if (!t) return;
+      
+      document.getElementById('pageTitle').textContent = `${t.hero.title.split(';')[0]} | ${t.services.title}`;
+      document.getElementById('metaDescription').setAttribute('content', t.hero.description.substring(0, 160));
+      document.getElementById('ogTitle').setAttribute('content', `${t.hero.title.split(';')[0]} | ${t.services.title}`);
+      document.getElementById('ogDescription').setAttribute('content', t.services.subtitle);
+      document.getElementById('ogLocale').setAttribute('content', lang === 'en' ? 'en_US' : lang === 'ru' ? 'ru_RU' : 'zh_CN');
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let value = t;
+        for (const k of keys) {
+          value = value?.[k];
+        }
+        if (value) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.setAttribute('placeholder', value);
+          } else if (el.tagName === 'OPTION') {
+            el.textContent = value;
+          } else if (el.tagName === 'LABEL') {
+            el.textContent = value;
+          } else {
+            el.textContent = value;
+          }
+        }
+      });
+      
+      // Update select options
+      const leadType = document.getElementById('leadType');
+      if (leadType) {
+        leadType.querySelectorAll('option').forEach((opt, idx) => {
+          const value = opt.getAttribute('value');
+          if (value === 'physical') opt.textContent = t.contact.physical;
+          else if (value === 'digital') opt.textContent = t.contact.digital;
+          else if (value === 'services') opt.textContent = t.contact.services;
+          else if (value === 'other') opt.textContent = t.contact.other;
+        });
+      }
+      
+      document.getElementById('langDropdown').classList.add('hidden');
+    }
+    
+    document.getElementById('langBtn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('langDropdown').classList.toggle('hidden');
+    });
+    
+    document.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#langSwitcher')) {
+        document.getElementById('langDropdown').classList.add('hidden');
+      }
+    });
+    
+    setLanguage(currentLang);
+
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    mobileMenuBtn?.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+    // Close mobile menu on navigation
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+    });
+
+    // Year
+    document.getElementById("currentYear").textContent = new Date().getFullYear().toString();
+
+    // Lead form → Telegram share
+    const leadForm = document.getElementById("leadForm");
+    const leadStatus = document.getElementById("leadStatus");
+
+    function validatePhone(phone) {
+      return /^(\+98|0)?9\d{9}$/.test((phone || "").trim());
+    }
+
+    leadForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("leadName").value.trim();
+      const phone = document.getElementById("leadPhone").value.trim();
+      const typeSelect = document.getElementById("leadType");
+      const typeText = typeSelect.options[typeSelect.selectedIndex].text;
+      const msg = document.getElementById("leadMessage").value.trim();
+      const t = translations[currentLang] || translations.en;
+
+      if (!name || !phone || !validatePhone(phone)) {
+        leadStatus.textContent = t.form.invalid;
+        return;
+      }
+
+      const text = [
+        t.contact.submit.replace(" (Telegram)", ""),
+        `${t.contact.fullName}: ${name}`,
+        `${t.contact.phone}: ${phone}`,
+        `${t.contact.businessType}: ${typeText}`,
+        msg ? `${t.contact.description}: ${msg}` : null,
+        "",
+        "Sent from tokan.app landing page"
+      ].filter(Boolean).join("\n");
+
+      const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent("https://tokan.app") + "&text=" + encodeURIComponent(text);
+
+      leadStatus.textContent = t.form.opening;
+
+      try {
+        window.open(shareUrl, "_blank", "noopener,noreferrer");
+        leadStatus.textContent = t.form.opened;
+        await navigator.clipboard.writeText(text);
+        setTimeout(() => { leadStatus.textContent = t.form.copied; }, 600);
+      } catch (err) {
+        leadStatus.textContent = t.form.error;
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+{
+    "disks": [
+        {
+            "name": "cache-images",
+            "mountTo": "/app/.next/cache/images"
+        }
+    ]
+}

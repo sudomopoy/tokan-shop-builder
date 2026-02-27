@@ -1,0 +1,13 @@
+from storages.backends.s3boto3 import S3Boto3Storage
+from storages.backends.s3boto3 import S3Boto3Storage
+from botocore.client import Config
+import os
+
+class StaticRootS3BotoStorage(S3Boto3Storage):
+    location = "static"
+    default_acl = 'public-read'
+
+class MediaRootS3BotoStorage(S3Boto3Storage):
+    location = "media"
+    default_acl = 'public-read'
+ 

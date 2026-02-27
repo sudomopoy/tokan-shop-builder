@@ -1,0 +1,11 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+  <li>
+    <a href="{% url 'admin:guide_docsection_import_markdown' %}" class="addlink">
+      ورود از مارک‌داون
+    </a>
+  </li>
+  {{ block.super }}
+{% endblock %}

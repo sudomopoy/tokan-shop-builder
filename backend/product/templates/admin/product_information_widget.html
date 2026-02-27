@@ -1,0 +1,45 @@
+<!-- templates/admin/product_data_widget.html -->
+<div class="product-data-widget">
+    <input type="hidden" name="{{ widget.name }}" id="{{ widget.attrs.id }}" class="json-data"
+        value="{{ widget.value|default_if_none:'{}' }}">
+
+    <ul class="nav nav-tabs" id="productDataTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="sizing-tab" data-bs-toggle="tab" data-bs-target="#sizing" type="button"
+                role="tab">جدول اندازه‌ها</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button"
+                role="tab">ویژگی‌های محصول</button>
+        </li>
+    </ul>
+
+    <div class="tab-content p-3 border border-top-0 rounded-bottom">
+        <!-- بخش جدول اندازه‌ها -->
+        <div class="tab-pane fade show active" id="sizing" role="tabpanel">
+            <div class="sizing-table-container">
+                <div class="table-controls mb-3">
+                    <button type="button" class="btn btn-sm btn-primary add-sizing-column">اضافه کردن ستون</button>
+                    <button type="button" class="btn btn-sm btn-primary add-sizing-row">اضافه کردن سطر</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered sizing-table">
+                        <thead class="table-light">
+                            <tr class="column-headers"></tr>
+                            <tr class="column-titles"></tr>
+                        </thead>
+                        <tbody class="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش ویژگی‌های محصول -->
+        <div class="tab-pane fade" id="features" role="tabpanel">
+            <div class="features-container">
+                <button type="button" class="btn btn-sm btn-primary add-feature mb-3">اضافه کردن ویژگی</button>
+                <div class="features-list"></div>
+            </div>
+        </div>
+    </div>
+</div>

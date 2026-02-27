@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گوشی موبایل | فروشگاه سِروا</title>
+    <!-- Tailwind CSS -->
+    <script src="libs/tailwind/tailwind.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="libs/fontawesome/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Tailwind Config -->
+    <script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-700 font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Top Bar & Header (Same as other pages) -->
+    <div class="bg-dark text-gray-300 text-xs py-2.5 hidden md:block border-b border-white/5">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="hover:text-white transition cursor-pointer"><i class="fas fa-phone-alt ml-2 text-primary"></i>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                <span class="hover:text-white transition cursor-pointer"><i class="fas fa-envelope ml-2 text-primary"></i>info@shop.ir</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-telegram text-lg"></i></a>
+                <a href="#" class="hover:text-primary transition transform hover:-translate-y-0.5"><i class="fab fa-whatsapp text-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-soft transition-all duration-300 border-b border-gray-100" id="mainHeader">
+        <div class="container py-4">
+            <div class="flex items-center justify-between gap-8">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-black text-primary flex items-center gap-2 tracking-tight">
+                        <i class="fas fa-cube text-3xl"></i>
+                        <span>سِروا</span>
+                    </a>
+                </div>
+                <div class="hidden lg:flex flex-1 max-w-2xl relative group">
+                    <input type="text" placeholder="جستجو..." class="w-full py-3.5 px-5 pr-12 rounded-2xl bg-gray-100 border-transparent focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder-gray-400 text-sm">
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition group-focus-within:text-primary">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                </div>
+                <div class="flex items-center gap-3 md:gap-4">
+                    <a href="login.html" class="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-primary transition font-bold text-sm border border-transparent hover:border-gray-100">
+                        <i class="far fa-user text-lg"></i>
+                        <span>ورود | ثبت‌نام</span>
+                    </a>
+                    <div class="h-8 w-px bg-gray-200 hidden md:block mx-1"></div>
+                    <a href="wishlist.html" class="relative w-12 h-12 rounded-xl bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-500 flex items-center justify-center transition hidden sm:flex group">
+                        <i class="far fa-heart text-xl group-hover:scale-110 transition"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">2</span>
+                    </a>
+                    <a href="cart.html" class="relative w-12 h-12 rounded-xl bg-gray-50 hover:bg-primary/10 text-gray-700 hover:text-primary flex items-center justify-center transition group">
+                        <i class="fas fa-shopping-bag text-xl group-hover:scale-110 transition"></i>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">3</span>
+                    </a>
+                    <button id="mobileMenuBtn" class="md:hidden w-12 h-12 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-700 flex items-center justify-center transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="hidden md:block">
+            <div class="container">
+                <ul class="flex items-center gap-8 text-sm font-bold text-gray-600">
+                    <li class="group py-3 relative">
+                         <a href="category.html" class="flex items-center gap-2 text-primary font-bold py-1">
+                            <i class="fas fa-layer-group"></i>
+                            دسته‌بندی کالاها
+                            <i class="fas fa-chevron-down text-[10px]"></i>
+                        </a>
+                         <!-- Mega Menu (Same as Index) -->
+                         <div class="absolute top-full right-0 w-[800px] bg-white shadow-2xl rounded-2xl p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-gray-100">
+                             <div class="grid grid-cols-4 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-dark mb-4 border-b pb-2 text-base">کالای دیجیتال</h4>
+                                    <ul class="space-y-2.5 text-gray-500 font-medium">
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">موبایل</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">لپ‌تاپ</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">تبلت</a></li>
+                                        <li><a href="#" class="hover:text-primary hover:translate-x-1 transition block">دوربین</a></li>
+                                    </ul>
+                                </div>
+                                <!-- ... other columns ... -->
+                             </div>
+                        </div>
+                    </li>
+                    <li class="py-3"><a href="#" class="hover:text-primary transition py-1">پرفروش‌ترین‌ها</a></li>
+                    <li class="py-3"><a href="#" class="hover:text-primary transition py-1">تخفیف‌ها</a></li>
+                    <li class="py-3"><a href="blog.html" class="hover:text-primary transition py-1">مجله خبری</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm transition-opacity">
+        <div class="bg-white w-80 h-full overflow-y-auto shadow-2xl">
+            <div class="p-5 border-b flex items-center justify-between bg-gray-50">
+                <span class="font-black text-xl text-dark">منوی سِروا</span>
+                <button id="closeMobileMenu" class="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-red-500 flex items-center justify-center shadow-sm transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-5">
+                <ul class="space-y-4 font-medium text-gray-600">
+                    <li><a href="index.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-primary/5 hover:text-primary transition"><i class="fas fa-home text-lg w-6"></i> خانه</a></li>
+                    <li><a href="category.html" class="flex items-center gap-3 p-2 rounded-lg hover:bg-primary/5 hover:text-primary transition"><i class="fas fa-layer-group text-lg w-6"></i> دسته‌بندی‌ها</a></li>
+                    <li><a href="#" class="flex items-center gap-3 p-2 rounded-lg hover:bg-primary/5 hover:text-primary transition"><i class="fas fa-star text-lg w-6"></i> پرفروش‌ترین‌ها</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-100">
+        <div class="container py-4">
+            <nav class="flex items-center gap-2 text-sm font-medium text-gray-500">
+                <a href="index.html" class="hover:text-primary transition">خانه</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <a href="category.html" class="hover:text-primary transition">کالای دیجیتال</a>
+                <i class="fas fa-chevron-left text-xs opacity-50"></i>
+                <span class="text-dark font-bold">گوشی موبایل</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Category Page Content -->
+    <section class="container py-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-black text-dark mb-2">گوشی موبایل</h1>
+                <p class="text-gray-500 text-sm">نمایش <span class="font-bold text-dark">۱-۲۴</span> از <span class="font-bold text-dark">۱۵۶</span> محصول</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-gray-500 hidden sm:block">مرتب‌سازی:</span>
+                <select class="bg-white border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-primary focus:border-primary block w-full p-2.5 outline-none font-medium">
+                    <option selected>پرفروش‌ترین</option>
+                    <option value="newest">جدیدترین</option>
+                    <option value="price-low">ارزان‌ترین</option>
+                    <option value="price-high">گران‌ترین</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-3xl p-6 sticky top-28 border border-gray-100 shadow-sm space-y-8">
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+                        <h2 class="font-bold text-lg text-dark flex items-center gap-2"><i class="fas fa-filter text-primary"></i> فیلترها</h2>
+                        <button class="text-red-500 text-xs font-bold hover:underline">حذف فیلترها</button>
+                    </div>
+
+                    <!-- Selected Filters -->
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-dark text-sm">فیلترهای اعمال شده:</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2">
+                                سامسونگ <button class="hover:text-red-500"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span class="bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2">
+                                موجود در انبار <button class="hover:text-red-500"><i class="fas fa-times"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div>
+                        <h3 class="font-bold text-dark mb-4 text-sm">محدوده قیمت (تومان)</h3>
+                        <div class="px-2">
+                            <input type="range" class="range-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="100000000">
+                        </div>
+                        <div class="flex items-center gap-2 mt-4">
+                            <input type="text" value="5,000,000" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold text-center outline-none focus:border-primary focus:bg-white transition">
+                            <span class="text-gray-400">-</span>
+                            <input type="text" value="50,000,000" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-bold text-center outline-none focus:border-primary focus:bg-white transition">
+                        </div>
+                    </div>
+
+                    <!-- Brands -->
+                    <div>
+                        <h3 class="font-bold text-dark mb-4 text-sm">برندها</h3>
+                        <div class="space-y-3 max-h-48 overflow-y-auto pr-1 scrollbar-hide">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary transition" checked>
+                                <span class="text-sm text-gray-600 group-hover:text-primary transition">سامسونگ</span>
+                                <span class="mr-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">45</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary transition">
+                                <span class="text-sm text-gray-600 group-hover:text-primary transition">اپل</span>
+                                <span class="mr-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">32</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary transition">
+                                <span class="text-sm text-gray-600 group-hover:text-primary transition">شیائومی</span>
+                                <span class="mr-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">28</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Filters -->
+                    <div class="space-y-4 border-t border-gray-100 pt-6">
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm font-bold text-gray-700 group-hover:text-primary transition">فقط کالاهای موجود</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm font-bold text-gray-700 group-hover:text-primary transition">ارسال رایگان</span>
+                            <div class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <div class="lg:col-span-3">
+                <!-- Toolbar -->
+                <div class="bg-white rounded-2xl p-3 mb-6 border border-gray-100 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-2 bg-gray-50 p-1 rounded-xl">
+                        <button id="gridView" class="p-2 rounded-lg bg-white text-primary shadow-sm transition">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button id="listView" class="p-2 rounded-lg text-gray-400 hover:text-dark transition">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    <div class="text-xs font-medium text-gray-500">
+                        در حال نمایش 24 محصول
+                    </div>
+                </div>
+
+                <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Product Card 1 -->
+                    <div class="group bg-white rounded-3xl p-4 border border-transparent hover:border-primary/20 hover:shadow-2xl transition-all duration-300 relative flex flex-col">
+                        <div class="absolute top-4 right-4 z-10 flex flex-col gap-2">
+                            <span class="bg-red-500 text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">-15%</span>
+                        </div>
+                        <div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50 group-hover:bg-white transition-colors">
+                            <img src="images/products/product-1.jpg" alt="Product" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition duration-500">
+                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-heart"></i></button>
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <div class="text-xs text-gray-400 mb-2 font-medium">سامسونگ</div>
+                            <h3 class="font-bold text-dark text-sm leading-relaxed mb-3 line-clamp-2 group-hover:text-primary transition cursor-pointer">
+                                <a href="product-details.html">گوشی موبایل سامسونگ مدل Galaxy A54 5G ظرفیت 256 گیگابایت</a>
+                            </h3>
+                            <div class="flex items-center gap-1 mb-4">
+                                <div class="flex text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-xs text-gray-400 font-medium mt-0.5">(4.5)</span>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                     <span class="text-xs text-gray-400 line-through mb-0.5">15,000,000</span>
+                                     <div class="flex items-center gap-1 text-primary font-black text-lg">
+                                        <span>14,250,000</span>
+                                        <span class="text-xs font-normal text-gray-500">تومان</span>
+                                     </div>
+                                </div>
+                                <button class="w-11 h-11 rounded-xl bg-gray-50 text-primary hover:bg-primary hover:text-white transition flex items-center justify-center group/btn">
+                                    <i class="fas fa-plus transition-transform group-hover/btn:rotate-90"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="group bg-white rounded-3xl p-4 border border-transparent hover:border-primary/20 hover:shadow-2xl transition-all duration-300 relative flex flex-col">
+                        <div class="absolute top-4 right-4 z-10 flex flex-col gap-2">
+                            <span class="bg-secondary text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">موجود</span>
+                        </div>
+                        <div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50 group-hover:bg-white transition-colors">
+                            <img src="images/products/product-2.jpg" alt="Product" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition duration-500">
+                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-heart"></i></button>
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <div class="text-xs text-gray-400 mb-2 font-medium">اپل</div>
+                            <h3 class="font-bold text-dark text-sm leading-relaxed mb-3 line-clamp-2 group-hover:text-primary transition cursor-pointer">
+                                <a href="product-details.html">هدفون بی‌سیم اپل مدل AirPods Pro 2 نسخه 2023</a>
+                            </h3>
+                            <div class="flex items-center gap-1 mb-4">
+                                <div class="flex text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-xs text-gray-400 font-medium mt-0.5">(5.0)</span>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                     <div class="flex items-center gap-1 text-primary font-black text-lg">
+                                        <span>9,800,000</span>
+                                        <span class="text-xs font-normal text-gray-500">تومان</span>
+                                     </div>
+                                </div>
+                                <button class="w-11 h-11 rounded-xl bg-gray-50 text-primary hover:bg-primary hover:text-white transition flex items-center justify-center group/btn">
+                                    <i class="fas fa-plus transition-transform group-hover/btn:rotate-90"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="group bg-white rounded-3xl p-4 border border-transparent hover:border-primary/20 hover:shadow-2xl transition-all duration-300 relative flex flex-col">
+                        <div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50 group-hover:bg-white transition-colors">
+                            <img src="images/products/product-3.jpg" alt="Product" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition duration-500">
+                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-heart"></i></button>
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <div class="text-xs text-gray-400 mb-2 font-medium">ایسوس</div>
+                            <h3 class="font-bold text-dark text-sm leading-relaxed mb-3 line-clamp-2 group-hover:text-primary transition cursor-pointer">
+                                <a href="product-details.html">لپ‌تاپ ایسوس 15.6 اینچی مدل Vivobook 15</a>
+                            </h3>
+                            <div class="flex items-center gap-1 mb-4">
+                                <div class="flex text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="text-xs text-gray-400 font-medium mt-0.5">(3.5)</span>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                     <span class="text-xs text-gray-400 line-through mb-0.5">24,000,000</span>
+                                     <div class="flex items-center gap-1 text-primary font-black text-lg">
+                                        <span>16,800,000</span>
+                                        <span class="text-xs font-normal text-gray-500">تومان</span>
+                                     </div>
+                                </div>
+                                <button class="w-11 h-11 rounded-xl bg-gray-50 text-primary hover:bg-primary hover:text-white transition flex items-center justify-center group/btn">
+                                    <i class="fas fa-plus transition-transform group-hover/btn:rotate-90"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Repeat for filler -->
+                    <div class="group bg-white rounded-3xl p-4 border border-transparent hover:border-primary/20 hover:shadow-2xl transition-all duration-300 relative flex flex-col">
+                        <div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50 group-hover:bg-white transition-colors">
+                            <img src="images/products/product-4.jpg" alt="Product" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition duration-500">
+                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-heart"></i></button>
+                                <button class="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"><i class="far fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <div class="text-xs text-gray-400 mb-2 font-medium">شیائومی</div>
+                            <h3 class="font-bold text-dark text-sm leading-relaxed mb-3 line-clamp-2 group-hover:text-primary transition cursor-pointer">
+                                <a href="product-details.html">ساعت هوشمند شیائومی مدل Mi Band 8</a>
+                            </h3>
+                            <div class="flex items-center gap-1 mb-4">
+                                <div class="flex text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <span class="text-xs text-gray-400 font-medium mt-0.5">(4.2)</span>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                     <div class="flex items-center gap-1 text-primary font-black text-lg">
+                                        <span>1,850,000</span>
+                                        <span class="text-xs font-normal text-gray-500">تومان</span>
+                                     </div>
+                                </div>
+                                <button class="w-11 h-11 rounded-xl bg-gray-50 text-primary hover:bg-primary hover:text-white transition flex items-center justify-center group/btn">
+                                    <i class="fas fa-plus transition-transform group-hover/btn:rotate-90"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-center gap-2 mt-12">
+                    <button class="w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-400 hover:border-primary hover:text-primary transition flex items-center justify-center" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="w-10 h-10 rounded-xl bg-primary text-white font-bold flex items-center justify-center shadow-lg shadow-primary/30">1</button>
+                    <button class="w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-600 hover:border-primary hover:text-primary transition flex items-center justify-center">2</button>
+                    <button class="w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-600 hover:border-primary hover:text-primary transition flex items-center justify-center">3</button>
+                    <span class="text-gray-400 px-2">...</span>
+                    <button class="w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-600 hover:border-primary hover:text-primary transition flex items-center justify-center">8</button>
+                    <button class="w-10 h-10 rounded-xl bg-white border border-gray-200 text-gray-600 hover:border-primary hover:text-primary transition flex items-center justify-center">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8 border-t border-white/5">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
+                <div class="lg:col-span-1">
+                    <a href="#" class="text-2xl font-black text-white flex items-center gap-2 mb-6">
+                        <i class="fas fa-cube text-primary text-3xl"></i>
+                        <span>سِروا</span>
+                    </a>
+                    <p class="text-gray-400 text-sm leading-7 mb-8 font-medium">
+                        فروشگاه اینترنتی سِروا با هدف ارائه بهترین محصولات دیجیتال با قیمتی رقابتی و خدماتی متمایز فعالیت خود را آغاز کرده است.
+                    </p>
+                </div>
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">دسترسی سریع</h4>
+                     <ul class="space-y-2 text-sm text-gray-400">
+                         <li><a href="#" class="hover:text-primary">تماس با ما</a></li>
+                         <li><a href="#" class="hover:text-primary">درباره ما</a></li>
+                         <li><a href="#" class="hover:text-primary">قوانین</a></li>
+                     </ul>
+                </div>
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">راهنمای خرید</h4>
+                     <ul class="space-y-2 text-sm text-gray-400">
+                         <li><a href="#" class="hover:text-primary">نحوه ثبت سفارش</a></li>
+                         <li><a href="#" class="hover:text-primary">رویه ارسال</a></li>
+                     </ul>
+                </div>
+                <div>
+                     <h4 class="font-bold text-lg mb-6 text-white">تماس با ما</h4>
+                     <p class="text-sm text-gray-400">021-88776655</p>
+                </div>
+            </div>
+             <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+                © ۱۴۰۴ تمامی حقوق محفوظ است.
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="fixed left-6 bottom-6 w-12 h-12 bg-primary text-white rounded-2xl shadow-xl hover:bg-primary/90 hover:-translate-y-1 transition-all opacity-0 pointer-events-none z-50 flex items-center justify-center group">
+        <i class="fas fa-arrow-up group-hover:animate-bounce"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+    <script>
+        // View Toggle Logic (Simple implementation inline as it was before, but adapted)
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const productsContainer = document.getElementById('productsContainer');
+
+        if(gridViewBtn && listViewBtn && productsContainer) {
+            gridViewBtn.addEventListener('click', () => {
+                gridViewBtn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                gridViewBtn.classList.remove('text-gray-400');
+                listViewBtn.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                listViewBtn.classList.add('text-gray-400');
+                
+                // Switch classes for Grid
+                productsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+                // Reset card styling (simplified for now, real impl would change card internal structure)
+                // For this quick implementation, we'll just change grid cols as cards are responsive
+            });
+
+            listViewBtn.addEventListener('click', () => {
+                listViewBtn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                listViewBtn.classList.remove('text-gray-400');
+                gridViewBtn.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                gridViewBtn.classList.add('text-gray-400');
+
+                // Switch classes for List
+                productsContainer.className = 'grid grid-cols-1 gap-6';
+                // Note: To make them true "List view" cards, we'd need to toggle classes on children.
+                // Given the scope, just stacking them is a basic list view. 
+                // A full list view redesign would require JS to swap HTML content or CSS classes on each card.
+            });
+        }
+    </script>
+</body>
+</html>

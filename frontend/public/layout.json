@@ -1,0 +1,47 @@
+{
+    "title": "Home Page 123",
+    "metadata": {
+      "description": "This is the home page of our website.",
+      "keywords": ["home", "page", "website"]
+    },
+    "layout": {
+      "header": true,
+      "footer": true
+    },
+    "components": [
+      {
+        "type": "Header",
+        "props": {
+          "text": "Welcome to the Home Page"
+        },
+        "childrens":[
+          {
+            "type": "Header child",
+            "props": {
+              "text": ""
+            },
+            "childrens":[
+              
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Content",
+        "props": {
+          "text": "This is the home page content."
+        }
+      }
+    ],
+    "styles": {
+      "Header": {
+        "color": "blue",
+        "fontSize": "24px"
+      },
+      "Content": {
+        "color": "black",
+        "fontSize": "16px"
+      }
+    }
+  }
+  

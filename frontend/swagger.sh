@@ -1,0 +1,1 @@
+npx swagger-typescript-api -p https://api.mytokan.ir/swagger/?format=openapi -o ./api -n api.ts
