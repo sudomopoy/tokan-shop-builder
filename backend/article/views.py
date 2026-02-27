@@ -14,6 +14,9 @@ from core.viewset import BaseStoreViewSet
 from core.permissions import IsStoreCustomer, HasBlogPermission
 import logging
 import uuid
+import hashlib
+from urllib.parse import urlencode
+from rest_framework.exceptions import PermissionDenied
 
 class ArticleViewSet(BaseStoreViewSet):
     queryset = Article.objects.all().order_by('created_at')
@@ -26,9 +29,27 @@ class ArticleViewSet(BaseStoreViewSet):
     search_fields = ['title']
 
     def get_permissions(self):
-        if self.action in ("list", "retrieve"):
+        if self.action == "list":
+            statuses = self.request.query_params.getlist("status")
+            # Public listing: allow anyone, but only "public" articles are accessible without dashboard permission.
+            if statuses and set(statuses) != {"public"}:
+                return [HasBlogPermission()]
+            return [AllowAny()]
+        if self.action == "retrieve":
             return [AllowAny()]
         return [HasBlogPermission()]
+
+    def _build_list_cache_key(self, request) -> str:
+        store = getattr(request, "store", None)
+        store_key = str(getattr(store, "pk", "no_store"))
+
+        pairs: list[tuple[str, str]] = []
+        for key in sorted(request.query_params.keys()):
+            for value in request.query_params.getlist(key):
+                pairs.append((key, value))
+        query_string = urlencode(pairs, doseq=True)
+        digest = hashlib.sha256(query_string.encode("utf-8")).hexdigest()
+        return f"articles_{store_key}_{digest}"
 
     @swagger_auto_schema(
         manual_parameters=[
@@ -81,19 +102,18 @@ class ArticleViewSet(BaseStoreViewSet):
     #     return Response(serializer.data)
     
     def list(self, request, *args, **kwargs):
-        filter_params = request.query_params
-        cache_key = f'articles_{hash(frozenset(filter_params.items()))}'
-        cached_articles = cache.get(cache_key)
-
-        if cached_articles:
-            return Response(cached_articles)
+        cache_key = self._build_list_cache_key(request)
+        cached_payload = cache.get(cache_key)
+        if cached_payload is not None:
+            return Response(cached_payload)
 
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
-            cache.set(cache_key, serializer.data, settings.CACHE_TTL)
-            return self.get_paginated_response(serializer.data)
+            response = self.get_paginated_response(serializer.data)
+            cache.set(cache_key, response.data, settings.CACHE_TTL)
+            return response
 
         serializer = self.get_serializer(queryset, many=True)
         cache.set(cache_key, serializer.data, settings.CACHE_TTL)
@@ -101,6 +121,13 @@ class ArticleViewSet(BaseStoreViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
+        if instance.status != "public":
+            perm = HasBlogPermission()
+            if not perm.has_permission(request, self) or not perm.has_object_permission(
+                request, self, instance
+            ):
+                raise PermissionDenied()
+
         article_id = str(instance.pk)
 
         try:
@@ -118,7 +145,9 @@ class ArticleViewSet(BaseStoreViewSet):
         return Response(serializer.data)
 
     def filter_queryset(self, queryset): 
-        if 'status' not in self.request.query_params:
-            queryset = queryset.filter(status='public') 
+        statuses = self.request.query_params.getlist("status")
+        # Public listing defaults to public-only unless a status filter is explicitly provided.
+        if not statuses:
+            queryset = queryset.filter(status="public")
 
         return super().filter_queryset(queryset)

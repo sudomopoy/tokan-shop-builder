@@ -6,6 +6,34 @@ function normalizeBaseUrl(url: string): string {
   return url.replace(/\/+$/, "");
 }
 
+function serializeParams(params: unknown): string {
+  const searchParams = new URLSearchParams();
+  if (!params || typeof params !== "object") return searchParams.toString();
+
+  const appendValue = (key: string, value: unknown) => {
+    if (value === undefined || value === null) return;
+    if (Array.isArray(value)) {
+      value.forEach((item) => appendValue(key, item));
+      return;
+    }
+    if (value instanceof Date) {
+      searchParams.append(key, value.toISOString());
+      return;
+    }
+    if (typeof value === "object") {
+      searchParams.append(key, JSON.stringify(value));
+      return;
+    }
+    searchParams.append(key, String(value));
+  };
+
+  Object.entries(params as Record<string, unknown>).forEach(([key, value]) => {
+    appendValue(key, value);
+  });
+
+  return searchParams.toString();
+}
+
 const API_BASE_URL = normalizeBaseUrl(
   process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080",
 );
@@ -15,6 +43,7 @@ export const apiClient = axios.create({
   headers: {
     Accept: "application/json",
   },
+  paramsSerializer: serializeParams,
   timeout: 30_000,
 });
 
