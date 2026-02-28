@@ -152,6 +152,20 @@ class WidgetType(BaseModel):
         on_delete=models.SET_NULL,
         related_name="widget_types"
     )
+    icon = models.CharField(
+        max_length=120,
+        null=True,
+        blank=True,
+        help_text="Dashboard icon key for visual builder, e.g. text, image, layout.",
+    )
+    visual_schema = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Visual input schema for dashboard page builder.",
+    )
+    default_widget_config = models.JSONField(default=dict, blank=True)
+    default_components_config = models.JSONField(default=dict, blank=True)
+    default_extra_request_params = models.JSONField(default=dict, blank=True)
 
     # آیا این ویجت layout است؟
     is_layout = models.BooleanField(
@@ -171,7 +185,41 @@ class WidgetType(BaseModel):
     is_active = models.BooleanField(default=True)
     def __str__(self):
         return self.name
-        
+
+
+class WidgetStyle(BaseModel):
+    """Selectable design variants for a widget type."""
+
+    widget_type = models.ForeignKey(
+        WidgetType,
+        on_delete=models.CASCADE,
+        related_name="styles",
+    )
+    key = models.SlugField(max_length=100)
+    name = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
+    preview_image = models.ForeignKey(
+        "media.Media",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="widget_styles",
+    )
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    default_widget_config = models.JSONField(default=dict, blank=True)
+    default_components_config = models.JSONField(default=dict, blank=True)
+    default_extra_request_params = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        verbose_name = "Widget Style"
+        verbose_name_plural = "Widget Styles"
+        ordering = ["widget_type", "order", "name"]
+        unique_together = [("widget_type", "key")]
+
+    def __str__(self):
+        return f"{self.widget_type.name} - {self.name}"
+
 
 MODULES=(
     ("products", "Products"),

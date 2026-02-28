@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from django.conf import settings
-from .models import Page, Widget, WidgetType, Theme
+from .models import Page, Widget, WidgetType, Theme, WidgetStyle
+from .widget_builder_catalog import (
+    get_default_payload,
+    get_style_presets,
+    get_visual_schema,
+    get_widget_icon,
+)
 
 
 class WidgetConfigSerializer(serializers.Serializer):
@@ -207,16 +213,100 @@ class ThemeSerializer(serializers.ModelSerializer):
         return result
 
 
+class WidgetStyleSerializer(serializers.ModelSerializer):
+    preview_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = WidgetStyle
+        fields = [
+            "id",
+            "key",
+            "name",
+            "description",
+            "preview_image",
+            "preview_url",
+            "order",
+            "is_active",
+            "default_widget_config",
+            "default_components_config",
+            "default_extra_request_params",
+        ]
+
+    def _file_to_url(self, file_field):
+        if not file_field:
+            return None
+        url = getattr(file_field, "url", None) or getattr(file_field, "name", None) or str(file_field)
+        if not url:
+            return None
+        if not isinstance(url, str):
+            url = str(url)
+        if url.startswith(("http://", "https://")):
+            return url
+        base = getattr(settings, "API_URL_BASE", "") or ""
+        return f"{base.rstrip('/')}/{url.lstrip('/')}" if base else url
+
+    def get_preview_url(self, obj):
+        if obj.preview_image and obj.preview_image.file:
+            return self._file_to_url(obj.preview_image.file)
+        return None
+
+
 class WidgetTypeSerializer(serializers.ModelSerializer):
     """
     Serializer for WidgetType model
     """
     theme_name = serializers.CharField(source='theme.name', read_only=True)
+    icon = serializers.SerializerMethodField()
+    visual_schema = serializers.SerializerMethodField()
+    style_presets = serializers.SerializerMethodField()
+    default_payload = serializers.SerializerMethodField()
     
     class Meta:
         model = WidgetType
-        fields = ['id', 'name', 'is_layout','description', 'theme', 'theme_name', 
-                  'thumbnail', 'is_active']
+        fields = [
+            'id',
+            'name',
+            'is_layout',
+            'description',
+            'theme',
+            'theme_name',
+            'thumbnail',
+            'icon',
+            'visual_schema',
+            'default_payload',
+            'style_presets',
+            'is_active',
+        ]
+
+    def get_icon(self, obj):
+        return obj.icon or get_widget_icon(obj.name)
+
+    def get_visual_schema(self, obj):
+        if obj.visual_schema:
+            return obj.visual_schema
+        return get_visual_schema(obj.name)
+
+    def get_default_payload(self, obj):
+        payload = get_default_payload(obj.name)
+        if obj.default_widget_config:
+            payload["widget_config"] = obj.default_widget_config
+        if obj.default_components_config:
+            payload["components_config"] = obj.default_components_config
+        if obj.default_extra_request_params:
+            payload["extra_request_params"] = obj.default_extra_request_params
+        return payload
+
+    def get_style_presets(self, obj):
+        if hasattr(obj, "_prefetched_objects_cache") and "styles" in obj._prefetched_objects_cache:
+            styles = sorted(
+                [s for s in obj.styles.all() if s.is_active],
+                key=lambda s: (s.order, s.name),
+            )
+        else:
+            styles = list(obj.styles.filter(is_active=True).order_by("order", "name"))
+        if styles:
+            return WidgetStyleSerializer(styles, many=True, context=self.context).data
+        return get_style_presets(obj.name)
 
 
 class WidgetSerializer(serializers.ModelSerializer):

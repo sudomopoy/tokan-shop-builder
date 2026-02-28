@@ -13,6 +13,7 @@ from core.permissions import IsStoreOwnerOnly
 
 from .models import Page, Widget, WidgetType, Theme
 from .path_utils import match_path
+from .widget_builder_catalog import get_default_payload, get_visual_schema, get_widget_icon
 
 THEME_SLUG_CACHE_TTL = getattr(
     settings, "THEME_SLUG_CACHE_TTL", 3 if settings.DEBUG else 60 * 10
@@ -234,6 +235,7 @@ class PageViewSet(viewsets.ModelViewSet):
         default_widget_types = [
             ('layout', True),
             ('slider', False),
+            ('menu', False),
             ('product.listview', False),
             ('product.detail', False),
             ('product.search', False),
@@ -254,17 +256,52 @@ class PageViewSet(viewsets.ModelViewSet):
             ('static.500', False),
             ('static.403', False),
             ('reservation', False),
+            ('content.text', False),
+            ('content.image', False),
+            ('form.builder', False),
         ]
 
         with transaction.atomic():
             # Ensure widget types exist
             for wt_name, is_layout in default_widget_types:
-                _, created = WidgetType.objects.get_or_create(
+                default_payload = get_default_payload(wt_name)
+                defaults = {
+                    'is_layout': is_layout,
+                    'is_active': True,
+                    'icon': get_widget_icon(wt_name),
+                    'visual_schema': get_visual_schema(wt_name),
+                    'default_widget_config': default_payload.get('widget_config', {}),
+                    'default_components_config': default_payload.get('components_config', {}),
+                    'default_extra_request_params': default_payload.get('extra_request_params', {}),
+                }
+                widget_type, created = WidgetType.objects.get_or_create(
                     name=wt_name,
-                    defaults={'is_layout': is_layout, 'is_active': True}
+                    defaults=defaults,
                 )
                 if created:
                     result['widget_types_created'] += 1
+                else:
+                    update_fields = []
+                    if widget_type.is_layout != is_layout:
+                        widget_type.is_layout = is_layout
+                        update_fields.append('is_layout')
+                    if not widget_type.icon:
+                        widget_type.icon = defaults['icon']
+                        update_fields.append('icon')
+                    if not widget_type.visual_schema:
+                        widget_type.visual_schema = defaults['visual_schema']
+                        update_fields.append('visual_schema')
+                    if not widget_type.default_widget_config and defaults['default_widget_config']:
+                        widget_type.default_widget_config = defaults['default_widget_config']
+                        update_fields.append('default_widget_config')
+                    if not widget_type.default_components_config and defaults['default_components_config']:
+                        widget_type.default_components_config = defaults['default_components_config']
+                        update_fields.append('default_components_config')
+                    if not widget_type.default_extra_request_params and defaults['default_extra_request_params']:
+                        widget_type.default_extra_request_params = defaults['default_extra_request_params']
+                        update_fields.append('default_extra_request_params')
+                    if update_fields:
+                        widget_type.save(update_fields=update_fields)
 
             wt_by_name = {wt.name: wt for wt in WidgetType.objects.filter(name__in=[n for n, _ in default_widget_types])}
             layout_type = wt_by_name.get('layout')
@@ -401,13 +438,96 @@ class WidgetTypeViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Filter widget types by theme if provided
         """
-        queryset = super().get_queryset().select_related('theme')
+        queryset = super().get_queryset().select_related('theme').prefetch_related('styles__preview_image')
 
         theme_id = self.request.query_params.get('theme')
         if theme_id:
-            queryset = queryset.filter(theme_id=theme_id)
+            queryset = queryset.filter(Q(theme_id=theme_id) | Q(theme__isnull=True))
 
         return queryset.filter(is_active=True)
+
+    def _resolve_store(self):
+        store = getattr(self.request, 'store', None)
+        if store:
+            return store
+        store_id = self.request.query_params.get('store')
+        if store_id:
+            from store.models import Store
+            try:
+                return Store.objects.get(pk=store_id)
+            except (Store.DoesNotExist, ValueError):
+                return None
+        user = getattr(self.request, 'user', None)
+        if not user or not user.is_authenticated:
+            return None
+        su = (
+            StoreUser.objects.filter(user=user, level__gte=1)
+            .select_related('store')
+            .order_by('-level', '-register_at')
+            .first()
+        )
+        return su.store if su else None
+
+    @action(detail=False, methods=['get'], url_path='builder-options')
+    def builder_options(self, request):
+        """
+        Return entity options used by visual widget builder.
+        GET /page/widget-types/builder-options/?sources=slider,menu,page,category,product,article
+        """
+        store = self._resolve_store()
+        if not store:
+            return Response({'sources': {}}, status=status.HTTP_200_OK)
+
+        sources_raw = request.query_params.get('sources')
+        if sources_raw:
+            requested_sources = {s.strip() for s in sources_raw.split(',') if s.strip()}
+        else:
+            requested_sources = {'slider', 'menu', 'page', 'category', 'product', 'article'}
+
+        result = {}
+
+        if 'slider' in requested_sources:
+            from slider.models import Slider
+            result['slider'] = [
+                {'value': str(item.id), 'label': item.title or f"Slider {item.id}"}
+                for item in Slider.objects.filter(store=store).order_by('-updated_at')[:300]
+            ]
+
+        if 'menu' in requested_sources:
+            from menu.models import Menu
+            result['menu'] = [
+                {'value': str(item.id), 'label': item.title or item.key or f"Menu {item.id}"}
+                for item in Menu.objects.filter(store=store).order_by('-updated_at')[:300]
+            ]
+
+        if 'page' in requested_sources:
+            result['page'] = [
+                {'value': str(item.id), 'label': item.title or item.path, 'path': item.path}
+                for item in Page.objects.filter(store=store).order_by('path')[:500]
+            ]
+
+        if 'category' in requested_sources:
+            from category.models import Category
+            result['category'] = [
+                {'value': str(item.id), 'label': item.name, 'module': item.module}
+                for item in Category.objects.filter(store=store).order_by('name')[:500]
+            ]
+
+        if 'product' in requested_sources:
+            from product.models import Product
+            result['product'] = [
+                {'value': str(item.id), 'label': item.title}
+                for item in Product.objects.filter(store=store).order_by('-updated_at')[:500]
+            ]
+
+        if 'article' in requested_sources:
+            from article.models import Article
+            result['article'] = [
+                {'value': str(item.id), 'label': item.title, 'slug': item.slug}
+                for item in Article.objects.filter(store=store).order_by('-updated_at')[:500]
+            ]
+
+        return Response({'sources': result}, status=status.HTTP_200_OK)
 
 
 class ThemeViewSet(viewsets.ReadOnlyModelViewSet):

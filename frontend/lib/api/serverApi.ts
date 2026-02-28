@@ -26,6 +26,7 @@ export type { Product, ProductListResponse } from "./productApi";
 export type { Category } from "./categoryApi";
 export type { Article } from "./articleApi";
 export type { Slider, Slide } from "./sliderApi";
+export type { Menu } from "./menuApi";
 
 export const createServerApi = (hostHeader: string | null) => {
   const client = createServerClient(hostHeader);
@@ -74,6 +75,16 @@ export const createServerApi = (hostHeader: string | null) => {
     async getSlider(id: string) {
       try {
         const { data } = await client.get(`/slider/sliders/${id}/`);
+        return data;
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err) && err.response?.status === 404) return null;
+        throw err;
+      }
+    },
+
+    async getMenu(id: string) {
+      try {
+        const { data } = await client.get(`/menu/menus/${encodeURIComponent(id)}/`);
         return data;
       } catch (err: unknown) {
         if (axios.isAxiosError(err) && err.response?.status === 404) return null;

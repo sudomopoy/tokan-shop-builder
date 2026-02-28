@@ -31,7 +31,65 @@ export type WidgetTypeDto = {
   theme?: string | number | null;
   theme_name?: string;
   thumbnail?: unknown;
+  icon?: string | null;
+  visual_schema?: WidgetVisualSchema;
+  default_payload?: WidgetDefaultPayload;
+  style_presets?: WidgetStylePresetDto[];
   is_active: boolean;
+};
+
+export type WidgetStylePresetDto = {
+  id?: string | number;
+  key: string;
+  name: string;
+  description?: string | null;
+  preview_image?: unknown;
+  preview_url?: string | null;
+  order?: number;
+  is_active?: boolean;
+  default_widget_config?: Record<string, unknown>;
+  default_components_config?: Record<string, unknown>;
+  default_extra_request_params?: Record<string, unknown>;
+};
+
+export type WidgetVisualField = {
+  key: string;
+  type:
+    | "text"
+    | "textarea"
+    | "number"
+    | "switch"
+    | "select"
+    | "entity_select"
+    | "rich_text"
+    | "form_fields";
+  label: string;
+  required?: boolean;
+  source?: string;
+  placeholder?: string;
+  help_text?: string;
+  default?: unknown;
+  min?: number;
+  max?: number;
+  options?: Array<{ value: string; label: string }>;
+};
+
+export type WidgetVisualGroup = {
+  key: string;
+  label: string;
+  target: "widget_config" | "components_config" | "extra_request_params";
+  fields: WidgetVisualField[];
+};
+
+export type WidgetVisualSchema = {
+  version?: number;
+  groups?: WidgetVisualGroup[];
+};
+
+export type WidgetDefaultPayload = {
+  widget_config?: Record<string, unknown>;
+  components_config?: Record<string, unknown>;
+  extra_request_params?: Record<string, unknown>;
 };
 
 export type WidgetDto = {
@@ -72,6 +130,16 @@ function asPaginated<T>(
 }
 
 export type PageByPathResponse = PageConfig & { theme?: string };
+
+export type WidgetBuilderOption = {
+  value: string;
+  label: string;
+  [key: string]: unknown;
+};
+
+export type WidgetBuilderOptionsResponse = {
+  sources: Record<string, WidgetBuilderOption[]>;
+};
 
 export const pageApi = {
   async getByPath(
@@ -141,6 +209,22 @@ export const pageApi = {
       return (data as any).results as WidgetTypeDto[];
     }
     return [];
+  },
+
+  async getBuilderOptions(params?: { sources?: string[]; store?: string | number }): Promise<WidgetBuilderOptionsResponse> {
+    const query: Record<string, unknown> = {};
+    if (params?.sources?.length) {
+      query.sources = params.sources.join(",");
+    }
+    if (params?.store != null) {
+      query.store = params.store;
+    }
+    const { data } = await apiClient.get<WidgetBuilderOptionsResponse>("/page/widget-types/builder-options/", {
+      params: query,
+    });
+    return data && typeof data === "object" && "sources" in data
+      ? data
+      : { sources: {} };
   },
 
   async listWidgets(params?: { page_id?: string | number; page_size?: number; [key: string]: unknown }): Promise<WidgetListResponse> {

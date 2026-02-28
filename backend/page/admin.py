@@ -1,7 +1,17 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
-from .models import Theme, ThemeCategory, ThemeTag, ThemeGalleryImage, Page, WidgetType, Widget, WidgetTemplate
+from .models import (
+    Theme,
+    ThemeCategory,
+    ThemeTag,
+    ThemeGalleryImage,
+    Page,
+    WidgetType,
+    WidgetStyle,
+    Widget,
+    WidgetTemplate,
+)
 
 
 @admin.register(ThemeCategory)
@@ -43,10 +53,19 @@ class PageAdmin(ImportExportModelAdmin):
 
 @admin.register(WidgetType)
 class WidgetTypeAdmin(ImportExportModelAdmin):
-    list_display = ["name", "is_active", "created_at"]
+    list_display = ["name", "is_layout", "icon", "is_active", "created_at"]
     list_filter = ["is_active"]
     search_fields = ["name", "description"]
     raw_id_fields = ["thumbnail"]
+
+
+@admin.register(WidgetStyle)
+class WidgetStyleAdmin(ImportExportModelAdmin):
+    list_display = ["widget_type", "name", "key", "order", "is_active", "created_at"]
+    list_filter = ["is_active", "widget_type"]
+    search_fields = ["name", "key", "widget_type__name"]
+    raw_id_fields = ["widget_type", "preview_image"]
+    ordering = ["widget_type", "order", "name"]
 
 
 @admin.register(Widget)

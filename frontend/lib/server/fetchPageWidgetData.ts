@@ -40,6 +40,7 @@ export async function fetchPageWidgetData(
     const id = pathParams.id ?? wc.id;
     const slug = pathParams.slug ?? wc.slug;
     const sliderId = typeof wc.slider_id === "string" ? wc.slider_id : null;
+    const menuId = typeof wc.menu_id === "string" ? wc.menu_id : null;
 
     switch (cfg.widget) {
       case "product.detail":
@@ -71,7 +72,7 @@ export async function fetchPageWidgetData(
       case "blog.detail":
         if (slug) {
           promises.push(
-            api.getArticle(slug).then((a) => {
+            api.getArticle(String(slug)).then((a) => {
               if (a) setNested(result, "blog.detail", a);
             })
           );
@@ -82,6 +83,15 @@ export async function fetchPageWidgetData(
           promises.push(
             api.getSlider(sliderId).then((s) => {
               if (s) setNested(result, `slider.${sliderId}`, s);
+            })
+          );
+        }
+        break;
+      case "menu":
+        if (menuId) {
+          promises.push(
+            api.getMenu(menuId).then((menu) => {
+              if (menu) setNested(result, `menu.${menuId}`, menu);
             })
           );
         }

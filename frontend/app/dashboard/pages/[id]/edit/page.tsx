@@ -15,11 +15,17 @@ import {
 } from "lucide-react";
 
 import { pageApi, storeApi } from "@/lib/api";
+import type {
+  WidgetBuilderOption,
+  WidgetDto,
+  WidgetTypeDto,
+} from "@/lib/api/pageApi";
 import { revalidatePage, revalidateStorePages } from "@/lib/server/storefrontCache";
 import type { PageConfig } from "@/themes/types";
-import type { WidgetDto, WidgetTypeDto } from "@/lib/api/pageApi";
-import JsonEditorField from "@/components/dashboard/JsonEditorField";
 import SearchableSelect from "@/components/dashboard/SearchableSelect";
+import WidgetVisualEditor, {
+  type WidgetPayloadState,
+} from "@/components/dashboard/WidgetVisualEditor";
 
 type PageFormState = {
   path: string;
@@ -31,39 +37,73 @@ type PageFormState = {
   is_active: boolean;
 };
 
+type NewWidgetFormState = {
+  kind: "content" | "layout";
+  widgetTypeId: string;
+  payload: WidgetPayloadState;
+};
+
+const EMPTY_WIDGET_PAYLOAD: WidgetPayloadState = {
+  widget_config: {},
+  components_config: {},
+  extra_request_params: {},
+};
+
 function normalizePath(input: string): string {
   const raw = (input || "").trim();
   if (!raw) return "/";
   return raw.startsWith("/") ? raw : `/${raw}`;
 }
 
-function safeString(v: unknown): string {
-  return typeof v === "string" ? v : "";
+function safeString(value: unknown): string {
+  return typeof value === "string" ? value : "";
 }
 
-function prettyJson(v: unknown): string {
-  if (!v || typeof v !== "object") return "{}";
-  try {
-    return JSON.stringify(v, null, 2);
-  } catch {
-    return "{}";
+function asObject(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
   }
+  return value as Record<string, unknown>;
 }
 
-function parseJsonObject(text: string): Record<string, unknown> {
-  const raw = (text || "").trim();
-  if (!raw) return {};
-  const parsed = JSON.parse(raw);
-  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw new Error("JSON باید یک object باشد");
-  }
-  return parsed as Record<string, unknown>;
+function clonePayload(payload: WidgetPayloadState): WidgetPayloadState {
+  return {
+    widget_config: { ...asObject(payload.widget_config) },
+    components_config: { ...asObject(payload.components_config) },
+    extra_request_params: { ...asObject(payload.extra_request_params) },
+  };
 }
 
 function resolvePagePath(page: PageConfig | null): string {
   if (!page) return "/";
   const anyPage = page as any;
   return normalizePath(anyPage.path ?? page.page ?? "/");
+}
+
+function payloadFromWidget(widget: WidgetDto): WidgetPayloadState {
+  return {
+    widget_config: asObject(widget.widget_config),
+    components_config: asObject(widget.components_config),
+    extra_request_params: asObject(widget.extra_request_params),
+  };
+}
+
+function payloadFromWidgetType(widgetType: WidgetTypeDto | null): WidgetPayloadState {
+  const defaults = asObject(widgetType?.default_payload);
+  return {
+    widget_config: asObject(defaults.widget_config),
+    components_config: asObject(defaults.components_config),
+    extra_request_params: asObject(defaults.extra_request_params),
+  };
+}
+
+function isLayoutWidget(widget: WidgetDto, widgetTypesById: Map<string, WidgetTypeDto>): boolean {
+  return Boolean(widgetTypesById.get(String(widget.widget_type))?.is_layout);
+}
+
+function getWidgetTypeName(widget: WidgetDto, widgetTypesById: Map<string, WidgetTypeDto>): string {
+  const widgetType = widgetTypesById.get(String(widget.widget_type));
+  return widgetType?.name ?? widget.widget_type_name ?? String(widget.widget_type);
 }
 
 export default function DashboardPageBuilderEdit() {
@@ -89,61 +129,110 @@ export default function DashboardPageBuilderEdit() {
   const [widgetError, setWidgetError] = useState<string | null>(null);
   const [widgetBusy, setWidgetBusy] = useState(false);
 
+  const [entityOptions, setEntityOptions] = useState<Record<string, WidgetBuilderOption[]>>({});
+  const [storeDomain, setStoreDomain] = useState<string | null>(null);
+
   const [previewPath, setPreviewPath] = useState<string>("");
   const [previewReloadKey, setPreviewReloadKey] = useState(0);
   const [originalPath, setOriginalPath] = useState<string>("/");
 
+  const [newWidgetForm, setNewWidgetForm] = useState<NewWidgetFormState>({
+    kind: "content",
+    widgetTypeId: "",
+    payload: clonePayload(EMPTY_WIDGET_PAYLOAD),
+  });
+
+  const [editingWidgetId, setEditingWidgetId] = useState<string | null>(null);
+  const [editWidgetTypeId, setEditWidgetTypeId] = useState<string>("");
+  const [editPayload, setEditPayload] = useState<WidgetPayloadState>(
+    clonePayload(EMPTY_WIDGET_PAYLOAD),
+  );
+
   const widgetTypesById = useMemo(() => {
     const map = new Map<string, WidgetTypeDto>();
-    for (const t of widgetTypes) map.set(String(t.id), t);
+    for (const widgetType of widgetTypes) {
+      map.set(String(widgetType.id), widgetType);
+    }
     return map;
   }, [widgetTypes]);
 
   const layoutWidgets = useMemo(() => {
-    return widgets.filter((w) => widgetTypesById.get(String(w.widget_type))?.is_layout);
+    return widgets.filter((widget) => isLayoutWidget(widget, widgetTypesById));
   }, [widgets, widgetTypesById]);
 
   const contentWidgets = useMemo(() => {
     return widgets
-      .filter((w) => !widgetTypesById.get(String(w.widget_type))?.is_layout)
+      .filter((widget) => !isLayoutWidget(widget, widgetTypesById))
       .slice()
       .sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
   }, [widgets, widgetTypesById]);
 
-  const activeWidgetTypes = useMemo(() => widgetTypes.filter((t) => t.is_active), [widgetTypes]);
+  const activeWidgetTypes = useMemo(() => widgetTypes.filter((item) => item.is_active), [widgetTypes]);
   const activeLayoutTypes = useMemo(
-    () => activeWidgetTypes.filter((t) => t.is_layout),
+    () => activeWidgetTypes.filter((item) => item.is_layout),
     [activeWidgetTypes],
   );
   const activeContentTypes = useMemo(
-    () => activeWidgetTypes.filter((t) => !t.is_layout),
+    () => activeWidgetTypes.filter((item) => !item.is_layout),
     [activeWidgetTypes],
   );
 
-  const [newWidgetForm, setNewWidgetForm] = useState<{
-    kind: "content" | "layout";
-    widgetTypeId: string;
-    widget_config: string;
-    components_config: string;
-    extra_request_params: string;
-  }>({
-    kind: "content",
-    widgetTypeId: "",
-    widget_config: "{}",
-    components_config: "{}",
-    extra_request_params: "{}",
-  });
+  const selectedNewWidgetType = useMemo(() => {
+    return widgetTypesById.get(newWidgetForm.widgetTypeId) ?? null;
+  }, [newWidgetForm.widgetTypeId, widgetTypesById]);
 
-  const [editingWidgetId, setEditingWidgetId] = useState<string | null>(null);
-  const [editWidgetForm, setEditWidgetForm] = useState<{
-    widget_config: string;
-    components_config: string;
-    extra_request_params: string;
-  }>({
-    widget_config: "{}",
-    components_config: "{}",
-    extra_request_params: "{}",
-  });
+  const selectedEditWidgetType = useMemo(() => {
+    return widgetTypesById.get(editWidgetTypeId) ?? null;
+  }, [editWidgetTypeId, widgetTypesById]);
+
+  const currentPath = resolvePagePath(page);
+  const previewSrc = normalizePath(previewPath || currentPath);
+
+  const resolveStoreDomain = async (): Promise<string | null> => {
+    if (storeDomain) return storeDomain;
+    try {
+      const store = await storeApi.getCurrentStore();
+      if (!store) return null;
+      const domain =
+        store.internal_domain ||
+        (store.external_domain ? `${store.name}.${store.external_domain}` : null);
+      setStoreDomain(domain);
+      return domain;
+    } catch {
+      return null;
+    }
+  };
+
+  const revalidateSmart = async (targetPath: string, fullStore = false) => {
+    const domain = await resolveStoreDomain();
+    if (!domain) return;
+    if (fullStore || targetPath.includes(":")) {
+      await revalidateStorePages(domain);
+      return;
+    }
+    await revalidatePage(domain, normalizePath(targetPath));
+  };
+
+  const fetchStoreContext = async () => {
+    try {
+      const store = await storeApi.getCurrentStore();
+      const domain =
+        store?.internal_domain ||
+        (store?.external_domain ? `${store?.name}.${store.external_domain}` : null);
+      setStoreDomain(domain ?? null);
+      const themeId = (store as any)?.theme ?? null;
+      return themeId;
+    } catch {
+      setStoreDomain(null);
+      return null;
+    }
+  };
+
+  const refreshWidgets = async () => {
+    if (!pageId) return;
+    const widgetsRes = await pageApi.listWidgets({ page_id: pageId, page_size: 500 });
+    setWidgets(widgetsRes.results ?? []);
+  };
 
   const fetchAll = async () => {
     if (!pageId) return;
@@ -151,18 +240,25 @@ export default function DashboardPageBuilderEdit() {
     setPageError(null);
     setWidgetError(null);
     try {
-      const [pageRes, widgetTypesRes, widgetsRes] = await Promise.all([
+      const themeId = await fetchStoreContext();
+      const widgetTypeParams = themeId ? { theme: themeId } : undefined;
+      const optionsPromise = pageApi.getBuilderOptions().catch(() => ({ sources: {} }));
+      const [pageRes, widgetTypesRes, widgetsRes, optionsRes] = await Promise.all([
         pageApi.get(pageId),
-        pageApi.listWidgetTypes(),
+        pageApi.listWidgetTypes(widgetTypeParams),
         pageApi.listWidgets({ page_id: pageId, page_size: 500 }),
+        optionsPromise,
       ]);
+
       setPage(pageRes);
       setWidgetTypes(widgetTypesRes ?? []);
       setWidgets(widgetsRes.results ?? []);
+      setEntityOptions(optionsRes?.sources ?? {});
 
       const anyPage = pageRes as any;
       const initialPath = normalizePath(anyPage.path ?? pageRes.page ?? "/");
       setOriginalPath(initialPath);
+      setPreviewPath(initialPath.includes(":") ? "" : initialPath);
 
       setPageForm({
         path: initialPath,
@@ -173,13 +269,13 @@ export default function DashboardPageBuilderEdit() {
         meta_keywords: safeString((pageRes as any).metaKeywords),
         is_active: typeof (pageRes as any).isActive === "boolean" ? (pageRes as any).isActive : true,
       });
-      setPreviewPath(initialPath.includes(":") ? "" : initialPath);
     } catch (err) {
       console.error(err);
       setPage(null);
       setWidgetTypes([]);
       setWidgets([]);
-      setPageError("خطا در دریافت اطلاعات صفحه");
+      setEntityOptions({});
+      setPageError("Failed to load page builder data.");
     } finally {
       setLoading(false);
     }
@@ -190,25 +286,15 @@ export default function DashboardPageBuilderEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageId]);
 
-  const getStoreDomain = async (): Promise<string | null> => {
-    try {
-      const store = await storeApi.getCurrentStore();
-      if (!store) return null;
-      return store.internal_domain || (store.external_domain ? `${store.name}.${store.external_domain}` : null);
-    } catch {
-      return null;
-    }
-  };
-
-  const handleSavePage = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSavePage = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!pageId) return;
     setPageSaving(true);
     setPageError(null);
     try {
-      const newPath = normalizePath(pageForm.path);
+      const nextPath = normalizePath(pageForm.path);
       const updated = await pageApi.update(pageId, {
-        path: newPath,
+        path: nextPath,
         title: pageForm.title || null,
         description: pageForm.description || null,
         meta_title: pageForm.meta_title || null,
@@ -217,118 +303,105 @@ export default function DashboardPageBuilderEdit() {
         is_active: pageForm.is_active,
       });
       setPage(updated);
-      setOriginalPath(newPath);
-      const path = resolvePagePath(updated);
-      setPreviewPath(path.includes(":") ? previewPath : path);
-      const domain = await getStoreDomain();
-      if (domain) {
-        if (newPath !== originalPath) {
-          await revalidateStorePages(domain);
-        } else {
-          await revalidatePage(domain, newPath);
-        }
+      setOriginalPath(nextPath);
+      if (!nextPath.includes(":")) {
+        setPreviewPath(nextPath);
       }
-      alert("اطلاعات صفحه ذخیره شد");
+      await revalidateSmart(nextPath, nextPath !== originalPath);
+      alert("Page details saved.");
     } catch (err: any) {
       console.error(err);
       const msg =
         err?.response?.data?.path?.[0] ||
         err?.response?.data?.detail ||
-        "خطا در ذخیره اطلاعات صفحه";
+        "Failed to save page details.";
       setPageError(Array.isArray(msg) ? msg.join(", ") : String(msg));
     } finally {
       setPageSaving(false);
     }
   };
 
-  const openWidgetEditor = (widget: WidgetDto) => {
-    setEditingWidgetId(String(widget.id));
-    setEditWidgetForm({
-      widget_config: prettyJson(widget.widget_config),
-      components_config: prettyJson(widget.components_config),
-      extra_request_params: prettyJson(widget.extra_request_params),
+  const onChangeNewWidgetType = (widgetTypeId: string, kind: "content" | "layout") => {
+    const widgetType = widgetTypesById.get(widgetTypeId) ?? null;
+    setNewWidgetForm({
+      kind,
+      widgetTypeId,
+      payload: payloadFromWidgetType(widgetType),
     });
   };
 
-  const closeWidgetEditor = () => {
-    setEditingWidgetId(null);
-  };
-
-  const refreshWidgets = async () => {
-    if (!pageId) return;
-    setWidgetBusy(true);
-    setWidgetError(null);
-    try {
-      const widgetsRes = await pageApi.listWidgets({ page_id: pageId, page_size: 500 });
-      setWidgets(widgetsRes.results ?? []);
-    } catch (err) {
-      console.error(err);
-      setWidgetError("خطا در دریافت لیست ویجت‌ها");
-    } finally {
-      setWidgetBusy(false);
-    }
-  };
-
-  const handleCreateWidget = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCreateWidget = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!pageId) return;
     setWidgetBusy(true);
     setWidgetError(null);
     try {
       const widgetTypeId = newWidgetForm.widgetTypeId;
-      if (!widgetTypeId) throw new Error("نوع ویجت را انتخاب کنید");
-
-      const widget_config = parseJsonObject(newWidgetForm.widget_config);
-      const components_config = parseJsonObject(newWidgetForm.components_config);
-      const extra_request_params = parseJsonObject(newWidgetForm.extra_request_params);
+      if (!widgetTypeId) throw new Error("Please select a widget type.");
 
       const isLayout = newWidgetForm.kind === "layout";
       if (isLayout && layoutWidgets.length > 0) {
-        throw new Error("برای هر صفحه فقط یک ویجت Layout در نظر گرفته شده است.");
+        throw new Error("Only one layout widget is allowed per page.");
       }
 
-      const maxIndex = (isLayout ? layoutWidgets : contentWidgets).reduce(
-        (max, w) => Math.max(max, w.index ?? 0),
-        0,
-      );
+      const targetList = isLayout ? layoutWidgets : contentWidgets;
+      const maxIndex = targetList.reduce((max, item) => Math.max(max, item.index ?? 0), 0);
 
       await pageApi.createWidget({
         page: pageId,
         widget_type: widgetTypeId,
         index: isLayout ? 0 : maxIndex + 1,
         is_active: true,
-        widget_config,
-        components_config,
-        extra_request_params,
+        widget_config: asObject(newWidgetForm.payload.widget_config),
+        components_config: asObject(newWidgetForm.payload.components_config),
+        extra_request_params: asObject(newWidgetForm.payload.extra_request_params),
       });
 
-      setNewWidgetForm((f) => ({ ...f, widgetTypeId: "", widget_config: "{}", components_config: "{}", extra_request_params: "{}" }));
       await refreshWidgets();
-      const domain = await getStoreDomain();
-      await revalidatePage(domain, resolvePagePath(page));
+      await revalidateSmart(resolvePagePath(page));
+
+      setNewWidgetForm((prev) => ({
+        ...prev,
+        widgetTypeId: "",
+        payload: clonePayload(EMPTY_WIDGET_PAYLOAD),
+      }));
     } catch (err: any) {
       console.error(err);
-      setWidgetError(err?.message ? String(err.message) : "خطا در ایجاد ویجت");
+      setWidgetError(err?.message ? String(err.message) : "Failed to create widget.");
     } finally {
       setWidgetBusy(false);
     }
   };
 
   const handleDeleteWidget = async (widget: WidgetDto) => {
-    if (!confirm("آیا از حذف این ویجت اطمینان دارید؟")) return;
+    if (!confirm("Delete this widget?")) return;
     setWidgetBusy(true);
     setWidgetError(null);
     try {
       await pageApi.deleteWidget(widget.id);
       await refreshWidgets();
-      const domain = await getStoreDomain();
-      await revalidatePage(domain, resolvePagePath(page));
+      await revalidateSmart(resolvePagePath(page));
+      if (editingWidgetId === String(widget.id)) {
+        setEditingWidgetId(null);
+      }
     } catch (err) {
       console.error(err);
-      setWidgetError("خطا در حذف ویجت");
+      setWidgetError("Failed to delete widget.");
     } finally {
       setWidgetBusy(false);
     }
+  };
+
+  const openWidgetEditor = (widget: WidgetDto) => {
+    setEditingWidgetId(String(widget.id));
+    setEditWidgetTypeId(String(widget.widget_type));
+    setEditPayload(payloadFromWidget(widget));
+  };
+
+  const closeWidgetEditor = () => {
+    setEditingWidgetId(null);
+    setEditWidgetTypeId("");
+    setEditPayload(clonePayload(EMPTY_WIDGET_PAYLOAD));
   };
 
   const handleSaveWidget = async () => {
@@ -336,82 +409,59 @@ export default function DashboardPageBuilderEdit() {
     setWidgetBusy(true);
     setWidgetError(null);
     try {
-      const widget_config = parseJsonObject(editWidgetForm.widget_config);
-      const components_config = parseJsonObject(editWidgetForm.components_config);
-      const extra_request_params = parseJsonObject(editWidgetForm.extra_request_params);
-
       await pageApi.updateWidget(editingWidgetId, {
-        widget_config,
-        components_config,
-        extra_request_params,
+        widget_config: asObject(editPayload.widget_config),
+        components_config: asObject(editPayload.components_config),
+        extra_request_params: asObject(editPayload.extra_request_params),
       });
-
       await refreshWidgets();
-      const domain = await getStoreDomain();
-      await revalidatePage(domain, resolvePagePath(page));
+      await revalidateSmart(resolvePagePath(page));
       closeWidgetEditor();
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setWidgetError(err?.message ? String(err.message) : "خطا در ذخیره ویجت");
+      setWidgetError("Failed to save widget.");
     } finally {
       setWidgetBusy(false);
     }
   };
 
-  const swapWidgetIndex = async (a: WidgetDto, b: WidgetDto) => {
+  const swapWidgetIndex = async (first: WidgetDto, second: WidgetDto) => {
     setWidgetBusy(true);
     setWidgetError(null);
     try {
       await Promise.all([
-        pageApi.updateWidget(a.id, { index: b.index }),
-        pageApi.updateWidget(b.id, { index: a.index }),
+        pageApi.updateWidget(first.id, { index: second.index }),
+        pageApi.updateWidget(second.id, { index: first.index }),
       ]);
       await refreshWidgets();
-      const domain = await getStoreDomain();
-      await revalidatePage(domain, resolvePagePath(page));
+      await revalidateSmart(resolvePagePath(page));
     } catch (err) {
       console.error(err);
-      setWidgetError("خطا در تغییر ترتیب ویجت‌ها");
+      setWidgetError("Failed to reorder widgets.");
     } finally {
       setWidgetBusy(false);
     }
   };
 
-  const updateLayoutToggle = async (key: "header" | "footer", value: boolean) => {
-    const layout = layoutWidgets[0];
-    if (!layout) return;
-    setWidgetBusy(true);
-    setWidgetError(null);
+  const reloadBuilderOptions = async () => {
     try {
-      const nextConfig: Record<string, unknown> = {
-        ...(layout.widget_config ?? {}),
-        [key]: value,
-      };
-      await pageApi.updateWidget(layout.id, { widget_config: nextConfig });
-      await refreshWidgets();
-      const domain = await getStoreDomain();
-      await revalidatePage(domain, resolvePagePath(page));
+      const result = await pageApi.getBuilderOptions();
+      setEntityOptions(result.sources ?? {});
     } catch (err) {
       console.error(err);
-      setWidgetError("خطا در ذخیره تنظیمات Layout");
-    } finally {
-      setWidgetBusy(false);
     }
   };
-
-  const currentPath = resolvePagePath(page);
-  const previewSrc = normalizePath(previewPath || currentPath);
 
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
       </div>
     );
   }
 
   if (!pageId) {
-    return <div className="text-gray-600">شناسه صفحه نامعتبر است.</div>;
+    return <div className="text-gray-600">Invalid page id.</div>;
   }
 
   return (
@@ -420,13 +470,13 @@ export default function DashboardPageBuilderEdit() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/pages"
-            className="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+            className="text-gray-600 hover:text-gray-900 inline-flex items-center gap-1"
           >
             <ArrowRight className="h-5 w-5" />
-            بازگشت
+            Back
           </Link>
           <div>
-            <h1 className="text-2xl font-bold">ویرایش صفحه</h1>
+            <h1 className="text-2xl font-bold">Visual Page Builder</h1>
             <p className="text-sm text-gray-500 font-mono">{currentPath}</p>
           </div>
         </div>
@@ -435,11 +485,11 @@ export default function DashboardPageBuilderEdit() {
           <a
             href={currentPath}
             target="_blank"
-            className="btn-secondary inline-flex items-center gap-2"
             rel="noreferrer"
+            className="btn-secondary inline-flex items-center gap-2"
           >
             <Eye className="h-5 w-5" />
-            پیش‌نمایش در تب جدید
+            Open page
           </a>
           <button
             type="button"
@@ -447,16 +497,15 @@ export default function DashboardPageBuilderEdit() {
             className="btn-secondary inline-flex items-center gap-2"
           >
             <RefreshCw className="h-5 w-5" />
-            بروزرسانی
+            Refresh
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
-        {/* Builder */}
         <div className="space-y-6">
           <form onSubmit={handleSavePage} className="card space-y-4">
-            <h2 className="text-lg font-semibold">مشخصات صفحه</h2>
+            <h2 className="text-lg font-semibold">Page Details</h2>
 
             {pageError && (
               <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{pageError}</div>
@@ -464,81 +513,59 @@ export default function DashboardPageBuilderEdit() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  مسیر (Path) *
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Path *</label>
                 <input
                   value={pageForm.path}
-                  onChange={(e) => setPageForm((f) => ({ ...f, path: e.target.value }))}
+                  onChange={(e) => setPageForm((prev) => ({ ...prev, path: e.target.value }))}
                   required
                   dir="ltr"
                   className="w-full ltr text-left px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">عنوان</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                 <input
                   value={pageForm.title}
-                  onChange={(e) => setPageForm((f) => ({ ...f, title: e.target.value }))}
+                  onChange={(e) => setPageForm((prev) => ({ ...prev, title: e.target.value }))}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
               <textarea
                 value={pageForm.description}
-                onChange={(e) => setPageForm((f) => ({ ...f, description: e.target.value }))}
+                onChange={(e) => setPageForm((prev) => ({ ...prev, description: e.target.value }))}
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
-            <details className="group">
-              <summary className="cursor-pointer text-sm text-blue-600 hover:text-blue-800 mb-2">
-                راهنمای قالب‌های داینامیک SEO (کلیک برای نمایش)
-              </summary>
-              <div className="p-3 bg-gray-50 rounded-lg text-sm text-gray-700 space-y-2 mb-4">
-                <p>برای صفحات داینامیک (مثل جزئیات محصول/مقاله) می‌توانید از متغیرها استفاده کنید:</p>
-                <ul className="list-disc list-inside space-y-1 font-mono text-xs">
-                  <li><code>{"{{ data.product.detail.title }}"}</code> — عنوان محصول</li>
-                  <li><code>{"{{ data.product.detail.short_description }}"}</code> — توضیح کوتاه محصول</li>
-                  <li><code>{"{{ data.blog.detail.title }}"}</code> — عنوان مقاله</li>
-                  <li><code>{"{{ data.blog.detail.description }}"}</code> — توضیحات مقاله</li>
-                </ul>
-                <p className="text-xs">اگر خالی بگذارید، به‌طور خودکار از اطلاعات ویجت صفحه پر می‌شود.</p>
-              </div>
-            </details>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Meta title</label>
                 <input
                   value={pageForm.meta_title}
-                  onChange={(e) => setPageForm((f) => ({ ...f, meta_title: e.target.value }))}
-                  placeholder="مثال: {{ data.product.detail.title }}"
+                  onChange={(e) => setPageForm((prev) => ({ ...prev, meta_title: e.target.value }))}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta Keywords</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Meta keywords</label>
                 <input
                   value={pageForm.meta_keywords}
-                  onChange={(e) => setPageForm((f) => ({ ...f, meta_keywords: e.target.value }))}
+                  onChange={(e) => setPageForm((prev) => ({ ...prev, meta_keywords: e.target.value }))}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Meta Description
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Meta description</label>
               <textarea
                 value={pageForm.meta_description}
-                onChange={(e) => setPageForm((f) => ({ ...f, meta_description: e.target.value }))}
-                placeholder="مثال: {{ data.product.detail.short_description }}"
+                onChange={(e) => setPageForm((prev) => ({ ...prev, meta_description: e.target.value }))}
                 rows={2}
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
@@ -548,102 +575,117 @@ export default function DashboardPageBuilderEdit() {
               <input
                 type="checkbox"
                 checked={pageForm.is_active}
-                onChange={(e) => setPageForm((f) => ({ ...f, is_active: e.target.checked }))}
+                onChange={(e) => setPageForm((prev) => ({ ...prev, is_active: e.target.checked }))}
               />
-              صفحه فعال باشد
+              Active page
             </label>
 
-            <div className="flex gap-3 pt-2">
+            <div className="pt-2">
               <button
                 type="submit"
                 disabled={pageSaving}
                 className="btn-primary disabled:opacity-50 inline-flex items-center gap-2"
               >
                 <Save className="h-5 w-5" />
-                {pageSaving ? "در حال ذخیره..." : "ذخیره"}
+                {pageSaving ? "Saving..." : "Save page"}
               </button>
             </div>
           </form>
 
           <div className="card space-y-4">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold">ویجت‌ها</h2>
-              <button
-                type="button"
-                onClick={refreshWidgets}
-                className="btn-secondary inline-flex items-center gap-2"
-                disabled={widgetBusy}
-              >
-                <RefreshCw className="h-5 w-5" />
-                بروزرسانی ویجت‌ها
-              </button>
+              <h2 className="text-lg font-semibold">Widgets</h2>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setWidgetBusy(true);
+                    setWidgetError(null);
+                    try {
+                      await refreshWidgets();
+                    } catch {
+                      setWidgetError("Failed to refresh widgets.");
+                    } finally {
+                      setWidgetBusy(false);
+                    }
+                  }}
+                  className="btn-secondary inline-flex items-center gap-2"
+                  disabled={widgetBusy}
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Refresh widgets
+                </button>
+                <button
+                  type="button"
+                  onClick={reloadBuilderOptions}
+                  className="btn-secondary inline-flex items-center gap-2"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Reload options
+                </button>
+              </div>
             </div>
 
             {widgetError && (
               <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{widgetError}</div>
             )}
 
-            {/* Layout widget */}
-            <div className="border border-gray-200 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold">Layout</h3>
+            <div className="rounded-lg border border-gray-200 p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold">Layout</h3>
+                <span className="text-xs text-gray-500">{layoutWidgets.length} widget</span>
+              </div>
+
               {layoutWidgets.length === 0 ? (
-                <p className="text-sm text-gray-600">
-                  هنوز هیچ ویجت Layout برای این صفحه ثبت نشده است.
-                </p>
+                <p className="text-sm text-gray-600">No layout widget assigned yet.</p>
               ) : (
-                layoutWidgets.slice(0, 1).map((w) => {
-                  const type = widgetTypesById.get(String(w.widget_type));
-                  const name = type?.name ?? w.widget_type_name ?? String(w.widget_type);
-                  const headerValue = (w.widget_config as any)?.header;
-                  const footerValue = (w.widget_config as any)?.footer;
-                  const showHeader = typeof headerValue === "boolean" ? headerValue : true;
-                  const showFooter = typeof footerValue === "boolean" ? footerValue : true;
-                  const canToggle = name === "layout";
+                layoutWidgets.slice(0, 1).map((widget) => {
+                  const name = getWidgetTypeName(widget, widgetTypesById);
+                  const isEditing = editingWidgetId === String(widget.id);
                   return (
-                    <div key={String(w.id)} className="space-y-3">
+                    <div key={String(widget.id)} className="rounded-lg border border-gray-200 p-3 space-y-3">
                       <div className="flex items-center justify-between gap-2">
                         <div className="text-sm">
-                          <span className="font-medium">نوع:</span>{" "}
-                          <code className="font-mono">{name}</code>
+                          <code className="font-mono bg-gray-50 px-2 py-1 rounded">{name}</code>
                         </div>
                         <div className="flex gap-2">
                           <button
                             type="button"
-                            onClick={() => openWidgetEditor(w)}
                             className="btn-secondary text-sm"
+                            onClick={() => (isEditing ? closeWidgetEditor() : openWidgetEditor(widget))}
+                            disabled={widgetBusy}
                           >
-                            ویرایش
+                            {isEditing ? "Close" : "Edit"}
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleDeleteWidget(w)}
                             className="btn-secondary text-sm text-red-600"
+                            onClick={() => handleDeleteWidget(widget)}
+                            disabled={widgetBusy}
                           >
-                            حذف
+                            <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
 
-                      {canToggle && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <label className="inline-flex items-center gap-2 text-sm text-gray-700">
-                            <input
-                              type="checkbox"
-                              checked={showHeader}
-                              onChange={(e) => updateLayoutToggle("header", e.target.checked)}
-                              disabled={widgetBusy}
-                            />
-                            نمایش هدر
-                          </label>
-                          <label className="inline-flex items-center gap-2 text-sm text-gray-700">
-                            <input
-                              type="checkbox"
-                              checked={showFooter}
-                              onChange={(e) => updateLayoutToggle("footer", e.target.checked)}
-                              disabled={widgetBusy}
-                            />
-                            نمایش فوتر
-                          </label>
+                      {isEditing && (
+                        <div className="space-y-3">
+                          <WidgetVisualEditor
+                            widgetType={selectedEditWidgetType}
+                            payload={editPayload}
+                            onChange={setEditPayload}
+                            entityOptions={entityOptions}
+                            disabled={widgetBusy}
+                          />
+                          <button
+                            type="button"
+                            onClick={handleSaveWidget}
+                            disabled={widgetBusy}
+                            className="btn-primary inline-flex items-center gap-2"
+                          >
+                            <Save className="h-4 w-4" />
+                            Save widget
+                          </button>
                         </div>
                       )}
                     </div>
@@ -654,138 +696,97 @@ export default function DashboardPageBuilderEdit() {
               <details className="pt-2">
                 <summary className="cursor-pointer text-sm font-medium inline-flex items-center gap-2">
                   <Plus className="h-4 w-4" />
-                  افزودن Layout
+                  Add layout widget
                 </summary>
                 <form onSubmit={handleCreateWidget} className="mt-3 space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      نوع Layout
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Layout type</label>
                     <SearchableSelect
-                      options={activeLayoutTypes.map((t) => ({
-                        value: String(t.id),
-                        label: t.name,
+                      options={activeLayoutTypes.map((item) => ({
+                        value: String(item.id),
+                        label: item.name,
                       }))}
                       value={newWidgetForm.kind === "layout" ? newWidgetForm.widgetTypeId : ""}
-                      onChange={(v) =>
-                        setNewWidgetForm((f) => ({
-                          ...f,
-                          kind: "layout",
-                          widgetTypeId: v,
-                        }))
-                      }
-                      placeholder="انتخاب کنید..."
+                      onChange={(widgetTypeId) => onChangeNewWidgetType(widgetTypeId, "layout")}
                       disabled={widgetBusy}
-                      searchPlaceholder="جستجوی نوع Layout..."
+                      placeholder="Select..."
+                      searchPlaceholder="Search layout..."
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div>
-                      <JsonEditorField
-                        label="widget_config (JSON)"
-                        value={newWidgetForm.widget_config}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, widget_config: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                    <div>
-                      <JsonEditorField
-                        label="components_config (JSON)"
-                        value={newWidgetForm.components_config}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, components_config: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                    <div>
-                      <JsonEditorField
-                        label="extra_request_params (JSON)"
-                        value={newWidgetForm.extra_request_params}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, extra_request_params: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                  </div>
+                  <WidgetVisualEditor
+                    widgetType={newWidgetForm.kind === "layout" ? selectedNewWidgetType : null}
+                    payload={newWidgetForm.payload}
+                    onChange={(payload) =>
+                      setNewWidgetForm((prev) => ({ ...prev, kind: "layout", payload }))
+                    }
+                    entityOptions={entityOptions}
+                    disabled={widgetBusy}
+                  />
 
                   <button
                     type="submit"
+                    disabled={widgetBusy || !newWidgetForm.widgetTypeId}
                     className="btn-primary disabled:opacity-50"
-                    disabled={widgetBusy}
                   >
-                    افزودن Layout
+                    Add layout
                   </button>
                 </form>
               </details>
             </div>
 
-            {/* Content widgets list */}
-            <div className="border border-gray-200 rounded-lg p-4 space-y-3">
+            <div className="rounded-lg border border-gray-200 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Content</h3>
-                <span className="text-sm text-gray-500">{contentWidgets.length} ویجت</span>
+                <span className="text-sm text-gray-500">{contentWidgets.length} widget</span>
               </div>
 
               {contentWidgets.length === 0 ? (
-                <p className="text-sm text-gray-600">هنوز ویجتی برای محتوای صفحه ثبت نشده است.</p>
+                <p className="text-sm text-gray-600">No content widgets yet.</p>
               ) : (
                 <div className="space-y-2">
-                  {contentWidgets.map((w, idx) => {
-                    const type = widgetTypesById.get(String(w.widget_type));
-                    const name = type?.name ?? w.widget_type_name ?? String(w.widget_type);
-                    const isEditing = editingWidgetId === String(w.id);
+                  {contentWidgets.map((widget, index) => {
+                    const name = getWidgetTypeName(widget, widgetTypesById);
+                    const isEditing = editingWidgetId === String(widget.id);
                     return (
-                      <div
-                        key={String(w.id)}
-                        className="border border-gray-200 rounded-lg p-3"
-                      >
+                      <div key={String(widget.id)} className="border border-gray-200 rounded-lg p-3 space-y-3">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="text-sm">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <code className="font-mono bg-gray-50 px-2 py-1 rounded">
-                                {name}
-                              </code>
-                              <span className="text-gray-500 text-xs">index: {w.index}</span>
+                              <code className="font-mono bg-gray-50 px-2 py-1 rounded">{name}</code>
+                              <span className="text-gray-500 text-xs">index: {widget.index}</span>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
                             <button
                               type="button"
                               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded disabled:opacity-40"
-                              title="بالا"
-                              disabled={widgetBusy || idx === 0}
-                              onClick={() => swapWidgetIndex(w, contentWidgets[idx - 1]!)}
+                              disabled={widgetBusy || index === 0}
+                              onClick={() => swapWidgetIndex(widget, contentWidgets[index - 1]!)}
+                              title="Move up"
                             >
                               <ChevronUp className="h-4 w-4" />
                             </button>
                             <button
                               type="button"
                               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded disabled:opacity-40"
-                              title="پایین"
-                              disabled={widgetBusy || idx === contentWidgets.length - 1}
-                              onClick={() => swapWidgetIndex(w, contentWidgets[idx + 1]!)}
+                              disabled={widgetBusy || index === contentWidgets.length - 1}
+                              onClick={() => swapWidgetIndex(widget, contentWidgets[index + 1]!)}
+                              title="Move down"
                             >
                               <ChevronDown className="h-4 w-4" />
                             </button>
                             <button
                               type="button"
-                              onClick={() => (isEditing ? closeWidgetEditor() : openWidgetEditor(w))}
+                              onClick={() => (isEditing ? closeWidgetEditor() : openWidgetEditor(widget))}
                               className="btn-secondary text-sm"
                               disabled={widgetBusy}
                             >
-                              {isEditing ? "بستن" : "ویرایش"}
+                              {isEditing ? "Close" : "Edit"}
                             </button>
                             <button
                               type="button"
-                              onClick={() => handleDeleteWidget(w)}
+                              onClick={() => handleDeleteWidget(widget)}
                               className="btn-secondary text-sm text-red-600"
                               disabled={widgetBusy}
                             >
@@ -795,57 +796,23 @@ export default function DashboardPageBuilderEdit() {
                         </div>
 
                         {isEditing && (
-                          <div className="mt-3 space-y-3">
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                              <div>
-                                <JsonEditorField
-                                  label="widget_config (JSON)"
-                                  value={editWidgetForm.widget_config}
-                                  onChange={(v) =>
-                                    setEditWidgetForm((f) => ({ ...f, widget_config: v }))
-                                  }
-                                  disabled={widgetBusy}
-                                  minHeight={160}
-                                />
-                              </div>
-                              <div>
-                                <JsonEditorField
-                                  label="components_config (JSON)"
-                                  value={editWidgetForm.components_config}
-                                  onChange={(v) =>
-                                    setEditWidgetForm((f) => ({ ...f, components_config: v }))
-                                  }
-                                  disabled={widgetBusy}
-                                  minHeight={160}
-                                />
-                              </div>
-                              <div>
-                                <JsonEditorField
-                                  label="extra_request_params (JSON)"
-                                  value={editWidgetForm.extra_request_params}
-                                  onChange={(v) =>
-                                    setEditWidgetForm((f) => ({
-                                      ...f,
-                                      extra_request_params: v,
-                                    }))
-                                  }
-                                  disabled={widgetBusy}
-                                  minHeight={160}
-                                />
-                              </div>
-                            </div>
-
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                onClick={handleSaveWidget}
-                                className="btn-primary disabled:opacity-50 inline-flex items-center gap-2"
-                                disabled={widgetBusy}
-                              >
-                                <Save className="h-5 w-5" />
-                                ذخیره ویجت
-                              </button>
-                            </div>
+                          <div className="space-y-3">
+                            <WidgetVisualEditor
+                              widgetType={selectedEditWidgetType}
+                              payload={editPayload}
+                              onChange={setEditPayload}
+                              entityOptions={entityOptions}
+                              disabled={widgetBusy}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleSaveWidget}
+                              disabled={widgetBusy}
+                              className="btn-primary inline-flex items-center gap-2"
+                            >
+                              <Save className="h-4 w-4" />
+                              Save widget
+                            </button>
                           </div>
                         )}
                       </div>
@@ -857,74 +824,40 @@ export default function DashboardPageBuilderEdit() {
               <details className="pt-2">
                 <summary className="cursor-pointer text-sm font-medium inline-flex items-center gap-2">
                   <Plus className="h-4 w-4" />
-                  افزودن ویجت محتوا
+                  Add content widget
                 </summary>
                 <form onSubmit={handleCreateWidget} className="mt-3 space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      نوع ویجت
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Widget type</label>
                     <SearchableSelect
-                      options={activeContentTypes.map((t) => ({
-                        value: String(t.id),
-                        label: t.name,
+                      options={activeContentTypes.map((item) => ({
+                        value: String(item.id),
+                        label: item.name,
                       }))}
                       value={newWidgetForm.kind === "content" ? newWidgetForm.widgetTypeId : ""}
-                      onChange={(v) =>
-                        setNewWidgetForm((f) => ({
-                          ...f,
-                          kind: "content",
-                          widgetTypeId: v,
-                        }))
-                      }
-                      placeholder="انتخاب کنید..."
+                      onChange={(widgetTypeId) => onChangeNewWidgetType(widgetTypeId, "content")}
                       disabled={widgetBusy}
-                      searchPlaceholder="جستجوی نوع ویجت..."
+                      placeholder="Select..."
+                      searchPlaceholder="Search widget..."
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div>
-                      <JsonEditorField
-                        label="widget_config (JSON)"
-                        value={newWidgetForm.widget_config}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, widget_config: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                    <div>
-                      <JsonEditorField
-                        label="components_config (JSON)"
-                        value={newWidgetForm.components_config}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, components_config: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                    <div>
-                      <JsonEditorField
-                        label="extra_request_params (JSON)"
-                        value={newWidgetForm.extra_request_params}
-                        onChange={(v) =>
-                          setNewWidgetForm((f) => ({ ...f, extra_request_params: v }))
-                        }
-                        disabled={widgetBusy}
-                        minHeight={140}
-                      />
-                    </div>
-                  </div>
+                  <WidgetVisualEditor
+                    widgetType={newWidgetForm.kind === "content" ? selectedNewWidgetType : null}
+                    payload={newWidgetForm.payload}
+                    onChange={(payload) =>
+                      setNewWidgetForm((prev) => ({ ...prev, kind: "content", payload }))
+                    }
+                    entityOptions={entityOptions}
+                    disabled={widgetBusy}
+                  />
 
                   <button
                     type="submit"
+                    disabled={widgetBusy || !newWidgetForm.widgetTypeId}
                     className="btn-primary disabled:opacity-50"
-                    disabled={widgetBusy}
                   >
-                    افزودن ویجت
+                    Add widget
                   </button>
                 </form>
               </details>
@@ -932,23 +865,22 @@ export default function DashboardPageBuilderEdit() {
           </div>
         </div>
 
-        {/* Preview */}
         <div className="card space-y-4">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold">پیش‌نمایش</h2>
+            <h2 className="text-lg font-semibold">Live Preview</h2>
             <button
               type="button"
               className="btn-secondary inline-flex items-center gap-2"
-              onClick={() => setPreviewReloadKey((k) => k + 1)}
+              onClick={() => setPreviewReloadKey((prev) => prev + 1)}
             >
               <RefreshCw className="h-5 w-5" />
-              رفرش پیش‌نمایش
+              Reload preview
             </button>
           </div>
 
           {currentPath.includes(":") && (
             <div className="p-3 bg-yellow-50 text-yellow-800 rounded-lg text-sm">
-              مسیر این صفحه داینامیک است. برای پیش‌نمایش، یک مسیر واقعی وارد کنید.
+              This page has dynamic path params. Enter a real path for preview.
             </div>
           )}
 
@@ -962,9 +894,9 @@ export default function DashboardPageBuilderEdit() {
             <a
               href={previewSrc}
               target="_blank"
-              className="btn-secondary inline-flex items-center gap-2"
               rel="noreferrer"
-              title="باز کردن همین آدرس"
+              title="Open this path"
+              className="btn-secondary inline-flex items-center gap-2"
             >
               <Eye className="h-5 w-5" />
             </a>
@@ -983,4 +915,3 @@ export default function DashboardPageBuilderEdit() {
     </div>
   );
 }
-
