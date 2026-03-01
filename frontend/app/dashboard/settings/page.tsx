@@ -36,6 +36,7 @@ import type { ShippingMethod } from "@/lib/api/orderApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import { ThemeSettingsSection } from "@/components/dashboard/ThemeSettingsSection";
 import { revalidateStorePages } from "@/lib/server/storefrontCache";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const TABS_BASE = [
   { id: "general", name: "اطلاعات کلی", icon: Store },
@@ -252,7 +253,7 @@ export default function SettingsPage() {
       setShippingMethodForms(smForms);
     } catch (err) {
       console.error(err);
-      setError("خطا در بارگذاری اطلاعات فروشگاه");
+      setError(tFrontendAuto("fe.bdcd264f30e1"));
       setStore(null);
     } finally {
       setLoading(false);
@@ -295,7 +296,7 @@ export default function SettingsPage() {
       const domain = store.internal_domain || (store.external_domain ? `${store.name}.${store.external_domain}` : null);
       await revalidateStorePages(domain);
 
-      setSuccess("تنظیمات با موفقیت ذخیره شد.");
+      setSuccess(tFrontendAuto("fe.aca2a91ea4bf"));
       setStore((prev) =>
         prev
           ? {
@@ -348,7 +349,7 @@ export default function SettingsPage() {
           configuration: { ...(typeof updated.configuration === "object" && updated.configuration ? updated.configuration : {}) },
         },
       }));
-      setSuccess("تنظیمات درگاه ذخیره شد.");
+      setSuccess(tFrontendAuto("fe.643e3b4eaf47"));
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       const msg = err.response?.data?.detail ?? err.response?.data?.configuration ?? "خطا در ذخیره درگاه";
@@ -390,7 +391,7 @@ export default function SettingsPage() {
           is_active: updated.is_active !== false,
         },
       }));
-      setSuccess("تنظیمات روش ارسال ذخیره شد.");
+      setSuccess(tFrontendAuto("fe.2828f02c80f4"));
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       const msg = err.response?.data?.detail ?? "خطا در ذخیره روش ارسال";
@@ -401,7 +402,7 @@ export default function SettingsPage() {
   };
 
   const deleteShippingMethod = async (smId: string) => {
-    if (!confirm("این روش ارسال حذف شود؟")) return;
+    if (!confirm(tFrontendAuto("fe.5ca9a7f26b8d"))) return;
     setDeletingShippingId(smId);
     setError(null);
     try {
@@ -412,7 +413,7 @@ export default function SettingsPage() {
         delete next[smId];
         return next;
       });
-      setSuccess("روش ارسال حذف شد.");
+      setSuccess(tFrontendAuto("fe.e7a966da9c66"));
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       const msg = err.response?.data?.error ?? err.response?.data?.detail ?? "حذف ممکن نیست.";
@@ -425,12 +426,12 @@ export default function SettingsPage() {
   const addShippingMethod = async () => {
     const f = newShippingForm;
     if (!f.name.trim()) {
-      setError("نام روش ارسال را وارد کنید.");
+      setError(tFrontendAuto("fe.a8581e496b36"));
       return;
     }
     const basePrice = parseFloat(f.base_shipping_price);
     if (Number.isNaN(basePrice) || basePrice < 0) {
-      setError("هزینه پایه ارسال معتبر وارد کنید.");
+      setError(tFrontendAuto("fe.8f7fb6357a77"));
       return;
     }
     setAddingShipping(true);
@@ -473,7 +474,7 @@ export default function SettingsPage() {
         max_payment_on_delivery: "",
         is_active: true,
       });
-      setSuccess("روش ارسال اضافه شد.");
+      setSuccess(tFrontendAuto("fe.ddd4d39f44a5"));
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       const msg = err.response?.data?.detail ?? "خطا در افزودن روش ارسال";
@@ -494,10 +495,10 @@ export default function SettingsPage() {
   if (!store) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">تنظیمات فروشگاه</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.6631ea9e106b")}</h1>
         <div className="card flex flex-col items-center justify-center py-16 text-center">
           <AlertCircle className="h-16 w-16 text-amber-500 mb-4" />
-          <p className="text-gray-600 mb-2">فروشگاهی یافت نشد.</p>
+          <p className="text-gray-600 mb-2">{tFrontendAuto("fe.79045ad7ac79")}</p>
           <p className="text-sm text-gray-500">
             برای دسترسی به تنظیمات، ابتدا از دامنه فروشگاه خود وارد شوید یا فروشگاه ایجاد کنید.
           </p>
@@ -509,7 +510,7 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-2xl sm:text-3xl font-bold">تنظیمات فروشگاه</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">{tFrontendAuto("fe.6631ea9e106b")}</h1>
         <button
           onClick={handleSave}
           disabled={saving}
@@ -531,7 +532,7 @@ export default function SettingsPage() {
           <button
             onClick={() => setSuccess(null)}
             className="mr-auto p-1 hover:bg-green-100 rounded"
-            aria-label="بستن"
+            aria-label={tFrontendAuto("fe.53df25bd0b3b")}
           >
             <X className="h-5 w-5" />
           </button>
@@ -545,7 +546,7 @@ export default function SettingsPage() {
           <button
             onClick={() => setError(null)}
             className="mr-auto p-1 hover:bg-red-100 rounded"
-            aria-label="بستن"
+            aria-label={tFrontendAuto("fe.53df25bd0b3b")}
           >
             <X className="h-5 w-5" />
           </button>
@@ -554,7 +555,7 @@ export default function SettingsPage() {
 
       {/* تب‌های تنظیمات */}
       <div className="border-b border-gray-200 overflow-x-auto">
-        <nav className="flex gap-1 min-w-max" aria-label="تب‌های تنظیمات">
+        <nav className="flex gap-1 min-w-max" aria-label={tFrontendAuto("fe.537f36a80a80")}>
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -582,47 +583,47 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-blue-100">
               <Store className="h-6 w-6 text-blue-600" />
             </div>
-            <h2 className="text-lg font-bold">اطلاعات کلی</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.8c4dee66143f")}</h2>
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">نام فروشگاه</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.c95d717d07f3")}</label>
               <input
                 type="text"
                 value={form.title}
                 onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="نام فروشگاه"
+                placeholder={tFrontendAuto("fe.c95d717d07f3")}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">نام انگلیسی</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.21d0718ebdfc")}</label>
               <input
                 type="text"
                 value={form.en_title}
                 onChange={(e) => setForm((f) => ({ ...f, en_title: e.target.value }))}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Store Name"
+                placeholder={tFrontendAuto("fe.931f9ec22d38")}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8593a9f18909")}</label>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                 rows={3}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="توضیحات کوتاه درباره فروشگاه"
+                placeholder={tFrontendAuto("fe.d2b1f1485521")}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">شعار</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.14d54aea5b9e")}</label>
               <input
                 type="text"
                 value={form.slogan}
                 onChange={(e) => setForm((f) => ({ ...f, slogan: e.target.value }))}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="شعار فروشگاه"
+                placeholder={tFrontendAuto("fe.346f6c187a5b")}
               />
             </div>
           </div>
@@ -635,7 +636,7 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-teal-100">
               <Phone className="h-6 w-6 text-teal-600" />
             </div>
-            <h2 className="text-lg font-bold">اطلاعات تماس و شبکه‌های اجتماعی</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.746a56e7f375")}</h2>
           </div>
           <p className="text-gray-600 text-sm mb-6">
             این اطلاعات در هدر و فوتر فروشگاه نمایش داده می‌شوند.
@@ -648,7 +649,7 @@ export default function SettingsPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">شماره تماس</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.7b7e803a0df9")}</label>
                   <input
                     type="text"
                     value={String(storeSettingsForm.store_phone ?? "")}
@@ -656,11 +657,11 @@ export default function SettingsPage() {
                       setStoreSettingsForm((prev) => ({ ...prev, store_phone: e.target.value }))
                     }
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="۰۲۱-۱۲۳۴۵۶۷۸"
+                    placeholder={tFrontendAuto("fe.9284bc9a6899")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">ایمیل</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.48ebc456a416")}</label>
                   <input
                     type="email"
                     value={String(storeSettingsForm.store_email ?? "")}
@@ -668,11 +669,11 @@ export default function SettingsPage() {
                       setStoreSettingsForm((prev) => ({ ...prev, store_email: e.target.value }))
                     }
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="info@shop.ir"
+                    placeholder={tFrontendAuto("fe.0c25f203ed98")}
                   />
                 </div>
                 <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">آدرس</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.889f46873df4")}</label>
                   <input
                     type="text"
                     value={String(storeSettingsForm.store_address ?? "")}
@@ -680,7 +681,7 @@ export default function SettingsPage() {
                       setStoreSettingsForm((prev) => ({ ...prev, store_address: e.target.value }))
                     }
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="تهران، خیابان ولیعصر..."
+                    placeholder={tFrontendAuto("fe.a8b1bff5a7e3")}
                   />
                 </div>
               </div>
@@ -724,11 +725,11 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-violet-100">
               <ImageIcon className="h-6 w-6 text-violet-600" />
             </div>
-            <h2 className="text-lg font-bold">برندینگ و لوگو</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.e9132998f41c")}</h2>
           </div>
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">آیکون (Favicon)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.3e664e377b1c")}</label>
               <div className="flex flex-wrap items-start gap-4">
                 {media.favicon ? (
                   <div className="relative group">
@@ -741,7 +742,7 @@ export default function SettingsPage() {
                       type="button"
                       onClick={() => setMedia((m) => ({ ...m, favicon: null }))}
                       className="absolute -top-1 -right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-label="حذف"
+                      aria-label={tFrontendAuto("fe.fc1d9d323674")}
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -753,12 +754,12 @@ export default function SettingsPage() {
                   className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
                   <FolderOpen className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm">انتخاب تصویر</span>
+                  <span className="text-sm">{tFrontendAuto("fe.facfb3d039a7")}</span>
                 </button>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">لوگو کوچک (Minimal)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.246311dafc4e")}</label>
               <div className="flex flex-wrap items-start gap-4">
                 {media.minimal_logo ? (
                   <div className="relative group">
@@ -771,7 +772,7 @@ export default function SettingsPage() {
                       type="button"
                       onClick={() => setMedia((m) => ({ ...m, minimal_logo: null }))}
                       className="absolute -top-1 -right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-label="حذف"
+                      aria-label={tFrontendAuto("fe.fc1d9d323674")}
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -783,12 +784,12 @@ export default function SettingsPage() {
                   className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
                   <FolderOpen className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm">انتخاب تصویر</span>
+                  <span className="text-sm">{tFrontendAuto("fe.facfb3d039a7")}</span>
                 </button>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">لوگو کامل (Full)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.cbdd92c58dc7")}</label>
               <div className="flex flex-wrap items-start gap-4">
                 {media.full_logo ? (
                   <div className="relative group">
@@ -801,7 +802,7 @@ export default function SettingsPage() {
                       type="button"
                       onClick={() => setMedia((m) => ({ ...m, full_logo: null }))}
                       className="absolute -top-1 -right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-label="حذف"
+                      aria-label={tFrontendAuto("fe.fc1d9d323674")}
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -813,7 +814,7 @@ export default function SettingsPage() {
                   className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
                   <FolderOpen className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm">انتخاب تصویر</span>
+                  <span className="text-sm">{tFrontendAuto("fe.facfb3d039a7")}</span>
                 </button>
               </div>
             </div>
@@ -827,11 +828,11 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-emerald-100">
               <Globe className="h-6 w-6 text-emerald-600" />
             </div>
-            <h2 className="text-lg font-bold">دامنه و آدرس</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.148cf7f75ec1")}</h2>
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">آدرس فعلی فروشگاه</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.da05777a0c60")}</label>
               <div className="text-left ltr px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 font-mono text-sm">
                 https://{store.external_domain || store.internal_domain || `${store.name}.tokan.app`}
               </div>
@@ -858,7 +859,7 @@ export default function SettingsPage() {
                         setDomainRequestLoading(true);
                         try {
                           await storeApi.cancelDomainRequest();
-                          setSuccess("درخواست لغو شد.");
+                          setSuccess(tFrontendAuto("fe.bdf3e67075c9"));
                           const progress = await storeApi.getSetupProgress();
                           setSetupProgress({
                             domain_change_pending: progress.domain_change_pending,
@@ -883,7 +884,7 @@ export default function SettingsPage() {
                 {/* فرم درخواست تغییر دامنه - فقط وقتی درخواست pending نداریم */}
                 {!setupProgress?.domain_change_pending && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">درخواست اتصال به دامنه اختصاصی</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.832801124657")}</label>
                     <p className="text-xs text-gray-500 mb-2">
                       برای اتصال دامنه شخصی خود، درخواست ثبت کنید. پس از تنظیم NS، درخواست توسط پشتیبانی تایید خواهد شد.
                     </p>
@@ -900,7 +901,7 @@ export default function SettingsPage() {
                         onClick={async () => {
                           const domain = domainRequestInput.trim();
                           if (!domain) {
-                            setError("دامنه را وارد کنید.");
+                            setError(tFrontendAuto("fe.e146273098f3"));
                             return;
                           }
                           setDomainRequestLoading(true);
@@ -951,7 +952,7 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-green-100">
               <CreditCard className="h-6 w-6 text-green-600" />
             </div>
-            <h2 className="text-lg font-bold">درگاه‌های پرداخت</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.40233b19bd97")}</h2>
           </div>
           <p className="text-gray-600 text-sm mb-4">
             برای هر نوع درگاه (تعریف‌شده در سیستم) فیلدهای کانفیگ از طریق نوع درگاه مشخص می‌شوند. مقادیر را برای این فروشگاه وارد کنید.
@@ -980,7 +981,7 @@ export default function SettingsPage() {
                     {form && (
                       <>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">عنوان نمایشی در فروشگاه</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.bd6aa34927c4")}</label>
                           <input
                             type="text"
                             value={form.title}
@@ -1007,12 +1008,12 @@ export default function SettingsPage() {
                               }
                               className="rounded border-gray-300 text-green-600 focus:ring-green-500"
                             />
-                            <span className="text-sm text-gray-700">استفاده از محیط سندباکس (تست)</span>
+                            <span className="text-sm text-gray-700">{tFrontendAuto("fe.86b1ac8ebf9c")}</span>
                           </label>
                         )}
                         {Array.isArray(schema) && schema.length > 0 && (
                           <div className="space-y-3 pt-2">
-                            <p className="text-sm font-medium text-gray-700">تنظیمات درگاه (مثلاً مرچنت آی دی)</p>
+                            <p className="text-sm font-medium text-gray-700">{tFrontendAuto("fe.7c30749ea600")}</p>
                             {schema.map((field: { key: string; label: string; type?: string; required?: boolean }) => (
                               <div key={field.key}>
                                 <label className="block text-sm text-gray-600 mb-1">
@@ -1066,7 +1067,7 @@ export default function SettingsPage() {
             <div className="flex items-center gap-4 p-6 rounded-lg border border-amber-200 bg-amber-50 text-amber-800">
               <AlertCircle className="h-10 w-10 shrink-0" />
               <div>
-                <p className="font-medium">درگاه پرداختی تعریف نشده است</p>
+                <p className="font-medium">{tFrontendAuto("fe.e89a9e839189")}</p>
                 <p className="text-sm mt-1">
                   برای دریافت پرداخت آنلاین، نوع درگاه را در پنل ادمین اضافه کنید تا برای همه فروشگاه‌ها ایجاد شود.
                 </p>
@@ -1082,7 +1083,7 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-sky-100">
               <Package className="h-6 w-6 text-sky-600" />
             </div>
-            <h2 className="text-lg font-bold">روش‌های ارسال</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.fed6ebca20fb")}</h2>
           </div>
           <p className="text-gray-600 text-sm mb-4">
             روش‌های سیستمی (مثل پست پیشتاز) قابل حذف نیستند؛ روش‌های سفارشی را خودتان اضافه یا حذف کنید. همه روش‌ها را می‌توان غیرفعال کرد.
@@ -1105,10 +1106,10 @@ export default function SettingsPage() {
                           <p className="font-medium text-gray-900">
                             {sm.definition?.name ?? sm.name}
                             {isSystem && (
-                              <span className="mr-2 text-xs font-normal text-sky-600 bg-sky-100 px-2 py-0.5 rounded">سیستمی</span>
+                              <span className="mr-2 text-xs font-normal text-sky-600 bg-sky-100 px-2 py-0.5 rounded">{tFrontendAuto("fe.4d321db4576c")}</span>
                             )}
                             {!isSystem && (
-                              <span className="mr-2 text-xs font-normal text-gray-500 bg-gray-200 px-2 py-0.5 rounded">سفارشی</span>
+                              <span className="mr-2 text-xs font-normal text-gray-500 bg-gray-200 px-2 py-0.5 rounded">{tFrontendAuto("fe.f7cf82345ab4")}</span>
                             )}
                           </p>
                           <p className="text-xs text-gray-500">
@@ -1122,7 +1123,7 @@ export default function SettingsPage() {
                           onClick={() => deleteShippingMethod(sm.id)}
                           disabled={deletingShippingId === sm.id}
                           className="p-2 text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
-                          title="حذف روش ارسال"
+                          title={tFrontendAuto("fe.aa23da44b91b")}
                         >
                           {deletingShippingId === sm.id ? <Loader2 className="h-5 w-5 animate-spin" /> : <Trash2 className="h-5 w-5" />}
                         </button>
@@ -1142,10 +1143,10 @@ export default function SettingsPage() {
                             }
                             className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
                           />
-                          <span className="text-sm font-medium text-gray-700">فعال (در checkout نمایش داده شود)</span>
+                          <span className="text-sm font-medium text-gray-700">{tFrontendAuto("fe.a0929d80342f")}</span>
                         </label>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">نام نمایشی</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.42804b9e344e")}</label>
                           <input
                             type="text"
                             value={form.name}
@@ -1159,7 +1160,7 @@ export default function SettingsPage() {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8593a9f18909")}</label>
                           <textarea
                             value={form.description}
                             onChange={(e) =>
@@ -1174,7 +1175,7 @@ export default function SettingsPage() {
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">هزینه پایه ارسال (تومان)</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8ab97a1590c2")}</label>
                             <input
                               type="number"
                               min={0}
@@ -1189,7 +1190,7 @@ export default function SettingsPage() {
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">هزینه هر کیلو اضافه (تومان)</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.fb5c2dfd1ba4")}</label>
                             <input
                               type="number"
                               min={0}
@@ -1205,7 +1206,7 @@ export default function SettingsPage() {
                           </div>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">آدرس پیگیری (با %tracking_code%) — اختیاری</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.21d50582e3ca")}</label>
                           <input
                             type="url"
                             value={form.tracking_code_base_url}
@@ -1217,7 +1218,7 @@ export default function SettingsPage() {
                             }
                             dir="ltr"
                             className="w-full ltr text-left px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                            placeholder="https://tracking.post.ir/?id=%tracking_code%"
+                            placeholder={tFrontendAuto("fe.a79589f2fe1c")}
                           />
                         </div>
                         <div className="space-y-2">
@@ -1233,7 +1234,7 @@ export default function SettingsPage() {
                               }
                               className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
                             />
-                            <span className="text-sm text-gray-700">پرداخت هزینه ارسال در محل</span>
+                            <span className="text-sm text-gray-700">{tFrontendAuto("fe.b46be1391273")}</span>
                           </label>
                           <label className="flex items-center gap-2 cursor-pointer">
                             <input
@@ -1247,11 +1248,11 @@ export default function SettingsPage() {
                               }
                               className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
                             />
-                            <span className="text-sm text-gray-700">پرداخت محصول در محل (پرداخت در محل)</span>
+                            <span className="text-sm text-gray-700">{tFrontendAuto("fe.b559f9f53de1")}</span>
                           </label>
                           {(form.shipping_payment_on_delivery || form.product_payment_on_delivery) && (
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">حداکثر مبلغ پرداخت در محل (تومان، اختیاری)</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.9f368d3a13f4")}</label>
                             <input
                               type="number"
                               min={0}
@@ -1263,7 +1264,7 @@ export default function SettingsPage() {
                                 }))
                               }
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                              placeholder="خالی = بدون محدودیت"
+                              placeholder={tFrontendAuto("fe.b36bf7b24a35")}
                             />
                           </div>
                           )}
@@ -1293,7 +1294,7 @@ export default function SettingsPage() {
             <div className="flex items-center gap-4 p-6 rounded-lg border border-amber-200 bg-amber-50 text-amber-800">
               <AlertCircle className="h-10 w-10 shrink-0" />
               <div>
-                <p className="font-medium">هنوز روش ارسالی ندارید</p>
+                <p className="font-medium">{tFrontendAuto("fe.6de3fa16272f")}</p>
                 <p className="text-sm mt-1">
                   می‌توانید روش ارسال سفارشی اضافه کنید یا منتظر تعریف روش‌های سیستمی توسط مدیر بمانید.
                 </p>
@@ -1321,17 +1322,17 @@ export default function SettingsPage() {
             {newShippingSectionOpen && (
             <div className="px-5 pb-5 pt-0 space-y-4 border-t border-sky-200/50">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">نام *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.e42daea11702")}</label>
               <input
                 type="text"
                 value={newShippingForm.name}
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, name: e.target.value }))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                placeholder="مثلاً ارسال با پیک"
+                placeholder={tFrontendAuto("fe.d74317ad9d8d")}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8593a9f18909")}</label>
               <textarea
                 value={newShippingForm.description}
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, description: e.target.value }))}
@@ -1341,7 +1342,7 @@ export default function SettingsPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">هزینه پایه ارسال (ریال) *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.bc5cd0207a33")}</label>
                 <input
                   type="number"
                   min={0}
@@ -1351,7 +1352,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">هزینه هر کیلو اضافه (ریال)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.e9067cbb0539")}</label>
                 <input
                   type="number"
                   min={0}
@@ -1362,13 +1363,13 @@ export default function SettingsPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">آدرس پیگیری (اختیاری، با %tracking_code%)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.a7f4c86363b6")}</label>
               <input
                 type="url"
                 value={newShippingForm.tracking_code_base_url}
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, tracking_code_base_url: e.target.value }))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                placeholder="خالی بگذارید اگر پیگیری ندارید"
+                placeholder={tFrontendAuto("fe.89906933a01d")}
               />
             </div>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -1378,7 +1379,7 @@ export default function SettingsPage() {
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, is_active: e.target.checked }))}
                 className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
-              <span className="text-sm text-gray-700">فعال</span>
+              <span className="text-sm text-gray-700">{tFrontendAuto("fe.e3d927082524")}</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -1387,7 +1388,7 @@ export default function SettingsPage() {
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, shipping_payment_on_delivery: e.target.checked }))}
                 className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
-              <span className="text-sm text-gray-700">پرداخت هزینه ارسال در محل</span>
+              <span className="text-sm text-gray-700">{tFrontendAuto("fe.b46be1391273")}</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -1396,11 +1397,11 @@ export default function SettingsPage() {
                 onChange={(e) => setNewShippingForm((f) => ({ ...f, product_payment_on_delivery: e.target.checked }))}
                 className="rounded border-gray-300 text-sky-600 focus:ring-sky-500"
               />
-              <span className="text-sm text-gray-700">پرداخت در محل</span>
+              <span className="text-sm text-gray-700">{tFrontendAuto("fe.026461726e82")}</span>
             </label>
             {(newShippingForm.shipping_payment_on_delivery || newShippingForm.product_payment_on_delivery) && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">حداکثر مبلغ پرداخت در محل (ریال، اختیاری)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.dcb224fefbf3")}</label>
               <input
                 type="number"
                 min={0}
@@ -1432,14 +1433,14 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-blue-100">
               <BarChart3 className="h-6 w-6 text-blue-600" />
             </div>
-            <h2 className="text-lg font-bold">سئو و آنالیز</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.e1fc225c108c")}</h2>
           </div>
           <p className="text-gray-600 text-sm mb-6">
             گوگل آنالیتیکس و تگ منیجر برای تحلیل ترافیک و رفتار کاربران.
           </p>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">شناسه گوگل آنالیتیکس</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.6256d65f029e")}</label>
               <input
                 type="text"
                 value={String(storeSettingsForm.google_analytics_id ?? "")}
@@ -1451,7 +1452,7 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">شناسه گوگل تگ منیجر</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.bbe15eca3118")}</label>
               <input
                 type="text"
                 value={String(storeSettingsForm.google_tag_manager_id ?? "")}
@@ -1471,10 +1472,10 @@ export default function SettingsPage() {
                 }
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <span className="text-sm font-medium text-gray-700">تایید گوگل سرچ کنسول</span>
+              <span className="text-sm font-medium text-gray-700">{tFrontendAuto("fe.687bbfc820fe")}</span>
             </label>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">اتصال به ترب</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.b6a445b4cc9b")}</label>
               <input
                 type="url"
                 value={String(storeSettingsForm.torob_api_url ?? "")}
@@ -1495,14 +1496,14 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-amber-100">
               <Shield className="h-6 w-6 text-amber-600" />
             </div>
-            <h2 className="text-lg font-bold">نمادها</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.1ff96f9aa356")}</h2>
           </div>
           <p className="text-gray-600 text-sm mb-6">
             لینک یا کد HTML نماد را وارد کنید. در صورت ورود کد، لینک به‌صورت خودکار استخراج و ذخیره می‌شود.
           </p>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">نماد اعتماد الکترونیکی (e-Namad)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.ddcd24cd4c82")}</label>
               <textarea
                 value={String(storeSettingsForm.trust_enamad_url ?? "")}
                 onChange={(e) =>
@@ -1510,11 +1511,11 @@ export default function SettingsPage() {
                 }
                 rows={3}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
-                placeholder="https://... یا کد HTML نماد"
+                placeholder={tFrontendAuto("fe.2519243de6c5")}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">نماد ساماندهی</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.294840c645c1")}</label>
               <textarea
                 value={String(storeSettingsForm.trust_samandehi_url ?? "")}
                 onChange={(e) =>
@@ -1522,7 +1523,7 @@ export default function SettingsPage() {
                 }
                 rows={3}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
-                placeholder="https://... یا کد HTML نماد"
+                placeholder={tFrontendAuto("fe.2519243de6c5")}
               />
             </div>
           </div>
@@ -1535,7 +1536,7 @@ export default function SettingsPage() {
             <div className="p-2 rounded-lg bg-indigo-100">
               <SlidersHorizontal className="h-6 w-6 text-indigo-600" />
             </div>
-            <h2 className="text-lg font-bold">تنظیمات پیشرفته (StoreSettings)</h2>
+            <h2 className="text-lg font-bold">{tFrontendAuto("fe.93bef1df68ee")}</h2>
           </div>
           {(() => {
             const editableSettings = (store?.settings ?? []).filter(

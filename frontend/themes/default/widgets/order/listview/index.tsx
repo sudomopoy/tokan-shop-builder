@@ -27,6 +27,7 @@ import { orderApi, type Order } from "@/lib/api/orderApi";
 import type { WidgetConfig } from "@/themes/types";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -120,7 +121,7 @@ function OrderCard({
           <CardMedia
             component="img"
             image={imageUrl}
-            alt="سفارش"
+            alt={tFrontendAuto("fe.57da8118bf96")}
             sx={{
               width: { xs: "100%", sm: 120 },
               height: { xs: 140, sm: 120 },
@@ -233,7 +234,7 @@ export default function OrderListView({ config }: { config?: WidgetConfig }) {
       } catch (err) {
         if (isMounted) {
           console.error("Orders load error:", err);
-          setError("خطا در بارگذاری سفارشات. لطفا دوباره تلاش کنید.");
+          setError(tFrontendAuto("fe.5529e6ddcc18"));
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -257,7 +258,7 @@ export default function OrderListView({ config }: { config?: WidgetConfig }) {
       );
     } catch (err) {
       console.error("Cancel order error:", err);
-      setError("خطا در لغو سفارش. لطفا دوباره تلاش کنید.");
+      setError(tFrontendAuto("fe.ac3d0b13aeda"));
     } finally {
       setCancellingCode(null);
     }

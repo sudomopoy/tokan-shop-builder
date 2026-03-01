@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function ServaNewsletterWidget({ config }: { config?: WidgetConfig }) {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export default function ServaNewsletterWidget({ config }: { config?: WidgetConfi
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
             <input
               type="email"
-              placeholder="آدرس ایمیل خود را وارد کنید..."
+              placeholder={tFrontendAuto("fe.740dfece74f1")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={status === "loading"}
@@ -52,10 +53,10 @@ export default function ServaNewsletterWidget({ config }: { config?: WidgetConfi
             </button>
           </form>
           {status === "success" && (
-            <p className="mt-4 text-white/90 text-sm">با موفقیت ثبت شد. از خبرنامه ما ممنونیم!</p>
+            <p className="mt-4 text-white/90 text-sm">{tFrontendAuto("fe.f10d051db982")}</p>
           )}
           {status === "error" && (
-            <p className="mt-4 text-red-200 text-sm">خطا در ثبت. لطفاً دوباره تلاش کنید.</p>
+            <p className="mt-4 text-red-200 text-sm">{tFrontendAuto("fe.47e02ccbab02")}</p>
           )}
         </div>
       </div>

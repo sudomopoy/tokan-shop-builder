@@ -55,6 +55,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type TabPanelProps = {
   children?: React.ReactNode;
@@ -138,7 +139,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
       setData("user.bankAccounts", bankAccountsData);
     } catch (err: any) {
       console.error("Profile load error:", err);
-      setError("خطا در بارگذاری اطلاعات پروفایل.");
+      setError(tFrontendAuto("fe.28f81cb68090"));
     } finally {
       setLoading(false);
     }
@@ -211,18 +212,18 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
       handleAddressDialogClose();
     } catch (err: any) {
       console.error("Address save error:", err);
-      setError("خطا در ذخیره آدرس.");
+      setError(tFrontendAuto("fe.6bcf197023d1"));
     }
   };
 
   const handleAddressDelete = async (addressId: string) => {
-    if (!confirm("آیا مطمئن هستید که می‌خواهید این آدرس را حذف کنید؟")) return;
+    if (!confirm(tFrontendAuto("fe.97a560a9fa60"))) return;
     try {
       await accountApi.deleteAddress(addressId);
       await loadData();
     } catch (err: any) {
       console.error("Address delete error:", err);
-      setError("خطا در حذف آدرس.");
+      setError(tFrontendAuto("fe.034a1dce939a"));
     }
   };
 
@@ -243,18 +244,18 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
       handleBankDialogClose();
     } catch (err: any) {
       console.error("Bank account save error:", err);
-      setError("خطا در ذخیره حساب بانکی.");
+      setError(tFrontendAuto("fe.679b8c646f38"));
     }
   };
 
   const handleBankDelete = async (accountId: string) => {
-    if (!confirm("آیا مطمئن هستید که می‌خواهید این حساب بانکی را حذف کنید؟")) return;
+    if (!confirm(tFrontendAuto("fe.ba0b473f027e"))) return;
     try {
       await accountApi.deleteBankAccount(accountId);
       await loadData();
     } catch (err: any) {
       console.error("Bank account delete error:", err);
-      setError("خطا در حذف حساب بانکی.");
+      setError(tFrontendAuto("fe.e453c025a6ad"));
     }
   };
 
@@ -356,9 +357,9 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
             color="primary"
             variant="outlined"
           />
-          {user.is_verified && <Chip label="احراز هویت شده" color="success" icon={<Shield size={16} />} />}
-          {user.store_user?.is_vendor && <Chip label="فروشنده" color="info" />}
-          {user.store_user?.is_admin && <Chip label="مدیر" color="warning" />}
+          {user.is_verified && <Chip label={tFrontendAuto("fe.e87efda1e0fc")} color="success" icon={<Shield size={16} />} />}
+          {user.store_user?.is_vendor && <Chip label={tFrontendAuto("fe.c440b2fec1c7")} color="info" />}
+          {user.store_user?.is_admin && <Chip label={tFrontendAuto("fe.3ee0cb450020")} color="warning" />}
         </Stack>
 
         {user.wallet && (
@@ -377,9 +378,9 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
       <Card variant="outlined" sx={{ borderRadius: 3 }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={tabValue} onChange={handleTabChange} sx={{ px: 2 }}>
-            <Tab label="اطلاعات شخصی" sx={{ textTransform: "none" }} />
-            <Tab label="آدرس‌ها" sx={{ textTransform: "none" }} />
-            <Tab label="حساب‌های بانکی" sx={{ textTransform: "none" }} />
+            <Tab label={tFrontendAuto("fe.93ce87ecebd5")} sx={{ textTransform: "none" }} />
+            <Tab label={tFrontendAuto("fe.e642e9116918")} sx={{ textTransform: "none" }} />
+            <Tab label={tFrontendAuto("fe.81a38a291d01")} sx={{ textTransform: "none" }} />
           </Tabs>
         </Box>
 
@@ -389,14 +390,14 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
             <Box sx={{ flex: "1 1 300px", minWidth: 0 }}>
               <TextField
                 fullWidth
-                label="شماره موبایل"
+                label={tFrontendAuto("fe.9da04b0b71f9")}
                 value={user.mobile}
                 disabled
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="کد ملی"
+                label={tFrontendAuto("fe.a926d003f2b9")}
                 value={user.national_id || ""}
                 disabled
                 sx={{ mb: 2 }}
@@ -405,14 +406,14 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
             <Box sx={{ flex: "1 1 300px", minWidth: 0 }}>
               <TextField
                 fullWidth
-                label="نام نمایشی"
+                label={tFrontendAuto("fe.42804b9e344e")}
                 value={user.store_user?.display_name || ""}
                 disabled
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="ایمیل"
+                label={tFrontendAuto("fe.48ebc456a416")}
                 value={user.store_user?.email || ""}
                 disabled
                 sx={{ mb: 2 }}
@@ -442,7 +443,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                     <Stack direction="row" spacing={1.5} alignItems="center">
                       <MapPin size={18} />
                       <Typography fontWeight="medium">{address.recipient_fullname}</Typography>
-                      {address.frequently_used && <Chip label="پیش‌فرض" size="small" color="primary" />}
+                      {address.frequently_used && <Chip label={tFrontendAuto("fe.0e54c662cf12")} size="small" color="primary" />}
                     </Stack>
                   }
                   secondary={
@@ -535,21 +536,21 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
         <DialogContent>
           <TextField
             fullWidth
-            label="نام گیرنده"
+            label={tFrontendAuto("fe.662e7f9c0d16")}
             value={addressForm.recipient_fullname}
             onChange={(e) => setAddressForm({ ...addressForm, recipient_fullname: e.target.value })}
             sx={{ mt: 2, mb: 2 }}
           />
           <TextField
             fullWidth
-            label="شماره تلفن"
+            label={tFrontendAuto("fe.49e571d9fbc0")}
             value={addressForm.phone_number}
             onChange={(e) => setAddressForm({ ...addressForm, phone_number: e.target.value })}
             sx={{ mb: 2 }}
           />
           <TextField
             fullWidth
-            label="استان"
+            label={tFrontendAuto("fe.f1402dc45f3f")}
             select
             value={addressForm.province}
             onChange={(e) => handleProvinceChange(e.target.value)}
@@ -563,7 +564,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
           </TextField>
           <TextField
             fullWidth
-            label="شهر"
+            label={tFrontendAuto("fe.9ddae2219b7e")}
             select
             value={addressForm.city}
             onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
@@ -578,7 +579,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
           </TextField>
           <TextField
             fullWidth
-            label="آدرس"
+            label={tFrontendAuto("fe.889f46873df4")}
             multiline
             rows={3}
             value={addressForm.address_line1}
@@ -587,7 +588,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
           />
           <TextField
             fullWidth
-            label="کد پستی"
+            label={tFrontendAuto("fe.de246976c5ed")}
             value={addressForm.postcode}
             onChange={(e) => setAddressForm({ ...addressForm, postcode: e.target.value })}
           />
@@ -609,11 +610,11 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
 
       {/* Bank Account Dialog */}
       <Dialog open={bankDialogOpen} onClose={handleBankDialogClose} maxWidth="sm" fullWidth>
-        <DialogTitle>افزودن حساب بانکی</DialogTitle>
+        <DialogTitle>{tFrontendAuto("fe.79c8f9474633")}</DialogTitle>
         <DialogContent>
           <TextField
             fullWidth
-            label="شماره شبا (IR...)"
+            label={tFrontendAuto("fe.dab2731d08f4")}
             value={bankForm.iban}
             onChange={(e) => setBankForm({ ...bankForm, iban: e.target.value.replace(/[^0-9]/g, "") })}
             placeholder="IR123456789012345678901234"
@@ -621,7 +622,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
           />
           <TextField
             fullWidth
-            label="شماره کارت (اختیاری)"
+            label={tFrontendAuto("fe.e928b5f426ac")}
             value={bankForm.card_number}
             onChange={(e) => setBankForm({ ...bankForm, card_number: e.target.value.replace(/[^0-9]/g, "") })}
             placeholder="1234567890123456"

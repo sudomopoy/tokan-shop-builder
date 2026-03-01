@@ -8,6 +8,8 @@ import ExpiredSubscriptionPage from "@/components/ExpiredSubscriptionPage";
 import DefaultErrorPage from "@/components/DefaultErrorPage";
 import { fetchPageWidgetData } from "@/lib/server/fetchPageWidgetData";
 import { resolvePageMetadata } from "@/lib/server/resolvePageMeta";
+import { DEPLOY_LOCALE } from "@/lib/i18n/deployment";
+import { localizeValue, pickByLocale } from "@/lib/i18n/localize";
 
 const CACHE_REVALIDATE = process.env.NODE_ENV === "development" ? 3 : 600; // 3 sec in dev, 10 min in production
 
@@ -28,11 +30,15 @@ async function fetchPageConfig(path: string, hostHeader: string | null) {
   if (hostHeader) {
     reqHeaders["X-Store-Host"] = hostHeader;
   }
+  reqHeaders["Accept-Language"] = DEPLOY_LOCALE;
   return pageApi.getByPath(path, { headers: reqHeaders });
 }
 
 function getCacheTags(cacheKey: string, path: string) {
-  return [`store-pages:${cacheKey}`, `store-page:${cacheKey}:${path}`];
+  return [
+    `store-pages:${cacheKey}:${DEPLOY_LOCALE}`,
+    `store-page:${cacheKey}:${DEPLOY_LOCALE}:${path}`,
+  ];
 }
 
 async function tryFetchErrorPage(
@@ -50,6 +56,7 @@ async function tryFetchErrorPage(
 }
 
 export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
+  const defaultStoreTitle = pickByLocale({ fa: "فروشگاه", en: "Store" });
   const path = "/" + (params.path?.join("/") ?? "");
   const headersList = await headers();
   const host =
@@ -57,24 +64,27 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
     headersList.get("x-real-host") ??
     headersList.get("host");
 
-  const cacheKey = host ?? "default";
+  const cacheKey = `${DEPLOY_LOCALE}:${host ?? "default"}`;
   const getCachedPage = unstable_cache(
     async () => fetchPageConfig(path, host),
-    [`page-by-path`, cacheKey, path],
+    [`page-by-path`, cacheKey, path, DEPLOY_LOCALE],
     { revalidate: CACHE_REVALIDATE, tags: getCacheTags(cacheKey, path) }
   );
 
   try {
     const result = await getCachedPage();
     if (!result || (result as { subscription_expired?: boolean }).subscription_expired) {
-      return { title: "فروشگاه" };
+      return { title: defaultStoreTitle };
     }
 
-    const pageConfig = { ...result, theme: undefined } as Parameters<typeof Render>[0]["pageConfig"];
+    const localizedResult = localizeValue(result);
+    const pageConfig = { ...localizedResult, theme: undefined } as Parameters<
+      typeof Render
+    >[0]["pageConfig"];
     const widgetData = await fetchPageWidgetData(pageConfig, host);
     return resolvePageMetadata(pageConfig, widgetData);
   } catch {
-    return { title: "فروشگاه" };
+    return { title: defaultStoreTitle };
   }
 }
 
@@ -87,10 +97,10 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     headersList.get("x-real-host") ??
     headersList.get("host");
 
-  const cacheKey = host ?? "default";
+  const cacheKey = `${DEPLOY_LOCALE}:${host ?? "default"}`;
   const getCachedPage = unstable_cache(
     async () => fetchPageConfig(path, host),
-    [`page-by-path`, cacheKey, path],
+    [`page-by-path`, cacheKey, path, DEPLOY_LOCALE],
     { revalidate: CACHE_REVALIDATE, tags: getCacheTags(cacheKey, path) }
   );
 
@@ -101,8 +111,9 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
       // Path not found (404) - try custom /404 page
       const errorPage = await tryFetchErrorPage(404, host, cacheKey);
       if (errorPage && !(errorPage as { subscription_expired?: boolean }).subscription_expired) {
-        const theme = errorPage.theme ?? "default";
-        const pageConfig = { ...errorPage, theme: undefined } as Parameters<
+        const localizedErrorPage = localizeValue(errorPage);
+        const theme = localizedErrorPage.theme ?? "default";
+        const pageConfig = { ...localizedErrorPage, theme: undefined } as Parameters<
           typeof Render
         >[0]["pageConfig"];
         return <Render theme={theme} pageConfig={pageConfig} hostHeader={host} />;
@@ -111,12 +122,13 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     }
 
     if ((result as { subscription_expired?: boolean }).subscription_expired) {
-      const storeTitle = (result as { store_title?: string }).store_title ?? "";
+      const storeTitle = localizeValue((result as { store_title?: string }).store_title) ?? "";
       return <ExpiredSubscriptionPage storeTitle={storeTitle} />;
     }
 
-    const theme = result.theme ?? "default";
-    const pageConfig = { ...result, theme: undefined } as Parameters<
+    const localizedResult = localizeValue(result);
+    const theme = localizedResult.theme ?? "default";
+    const pageConfig = { ...localizedResult, theme: undefined } as Parameters<
       typeof Render
     >[0]["pageConfig"];
 
@@ -132,8 +144,9 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
         try {
           const errorPage = await tryFetchErrorPage(errorCode, host, cacheKey);
           if (errorPage && !(errorPage as { subscription_expired?: boolean }).subscription_expired) {
-            const theme = errorPage.theme ?? "default";
-            const pageConfig = { ...errorPage, theme: undefined } as Parameters<
+            const localizedErrorPage = localizeValue(errorPage);
+            const theme = localizedErrorPage.theme ?? "default";
+            const pageConfig = { ...localizedErrorPage, theme: undefined } as Parameters<
               typeof Render
             >[0]["pageConfig"];
             return <Render theme={theme} pageConfig={pageConfig} hostHeader={host} />;

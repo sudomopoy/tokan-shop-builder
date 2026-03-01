@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { menuApi } from "@/lib/api";
 import type { Menu } from "@/lib/api/menuApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function MenuEditPage() {
   const params = useParams();
@@ -39,7 +40,7 @@ export default function MenuEditPage() {
         });
       } catch (err) {
         console.error(err);
-        setError("خطا در دریافت منو");
+        setError(tFrontendAuto("fe.75cd33527da2"));
       } finally {
         setLoading(false);
       }
@@ -89,7 +90,7 @@ export default function MenuEditPage() {
   if (!menu) {
     return (
       <div className="card p-6 text-center">
-        <p className="text-gray-600">منو یافت نشد</p>
+        <p className="text-gray-600">{tFrontendAuto("fe.028ee2f28d20")}</p>
         <Link href="/dashboard/menus" className="btn-primary mt-4 inline-block">
           بازگشت به لیست منوها
         </Link>
@@ -116,7 +117,7 @@ export default function MenuEditPage() {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">عنوان *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.a83c261c5577")}</label>
           <input
             value={form.title}
             onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
@@ -126,18 +127,18 @@ export default function MenuEditPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">کلید</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.9d657c43471a")}</label>
           <input
             value={form.key}
             onChange={(e) => setForm((f) => ({ ...f, key: e.target.value }))}
-            placeholder="header, footer"
+            placeholder={tFrontendAuto("fe.b3b993843869")}
             dir="ltr"
             className="w-full ltr text-left px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8593a9f18909")}</label>
           <textarea
             value={form.description}
             onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
@@ -154,7 +155,7 @@ export default function MenuEditPage() {
               onChange={(e) => setForm((f) => ({ ...f, is_active: e.target.checked }))}
               className="rounded border-gray-300"
             />
-            <span className="text-sm">فعال</span>
+            <span className="text-sm">{tFrontendAuto("fe.e3d927082524")}</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -163,7 +164,7 @@ export default function MenuEditPage() {
               onChange={(e) => setForm((f) => ({ ...f, is_primary: e.target.checked }))}
               className="rounded border-gray-300"
             />
-            <span className="text-sm">منوی اصلی</span>
+            <span className="text-sm">{tFrontendAuto("fe.2a878dcbfce7")}</span>
           </label>
         </div>
 

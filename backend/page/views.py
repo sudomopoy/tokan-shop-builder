@@ -9,6 +9,7 @@ from django.conf import settings
 from django.db import transaction
 
 from account.models import StoreUser
+from core.i18n import get_deploy_locale, localize_value
 from core.permissions import IsStoreOwnerOnly
 
 from .models import Page, Widget, WidgetType, Theme
@@ -200,6 +201,7 @@ class PageViewSet(viewsets.ModelViewSet):
         POST /api/page/pages/setup-defaults/
         Store is resolved from: request.store (middleware/domain), ?store= param, or user's first StoreUser.
         """
+        is_en = get_deploy_locale() == "en"
         store = getattr(request, 'store', None)
         if not store:
             data = getattr(request, 'data', None)
@@ -220,16 +222,20 @@ class PageViewSet(viewsets.ModelViewSet):
             store = store_user.store if store_user else None
         if not store:
             return Response(
-                {'detail': 'فروشگاهی برای کاربر یافت نشد'},
+                {'detail': 'No store found for this user' if is_en else 'فروشگاهی برای کاربر یافت نشد'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         if not StoreUser.objects.filter(store=store, user=request.user, level__gte=1).exists():
             return Response(
-                {'detail': 'شما دسترسی مدیریت به این فروشگاه را ندارید'},
+                {'detail': 'You do not have admin access to this store' if is_en else 'شما دسترسی مدیریت به این فروشگاه را ندارید'},
                 status=status.HTTP_403_FORBIDDEN
             )
 
         result = {'created': 0, 'skipped': 0, 'errors': [], 'widget_types_created': 0}
+        deploy_locale = get_deploy_locale()
+
+        def t(fa: str, en: str) -> str:
+            return en if deploy_locale == "en" else fa
 
         # Default widget types: (name, is_layout)
         default_widget_types = [
@@ -314,43 +320,43 @@ class PageViewSet(viewsets.ModelViewSet):
             if is_reservation:
                 # فروشگاه رزرواسیون: بدون محصول، فقط ویجت‌های رزرو
                 default_pages = [
-                    ('/', 'صفحه اصلی', ['slider', 'reservation']),
-                    ('/reservation', 'رزرو آنلاین', ['reservation']),
-                    ('/login', 'ورود / ثبت‌نام', ['login']),
-                    ('/profile', 'حساب کاربری', ['profile']),
-                    ('/404', 'صفحه یافت نشد', ['static.404']),
-                    ('/500', 'خطای سرور', ['static.500']),
-                    ('/403', 'عدم دسترسی', ['static.403']),
+                    ('/', t('صفحه اصلی', 'Home'), ['slider', 'reservation']),
+                    ('/reservation', t('رزرو آنلاین', 'Online Reservation'), ['reservation']),
+                    ('/login', t('ورود / ثبت‌نام', 'Login / Signup'), ['login']),
+                    ('/profile', t('حساب کاربری', 'Profile'), ['profile']),
+                    ('/404', t('صفحه یافت نشد', 'Not Found'), ['static.404']),
+                    ('/500', t('خطای سرور', 'Server Error'), ['static.500']),
+                    ('/403', t('عدم دسترسی', 'Forbidden'), ['static.403']),
                 ]
             else:
                 # فروشگاه محصولی (فیزیکی، دیجیتال، دانلودی، استریمینگ)
                 base_pages = [
-                    ('/', 'صفحه اصلی', ['slider', 'category.listview', 'product.listview']),
-                    ('/search', 'جستجوی محصولات', ['product.search']),
-                    ('/product/:id:number/:slug?:string', 'جزئیات محصول', ['product.detail']),
-                    ('/categories', 'دسته‌بندی‌ها', ['category.search']),
-                    ('/basket', 'سبد خرید', ['basket']),
-                    ('/checkout', 'تکمیل خرید', ['checkout']),
-                    ('/login', 'ورود / ثبت‌نام', ['login']),
-                    ('/profile', 'حساب کاربری', ['profile']),
-                    ('/orders', 'سفارشات من', ['order.listview']),
-                    ('/order/:id:number', 'جزئیات سفارش', ['order.detail']),
-                    ('/blog', 'بلاگ', ['blog.listview']),
-                    ('/blog/:slug', 'مقاله بلاگ', ['blog.detail']),
-                    ('/404', 'صفحه یافت نشد', ['static.404']),
-                    ('/500', 'خطای سرور', ['static.500']),
-                    ('/403', 'عدم دسترسی', ['static.403']),
+                    ('/', t('صفحه اصلی', 'Home'), ['slider', 'category.listview', 'product.listview']),
+                    ('/search', t('جستجوی محصولات', 'Product Search'), ['product.search']),
+                    ('/product/:id:number/:slug?:string', t('جزئیات محصول', 'Product Detail'), ['product.detail']),
+                    ('/categories', t('دسته‌بندی‌ها', 'Categories'), ['category.search']),
+                    ('/basket', t('سبد خرید', 'Basket'), ['basket']),
+                    ('/checkout', t('تکمیل خرید', 'Checkout'), ['checkout']),
+                    ('/login', t('ورود / ثبت‌نام', 'Login / Signup'), ['login']),
+                    ('/profile', t('حساب کاربری', 'Profile'), ['profile']),
+                    ('/orders', t('سفارشات من', 'My Orders'), ['order.listview']),
+                    ('/order/:id:number', t('جزئیات سفارش', 'Order Detail'), ['order.detail']),
+                    ('/blog', t('بلاگ', 'Blog'), ['blog.listview']),
+                    ('/blog/:slug', t('مقاله بلاگ', 'Blog Article'), ['blog.detail']),
+                    ('/404', t('صفحه یافت نشد', 'Not Found'), ['static.404']),
+                    ('/500', t('خطای سرور', 'Server Error'), ['static.500']),
+                    ('/403', t('عدم دسترسی', 'Forbidden'), ['static.403']),
                 ]
                 # صفحات مخصوص نوع فروشگاه دیجیتال (استریم، دانلود، دیجیتال عمومی)
                 extra_after_profile = []
                 if is_streaming:
-                    extra_after_profile = [('/my-videos', 'ویدیوهای خریداری‌شده', ['profile.my_videos'])]
+                    extra_after_profile = [('/my-videos', t('ویدیوهای خریداری‌شده', 'Purchased Videos'), ['profile.my_videos'])]
                 elif is_download:
-                    extra_after_profile = [('/my-downloads', 'دانلودهای من', ['profile.my_downloads'])]
+                    extra_after_profile = [('/my-downloads', t('دانلودهای من', 'My Downloads'), ['profile.my_downloads'])]
                 elif store_category_slug == 'digital':
                     extra_after_profile = [
-                        ('/my-videos', 'ویدیوهای خریداری‌شده', ['profile.my_videos']),
-                        ('/my-downloads', 'دانلودهای من', ['profile.my_downloads']),
+                        ('/my-videos', t('ویدیوهای خریداری‌شده', 'Purchased Videos'), ['profile.my_videos']),
+                        ('/my-downloads', t('دانلودهای من', 'My Downloads'), ['profile.my_downloads']),
                     ]
                 idx = next(i for i, p in enumerate(base_pages) if p[0] == '/profile')
                 for i, extra in enumerate(extra_after_profile):
@@ -489,41 +495,41 @@ class WidgetTypeViewSet(viewsets.ReadOnlyModelViewSet):
         if 'slider' in requested_sources:
             from slider.models import Slider
             result['slider'] = [
-                {'value': str(item.id), 'label': item.title or f"Slider {item.id}"}
+                {'value': str(item.id), 'label': localize_value(item.title) or f"Slider {item.id}"}
                 for item in Slider.objects.filter(store=store).order_by('-updated_at')[:300]
             ]
 
         if 'menu' in requested_sources:
             from menu.models import Menu
             result['menu'] = [
-                {'value': str(item.id), 'label': item.title or item.key or f"Menu {item.id}"}
+                {'value': str(item.id), 'label': localize_value(item.title) or item.key or f"Menu {item.id}"}
                 for item in Menu.objects.filter(store=store).order_by('-updated_at')[:300]
             ]
 
         if 'page' in requested_sources:
             result['page'] = [
-                {'value': str(item.id), 'label': item.title or item.path, 'path': item.path}
+                {'value': str(item.id), 'label': localize_value(item.title) or item.path, 'path': item.path}
                 for item in Page.objects.filter(store=store).order_by('path')[:500]
             ]
 
         if 'category' in requested_sources:
             from category.models import Category
             result['category'] = [
-                {'value': str(item.id), 'label': item.name, 'module': item.module}
+                {'value': str(item.id), 'label': localize_value(item.name), 'module': item.module}
                 for item in Category.objects.filter(store=store).order_by('name')[:500]
             ]
 
         if 'product' in requested_sources:
             from product.models import Product
             result['product'] = [
-                {'value': str(item.id), 'label': item.title}
+                {'value': str(item.id), 'label': localize_value(item.title)}
                 for item in Product.objects.filter(store=store).order_by('-updated_at')[:500]
             ]
 
         if 'article' in requested_sources:
             from article.models import Article
             result['article'] = [
-                {'value': str(item.id), 'label': item.title, 'slug': item.slug}
+                {'value': str(item.id), 'label': localize_value(item.title), 'slug': item.slug}
                 for item in Article.objects.filter(store=store).order_by('-updated_at')[:500]
             ]
 

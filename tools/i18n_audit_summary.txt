@@ -1,0 +1,59 @@
+total=1094
+frontend=956
+landing=138
+backend=0
+by_kind:
+- jsx_text: 745
+- ui_prop_string: 235
+- ui_call_string: 114
+top_files:
+- 89 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/settings/page.tsx
+- 38 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/checkout/index.tsx
+- 33 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/app/setup/page.tsx
+- 32 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/profile/index.tsx
+- 31 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/dashboard/ProductFormLayout.tsx
+- 27 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/default/widgets/profile/index.tsx
+- 24 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/blog/new/page.tsx
+- 24 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/blog/[slug]/edit/page.tsx
+- 24 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/app/panel/admin/withdrawals/page.tsx
+- 19 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/affiliate/page.tsx
+- 19 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/menus/[id]/page.tsx
+- 19 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/app/panel/wallet/page.tsx
+- 18 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/sliders/[id]/page.tsx
+- 18 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/subscription/page.tsx
+- 16 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/pages/[id]/edit/page.tsx
+- 16 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/default/widgets/checkout/index.tsx
+- 15 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/finance/page.tsx
+- 15 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/basket/index.tsx
+- 14 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/menus/page.tsx
+- 14 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/dashboard/ProductVariantSection.tsx
+- 14 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/reservation/index.tsx
+- 13 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/product/detail/index.tsx
+- 13 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/app/panel/affiliate/page.tsx
+- 12 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/pages/page.tsx
+- 12 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/reservation/services/new/page.tsx
+- 12 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/static/contact/index.tsx
+- 12 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/components/Pricing.tsx
+- 11 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/reservation/providers/new/page.tsx
+- 11 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/wallet/page.tsx
+- 11 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/FileManagerModal.tsx
+- 11 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/default/widgets/product/search/index.tsx
+- 11 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/product/search/index.tsx
+- 10 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/blog/page.tsx
+- 10 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/reservation/services/[id]/page.tsx
+- 10 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/default/widgets/order/detail/index.tsx
+- 10 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/order/detail/index.tsx
+- 10 | F:/dev/tokan-v3/tokan-shop-builder/landing/src/components/Contact.tsx
+- 9 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/reservation/providers/[id]/page.tsx
+- 9 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/sliders/page.tsx
+- 9 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/storefront/ProductReviews.tsx
+- 9 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/static/about/index.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/media/page.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/menus/[id]/edit/page.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/app/dashboard/reservation/services/page.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/dashboard/CustomInputDefinitionsEditor.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/components/dashboard/VideoHelpDrawer.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/default/widgets/slider/index.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/blog/detail/index.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/layout/header/index.tsx
+- 8 | F:/dev/tokan-v3/tokan-shop-builder/frontend/themes/serva/widgets/product/listview/index.tsx

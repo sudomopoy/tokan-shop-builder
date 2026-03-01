@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from django.urls import path
+from django.utils.translation import gettext_lazy as _
 
 from .models import DocSection, PageGuide
 from .admin_views import import_markdown_view
@@ -20,19 +21,19 @@ class PageGuideAdmin(admin.ModelAdmin):
         return bool(obj.video_desktop)
 
     has_video_desktop.boolean = True
-    has_video_desktop.short_description = "ویدیو دسکتاپ"
+    has_video_desktop.short_description = _("Desktop video")
 
     def has_video_mobile(self, obj):
         return bool(obj.video_mobile)
 
     has_video_mobile.boolean = True
-    has_video_mobile.short_description = "ویدیو موبایل"
+    has_video_mobile.short_description = _("Mobile video")
 
     def has_description(self, obj):
         return bool(obj.description)
 
     has_description.boolean = True
-    has_description.short_description = "توضیحات"
+    has_description.short_description = _("Description")
 
 
 @admin.register(DocSection)
@@ -60,13 +61,13 @@ class DocSectionAdmin(admin.ModelAdmin):
         tags = obj.tags if isinstance(obj.tags, list) else []
         return ", ".join(str(t) for t in tags[:5]) if tags else "-"
 
-    tags_preview.short_description = "تگ‌ها"
+    tags_preview.short_description = _("Tags")
 
-    @admin.action(description="وکتورایز مجدد انتخاب‌شده‌ها")
+    @admin.action(description=_("Re-index selected items"))
     def reindex_selected(self, request, queryset):
         vs = VectorStoreService()
         if not vs.is_available():
-            self.message_user(request, "ChromaDB پیکربندی نشده است.", level=messages.WARNING)
+            self.message_user(request, _("ChromaDB is not configured."), level=messages.WARNING)
             return
 
         ids = [obj.id for obj in queryset]
@@ -77,7 +78,8 @@ class DocSectionAdmin(admin.ModelAdmin):
             reindex_doc_sections_task.delay(ids)
             self.message_user(
                 request,
-                f"وکتورایز {len(ids)} سکشن به صف Celery فرستاده شد و در پس‌زمینه اجرا می‌شود.",
+                _("%(count)s sections queued for Celery re-indexing.")
+                % {"count": len(ids)},
                 level=messages.SUCCESS,
             )
         else:
@@ -91,4 +93,8 @@ class DocSectionAdmin(admin.ModelAdmin):
                     tags=tags,
                 ):
                     count += 1
-            self.message_user(request, f"{count} سکشن با موفقیت وکتورایز شد.", level=messages.SUCCESS)
+            self.message_user(
+                request,
+                _("%(count)s sections were re-indexed successfully.") % {"count": count},
+                level=messages.SUCCESS,
+            )

@@ -20,6 +20,7 @@ import { authApi } from "@/lib/api";
 import type { WidgetConfig } from "@/themes/types";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setJwtAuth, setTokenAuth } from "@/lib/auth/authService";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type LoginMode = "sms" | "password";
 
@@ -254,12 +255,12 @@ export default function Login({ config }: { config?: WidgetConfig }) {
             }}
           >
             <Tab
-              label="ورود با پیامک"
+              label={tFrontendAuto("fe.d644a27e8b32")}
               icon={<Phone size={20} />}
               iconPosition="start"
             />
             <Tab
-              label="ورود با رمز عبور"
+              label={tFrontendAuto("fe.30db280aec44")}
               icon={<Lock size={20} />}
               iconPosition="start"
             />
@@ -283,7 +284,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
               <form onSubmit={handleSMSMobileSubmit}>
                 <TextField
                   fullWidth
-                  label="شماره موبایل"
+                  label={tFrontendAuto("fe.9da04b0b71f9")}
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                   placeholder="09123456789"
@@ -323,7 +324,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
               <form onSubmit={handleOTPSubmit}>
                 <TextField
                   fullWidth
-                  label="کد تایید"
+                  label={tFrontendAuto("fe.7bb99ed41886")}
                   value={otp}
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 5))}
                   placeholder="12345"
@@ -384,7 +385,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
             <form onSubmit={handlePasswordLogin}>
               <TextField
                 fullWidth
-                label="شماره موبایل"
+                label={tFrontendAuto("fe.9da04b0b71f9")}
                 value={passwordMobile}
                 onChange={(e) => setPasswordMobile(e.target.value)}
                 placeholder="09123456789"
@@ -401,7 +402,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
               />
               <TextField
                 fullWidth
-                label="رمز عبور"
+                label={tFrontendAuto("fe.4fb2a8ca7a45")}
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -417,7 +418,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="toggle password visibility"
+                        aria-label={tFrontendAuto("fe.5b97e2df2d35")}
                         onClick={() => setShowPassword(!showPassword)}
                         edge="end"
                       >

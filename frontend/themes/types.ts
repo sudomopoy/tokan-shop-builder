@@ -30,6 +30,8 @@ export type PageConfig = {
     metaTitle?: string | null;
     metaDescription?: string | null;
     metaKeywords?: string | null;
+    deployLocale?: "fa" | "en";
+    deployDirection?: "rtl" | "ltr";
     layout: WidgetConfig | null;
     content: Array<WidgetConfig | null>;
   };

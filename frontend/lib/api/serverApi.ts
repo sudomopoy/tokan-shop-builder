@@ -3,12 +3,14 @@
  * Uses explicit headers (X-Store-Host) since window is unavailable on server.
  */
 import axios from "axios";
+import { DEPLOY_LOCALE } from "@/lib/i18n/deployment";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080").replace(/\/+$/, "");
 
 function createServerClient(hostHeader: string | null) {
   const headers: Record<string, string> = {
     Accept: "application/json",
+    "Accept-Language": DEPLOY_LOCALE,
   };
   if (hostHeader) {
     headers["X-Store-Host"] = hostHeader;

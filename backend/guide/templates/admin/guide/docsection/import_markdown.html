@@ -17,7 +17,7 @@
 <ol class="breadcrumbs">
   <li><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
   <li><a href="{% url 'admin:app_list' app_label='guide' %}">{% translate 'Guide' %}</a></li>
-  <li><a href="{% url 'admin:guide_docsection_changelist' %}">بخش‌های مستندات</a></li>
+  <li><a href="{% url 'admin:guide_docsection_changelist' %}">{% translate "Documentation sections" %}</a></li>
   <li aria-current="page">{{ title }}</li>
 </ol>
 {% endblock %}

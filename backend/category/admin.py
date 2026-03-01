@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from django import forms
 from .models import *
 from .default_icons import DEFAULT_CATEGORY_ICONS, ICON_CHOICES
@@ -13,8 +14,8 @@ class CategoryAdminForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'icon_type': IconTypeWidget(choices=[
-                ('default', 'آیکون پیش‌فرض'),
-                ('uploaded', 'آیکون آپلود شده')
+                ('default', _('Default icon')),
+                ('uploaded', _('Uploaded icon'))
             ]),
             'default_icon': IconSelectionWidget(choices=ICON_CHOICES),
         }
@@ -26,12 +27,12 @@ class CategoryAdmin(ImportExportModelAdmin):
     list_filter = ['icon_type', 'module', 'is_editable', 'created_at']
     search_fields = ['name', 'slug']
     fieldsets = (
-        ('اطلاعات اصلی', {
+        (_('Main information'), {
             'fields': ('store', 'name', 'slug', 'module', 'parent', 'is_editable')
         }),
-        ('آیکون', {
+        (_('Icon'), {
             'fields': ('icon_type', 'default_icon', 'icon'),
-            'description': 'انتخاب نوع آیکون: پیش‌فرض یا آپلود شده'
+            'description': _('Choose icon type: default or uploaded')
         }),
     )
     
@@ -50,7 +51,7 @@ class CategoryAdmin(ImportExportModelAdmin):
                     svg_content
                 )
         return '-'
-    icon_preview.short_description = 'پیش‌نمایش آیکون'
+    icon_preview.short_description = _('Icon preview')
     
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)

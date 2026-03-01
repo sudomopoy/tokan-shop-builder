@@ -15,6 +15,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { orderApi, type SalesStatistics } from "@/lib/api/orderApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const Chart = dynamic(() => import("react-apexcharts").then((mod) => mod.default), {
   ssr: false,
@@ -100,7 +101,7 @@ export default function FinancePage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">بخش مالی</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.763d3603e81d")}</h1>
         <div className="flex justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
         </div>
@@ -111,9 +112,9 @@ export default function FinancePage() {
   if (!stats) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">بخش مالی</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.763d3603e81d")}</h1>
         <div className="card text-center py-12 text-gray-500">
-          <p>دریافت آمار مالی امکان‌پذیر نبود. لطفاً دوباره تلاش کنید.</p>
+          <p>{tFrontendAuto("fe.50a8c6e5b5c4")}</p>
         </div>
       </div>
     );
@@ -243,8 +244,8 @@ export default function FinancePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">بخش مالی</h1>
-        <p className="text-gray-600 mt-1">آمار فروش، درآمد و ریز مالی فروشگاه</p>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.763d3603e81d")}</h1>
+        <p className="text-gray-600 mt-1">{tFrontendAuto("fe.54a43dbfb4e2")}</p>
       </div>
 
       {/* کارت‌های اصلی */}
@@ -270,7 +271,7 @@ export default function FinancePage() {
 
       {/* کارت‌های وضعیت سفارشات */}
       <div>
-        <h2 className="text-xl font-bold mb-4">وضعیت سفارشات</h2>
+        <h2 className="text-xl font-bold mb-4">{tFrontendAuto("fe.d646430cb3c2")}</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {statusCards.map((card) => (
             <div key={card.name} className="card flex items-center gap-4">
@@ -288,7 +289,7 @@ export default function FinancePage() {
 
       {/* نمودار درآمد ۳۰ روز */}
       <div className="card">
-        <h2 className="text-xl font-bold mb-4">نمودار درآمد (۳۰ روز گذشته)</h2>
+        <h2 className="text-xl font-bold mb-4">{tFrontendAuto("fe.7c22fada8467")}</h2>
         <div className="h-80">
           <Chart
             options={revenueChartOptions}
@@ -302,7 +303,7 @@ export default function FinancePage() {
 
       {/* نمودار تعداد سفارشات */}
       <div className="card">
-        <h2 className="text-xl font-bold mb-4">تعداد سفارشات روزانه (۳۰ روز گذشته)</h2>
+        <h2 className="text-xl font-bold mb-4">{tFrontendAuto("fe.ca053c38aab3")}</h2>
         <div className="h-80">
           <Chart
             options={ordersChartOptions}
@@ -317,7 +318,7 @@ export default function FinancePage() {
       {/* آخرین سفارشات */}
       <div className="card overflow-hidden p-0">
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-xl font-bold">آخرین سفارشات</h2>
+          <h2 className="text-xl font-bold">{tFrontendAuto("fe.7ca63fd4d9eb")}</h2>
           <Link
             href="/dashboard/orders"
             className="text-blue-600 hover:text-blue-700 text-sm font-medium"
@@ -329,11 +330,11 @@ export default function FinancePage() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">شماره</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">مبلغ</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">وضعیت</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">تاریخ</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">عملیات</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.4e13742ef7b3")}</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.3747dab0ba22")}</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.b56dc5016988")}</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.f93805684cab")}</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.ad12690641ac")}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -358,7 +359,7 @@ export default function FinancePage() {
                         className="inline-flex items-center gap-1.5 p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
                       >
                         <Eye className="h-4 w-4" />
-                        <span className="text-sm">جزئیات</span>
+                        <span className="text-sm">{tFrontendAuto("fe.1b2b6460d4eb")}</span>
                       </Link>
                     </td>
                   </tr>

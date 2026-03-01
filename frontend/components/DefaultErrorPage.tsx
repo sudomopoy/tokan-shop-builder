@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { DEPLOY_DIRECTION } from "@/lib/i18n/deployment";
+import { tFrontend } from "@/lib/i18n/messages";
 
 type ErrorCode = 404 | 500 | 403;
 
@@ -9,20 +11,20 @@ const ERROR_CONFIG: Record<
   { title: string; description: string; icon: string; color: string }
 > = {
   404: {
-    title: "صفحه پیدا نشد",
-    description: "متأسفانه صفحه‌ای که دنبالش هستید وجود ندارد.",
+    title: tFrontend("error.404.title"),
+    description: tFrontend("error.404.description"),
     icon: "🔍",
     color: "from-slate-50 to-slate-100",
   },
   500: {
-    title: "خطای سرور",
-    description: "متأسفانه خطایی در سرور رخ داده است. لطفاً کمی بعد دوباره تلاش کنید.",
+    title: tFrontend("error.500.title"),
+    description: tFrontend("error.500.description"),
     icon: "⚠️",
     color: "from-red-50 to-slate-50",
   },
   403: {
-    title: "دسترسی غیرمجاز",
-    description: "شما به این بخش دسترسی ندارید.",
+    title: tFrontend("error.403.title"),
+    description: tFrontend("error.403.description"),
     icon: "🚫",
     color: "from-amber-50 to-slate-50",
   },
@@ -38,7 +40,7 @@ export default function DefaultErrorPage({
   return (
     <div
       className={`min-h-screen flex flex-col items-center justify-center bg-gradient-to-b ${config.color} p-6`}
-      dir="rtl"
+      dir={DEPLOY_DIRECTION}
     >
       <div className="max-w-lg w-full text-center space-y-8">
         <div className="w-24 h-24 mx-auto rounded-2xl bg-white shadow-lg flex items-center justify-center text-5xl border border-gray-100">
@@ -54,7 +56,7 @@ export default function DefaultErrorPage({
             href="/"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
           >
-            بازگشت به صفحه اصلی
+            {tFrontend("error.backToHome")}
           </Link>
         </div>
       </div>

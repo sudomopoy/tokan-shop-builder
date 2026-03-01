@@ -22,6 +22,7 @@ import { basketApi, type Basket, type BasketItem } from "@/lib/api/basketApi";
 import type { WidgetConfig } from "@/themes/types";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 // Helper function to format price in Persian (matches products listview)
 const formatPrice = (price: number): string => {
@@ -223,7 +224,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       } catch (err) {
         if (isMounted) {
           console.error("Error fetching basket:", err);
-          setError("خطا در دریافت سبد خرید. لطفا دوباره تلاش کنید.");
+          setError(tFrontendAuto("fe.5ca312bc2c6f"));
         }
       } finally {
         if (isMounted) {
@@ -248,7 +249,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       setBasket(updatedBasket);
     } catch (err) {
       console.error("Error updating item:", err);
-      setError("خطا در به‌روزرسانی تعداد. لطفا دوباره تلاش کنید.");
+      setError(tFrontendAuto("fe.67b4453e082c"));
     } finally {
       setUpdatingItems((prev) => {
         const next = new Set(prev);
@@ -267,7 +268,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       setBasket(updatedBasket);
     } catch (err) {
       console.error("Error removing item:", err);
-      setError("خطا در حذف آیتم. لطفا دوباره تلاش کنید.");
+      setError(tFrontendAuto("fe.9b53583bdfcb"));
     } finally {
       setUpdatingItems((prev) => {
         const next = new Set(prev);
@@ -491,7 +492,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
               <Divider sx={{ mb: 2 }} />
 
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                <Typography fontWeight="bold">جمع سبد خرید</Typography>
+                <Typography fontWeight="bold">{tFrontendAuto("fe.7f6f786067e8")}</Typography>
                 <Typography
                   variant="h6"
                   sx={{

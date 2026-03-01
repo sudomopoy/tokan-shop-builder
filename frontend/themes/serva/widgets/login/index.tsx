@@ -8,6 +8,7 @@ import { authApi } from "@/lib/api";
 import type { WidgetConfig } from "@/themes/types";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setJwtAuth, setTokenAuth } from "@/lib/auth/authService";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type LoginMode = "sms" | "password";
 
@@ -163,7 +164,7 @@ export default function Login({ config }: { config?: WidgetConfig }) {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">ورود</span>
+            <span className="text-dark">{tFrontendAuto("fe.c5f2b4828c9b")}</span>
           </nav>
         </div>
       </div>

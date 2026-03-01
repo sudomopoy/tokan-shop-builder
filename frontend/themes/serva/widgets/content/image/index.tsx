@@ -1,6 +1,8 @@
 "use client";
 
 import type { WidgetConfig } from "@/themes/types";
+import { localizedString } from "@/lib/i18n/localize";
+import { tFrontend } from "@/lib/i18n/messages";
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value : "";
@@ -12,10 +14,12 @@ function asNumber(value: unknown, fallback: number): number {
 }
 
 export default function ServaImageWidget({ config }: { config?: WidgetConfig }) {
-  const imageUrl = asString(config?.widgetConfig?.image_url);
-  const alt = asString(config?.widgetConfig?.alt) || "Widget image";
-  const caption = asString(config?.widgetConfig?.caption);
-  const linkUrl = asString(config?.widgetConfig?.link_url);
+  const imageUrl = localizedString(config?.widgetConfig?.image_url);
+  const alt =
+    localizedString(config?.widgetConfig?.alt) ||
+    tFrontend("widget.image.defaultAlt");
+  const caption = localizedString(config?.widgetConfig?.caption);
+  const linkUrl = localizedString(config?.widgetConfig?.link_url);
   const styleKey = asString(config?.widgetConfig?.style_key) || "cover";
   const height = asNumber(config?.widgetConfig?.height, 420);
 
@@ -23,7 +27,7 @@ export default function ServaImageWidget({ config }: { config?: WidgetConfig }) 
     return (
       <section className="px-4 py-10">
         <div className="mx-auto max-w-6xl rounded-3xl border border-dashed border-slate-300 p-8 text-sm text-slate-500">
-          No image selected for this widget.
+          {tFrontend("widget.image.empty")}
         </div>
       </section>
     );

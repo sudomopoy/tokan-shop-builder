@@ -28,6 +28,7 @@ import {
 import { storeApi } from "@/lib/api";
 import Link from "next/link";
 import SetupGuideModal from "./SetupGuideModal";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   domain: Globe,
@@ -148,7 +149,7 @@ export default function SetupTasksSection() {
             type="button"
             onClick={dismissCongrats}
             className="flex-shrink-0 p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
-            aria-label="بستن"
+            aria-label={tFrontendAuto("fe.53df25bd0b3b")}
           >
             <X className="h-5 w-5" />
           </button>
@@ -184,12 +185,12 @@ export default function SetupTasksSection() {
             </p>
             {progress.smart_setup_current_stage && (
               <div className="mt-6 px-5 py-3 rounded-xl bg-violet-100 border border-violet-200">
-                <p className="text-xs text-violet-600 font-medium mb-1">مرحله فعلی</p>
+                <p className="text-xs text-violet-600 font-medium mb-1">{tFrontendAuto("fe.b332f053695d")}</p>
                 <p className="font-semibold text-violet-800">{progress.smart_setup_current_stage}</p>
               </div>
             )}
             {!progress.smart_setup_current_stage && (
-              <p className="mt-4 text-sm text-gray-500">در حال بررسی درخواست...</p>
+              <p className="mt-4 text-sm text-gray-500">{tFrontendAuto("fe.ce7c50b7c757")}</p>
             )}
           </div>
         </div>
@@ -249,7 +250,7 @@ export default function SetupTasksSection() {
                       <span className="font-medium text-violet-700">فقط {toFa(pendingCount)} قدم</span> تا آماده‌سازی کامل
                     </>
                   ) : (
-                    <span className="text-green-600 font-medium">همه چیز آماده است!</span>
+                    <span className="text-green-600 font-medium">{tFrontendAuto("fe.049496c531b2")}</span>
                   )}
                 </p>
               </div>
@@ -277,7 +278,7 @@ export default function SetupTasksSection() {
                   })()}
                 </div>
                 <div>
-                  <p className="text-xs text-violet-600 font-medium">قدم بعدی شما</p>
+                  <p className="text-xs text-violet-600 font-medium">{tFrontendAuto("fe.60a3f3ea025a")}</p>
                   <p className="font-bold text-gray-900">{nextTask.label}</p>
                 </div>
               </div>
@@ -323,7 +324,7 @@ export default function SetupTasksSection() {
                       <p className="text-sm font-medium text-gray-800 truncate">
                         {task.label}
                         {task.optional && (
-                          <span className="text-gray-400 font-normal text-xs mr-1">(اختیاری)</span>
+                          <span className="text-gray-400 font-normal text-xs mr-1">{tFrontendAuto("fe.0930d60af096")}</span>
                         )}
                       </p>
                       <div className="flex items-center gap-2 mt-1">

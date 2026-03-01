@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -15,15 +16,15 @@ export function Footer() {
             <div className="h-10 w-10 rounded-2xl overflow-hidden glass flex items-center justify-center border border-slate-200">
               <Image
                 src="/logo.jpg"
-                alt="لوگوی توکان"
+                alt={tLandingAuto("ld.a96088fccdfb")}
                 width={36}
                 height={36}
                 className="h-9 w-9 object-contain"
               />
             </div>
             <div>
-              <div className="font-extrabold text-slate-900">توکان</div>
-              <div className="text-sm text-slate-500">توسعه کسب‌وکار دیجیتال</div>
+              <div className="font-extrabold text-slate-900">{tLandingAuto("ld.989871906ce6")}</div>
+              <div className="text-sm text-slate-500">{tLandingAuto("ld.7058385deda5")}</div>
             </div>
           </div>
 
@@ -39,7 +40,7 @@ export function Footer() {
               target="_blank"
               rel="noreferrer"
               className="h-10 w-10 rounded-xl glass hover:bg-slate-100 transition flex items-center justify-center text-slate-700 border border-slate-200"
-              aria-label="تلگرام"
+              aria-label={tLandingAuto("ld.cf1a31f63e99")}
             >
               <FontAwesomeIcon icon={faTelegram} />
             </a>

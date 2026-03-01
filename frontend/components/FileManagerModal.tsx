@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { mediaApi } from "@/lib/api";
 import type { Media } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function isVideo(media: Media): boolean {
   return media.file_type?.startsWith("video/") ?? false;
@@ -298,7 +299,7 @@ export function FileManagerModal({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-lg font-bold">انتخاب فایل</h2>
+          <h2 className="text-lg font-bold">{tFrontendAuto("fe.51d2273e1e8d")}</h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100"
@@ -387,7 +388,7 @@ export function FileManagerModal({
                             }
                             onBlur={() => savePendingMeta(idx)}
                             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
-                            placeholder="عنوان فایل"
+                            placeholder={tFrontendAuto("fe.48aafb2d5247")}
                           />
                         </div>
                         <div>
@@ -402,7 +403,7 @@ export function FileManagerModal({
                             }
                             onBlur={() => savePendingMeta(idx)}
                             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
-                            placeholder="متن جایگزین برای سئو"
+                            placeholder={tFrontendAuto("fe.ab2ddbaabdfa")}
                           />
                         </div>
                         <div className="flex gap-2 flex-wrap">
@@ -499,7 +500,7 @@ export function FileManagerModal({
                           type="button"
                           onClick={(e) => openGalleryEdit(m, e)}
                           className="absolute bottom-1 left-1 p-1.5 rounded-lg bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
-                          title="ویرایش عنوان و Alt"
+                          title={tFrontendAuto("fe.c2c335ae0e8d")}
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
@@ -585,7 +586,7 @@ export function FileManagerModal({
                   </div>
 
                   <div>
-                    <p className="text-xs text-gray-500 mb-2">دستورات از پیش‌ساخته:</p>
+                    <p className="text-xs text-gray-500 mb-2">{tFrontendAuto("fe.63c82ba94c95")}</p>
                     <div className="flex flex-wrap gap-2">
                       {AI_PROMPT_PRESETS.map((preset) => (
                         <button
@@ -607,7 +608,7 @@ export function FileManagerModal({
                       type="text"
                       value={aiChatInput}
                       onChange={(e) => setAiChatInput(e.target.value)}
-                      placeholder="دستور خود را بنویسید... (به زودی)"
+                      placeholder={tFrontendAuto("fe.53d8e513b794")}
                       disabled
                       className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-100"
                     />
@@ -633,7 +634,7 @@ export function FileManagerModal({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold">ویرایش فایل</h3>
+                <h3 className="text-lg font-bold">{tFrontendAuto("fe.cf62859a373b")}</h3>
                 <button
                   type="button"
                   onClick={closeGalleryEdit}
@@ -644,23 +645,23 @@ export function FileManagerModal({
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">عنوان</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.1b32651b420d")}</label>
                   <input
                     type="text"
                     value={galleryEditForm.title}
                     onChange={(e) => setGalleryEditForm((p) => ({ ...p, title: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg"
-                    placeholder="عنوان فایل"
+                    placeholder={tFrontendAuto("fe.48aafb2d5247")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Alt (متن جایگزین)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.b9fb4bfa6c7e")}</label>
                   <input
                     type="text"
                     value={galleryEditForm.alt}
                     onChange={(e) => setGalleryEditForm((p) => ({ ...p, alt: e.target.value }))}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg"
-                    placeholder="متن جایگزین برای سئو"
+                    placeholder={tFrontendAuto("fe.ab2ddbaabdfa")}
                   />
                 </div>
                 <div className="flex gap-2 pt-2">

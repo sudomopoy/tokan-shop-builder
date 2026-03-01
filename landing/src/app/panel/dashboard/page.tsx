@@ -11,6 +11,7 @@ import {
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { getPanelInfo, getAffiliateEarnings } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function formatPrice(v: string | number): string {
   const n = typeof v === "string" ? parseFloat(v) || 0 : v;
@@ -66,7 +67,7 @@ export default function PanelDashboardPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-slate-900 mb-2">داشبورد</h1>
+      <h1 className="text-2xl font-bold text-slate-900 mb-2">{tLandingAuto("ld.8ff6c868762a")}</h1>
       <p className="text-slate-600 mb-8">
         خوش آمدید به پنل مدیریت توکان
       </p>
@@ -74,7 +75,7 @@ export default function PanelDashboardPage() {
       {/* خلاصه موجودی و درآمد */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="glass rounded-2xl p-5 border border-slate-200">
-          <p className="text-sm text-slate-500 mb-1">موجودی کیف پول</p>
+          <p className="text-sm text-slate-500 mb-1">{tLandingAuto("ld.1d190755e8fa")}</p>
           <p className="text-xl font-bold text-slate-900">{formatPrice(balance)} تومان</p>
           <Link
             href="/panel/wallet"
@@ -87,11 +88,11 @@ export default function PanelDashboardPage() {
         {earnings && (
           <>
             <div className="glass rounded-2xl p-5 border border-emerald-100 bg-emerald-50/30">
-              <p className="text-sm text-slate-500 mb-1">درآمد واریز شده</p>
+              <p className="text-sm text-slate-500 mb-1">{tLandingAuto("ld.bee140eafd7c")}</p>
               <p className="text-xl font-bold text-emerald-700">{formatPrice(earnings.total_completed)} تومان</p>
             </div>
             <div className="glass rounded-2xl p-5 border border-amber-100 bg-amber-50/30">
-              <p className="text-sm text-slate-500 mb-1">در انتظار واریز</p>
+              <p className="text-sm text-slate-500 mb-1">{tLandingAuto("ld.7ebe6037b53b")}</p>
               <p className="text-xl font-bold text-amber-700">{formatPrice(earnings.total_pending)} تومان</p>
             </div>
           </>
@@ -99,7 +100,7 @@ export default function PanelDashboardPage() {
       </div>
 
       {/* لینک‌های سریع */}
-      <h2 className="text-lg font-semibold text-slate-800 mb-4">دسترسی سریع</h2>
+      <h2 className="text-lg font-semibold text-slate-800 mb-4">{tLandingAuto("ld.4219bbd62390")}</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {quickLinks.map((link) => (
           <Link
@@ -124,7 +125,7 @@ export default function PanelDashboardPage() {
       {info?.stores && info.stores.length > 0 && (
         <div className="mt-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-slate-800">فروشگاه‌های شما</h2>
+            <h2 className="text-lg font-semibold text-slate-800">{tLandingAuto("ld.0fb874d2b597")}</h2>
             <Link
               href="/panel/stores"
               className="text-sm text-brand-600 hover:underline flex items-center gap-1"

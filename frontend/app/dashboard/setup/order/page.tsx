@@ -19,6 +19,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { storeApi } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   domain: Globe,
@@ -61,7 +62,7 @@ export default function InitialSetupOrderPage() {
   const handleSubmitOrder = async () => {
     if (!service) return;
     if (service.cost_amount <= 0) {
-      setError("هزینه این سرویس در سیستم تنظیم نشده است. با پشتیبانی تماس بگیرید.");
+      setError(tFrontendAuto("fe.3a49288d6e3c"));
       return;
     }
     setSubmitting(true);
@@ -71,7 +72,7 @@ export default function InitialSetupOrderPage() {
       if (res.payment_link) {
         window.location.href = res.payment_link;
       } else {
-        setError("مشکلی در ایجاد درخواست پرداخت وجود دارد.");
+        setError(tFrontendAuto("fe.13745bdc4e8c"));
       }
     } catch (err: any) {
       setError(err?.response?.data?.detail ?? "خطا در ثبت سفارش");
@@ -106,7 +107,7 @@ export default function InitialSetupOrderPage() {
           داشبورد
         </Link>
         <ArrowRight className="h-4 w-4 rotate-180" />
-        <span className="text-gray-700 font-medium">سفارش راه‌اندازی اولیه وب‌سایت</span>
+        <span className="text-gray-700 font-medium">{tFrontendAuto("fe.13ba7caa6bea")}</span>
       </div>
 
       <div className="rounded-2xl border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50/30 shadow-sm overflow-hidden">
@@ -123,7 +124,7 @@ export default function InitialSetupOrderPage() {
         </div>
 
         <div className="px-8 pb-8">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">موارد شامل‌شده در این سرویس</h2>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">{tFrontendAuto("fe.4b8340fa0dc4")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {service.items.map((item) => {
               const Icon = ICON_MAP[item.key] ?? CheckCircle2;
@@ -155,7 +156,7 @@ export default function InitialSetupOrderPage() {
             <div className="text-lg">
               {service.cost_amount > 0 ? (
                 <>
-                  <span className="text-gray-600">مبلغ قابل پرداخت:</span>
+                  <span className="text-gray-600">{tFrontendAuto("fe.2e8a2c608d45")}</span>
                   <span className="font-bold text-violet-700 mr-2">
                     {formatPrice(service.cost_amount)} تومان
                   </span>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   faArrowLeft,
   faWandSparkles,
   faLock,
@@ -104,8 +105,8 @@ export function Hero() {
                     <FontAwesomeIcon icon={faRocket} className="text-white" />
                   </div>
                   <div>
-                    <div className="font-extrabold text-slate-900">نقشه رشد توکان</div>
-                    <div className="text-sm text-slate-600">از طراحی تا فروش و لید</div>
+                    <div className="font-extrabold text-slate-900">{tLandingAuto("ld.472b105ad7a8")}</div>
+                    <div className="text-sm text-slate-600">{tLandingAuto("ld.658af6eabe6b")}</div>
                   </div>
                 </div>
                 <span className="text-xs px-3 py-1.5 rounded-full glass text-slate-600 border border-slate-200">
@@ -140,7 +141,7 @@ export function Hero() {
 
             <div className="absolute -bottom-6 -right-3 glass rounded-2xl px-4 py-3 animate-floaty hidden md:flex border border-slate-200">
               <FontAwesomeIcon icon={faBolt} className="text-brand-500 ml-2" />
-              <span className="text-sm text-slate-700">شروع سریع، رشد واقعی</span>
+              <span className="text-sm text-slate-700">{tLandingAuto("ld.35dad3df2dd6")}</span>
             </div>
           </div>
         </div>

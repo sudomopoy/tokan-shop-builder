@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, Search } from "lucide-react";
 import { orderApi, type Order } from "@/lib/api/orderApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "در انتظار پرداخت",
@@ -87,7 +88,7 @@ export default function OrdersPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h1 className="text-3xl font-bold">مدیریت سفارشات</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.9bfbc4ecbf73")}</h1>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
@@ -95,7 +96,7 @@ export default function OrdersPage() {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="جستجو با شماره سفارش، نام یا موبایل..."
+            placeholder={tFrontendAuto("fe.73ce4d8a2728")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pr-10 pl-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -106,7 +107,7 @@ export default function OrdersPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[180px]"
         >
-          <option value="">همه وضعیت‌ها</option>
+          <option value="">{tFrontendAuto("fe.333174e52f41")}</option>
           {Object.entries(STATUS_LABELS).map(([k, v]) => (
             <option key={k} value={k}>
               {v}
@@ -177,10 +178,10 @@ export default function OrdersPage() {
                         <Link
                           href={`/dashboard/orders/${order.code}`}
                           className="inline-flex items-center gap-1.5 p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
-                          title="مشاهده جزئیات"
+                          title={tFrontendAuto("fe.89508fc5f0d6")}
                         >
                           <Eye className="h-4 w-4" />
-                          <span className="text-sm">جزئیات</span>
+                          <span className="text-sm">{tFrontendAuto("fe.1b2b6460d4eb")}</span>
                         </Link>
                       </td>
                     </tr>

@@ -3,6 +3,7 @@ from .models import Article
 from tag.models import Tag
 from media.models import Media
 from category.models import Category
+from core.i18n import localize_value
 
 
 class ArticleCategorySerializer(serializers.ModelSerializer):
@@ -87,3 +88,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return localize_value(data)

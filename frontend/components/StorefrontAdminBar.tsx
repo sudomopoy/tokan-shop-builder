@@ -20,6 +20,8 @@ import { accountApi, storeApi, announcementApi } from "@/lib/api";
 import { getMediaUrl } from "@/lib/api/storeApi";
 import type { User } from "@/lib/api/accountApi";
 import type { StoreListItem } from "@/lib/api/storeApi";
+import { DEPLOY_DIRECTION, DEPLOY_LOCALE } from "@/lib/i18n/deployment";
+import { tFrontend } from "@/lib/i18n/messages";
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
 function toPersianDigits(num: number | string): string {
@@ -40,13 +42,42 @@ type QuickLinkItem = {
 };
 
 const QUICK_LINKS: QuickLinkItem[] = [
-  { href: "/dashboard", label: "داشبورد", icon: LayoutDashboard },
-  { href: "/dashboard/products", label: "محصولات", icon: Package },
-  { href: "/dashboard/products/new", label: "افزودن محصول", icon: Plus },
-  { href: "/dashboard/orders", label: "سفارشات", icon: ShoppingCart },
-  { href: "/dashboard/blog", label: "بلاگ", icon: BookOpen },
-  { href: "/dashboard/notifications", label: "اعلانات", icon: Bell, badgeKey: "unreadCount" },
-  { href: "/dashboard/settings", label: "تنظیمات", icon: Settings },
+  {
+    href: "/dashboard",
+    label: tFrontend("adminBar.dashboard"),
+    icon: LayoutDashboard,
+  },
+  {
+    href: "/dashboard/products",
+    label: tFrontend("adminBar.products"),
+    icon: Package,
+  },
+  {
+    href: "/dashboard/products/new",
+    label: tFrontend("adminBar.newProduct"),
+    icon: Plus,
+  },
+  {
+    href: "/dashboard/orders",
+    label: tFrontend("adminBar.orders"),
+    icon: ShoppingCart,
+  },
+  {
+    href: "/dashboard/blog",
+    label: tFrontend("adminBar.blog"),
+    icon: BookOpen,
+  },
+  {
+    href: "/dashboard/notifications",
+    label: tFrontend("adminBar.notifications"),
+    icon: Bell,
+    badgeKey: "unreadCount",
+  },
+  {
+    href: "/dashboard/settings",
+    label: tFrontend("adminBar.settings"),
+    icon: Settings,
+  },
 ];
 
 export default function StorefrontAdminBar() {
@@ -128,11 +159,17 @@ export default function StorefrontAdminBar() {
   const storeUrl = getStoreFrontUrl(currentStore);
   const hasStore = !!currentStore && storeUrl !== "#";
   const storeLogo = currentStore?.minimal_logo || currentStore?.favicon;
-  const storeTitle = currentStore?.title || currentStore?.name || "فروشگاه";
+  const storeTitle =
+    currentStore?.title ||
+    currentStore?.name ||
+    tFrontend("adminBar.storeDefault");
 
   const getBadge = (key: string) => {
     if (key === "unreadCount" && unreadCount > 0) {
-      return unreadCount > 99 ? "۹۹+" : toPersianDigits(unreadCount);
+      if (DEPLOY_LOCALE === "fa") {
+        return unreadCount > 99 ? "۹۹+" : toPersianDigits(unreadCount);
+      }
+      return unreadCount > 99 ? "99+" : String(unreadCount);
     }
     return null;
   };
@@ -147,7 +184,9 @@ export default function StorefrontAdminBar() {
         {badge && (
           <span
             className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[10px] font-bold text-slate-900"
-            aria-label={`${unreadCount} اعلان خوانده نشده`}
+            aria-label={
+              tFrontend("adminBar.unreadAria", { count: unreadCount })
+            }
           >
             {badge}
           </span>
@@ -174,7 +213,7 @@ export default function StorefrontAdminBar() {
     <>
       <div
         className="fixed top-0 left-0 right-0 z-[9999] border-b border-white/10 bg-slate-900/95 text-white shadow-xl backdrop-blur-md"
-        dir="rtl"
+        dir={DEPLOY_DIRECTION}
         ref={menuRef}
       >
         <div className="flex items-center justify-between h-11 sm:h-10 px-3 sm:px-4 text-xs sm:text-[13px]">
@@ -192,10 +231,10 @@ export default function StorefrontAdminBar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 rounded-lg px-2.5 py-2 hover:bg-white/10 transition-colors text-white/90"
-                  title="مشاهده فروشگاه در تب جدید"
+                  title={tFrontend("adminBar.openStoreNewTab")}
                 >
                   <ExternalLink className="h-4 w-4" />
-                  <span>مشاهده فروشگاه</span>
+                  <span>{tFrontend("adminBar.viewStore")}</span>
                 </a>
               </>
             )}
@@ -207,7 +246,11 @@ export default function StorefrontAdminBar() {
               onClick={() => setMobileMenuOpen((o) => !o)}
               className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/15 active:scale-95 transition-all"
               aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? "بستن منو" : "باز کردن منو"}
+              aria-label={
+                mobileMenuOpen
+                  ? tFrontend("adminBar.menuClose")
+                  : tFrontend("adminBar.menuOpen")
+              }
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -286,7 +329,9 @@ export default function StorefrontAdminBar() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <ExternalLink className="h-4 w-4" />
-                  <span>مشاهده فروشگاه در تب جدید</span>
+                  <span>
+                    {tFrontend("adminBar.openStoreNewTab")}
+                  </span>
                 </a>
               )}
             </div>

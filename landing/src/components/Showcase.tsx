@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   faArrowUpRightFromSquare,
   faArrowLeft,
   faStore,
@@ -40,7 +41,7 @@ export function Showcase() {
             <div className="h-48 overflow-hidden bg-slate-100 relative">
               <Image
                 src="https://s3-public.ropomoda.com/files/2025/7/4/125e0e27-1107-4a6f-9493-843b1c2beca2..jpg"
-                alt="روپومدا"
+                alt={tLandingAuto("ld.9f8505043369")}
                 fill
                 className="object-cover group-hover:scale-105 transition duration-500"
               />
@@ -52,7 +53,7 @@ export function Showcase() {
                 </h3>
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-slate-500" />
               </div>
-              <p className="mt-2 text-slate-600">فروشگاه تخصصی پوشاک</p>
+              <p className="mt-2 text-slate-600">{tLandingAuto("ld.9ff45b9e8362")}</p>
               <div className="mt-4 inline-flex items-center gap-2 text-brand-600 font-bold">
                 مشاهده
                 <FontAwesomeIcon icon={faArrowLeft} />

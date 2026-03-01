@@ -14,6 +14,7 @@ import {
   History,
 } from "lucide-react";
 import {
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
   subscriptionApi,
   accountApi,
   type SubscriptionPlan,
@@ -181,7 +182,7 @@ export default function SubscriptionPage() {
       }
     } catch (err) {
       console.error(err);
-      setError("خطا در بارگذاری اطلاعات اشتراک");
+      setError(tFrontendAuto("fe.e2969985fcd0"));
     } finally {
       setLoading(false);
     }
@@ -230,7 +231,7 @@ export default function SubscriptionPage() {
 
   const handleRenew = async () => {
     if (!selectedPlanId || !selectedDurationMonths) {
-      setError("پلن و مدت را انتخاب کنید.");
+      setError(tFrontendAuto("fe.96ccfd501124"));
       return;
     }
     setError("");
@@ -267,18 +268,18 @@ export default function SubscriptionPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-        <p className="mt-3 text-sm text-gray-500">در حال بارگذاری...</p>
+        <p className="mt-3 text-sm text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
       </div>
     );
   }
 
   const PaymentSection = () => (
     <div className="space-y-4">
-      <h2 className="font-bold text-gray-900">کد تخفیف و پرداخت</h2>
+      <h2 className="font-bold text-gray-900">{tFrontendAuto("fe.201fc928e347")}</h2>
 
       {/* کیف پول */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">کیف پول</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.7763144e9064")}</label>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm text-gray-600">
             موجودی: <span className="font-semibold tabular-nums">{formatPrice(walletBalance)}</span> تومان
@@ -304,13 +305,13 @@ export default function SubscriptionPage() {
               onChange={(e) => setWalletAmount(Math.max(0, Math.min(maxWalletAmount, parseInt(e.target.value) || 0)))}
               className="w-28 px-2 py-1.5 rounded-lg border border-gray-200 text-sm tabular-nums"
             />
-            <span className="text-xs text-gray-500">تومان از کیف پول</span>
+            <span className="text-xs text-gray-500">{tFrontendAuto("fe.5613a33675f9")}</span>
           </div>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">کد تخفیف (اختیاری)</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.88006a7d6d6f")}</label>
         <div className="flex gap-2 min-w-0">
           <input
             type="text"
@@ -319,7 +320,7 @@ export default function SubscriptionPage() {
               setDiscountCode(e.target.value.toUpperCase());
               setDiscountVerified(null);
             }}
-            placeholder="مثال: TOKAN20"
+            placeholder={tFrontendAuto("fe.574d7b6ce6e7")}
             className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
           <button
@@ -352,10 +353,10 @@ export default function SubscriptionPage() {
       )}
       <div className="flex flex-col sm:flex-row lg:flex-col gap-4 pt-2 border-t border-gray-200">
         <div>
-          <p className="text-sm text-gray-500">مبلغ قابل پرداخت</p>
+          <p className="text-sm text-gray-500">{tFrontendAuto("fe.2e6cbd8c252b")}</p>
           <p className="text-xl font-bold text-gray-900 tabular-nums">
             {formatPrice(Math.max(0, finalPrice - walletAmount))}
-            <span className="text-sm font-normal text-gray-500 mr-1">تومان</span>
+            <span className="text-sm font-normal text-gray-500 mr-1">{tFrontendAuto("fe.d95175effeea")}</span>
           </p>
           {walletAmount > 0 && (
             <p className="text-xs text-emerald-600 mt-0.5">
@@ -391,7 +392,7 @@ export default function SubscriptionPage() {
         {/* ستون چپ: وضعیت + پلن‌ها */}
         <div className="space-y-5 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h1 className="text-xl font-bold text-gray-900">اشتراک فروشگاه</h1>
+            <h1 className="text-xl font-bold text-gray-900">{tFrontendAuto("fe.f9a76e7edd50")}</h1>
             <Link
               href="/dashboard/subscription/history"
               className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-600"
@@ -448,7 +449,7 @@ export default function SubscriptionPage() {
           {/* موبایل: کیف پول و کد تخفیف */}
           <div className="lg:hidden card p-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">کیف پول</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.7763144e9064")}</label>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-sm text-gray-600">
                   موجودی: <span className="font-semibold tabular-nums">{formatPrice(walletBalance)}</span> تومان
@@ -474,12 +475,12 @@ export default function SubscriptionPage() {
                     onChange={(e) => setWalletAmount(Math.max(0, Math.min(maxWalletAmount, parseInt(e.target.value) || 0)))}
                     className="w-24 px-2 py-1.5 rounded-lg border border-gray-200 text-sm tabular-nums"
                   />
-                  <span className="text-xs text-gray-500">تومان</span>
+                  <span className="text-xs text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
                 </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">کد تخفیف (اختیاری)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.88006a7d6d6f")}</label>
             <div className="flex gap-2 min-w-0">
               <input
                 type="text"
@@ -488,7 +489,7 @@ export default function SubscriptionPage() {
                   setDiscountCode(e.target.value.toUpperCase());
                   setDiscountVerified(null);
                 }}
-                placeholder="مثال: TOKAN20"
+                placeholder={tFrontendAuto("fe.574d7b6ce6e7")}
                 className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
               <button
@@ -523,7 +524,7 @@ export default function SubscriptionPage() {
 
           {/* پلن‌ها */}
           <div>
-            <h2 className="font-bold text-gray-900 mb-3">انتخاب پلن اشتراک</h2>
+            <h2 className="font-bold text-gray-900 mb-3">{tFrontendAuto("fe.2d80e1827ea4")}</h2>
             {plans.length === 0 ? (
               <div className="card p-5">
                 <p className="text-amber-600 text-sm">
@@ -558,9 +559,9 @@ export default function SubscriptionPage() {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] p-4">
         <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
           <div className="min-w-0">
-            <p className="text-xs text-gray-500">مبلغ قابل پرداخت</p>
+            <p className="text-xs text-gray-500">{tFrontendAuto("fe.2e6cbd8c252b")}</p>
             <p className="text-lg font-bold text-gray-900 tabular-nums truncate">
-              {formatPrice(Math.max(0, finalPrice - walletAmount))} <span className="text-xs font-normal text-gray-500">تومان</span>
+              {formatPrice(Math.max(0, finalPrice - walletAmount))} <span className="text-xs font-normal text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
             </p>
           </div>
           <button

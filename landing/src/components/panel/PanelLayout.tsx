@@ -18,22 +18,28 @@ import {
   faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import { getPanelInfo } from "@/lib/api";
+import { DEPLOY_DIRECTION, DEPLOY_LOCALE, pickByLocale } from "@/lib/i18n";
 
 type PanelInfo = Awaited<ReturnType<typeof getPanelInfo>>;
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
 function formatPersianNumber(num: number): string {
+  if (DEPLOY_LOCALE !== "fa") return String(num);
   return String(num).replace(/\d/g, (d) => PERSIAN_DIGITS[parseInt(d, 10)]!);
 }
 
 const navItems = [
-  { name: "داشبورد", href: "/panel/dashboard", icon: faHome },
-  { name: "کیف پول", href: "/panel/wallet", icon: faWallet },
-  { name: "دعوت و کسب درآمد", href: "/panel/affiliate", icon: faUsers },
-  { name: "فروشگاه‌های من", href: "/panel/stores", icon: faStore },
+  { name: pickByLocale({ fa: "داشبورد", en: "Dashboard" }), href: "/panel/dashboard", icon: faHome },
+  { name: pickByLocale({ fa: "کیف پول", en: "Wallet" }), href: "/panel/wallet", icon: faWallet },
+  { name: pickByLocale({ fa: "دعوت و کسب درآمد", en: "Affiliate" }), href: "/panel/affiliate", icon: faUsers },
+  { name: pickByLocale({ fa: "فروشگاه‌های من", en: "My Stores" }), href: "/panel/stores", icon: faStore },
 ];
 const adminNavItems = [
-  { name: "مدیریت درخواست‌های برداشت", href: "/panel/admin/withdrawals", icon: faClipboardList },
+  {
+    name: pickByLocale({ fa: "مدیریت درخواست‌های برداشت", en: "Withdraw Requests" }),
+    href: "/panel/admin/withdrawals",
+    icon: faClipboardList,
+  },
 ];
 
 export default function PanelLayout({
@@ -74,7 +80,7 @@ export default function PanelLayout({
   const balance = info.user?.wallet?.available_balance ?? 0;
 
   return (
-    <div className="min-h-screen hero-surface flex" dir="rtl">
+    <div className="min-h-screen hero-surface flex" dir={DEPLOY_DIRECTION}>
       {/* Mobile sidebar toggle */}
       <button
         onClick={() => setSidebarOpen(true)}
@@ -92,10 +98,10 @@ export default function PanelLayout({
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl overflow-hidden glass flex items-center justify-center">
-              <Image src="/logo.jpg" alt="توکان" width={28} height={28} className="rounded-lg" />
+              <Image src="/logo.jpg" alt={pickByLocale({ fa: "توکان", en: "Tokan" })} width={28} height={28} className="rounded-lg" />
             </div>
             <div>
-              <h1 className="font-bold text-slate-900">پنل توکان</h1>
+              <h1 className="font-bold text-slate-900">{pickByLocale({ fa: "پنل توکان", en: "Tokan Panel" })}</h1>
               <p className="text-xs text-slate-500 truncate max-w-[140px]">
                 {info.user?.mobile || info.user?.username}
               </p>
@@ -131,7 +137,7 @@ export default function PanelLayout({
             <>
               <div className="pt-4 mt-4 border-t border-slate-100">
                 <p className="px-4 text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">
-                  مدیریت سیستم
+                  {pickByLocale({ fa: "مدیریت سیستم", en: "System Admin" })}
                 </p>
               </div>
               {adminNavItems.map((item) => {
@@ -156,10 +162,10 @@ export default function PanelLayout({
 
         <div className="p-4 border-t border-slate-100">
           <div className="mb-3 px-4 py-3 rounded-xl bg-brand-50/50 border border-brand-100">
-            <p className="text-xs text-slate-500">موجودی کیف پول</p>
+            <p className="text-xs text-slate-500">{pickByLocale({ fa: "موجودی کیف پول", en: "Wallet Balance" })}</p>
             <p className="text-lg font-bold text-brand-700">
               {formatPersianNumber(typeof balance === "string" ? parseFloat(balance) || 0 : Number(balance) || 0)}{" "}
-              تومان
+              {pickByLocale({ fa: "تومان", en: "IRR" })}
             </p>
           </div>
           <div className="flex gap-2">
@@ -169,14 +175,14 @@ export default function PanelLayout({
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-50 border border-slate-200"
             >
               <FontAwesomeIcon icon={faArrowRight} />
-              صفحه اصلی
+              {pickByLocale({ fa: "صفحه اصلی", en: "Home" })}
             </Link>
             <button
               onClick={handleLogout}
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm text-red-600 hover:bg-red-50 border border-red-100"
             >
               <FontAwesomeIcon icon={faSignOutAlt} />
-              خروج
+              {pickByLocale({ fa: "خروج", en: "Logout" })}
             </button>
           </div>
         </div>

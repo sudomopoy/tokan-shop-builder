@@ -21,6 +21,7 @@ import { Search, Calendar, Eye, ArrowRight } from "lucide-react";
 import { articleApi, type Article } from "@/lib/api/articleApi";
 import type { WidgetConfig } from "@/themes/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const stripHtml = (html: string, maxLen = 150): string => {
   if (!html) return "";
@@ -138,7 +139,7 @@ export default function BlogSearch({ config }: { config?: WidgetConfig }) {
         setArticles(res.results ?? []);
       } catch (err) {
         console.error("Blog search error:", err);
-        setError("خطا در جستجو. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.5697ed15b37e"));
         setArticles([]);
       } finally {
         setLoading(false);
@@ -169,7 +170,7 @@ export default function BlogSearch({ config }: { config?: WidgetConfig }) {
       <Box component="form" onSubmit={handleSearch} sx={{ mb: 4 }}>
         <TextField
           fullWidth
-          placeholder="عبارت جستجو..."
+          placeholder={tFrontendAuto("fe.f44ed45b517c")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           InputProps={{
@@ -216,7 +217,7 @@ export default function BlogSearch({ config }: { config?: WidgetConfig }) {
           </Typography>
         </Box>
       ) : articles.length === 0 ? (
-        <Alert severity="info">مطلبی با این عبارت یافت نشد.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.edba784f4102")}</Alert>
       ) : (
         <>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>

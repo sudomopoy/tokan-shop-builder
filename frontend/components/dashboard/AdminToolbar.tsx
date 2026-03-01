@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ExternalLink, Settings, Home, Store } from "lucide-react";
 import type { StoreListItem } from "@/lib/api/storeApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function getStoreFrontUrl(store: StoreListItem | null): string {
   if (!store) return "#";
@@ -38,10 +39,10 @@ export default function AdminToolbar({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 hover:bg-white/10 rounded-md px-2 py-1.5 transition-colors shrink-0"
-                  title="مشاهده فروشگاه در تب جدید"
+                  title={tFrontendAuto("fe.5eea546c1d65")}
                 >
                   <ExternalLink className="h-3.5 w-3.5 shrink-0" />
-                  <span className="hidden xsm:inline">مشاهده فروشگاه</span>
+                  <span className="hidden xsm:inline">{tFrontendAuto("fe.b35879c7eeb4")}</span>
                 </a>
 
                 <span className="text-slate-500 shrink-0 hidden sm:inline">|</span>
@@ -52,10 +53,10 @@ export default function AdminToolbar({
             <Link
               href="/dashboard"
               className="flex items-center gap-1.5 hover:bg-white/10 rounded-md px-2 py-1.5 transition-colors shrink-0"
-              title="صفحه اصلی داشبورد"
+              title={tFrontendAuto("fe.f877b1be37b8")}
             >
               <Home className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden xsm:inline">داشبورد</span>
+              <span className="hidden xsm:inline">{tFrontendAuto("fe.b309fd74c951")}</span>
             </Link>
 
             <span className="text-slate-500 shrink-0 hidden sm:inline">|</span>
@@ -64,10 +65,10 @@ export default function AdminToolbar({
             <Link
               href="/dashboard/settings"
               className="flex items-center gap-1.5 hover:bg-white/10 rounded-md px-2 py-1.5 transition-colors shrink-0"
-              title="تنظیمات فروشگاه"
+              title={tFrontendAuto("fe.6631ea9e106b")}
             >
               <Settings className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden xsm:inline">تنظیمات</span>
+              <span className="hidden xsm:inline">{tFrontendAuto("fe.1cff677453b2")}</span>
             </Link>
           </div>
 

@@ -20,6 +20,7 @@ import { Navigation, Pagination, Autoplay, FreeMode } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { articleApi, type Article } from "@/lib/api/articleApi";
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const stripHtml = (html: string, maxLen = 120): string => {
   if (!html) return "";
@@ -161,7 +162,7 @@ export default function BlogListView({ config }: { config?: WidgetConfig }) {
       .catch((err) => {
         if (isMounted) {
           console.error("Blog list error:", err);
-          setError("خطا در بارگذاری مطالب. لطفا دوباره تلاش کنید.");
+          setError(tFrontendAuto("fe.13d6bbbc4b88"));
         }
       })
       .finally(() => {
@@ -218,7 +219,7 @@ export default function BlogListView({ config }: { config?: WidgetConfig }) {
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : articles.length === 0 ? (
-        <Alert severity="info">مطلبی یافت نشد.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.54ca9cd5a189")}</Alert>
       ) : (
         <Swiper
           onSwiper={(swiper) => { swiperRef.current = swiper; updateNavigationState(); }}

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCalendar, faNewspaper } from "@fortawesome/free-solid-svg-icons";
 import { getArticles, resolveArticleImageUrl, type Article } from "@/lib/api";
 import { TokanPromo } from "./TokanPromo";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function stripHtml(html: string, maxLen = 100): string {
   if (!html) return "";
@@ -139,7 +140,7 @@ export function BlogSection() {
                   icon={faNewspaper}
                   className="text-4xl text-slate-400"
                 />
-                <p className="mt-4 text-slate-600">به زودی مطالب جدید...</p>
+                <p className="mt-4 text-slate-600">{tLandingAuto("ld.ad47ad74ea53")}</p>
               </div>
             )}
           </div>

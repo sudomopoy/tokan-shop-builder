@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { mediaApi, accountApi } from "@/lib/api";
 import type { Media } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} بایت`;
@@ -81,7 +82,7 @@ export default function MediaPage() {
   };
 
   const handleDelete = async (m: Media) => {
-    if (!confirm(`آیا از حذف «${m.title || m.original_filename}» اطمینان دارید؟`))
+    if (!confirm(tFrontendAuto("fe.42cd2750de0d", { p1: m.title || m.original_filename })))
       return;
     try {
       await mediaApi.delete(m.id);
@@ -131,7 +132,7 @@ export default function MediaPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h1 className="text-3xl font-bold">مدیریت فایل‌ها</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.8d4913bf37d9")}</h1>
         <div className="flex gap-2">
           <input
             ref={fileInputRef}
@@ -169,7 +170,7 @@ export default function MediaPage() {
       ) : items.length === 0 ? (
         <div className="card p-12 text-center">
           <FolderOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 mb-4">هنوز فایلی آپلود نشده است</p>
+          <p className="text-gray-500 mb-4">{tFrontendAuto("fe.95204391162f")}</p>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
@@ -206,7 +207,7 @@ export default function MediaPage() {
                   <button
                     onClick={() => openEditModal(m)}
                     className="p-2 bg-white rounded-lg text-gray-700 hover:bg-gray-100"
-                    title="ویرایش"
+                    title={tFrontendAuto("fe.de21bfe62ab5")}
                   >
                     <Pencil className="h-4 w-4" />
                   </button>
@@ -214,7 +215,7 @@ export default function MediaPage() {
                     <button
                       onClick={() => handleDelete(m)}
                       className="p-2 bg-white rounded-lg text-red-600 hover:bg-red-50"
-                      title="حذف"
+                      title={tFrontendAuto("fe.fc1d9d323674")}
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -246,7 +247,7 @@ export default function MediaPage() {
           />
           <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">ویرایش اطلاعات فایل</h2>
+              <h2 className="text-xl font-bold">{tFrontendAuto("fe.adbdf8ea9b75")}</h2>
               <button
                 onClick={closeEditModal}
                 className="p-1 text-gray-500 hover:text-gray-700"
@@ -266,7 +267,7 @@ export default function MediaPage() {
                     setEditForm((p) => ({ ...p, title: e.target.value }))
                   }
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="عنوان فایل"
+                  placeholder={tFrontendAuto("fe.48aafb2d5247")}
                 />
               </div>
               <div>
@@ -280,7 +281,7 @@ export default function MediaPage() {
                   }
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="متن جایگزین برای تصویر"
+                  placeholder={tFrontendAuto("fe.6d914159db73")}
                 />
               </div>
               <div className="flex gap-2 pt-2">

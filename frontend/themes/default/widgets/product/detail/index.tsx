@@ -20,6 +20,7 @@ import { productApi, type Product } from "@/lib/api";
 import type { WidgetConfig } from "@/themes/types";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import { ProductReviews } from "@/components/storefront/ProductReviews";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -66,7 +67,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
       .catch((err) => {
         if (isMounted) {
           console.error("Product detail error:", err);
-          setError("محصول یافت نشد یا دسترسی به آن ندارید.");
+          setError(tFrontendAuto("fe.51cdbb0c893c"));
         }
       })
       .finally(() => {
@@ -80,7 +81,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
   if (!id) {
     return (
       <Container maxWidth="lg" sx={{ py: 8, px: 2 }}>
-        <Alert severity="info">شناسه محصول مشخص نشده است.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.064b218af17a")}</Alert>
       </Container>
     );
   }
@@ -192,7 +193,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
           />
 
           <Box sx={{ mt: 6, pt: 4, borderTop: 1, borderColor: "divider" }}>
-            <Typography variant="h6" sx={{ mb: 3 }}>نظرات کاربران</Typography>
+            <Typography variant="h6" sx={{ mb: 3 }}>{tFrontendAuto("fe.8dc079691c98")}</Typography>
             <ProductReviews
               productId={product.id}
               product={product}

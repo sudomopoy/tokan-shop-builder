@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import {
+  DEPLOY_DIRECTION,
+  DEPLOY_LANG,
+  DEPLOY_OG_LOCALE,
+} from "@/lib/i18n";
+import { tLanding } from "@/lib/messages";
 
 export const metadata: Metadata = {
-  title: "توکان | توسعه کسب‌وکار دیجیتال (طراحی سایت، سئو و رشد با AI)",
-  description:
-    "توکان؛ توسعه کسب‌وکار شما در کنار طراحی سایت و فروشگاه، سئو و رشد با بهره‌گیری از هوش مصنوعی.",
+  title: tLanding("layout.title"),
+  description: tLanding("layout.description"),
   openGraph: {
-    title: "توکان | توسعه کسب‌وکار دیجیتال",
-    description:
-      "طراحی سایت و فروشگاه، سئو و رشد کسب‌وکار با کمک هوش مصنوعی. پلن‌های اشتراکی شفاف و پکیج‌های تکمیلی.",
+    title: tLanding("layout.ogTitle"),
+    description: tLanding("layout.ogDescription"),
     type: "website",
-    locale: "fa_IR",
+    locale: DEPLOY_OG_LOCALE,
   },
   themeColor: "#f8fafc",
 };
@@ -21,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang={DEPLOY_LANG} dir={DEPLOY_DIRECTION}>
       <body>{children}</body>
     </html>
   );

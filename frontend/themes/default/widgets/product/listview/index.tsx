@@ -31,6 +31,7 @@ import { productApi, basketApi, type Product } from "@/lib/api";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 // Helper function to format price in Persian
 const formatPrice = (price: number): string => {
@@ -224,7 +225,7 @@ function ProductCard({ product, onFavoriteToggle, onAddToBasket, favoriteIds, is
                 zIndex: 1,
               }}
             >
-              <Chip label="ناموجود" sx={{ bgcolor: "error.main", color: "white", fontWeight: 600 }} />
+              <Chip label={tFrontendAuto("fe.6d56e8170def")} sx={{ bgcolor: "error.main", color: "white", fontWeight: 600 }} />
             </Box>
           )}
         </Box>
@@ -297,7 +298,7 @@ function ProductCard({ product, onFavoriteToggle, onAddToBasket, favoriteIds, is
           fullWidth
           size="medium"
           startIcon={isAddingToBasket ? <CircularProgress size={18} color="inherit" /> : <ShoppingCart size={18} />}
-          aria-label="افزودن به سبد خرید"
+          aria-label={tFrontendAuto("fe.a7a999abc82a")}
           disabled={!product.inStock || isAddingToBasket}
           onClick={(e) => {
             e.preventDefault();
@@ -364,7 +365,7 @@ export default function ProductsListView() {
           return;
         }
         console.error("Error fetching products:", err);
-        setError("خطا در بارگذاری محصولات. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.6946c2db60e5"));
         setLoading(false);
       });
 

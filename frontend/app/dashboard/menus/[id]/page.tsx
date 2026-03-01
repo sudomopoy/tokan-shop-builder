@@ -9,6 +9,7 @@ import type { Menu, MenuItem, MenuItemType } from "@/lib/api/menuApi";
 import type { Category } from "@/lib/api/categoryApi";
 import type { PageConfig } from "@/themes/types";
 import type { Product } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function getItemLabel(item: MenuItem): string {
   return item.resolved_title || item.title || "—";
@@ -53,7 +54,7 @@ export default function MenuItemsPage() {
       console.error(err);
       setMenu(null);
       setItems([]);
-      setError("خطا در دریافت منو");
+      setError(tFrontendAuto("fe.75cd33527da2"));
     } finally {
       setLoading(false);
     }
@@ -159,7 +160,7 @@ export default function MenuItemsPage() {
   };
 
   const handleDelete = async (item: MenuItem) => {
-    if (!confirm(`آیا از حذف «${getItemLabel(item)}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.42cd2750de0d", { p1: getItemLabel(item) }))) return;
     try {
       await menuApi.deleteItem(item.id);
       await fetchMenu();
@@ -197,21 +198,21 @@ export default function MenuItemsPage() {
             <button
               onClick={() => openCreate(item.id)}
               className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-              title="افزودن زیرمنو"
+              title={tFrontendAuto("fe.c5cfd3060a40")}
             >
               <Plus className="h-4 w-4" />
             </button>
             <button
               onClick={() => openEdit(item)}
               className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-              title="ویرایش"
+              title={tFrontendAuto("fe.de21bfe62ab5")}
             >
               <Pencil className="h-4 w-4" />
             </button>
             <button
               onClick={() => handleDelete(item)}
               className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-              title="حذف"
+              title={tFrontendAuto("fe.fc1d9d323674")}
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -312,12 +313,12 @@ export default function MenuItemsPage() {
                   <input
                     value={form.title}
                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                    placeholder="عنوان سفارشی"
+                    placeholder={tFrontendAuto("fe.8476f8e21569")}
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">نوع *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.241c9eda4bd0")}</label>
                   <select
                     value={form.item_type}
                     onChange={(e) =>
@@ -332,11 +333,11 @@ export default function MenuItemsPage() {
                     }
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="link">لینک</option>
-                    <option value="empty">خالی (گروه)</option>
-                    <option value="category">دسته‌بندی</option>
-                    <option value="product">محصول</option>
-                    <option value="page">صفحه</option>
+                    <option value="link">{tFrontendAuto("fe.0093767757d9")}</option>
+                    <option value="empty">{tFrontendAuto("fe.335c5d94909a")}</option>
+                    <option value="category">{tFrontendAuto("fe.6c76efc8a63e")}</option>
+                    <option value="product">{tFrontendAuto("fe.67b7ace0b172")}</option>
+                    <option value="page">{tFrontendAuto("fe.dbff28a4556b")}</option>
                   </select>
                 </div>
                 {form.item_type === "link" && (
@@ -365,7 +366,7 @@ export default function MenuItemsPage() {
                       required
                       className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="">انتخاب کنید</option>
+                      <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                       {categories.map((c) => (
                         <option key={c.id} value={c.id}>
                           {c.name}
@@ -385,7 +386,7 @@ export default function MenuItemsPage() {
                       required
                       className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="">انتخاب کنید</option>
+                      <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                       {products.map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.title}
@@ -405,7 +406,7 @@ export default function MenuItemsPage() {
                       required
                       className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="">انتخاب کنید</option>
+                      <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                       {pages.map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.path ?? p.page ?? p.id}
@@ -415,7 +416,7 @@ export default function MenuItemsPage() {
                   </div>
                 )}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">وضعیت</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.b56dc5016988")}</label>
                   <select
                     value={form.status}
                     onChange={(e) =>
@@ -426,9 +427,9 @@ export default function MenuItemsPage() {
                     }
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="active">فعال</option>
-                    <option value="inactive">غیرفعال</option>
-                    <option value="coming_soon">به زودی</option>
+                    <option value="active">{tFrontendAuto("fe.e3d927082524")}</option>
+                    <option value="inactive">{tFrontendAuto("fe.0e0e08728689")}</option>
+                    <option value="coming_soon">{tFrontendAuto("fe.2405d444dfd0")}</option>
                   </select>
                 </div>
                 <div className="flex gap-3 pt-4">

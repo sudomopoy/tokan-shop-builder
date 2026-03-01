@@ -1,5 +1,6 @@
 import axios from "axios";
 import { readAuthHeaderValueFromStorage } from "@/lib/auth/storage";
+import { DEPLOY_LOCALE } from "@/lib/i18n/deployment";
 
 function normalizeBaseUrl(url: string): string {
   // Remove trailing slash to keep URL joins predictable.
@@ -42,6 +43,7 @@ export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     Accept: "application/json",
+    "Accept-Language": DEPLOY_LOCALE,
   },
   paramsSerializer: serializeParams,
   timeout: 30_000,
@@ -59,6 +61,7 @@ apiClient.interceptors.request.use(
     if (typeof window !== "undefined" && window.location?.host) {
       config.headers["X-Store-Host"] = window.location.host;
     }
+    config.headers["Accept-Language"] = DEPLOY_LOCALE;
     return config;
   },
   (error) => {

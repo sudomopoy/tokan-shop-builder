@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ deploy_locale }}" dir="{{ deploy_direction }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پرداخت موفق | توکان</title>
+    <title>{% if deploy_locale == "en" %}Payment Success | Tokan{% else %}پرداخت موفق | توکان{% endif %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 24px;
-            direction: rtl;
+            direction: {{ deploy_direction }};
             display: flex;
             align-items: center;
             justify-content: center;
@@ -176,28 +176,28 @@
         <div class="icon-wrap">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h1 id="title">پرداخت موفقیت‌آمیز بود</h1>
-        <p class="desc" id="message">تراکنش شما با موفقیت انجام شد.</p>
+        <h1 id="title">{% if deploy_locale == "en" %}Payment Completed Successfully{% else %}پرداخت موفقیت‌آمیز بود{% endif %}</h1>
+        <p class="desc" id="message">{% if deploy_locale == "en" %}Your transaction was completed successfully.{% else %}تراکنش شما با موفقیت انجام شد.{% endif %}</p>
 
         {% if order_id %}
         <div class="info-box" id="order-info">
-            <p class="info-label">شماره سفارش</p>
+            <p class="info-label">{% if deploy_locale == "en" %}Order Number{% else %}شماره سفارش{% endif %}</p>
             <div class="info-value-wrap">
                 <span class="info-value" id="order-id">{{ order_id }}</span>
-                <button class="btn-icon" onclick="copyText('{{ order_id }}', 'شماره سفارش کپی شد')" title="کپی">
+                <button class="btn-icon" onclick="copyText('{{ order_id }}', '{% if deploy_locale == "en" %}Order number copied{% else %}شماره سفارش کپی شد{% endif %}')" title="{% if deploy_locale == "en" %}Copy{% else %}کپی{% endif %}">
                     <i class="fas fa-copy"></i>
                 </button>
-                <button class="btn-icon" onclick="shareOrder()" title="اشتراک‌گذاری">
+                <button class="btn-icon" onclick="shareOrder()" title="{% if deploy_locale == "en" %}Share{% else %}اشتراک‌گذاری{% endif %}">
                     <i class="fas fa-share-alt"></i>
                 </button>
             </div>
         </div>
         {% elif trx_id %}
         <div class="info-box" id="trx-info">
-            <p class="info-label">شناسه تراکنش</p>
+            <p class="info-label">{% if deploy_locale == "en" %}Transaction ID{% else %}شناسه تراکنش{% endif %}</p>
             <div class="info-value-wrap">
                 <span class="info-value" id="trx-id">{{ trx_id }}</span>
-                <button class="btn-icon" onclick="copyText('{{ trx_id }}', 'شناسه تراکنش کپی شد')" title="کپی">
+                <button class="btn-icon" onclick="copyText('{{ trx_id }}', '{% if deploy_locale == "en" %}Transaction ID copied{% else %}شناسه تراکنش کپی شد{% endif %}')" title="{% if deploy_locale == "en" %}Copy{% else %}کپی{% endif %}">
                     <i class="fas fa-copy"></i>
                 </button>
             </div>
@@ -206,17 +206,17 @@
 
         <div class="actions">
             {% if order_id %}
-            <a href="{{ website_url_base }}/order/{{ order_id }}" class="btn-primary">مشاهده سفارش</a>
+            <a href="{{ website_url_base }}/order/{{ order_id }}" class="btn-primary">{% if deploy_locale == "en" %}View Order{% else %}مشاهده سفارش{% endif %}</a>
             {% elif payment_type == 'wallet' %}
-            <a href="{{ website_url_base }}/dashboard/wallet" class="btn-primary">مشاهده کیف پول</a>
+            <a href="{{ website_url_base }}/dashboard/wallet" class="btn-primary">{% if deploy_locale == "en" %}Open Wallet{% else %}مشاهده کیف پول{% endif %}</a>
             {% elif payment_type == 'subscription' %}
-            <a href="{{ website_url_base }}/dashboard/subscription" class="btn-primary">بازگشت به اشتراک</a>
+            <a href="{{ website_url_base }}/dashboard/subscription" class="btn-primary">{% if deploy_locale == "en" %}Back to Subscription{% else %}بازگشت به اشتراک{% endif %}</a>
             {% elif payment_type == 'smart_setup' %}
-            <a href="{{ website_url_base }}/dashboard" class="btn-primary">بازگشت به داشبورد</a>
+            <a href="{{ website_url_base }}/dashboard" class="btn-primary">{% if deploy_locale == "en" %}Back to Dashboard{% else %}بازگشت به داشبورد{% endif %}</a>
             {% else %}
-            <a href="{{ website_url_base }}/dashboard" class="btn-primary">بازگشت به داشبورد</a>
+            <a href="{{ website_url_base }}/dashboard" class="btn-primary">{% if deploy_locale == "en" %}Back to Dashboard{% else %}بازگشت به داشبورد{% endif %}</a>
             {% endif %}
-            <a href="{{ website_url_base }}/" class="btn-secondary">صفحه اصلی</a>
+            <a href="{{ website_url_base }}/" class="btn-secondary">{% if deploy_locale == "en" %}Home{% else %}صفحه اصلی{% endif %}</a>
         </div>
     </div>
 
@@ -231,9 +231,9 @@
             var orderId = '{{ order_id }}';
             var url = '{{ website_url_base }}/order/' + orderId;
             if (navigator.share) {
-                navigator.share({ title: 'سفارش ' + orderId, url: url }).catch(console.error);
+                navigator.share({ title: '{% if deploy_locale == "en" %}Order{% else %}سفارش{% endif %} ' + orderId, url: url }).catch(console.error);
             } else {
-                copyText(url, 'لینک سفارش کپی شد');
+                copyText(url, '{% if deploy_locale == "en" %}Order link copied{% else %}لینک سفارش کپی شد{% endif %}');
             }
         }
     </script>

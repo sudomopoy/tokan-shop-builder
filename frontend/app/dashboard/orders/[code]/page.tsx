@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Package, User, MapPin, Truck } from "lucide-react";
 import { orderApi, type Order } from "@/lib/api/orderApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "در انتظار پرداخت",
@@ -104,7 +105,7 @@ export default function OrderDetailPage() {
   };
 
   const handleCancel = async () => {
-    if (!order || !code || updating || !confirm("آیا از لغو این سفارش اطمینان دارید؟")) return;
+    if (!order || !code || updating || !confirm(tFrontendAuto("fe.8f6415dfc1f2"))) return;
     setUpdating(true);
     try {
       await orderApi.cancelOrder(code);
@@ -130,7 +131,7 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="card text-center py-12">
-        <p className="text-gray-600 mb-4">سفارش یافت نشد</p>
+        <p className="text-gray-600 mb-4">{tFrontendAuto("fe.04c1464ec41f")}</p>
         <Link href="/dashboard/orders" className="text-blue-600 hover:underline">
           بازگشت به لیست سفارشات
         </Link>
@@ -174,7 +175,7 @@ export default function OrderDetailPage() {
 
             {canUpdate && (
               <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
-                <h3 className="font-medium text-gray-800">تغییر وضعیت و کد پیگیری</h3>
+                <h3 className="font-medium text-gray-800">{tFrontendAuto("fe.65b4b0e36e6b")}</h3>
                 <div className="flex flex-wrap gap-4">
                   <select
                     value={newStatus}
@@ -189,7 +190,7 @@ export default function OrderDetailPage() {
                   </select>
                   <input
                     type="text"
-                    placeholder="کد پیگیری مرسوله"
+                    placeholder={tFrontendAuto("fe.da0c59052e40")}
                     value={trackingCode}
                     onChange={(e) => setTrackingCode(e.target.value)}
                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-w-[200px]"
@@ -331,15 +332,15 @@ export default function OrderDetailPage() {
           <div className="card bg-gray-50">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">جمع محصولات</span>
+                <span className="text-gray-600">{tFrontendAuto("fe.4ab751e13f21")}</span>
                 <span>{formatPrice(order.products_total_amount)} تومان</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">هزینه ارسال</span>
+                <span className="text-gray-600">{tFrontendAuto("fe.c580b95eac6e")}</span>
                 <span>{formatPrice(order.delivery_amount)} تومان</span>
               </div>
               <div className="flex justify-between font-bold text-base pt-2 border-t border-gray-200">
-                <span>مبلغ قابل پرداخت</span>
+                <span>{tFrontendAuto("fe.2e6cbd8c252b")}</span>
                 <span>{formatPrice(order.payable_amount)} تومان</span>
               </div>
             </div>

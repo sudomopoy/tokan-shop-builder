@@ -11,6 +11,7 @@ import { addressApi, type Address } from "@/lib/api/addressApi";
 import { metaApi, type Province, type City } from "@/lib/api/metaApi";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => new Intl.NumberFormat("fa-IR").format(price);
 const ensureNumber = (v: unknown): number => (typeof v === "string" ? parseFloat(v) || 0 : typeof v === "number" ? v : 0);
@@ -77,7 +78,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
         }
       } catch (e) {
         console.error(e);
-        setError("خطا در بارگذاری اطلاعات.");
+        setError(tFrontendAuto("fe.390c1d197541"));
       } finally {
         setLoading(false);
       }
@@ -122,22 +123,22 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
   const submitOrder = async () => {
     setError(null);
     if (!basket || basket.items.length === 0) {
-      setError("سبد خرید شما خالی است.");
+      setError(tFrontendAuto("fe.f67f8f7bf4ec"));
       return;
     }
     if (!allDigital) {
       if (!selectedAddressId) {
-        setError("لطفاً آدرس تحویل را انتخاب یا ثبت کنید.");
+        setError(tFrontendAuto("fe.7a323fd316b3"));
         setShowAddAddress(true);
         return;
       }
       if (!selectedShippingId) {
-        setError("لطفاً روش ارسال را انتخاب کنید.");
+        setError(tFrontendAuto("fe.0071a54445eb"));
         return;
       }
     }
     if (!selectedGatewayId) {
-      setError("لطفاً روش پرداخت را انتخاب کنید.");
+      setError(tFrontendAuto("fe.39976e0a80d3"));
       return;
     }
     if (allDigital) {
@@ -146,7 +147,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
         const values = customInputs[item.id] ?? {};
         for (const d of defs) {
           if (d.required && !(values[d.key] ?? "").trim()) {
-            setError(`لطفاً "${d.label}" را برای ${item.product_details?.title} وارد کنید.`);
+            setError(tFrontendAuto("fe.8a503e7ccd8f", { p1: d.label, p2: item.product_details?.title }));
             return;
           }
         }
@@ -182,7 +183,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
   const addAddress = async () => {
     if (!newAddress.recipient_fullname || !newAddress.phone_number || !newAddress.province || !newAddress.city || !newAddress.address_line1) {
-      setError("لطفاً تمام فیلدهای ضروری آدرس را وارد کنید.");
+      setError(tFrontendAuto("fe.3f6fe5f0163c"));
       return;
     }
     setSubmitting(true);
@@ -203,7 +204,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
       setNewAddress({ recipient_fullname: "", phone_number: "", province: "", city: "", address_line1: "", postcode: "" });
     } catch (e) {
       console.error(e);
-      setError("ثبت آدرس ناموفق بود.");
+      setError(tFrontendAuto("fe.37a1922a9b0f"));
     } finally {
       setSubmitting(false);
     }
@@ -213,7 +214,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
     return (
       <section className="container py-12">
         <div className="bg-white rounded-xl p-6 text-center">
-          <h2 className="text-xl font-bold text-dark mb-4">لطفا برای ادامه وارد شوید</h2>
+          <h2 className="text-xl font-bold text-dark mb-4">{tFrontendAuto("fe.3887f8f84056")}</h2>
           <button onClick={() => router.push(`/login?next=/checkout`)} className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
             ورود به حساب کاربری
           </button>
@@ -225,7 +226,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
   if (loading) {
     return (
       <section className="container py-12">
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       </section>
     );
   }
@@ -274,7 +275,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
               سبد خرید
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">تسویه حساب</span>
+            <span className="text-dark">{tFrontendAuto("fe.dabf0846b54a")}</span>
           </nav>
         </div>
       </div>
@@ -287,33 +288,33 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
               <>
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 rounded-full step-completed flex items-center justify-center">✓</div>
-                  <span className="hidden md:block text-sm font-medium">اطلاعات خرید</span>
+                  <span className="hidden md:block text-sm font-medium">{tFrontendAuto("fe.d1ecf8b0c92e")}</span>
                 </div>
                 <div className="flex-1 h-1 bg-gray-200 mx-4">
                   <div className="h-full bg-primary" style={{ width: "70%" }} />
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full step-active flex items-center justify-center">۲</div>
-                  <span className="hidden md:block text-sm font-medium">پرداخت</span>
+                  <div className="w-10 h-10 rounded-full step-active flex items-center justify-center">{tFrontendAuto("fe.07a738c2cfa5")}</div>
+                  <span className="hidden md:block text-sm font-medium">{tFrontendAuto("fe.89de546b8724")}</span>
                 </div>
               </>
             ) : (
               <>
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 rounded-full step-completed flex items-center justify-center">✓</div>
-                  <span className="hidden md:block text-sm font-medium">اطلاعات ارسال</span>
+                  <span className="hidden md:block text-sm font-medium">{tFrontendAuto("fe.ef9ead4a3c5d")}</span>
                 </div>
                 <div className="flex-1 h-1 bg-gray-200 mx-4">
                   <div className="h-full bg-primary" style={{ width: "70%" }} />
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full step-active flex items-center justify-center">۲</div>
-                  <span className="hidden md:block text-sm font-medium">روش ارسال</span>
+                  <div className="w-10 h-10 rounded-full step-active flex items-center justify-center">{tFrontendAuto("fe.07a738c2cfa5")}</div>
+                  <span className="hidden md:block text-sm font-medium">{tFrontendAuto("fe.87be845b148a")}</span>
                 </div>
                 <div className="flex-1 h-1 bg-gray-200 mx-4" />
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center">۳</div>
-                  <span className="hidden md:block text-sm font-medium">پرداخت</span>
+                  <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center">{tFrontendAuto("fe.d4c0a3d2f1e3")}</div>
+                  <span className="hidden md:block text-sm font-medium">{tFrontendAuto("fe.89de546b8724")}</span>
                 </div>
               </>
             )}
@@ -327,7 +328,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
             {allDigital &&
               basket.items.some((i) => (i.product_details?.custom_input_definitions?.length ?? 0) > 0) && (
               <div className="bg-white rounded-xl p-6">
-                <h2 className="text-xl font-bold text-dark mb-6">اطلاعات مورد نیاز برای هر محصول</h2>
+                <h2 className="text-xl font-bold text-dark mb-6">{tFrontendAuto("fe.7a727d31a303")}</h2>
                 <div className="space-y-6">
                   {basket.items.map((item) => {
                     const defs = item.product_details?.custom_input_definitions ?? [];
@@ -387,7 +388,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
             {!allDigital && (
             <div className="bg-white rounded-xl p-6">
               <div className="flex items-center justify-between gap-3 mb-6">
-                <h2 className="text-xl font-bold text-dark">اطلاعات ارسال</h2>
+                <h2 className="text-xl font-bold text-dark">{tFrontendAuto("fe.ef9ead4a3c5d")}</h2>
                 <button
                   type="button"
                   onClick={() => setShowAddAddress((v) => !v)}
@@ -405,7 +406,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <span className="font-bold text-dark">{a.recipient_fullname}</span>
-                          {a.frequently_used ? <span className="text-xs text-primary font-bold">پیش‌فرض</span> : null}
+                          {a.frequently_used ? <span className="text-xs text-primary font-bold">{tFrontendAuto("fe.0e54c662cf12")}</span> : null}
                         </div>
                         <p className="text-sm text-gray-600">{a.address_line1}</p>
                         <p className="text-xs text-gray-500 mt-1" dir="ltr">
@@ -416,14 +417,14 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-600 text-sm">آدرسی ثبت نشده است.</p>
+                <p className="text-gray-600 text-sm">{tFrontendAuto("fe.695a4ba9b526")}</p>
               )}
 
               {showAddAddress ? (
                 <div className="mt-6 border-t pt-6 space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-dark mb-2">نام و نام خانوادگی *</label>
+                      <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.7293f781ca10")}</label>
                       <input
                         value={newAddress.recipient_fullname}
                         onChange={(e) => setNewAddress((s) => ({ ...s, recipient_fullname: e.target.value }))}
@@ -431,7 +432,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-dark mb-2">شماره تماس *</label>
+                      <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.043d9dec7a79")}</label>
                       <input
                         value={newAddress.phone_number}
                         onChange={(e) => setNewAddress((s) => ({ ...s, phone_number: e.target.value }))}
@@ -441,13 +442,13 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-dark mb-2">استان *</label>
+                      <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.74332d19bbe8")}</label>
                       <select
                         value={newAddress.province}
                         onChange={(e) => setNewAddress((s) => ({ ...s, province: e.target.value, city: "" }))}
                         className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none"
                       >
-                        <option value="">انتخاب کنید</option>
+                        <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                         {provinces.map((p) => (
                           <option key={p.id} value={p.id}>
                             {p.name}
@@ -456,14 +457,14 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-dark mb-2">شهر *</label>
+                      <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.de681d031ddc")}</label>
                       <select
                         value={newAddress.city}
                         onChange={(e) => setNewAddress((s) => ({ ...s, city: e.target.value }))}
                         className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none"
                         disabled={!newAddress.province}
                       >
-                        <option value="">انتخاب کنید</option>
+                        <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                         {cities.map((c) => (
                           <option key={c.id} value={c.id}>
                             {c.name}
@@ -473,7 +474,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-dark mb-2">آدرس کامل *</label>
+                    <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.1f25de4b698b")}</label>
                     <textarea
                       rows={3}
                       value={newAddress.address_line1}
@@ -482,7 +483,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-dark mb-2">کد پستی</label>
+                    <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.de246976c5ed")}</label>
                     <input
                       value={newAddress.postcode}
                       onChange={(e) => setNewAddress((s) => ({ ...s, postcode: e.target.value }))}
@@ -505,7 +506,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
             {/* Shipping Method - only for physical */}
             {!allDigital && (
             <div className="bg-white rounded-xl p-6">
-              <h2 className="text-xl font-bold text-dark mb-6">روش ارسال</h2>
+              <h2 className="text-xl font-bold text-dark mb-6">{tFrontendAuto("fe.87be845b148a")}</h2>
               <div className="space-y-4">
                 {shippingMethods.map((m) => (
                   <label
@@ -532,7 +533,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
             {/* Payment Method */}
             <div className="bg-white rounded-xl p-6">
-              <h2 className="text-xl font-bold text-dark mb-6">روش پرداخت</h2>
+              <h2 className="text-xl font-bold text-dark mb-6">{tFrontendAuto("fe.25c2cd1f3fdf")}</h2>
               <div className="space-y-4">
                 {gateways.map((g) => (
                   <label
@@ -547,7 +548,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                         <span className="font-bold text-dark">{g.title}</span>
                         <span className="text-sm text-gray-500">{g.gateway_type?.title ?? ""}</span>
                       </div>
-                      <p className="text-sm text-gray-600">پرداخت از طریق درگاه</p>
+                      <p className="text-sm text-gray-600">{tFrontendAuto("fe.1a2299036ed6")}</p>
                     </div>
                   </label>
                 ))}
@@ -558,7 +559,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
           {/* Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl p-6 sticky top-24">
-              <h2 className="font-bold text-lg text-dark mb-6">خلاصه سفارش</h2>
+              <h2 className="font-bold text-lg text-dark mb-6">{tFrontendAuto("fe.aa69600564cc")}</h2>
 
               <div className="space-y-3 mb-6 pb-6 border-b">
                 {basket.items.slice(0, 3).map((i) => {
@@ -581,11 +582,11 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">جمع کل کالاها:</span>
+                  <span className="text-gray-600">{tFrontendAuto("fe.14d33b52d34c")}</span>
                   <span className="font-medium">{formatPrice(total)} تومان</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">هزینه ارسال:</span>
+                  <span className="text-gray-600">{tFrontendAuto("fe.8ad37a1a880f")}</span>
                   <span className="font-medium">
                     {shippingCost === 0 ? "رایگان" : `${formatPrice(shippingCost)} تومان`}
                   </span>
@@ -594,7 +595,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
               <div className="border-t pt-4 mb-6">
                 <div className="flex justify-between items-center">
-                  <span className="font-bold text-lg">مبلغ قابل پرداخت:</span>
+                  <span className="font-bold text-lg">{tFrontendAuto("fe.2e8a2c608d45")}</span>
                   <span className="font-bold text-2xl text-primary">{formatPrice(payableAmount)} تومان</span>
                 </div>
               </div>

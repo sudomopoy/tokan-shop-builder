@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from .models import *
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
@@ -30,27 +31,27 @@ class WalletAdmin(ImportExportModelAdmin):
 
     def user_info(self, obj):
         return f"{obj.user.mobile} ({obj.user.username})"
-    user_info.short_description = 'کاربر'
+    user_info.short_description = _('User')
     
     def withdrawable_balance_display(self, obj):
-        return f"{obj.withdrawable_balance:,.0f} تومان"
-    withdrawable_balance_display.short_description = 'موجودی قابل برداشت'
+        return _("%(amount)s Toman") % {"amount": f"{obj.withdrawable_balance:,.0f}"}
+    withdrawable_balance_display.short_description = _('Withdrawable balance')
     
     def gift_balance_display(self, obj):
-        return f"{obj.gift_balance:,.0f} تومان"
-    gift_balance_display.short_description = 'موجودی هدیه'
+        return _("%(amount)s Toman") % {"amount": f"{obj.gift_balance:,.0f}"}
+    gift_balance_display.short_description = _('Gift balance')
     
     def blocked_balance_display(self, obj):
-        return f"{obj.blocked_balance:,.0f} تومان"
-    blocked_balance_display.short_description = 'موجودی مسدود'
+        return _("%(amount)s Toman") % {"amount": f"{obj.blocked_balance:,.0f}"}
+    blocked_balance_display.short_description = _('Blocked balance')
     
     def available_balance_display(self, obj):
-        return f"{obj.available_balance:,.0f} تومان"
-    available_balance_display.short_description = 'موجودی در دسترس'
+        return _("%(amount)s Toman") % {"amount": f"{obj.available_balance:,.0f}"}
+    available_balance_display.short_description = _('Available balance')
     
     def total_balance_display(self, obj):
-        return f"{obj.total_balance:,.0f} تومان"
-    total_balance_display.short_description = 'موجودی کل'
+        return _("%(amount)s Toman") % {"amount": f"{obj.total_balance:,.0f}"}
+    total_balance_display.short_description = _('Total balance')
     
     def available_balance(self, obj):
         return obj.available_balance
@@ -101,16 +102,16 @@ class TransactionAdmin(ImportExportModelAdmin):
         'is_payed',
     )
     fieldsets = (
-        ('اطلاعات تراکنش', {
+        (_('Transaction information'), {
             'fields': ('id', 'payment_method', 'status', 'timestamp')
         }),
-        ('مبالغ', {
+        (_('Amounts'), {
             'fields': ('withdrawable_amount', 'gift_amount', 'total_amount')
         }),
-        ('کیف پول‌ها', {
+        (_('Wallets'), {
             'fields': ('from_wallet', 'to_wallet')
         }),
-        ('وضعیت پرداخت', {
+        (_('Payment state'), {
             'fields': ('has_online_payment', 'is_payed')
         }),
     )
@@ -122,7 +123,7 @@ class TransactionAdmin(ImportExportModelAdmin):
     
     def id_short(self, obj):
         return str(obj.id)[:8]
-    id_short.short_description = 'شناسه'
+    id_short.short_description = _('ID')
     
     def payment_method_badge(self, obj):
         colors = {
@@ -132,10 +133,10 @@ class TransactionAdmin(ImportExportModelAdmin):
             'inner_transfer': '#FF9800',
         }
         labels = {
-            'withdrawal': 'برداشت',
-            'deposit': 'واریز',
-            'purchase': 'خرید',
-            'inner_transfer': 'انتقال داخلی',
+            'withdrawal': _('Withdrawal'),
+            'deposit': _('Deposit'),
+            'purchase': _('Purchase'),
+            'inner_transfer': _('Internal transfer'),
         }
         color = colors.get(obj.payment_method, '#000')
         label = labels.get(obj.payment_method, obj.payment_method)
@@ -143,29 +144,36 @@ class TransactionAdmin(ImportExportModelAdmin):
             '<span style="background-color: {}; color: white; padding: 3px 8px; border-radius: 3px; font-size: 11px;">{}</span>',
             color, label
         )
-    payment_method_badge.short_description = 'نوع'
+    payment_method_badge.short_description = _('Type')
     
     def from_wallet_info(self, obj):
         if obj.from_wallet:
             return f"{obj.from_wallet.user.mobile} ({obj.from_wallet.user.username})"
         return '-'
-    from_wallet_info.short_description = 'از کیف پول'
+    from_wallet_info.short_description = _('From wallet')
 
     def to_wallet_info(self, obj):
         if obj.to_wallet:
             return f"{obj.to_wallet.user.mobile} ({obj.to_wallet.user.username})"
         return '-'
-    to_wallet_info.short_description = 'به کیف پول'
+    to_wallet_info.short_description = _('To wallet')
     
     def amount_display(self, obj):
         parts = []
         if obj.withdrawable_amount > 0:
-            parts.append(f"{obj.withdrawable_amount:,.0f} تومان")
+            parts.append(_("%(amount)s Toman") % {"amount": f"{obj.withdrawable_amount:,.0f}"})
         if obj.gift_amount > 0:
-            parts.append(f"+ {obj.gift_amount:,.0f} تومان هدیه")
-        return format_html('<div>{}</div><small style="color: #666;">جمع: {:,.0f} تومان</small>', 
-                          '<br>'.join(parts) if parts else '0', obj.total_amount)
-    amount_display.short_description = 'مبلغ'
+            parts.append(
+                _("+ %(amount)s Toman gift") % {"amount": f"{obj.gift_amount:,.0f}"}
+            )
+        return format_html(
+            '<div>{}</div><small style="color: #666;">{} {:,.0f} {}</small>',
+            '<br>'.join(parts) if parts else '0',
+            _('Total:'),
+            obj.total_amount,
+            _('Toman'),
+        )
+    amount_display.short_description = _('Amount')
     
     def status_badge(self, obj):
         colors = {
@@ -175,10 +183,10 @@ class TransactionAdmin(ImportExportModelAdmin):
             'canceled': '#9E9E9E',
         }
         labels = {
-            'pending': 'در انتظار',
-            'completed': 'تکمیل شده',
-            'failed': 'ناموفق',
-            'canceled': 'لغو شده',
+            'pending': _('Pending'),
+            'completed': _('Completed'),
+            'failed': _('Failed'),
+            'canceled': _('Canceled'),
         }
         color = colors.get(obj.status, '#000')
         label = labels.get(obj.status, obj.status)
@@ -186,36 +194,47 @@ class TransactionAdmin(ImportExportModelAdmin):
             '<span style="background-color: {}; color: white; padding: 5px 10px; border-radius: 3px;">{}</span>',
             color, label
         )
-    status_badge.short_description = 'وضعیت'
+    status_badge.short_description = _('Status')
     
     def actions_buttons(self, obj):
         if obj.payment_method == 'withdrawal' and obj.status == 'pending':
-            return mark_safe('<span style="color: orange; font-weight: bold;">⏳ منتظر تایید برداشت</span>')
+            return mark_safe(
+                f'<span style="color: orange; font-weight: bold;">⏳ {_("Awaiting withdrawal approval")}</span>'
+            )
         return '-'
-    actions_buttons.short_description = 'عملیات'
+    actions_buttons.short_description = _('Actions')
     
     def approve_withdrawal_requests(self, request, queryset):
-        """تایید درخواست‌های برداشت"""
+        """Approve withdrawal requests."""
         updated = 0
         errors = []
         
         for transaction in queryset:
             if transaction.payment_method == 'withdrawal' and transaction.status == 'pending':
                 try:
-                    # چک کردن موجودی
+                    # Check available balance before completing transaction.
                     if transaction.from_wallet.withdrawable_balance >= transaction.withdrawable_amount:
                         transaction.complete()
                         updated += 1
                     else:
-                        errors.append(f'تراکنش {str(transaction.id)[:8]}: موجودی کافی نیست')
+                        errors.append(
+                            _('Transaction %(id)s: insufficient balance')
+                            % {"id": str(transaction.id)[:8]}
+                        )
                 except Exception as e:
-                    errors.append(f'تراکنش {str(transaction.id)[:8]}: {str(e)}')
+                    errors.append(
+                        _('Transaction %(id)s: %(error)s')
+                        % {"id": str(transaction.id)[:8], "error": str(e)}
+                    )
         
         if updated:
-            self.message_user(request, f'{updated} درخواست برداشت تایید شد.')
+            self.message_user(
+                request,
+                _('%(count)s withdrawal requests approved.') % {"count": updated},
+            )
         if errors:
             self.message_user(request, ' | '.join(errors), level='error')
-    approve_withdrawal_requests.short_description = 'تایید درخواست‌های برداشت'
+    approve_withdrawal_requests.short_description = _('Approve withdrawal requests')
 
 
 class SystemAccountantAdmin(ImportExportModelAdmin):
@@ -313,22 +332,22 @@ class WithdrawRequestAdmin(ImportExportModelAdmin):
 
     def id_short(self, obj):
         return str(obj.id)[:8]
-    id_short.short_description = "شناسه"
+    id_short.short_description = _("ID")
 
     def user_display(self, obj):
         return obj.wallet.user.mobile or obj.wallet.user.username
-    user_display.short_description = "کاربر"
+    user_display.short_description = _("User")
 
     def amount_display(self, obj):
-        return f"{obj.amount:,.0f} تومان"
-    amount_display.short_description = "مبلغ"
+        return _("%(amount)s Toman") % {"amount": f"{obj.amount:,.0f}"}
+    amount_display.short_description = _("Amount")
 
     def status_display(self, obj):
         labels = {
-            "pending": "در انتظار",
-            "approved": "تایید شده",
-            "rejected": "رد شده",
-            "deposited": "واریز شده",
+            "pending": _("Pending"),
+            "approved": _("Approved"),
+            "rejected": _("Rejected"),
+            "deposited": _("Deposited"),
         }
         return labels.get(obj.status, obj.status)
-    status_display.short_description = "وضعیت"
+    status_display.short_description = _("Status")

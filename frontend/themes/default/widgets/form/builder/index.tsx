@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 
 import { apiClient } from "@/lib/api/apiClient";
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type BuilderField = {
   id: string;
@@ -155,7 +156,7 @@ export default function FormBuilderWidget({ config }: { config?: WidgetConfig })
           <div className="space-y-4 border-b lg:border-b-0 lg:border-l border-gray-100 pb-6 lg:pb-0 lg:pl-6">
             <h2 className="text-3xl font-black text-gray-900">{title}</h2>
             {description ? <p className="text-gray-600 leading-7">{description}</p> : null}
-            <p className="text-sm text-gray-500">Responses are sent instantly to your dashboard integrations.</p>
+            <p className="text-sm text-gray-500">{tFrontendAuto("fe.750dfcd869e5")}</p>
           </div>
           <form className="space-y-4" onSubmit={handleSubmit}>
             {fields.map((field) => (

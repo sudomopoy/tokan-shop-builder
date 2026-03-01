@@ -14,6 +14,7 @@ import {
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { getArticle, getArticles, resolveArticleImageUrl, type Article } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -88,7 +89,7 @@ export function BlogArticleClient({ slug }: { slug: string | null }) {
       })
       .catch(() => {
         if (isMounted) {
-          setError("مطلب یافت نشد یا دسترسی به آن ندارید.");
+          setError(tLandingAuto("ld.3b7717fa1f36"));
           setArticle(null);
         }
       })
@@ -107,7 +108,7 @@ export function BlogArticleClient({ slug }: { slug: string | null }) {
         <Header />
         <main className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
           <div className="glass rounded-2xl p-8 text-center border border-slate-200">
-            <p className="text-slate-600">آدرس مطلب مشخص نشده است.</p>
+            <p className="text-slate-600">{tLandingAuto("ld.edaa9b5678f1")}</p>
             <Link
               href="/blog"
               className="mt-4 inline-flex items-center gap-2 text-brand-600 font-bold"

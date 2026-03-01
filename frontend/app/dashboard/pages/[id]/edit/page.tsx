@@ -24,6 +24,7 @@ import { revalidatePage, revalidateStorePages } from "@/lib/server/storefrontCac
 import type { PageConfig } from "@/themes/types";
 import SearchableSelect from "@/components/dashboard/SearchableSelect";
 import WidgetVisualEditor, {
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
   type WidgetPayloadState,
 } from "@/components/dashboard/WidgetVisualEditor";
 
@@ -374,7 +375,7 @@ export default function DashboardPageBuilderEdit() {
   };
 
   const handleDeleteWidget = async (widget: WidgetDto) => {
-    if (!confirm("Delete this widget?")) return;
+    if (!confirm(tFrontendAuto("fe.6fe406b6e41a"))) return;
     setWidgetBusy(true);
     setWidgetError(null);
     try {
@@ -461,7 +462,7 @@ export default function DashboardPageBuilderEdit() {
   }
 
   if (!pageId) {
-    return <div className="text-gray-600">Invalid page id.</div>;
+    return <div className="text-gray-600">{tFrontendAuto("fe.d608a57ad765")}</div>;
   }
 
   return (
@@ -476,7 +477,7 @@ export default function DashboardPageBuilderEdit() {
             Back
           </Link>
           <div>
-            <h1 className="text-2xl font-bold">Visual Page Builder</h1>
+            <h1 className="text-2xl font-bold">{tFrontendAuto("fe.2a128fdccc3a")}</h1>
             <p className="text-sm text-gray-500 font-mono">{currentPath}</p>
           </div>
         </div>
@@ -505,7 +506,7 @@ export default function DashboardPageBuilderEdit() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
         <div className="space-y-6">
           <form onSubmit={handleSavePage} className="card space-y-4">
-            <h2 className="text-lg font-semibold">Page Details</h2>
+            <h2 className="text-lg font-semibold">{tFrontendAuto("fe.7e28a7bc5838")}</h2>
 
             {pageError && (
               <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{pageError}</div>
@@ -513,7 +514,7 @@ export default function DashboardPageBuilderEdit() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Path *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.d5ac0ce5aa3c")}</label>
                 <input
                   value={pageForm.path}
                   onChange={(e) => setPageForm((prev) => ({ ...prev, path: e.target.value }))}
@@ -544,7 +545,7 @@ export default function DashboardPageBuilderEdit() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.9d89675f3214")}</label>
                 <input
                   value={pageForm.meta_title}
                   onChange={(e) => setPageForm((prev) => ({ ...prev, meta_title: e.target.value }))}
@@ -552,7 +553,7 @@ export default function DashboardPageBuilderEdit() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta keywords</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.45c46fe18185")}</label>
                 <input
                   value={pageForm.meta_keywords}
                   onChange={(e) => setPageForm((prev) => ({ ...prev, meta_keywords: e.target.value }))}
@@ -562,7 +563,7 @@ export default function DashboardPageBuilderEdit() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Meta description</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.2a3ac8f17155")}</label>
               <textarea
                 value={pageForm.meta_description}
                 onChange={(e) => setPageForm((prev) => ({ ...prev, meta_description: e.target.value }))}
@@ -637,7 +638,7 @@ export default function DashboardPageBuilderEdit() {
               </div>
 
               {layoutWidgets.length === 0 ? (
-                <p className="text-sm text-gray-600">No layout widget assigned yet.</p>
+                <p className="text-sm text-gray-600">{tFrontendAuto("fe.541e5b365cf4")}</p>
               ) : (
                 layoutWidgets.slice(0, 1).map((widget) => {
                   const name = getWidgetTypeName(widget, widgetTypesById);
@@ -700,7 +701,7 @@ export default function DashboardPageBuilderEdit() {
                 </summary>
                 <form onSubmit={handleCreateWidget} className="mt-3 space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Layout type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.06484316f783")}</label>
                     <SearchableSelect
                       options={activeLayoutTypes.map((item) => ({
                         value: String(item.id),
@@ -742,7 +743,7 @@ export default function DashboardPageBuilderEdit() {
               </div>
 
               {contentWidgets.length === 0 ? (
-                <p className="text-sm text-gray-600">No content widgets yet.</p>
+                <p className="text-sm text-gray-600">{tFrontendAuto("fe.082891e94766")}</p>
               ) : (
                 <div className="space-y-2">
                   {contentWidgets.map((widget, index) => {
@@ -763,7 +764,7 @@ export default function DashboardPageBuilderEdit() {
                               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded disabled:opacity-40"
                               disabled={widgetBusy || index === 0}
                               onClick={() => swapWidgetIndex(widget, contentWidgets[index - 1]!)}
-                              title="Move up"
+                              title={tFrontendAuto("fe.6fd89126738d")}
                             >
                               <ChevronUp className="h-4 w-4" />
                             </button>
@@ -772,7 +773,7 @@ export default function DashboardPageBuilderEdit() {
                               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded disabled:opacity-40"
                               disabled={widgetBusy || index === contentWidgets.length - 1}
                               onClick={() => swapWidgetIndex(widget, contentWidgets[index + 1]!)}
-                              title="Move down"
+                              title={tFrontendAuto("fe.be0b291d5fed")}
                             >
                               <ChevronDown className="h-4 w-4" />
                             </button>
@@ -828,7 +829,7 @@ export default function DashboardPageBuilderEdit() {
                 </summary>
                 <form onSubmit={handleCreateWidget} className="mt-3 space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Widget type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.51f412d6caf4")}</label>
                     <SearchableSelect
                       options={activeContentTypes.map((item) => ({
                         value: String(item.id),
@@ -867,7 +868,7 @@ export default function DashboardPageBuilderEdit() {
 
         <div className="card space-y-4">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold">Live Preview</h2>
+            <h2 className="text-lg font-semibold">{tFrontendAuto("fe.97693c893dbf")}</h2>
             <button
               type="button"
               className="btn-secondary inline-flex items-center gap-2"
@@ -895,7 +896,7 @@ export default function DashboardPageBuilderEdit() {
               href={previewSrc}
               target="_blank"
               rel="noreferrer"
-              title="Open this path"
+              title={tFrontendAuto("fe.ec74c9f2566b")}
               className="btn-secondary inline-flex items-center gap-2"
             >
               <Eye className="h-5 w-5" />

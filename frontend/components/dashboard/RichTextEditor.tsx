@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const ReactQuill = dynamic(
   () => import("react-quill").then((mod) => mod.default),
@@ -49,7 +50,7 @@ const formats = [
 export function RichTextEditor({
   value,
   onChange,
-  placeholder = "متن را وارد کنید...",
+  placeholder = {tFrontendAuto("fe.d3df418952c1")},
   className = "",
 }: RichTextEditorProps) {
   return (

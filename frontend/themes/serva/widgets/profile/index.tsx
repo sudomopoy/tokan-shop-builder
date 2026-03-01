@@ -37,6 +37,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const TAB_IDS = ["info", "addresses", "bank", "settings"] as const;
 type TabId = (typeof TAB_IDS)[number];
@@ -151,7 +152,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
       setData("user.bankAccounts", bankAccountsData);
     } catch (err: unknown) {
       console.error("Profile load error:", err);
-      setError("خطا در بارگذاری اطلاعات پروفایل.");
+      setError(tFrontendAuto("fe.28f81cb68090"));
     } finally {
       setLoading(false);
     }
@@ -241,13 +242,13 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
   };
 
   const deleteAddress = async (addressId: string) => {
-    if (!confirm("آیا مطمئن هستید که می‌خواهید این آدرس را حذف کنید؟")) return;
+    if (!confirm(tFrontendAuto("fe.97a560a9fa60"))) return;
     try {
       await accountApi.deleteAddress(addressId);
       await loadData();
     } catch (err: unknown) {
       console.error("Address delete error:", err);
-      setError("خطا در حذف آدرس.");
+      setError(tFrontendAuto("fe.034a1dce939a"));
     }
   };
 
@@ -283,14 +284,14 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
   };
 
   const deleteBank = async (accountId: string) => {
-    if (!confirm("آیا مطمئن هستید که می‌خواهید این حساب بانکی را حذف کنید؟"))
+    if (!confirm(tFrontendAuto("fe.ba0b473f027e")))
       return;
     try {
       await accountApi.deleteBankAccount(accountId);
       await loadData();
     } catch (err: unknown) {
       console.error("Bank delete error:", err);
-      setError("خطا در حذف حساب بانکی.");
+      setError(tFrontendAuto("fe.e453c025a6ad"));
     }
   };
 
@@ -307,7 +308,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 خانه
               </Link>
               <span className="text-xs opacity-60">‹</span>
-              <span className="text-dark">پروفایل</span>
+              <span className="text-dark">{tFrontendAuto("fe.e68a4edf84ec")}</span>
             </nav>
           </div>
         </div>
@@ -348,7 +349,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 خانه
               </Link>
               <span className="text-xs opacity-60">‹</span>
-              <span className="text-dark">پروفایل</span>
+              <span className="text-dark">{tFrontendAuto("fe.e68a4edf84ec")}</span>
             </nav>
           </div>
         </div>
@@ -371,7 +372,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 خانه
               </Link>
               <span className="text-xs opacity-60">‹</span>
-              <span className="text-dark">پروفایل</span>
+              <span className="text-dark">{tFrontendAuto("fe.e68a4edf84ec")}</span>
             </nav>
           </div>
         </div>
@@ -642,7 +643,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                     icon={faMapMarkerAlt}
                     className="text-4xl text-gray-300 mb-4"
                   />
-                  <p>هیچ آدرسی ثبت نشده است.</p>
+                  <p>{tFrontendAuto("fe.80bd5410525b")}</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -683,7 +684,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                             type="button"
                             onClick={() => openAddressDialog(addr)}
                             className="w-10 h-10 rounded-xl border border-gray-200 text-gray-600 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition flex items-center justify-center"
-                            aria-label="ویرایش"
+                            aria-label={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <FontAwesomeIcon icon={faPen} />
                           </button>
@@ -691,7 +692,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                             type="button"
                             onClick={() => deleteAddress(addr.id)}
                             className="w-10 h-10 rounded-xl border border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition flex items-center justify-center"
-                            aria-label="حذف"
+                            aria-label={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <FontAwesomeIcon icon={faTrashAlt} />
                           </button>
@@ -726,7 +727,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                     icon={faCreditCard}
                     className="text-4xl text-gray-300 mb-4"
                   />
-                  <p>هیچ حساب بانکی ثبت نشده است.</p>
+                  <p>{tFrontendAuto("fe.833a826631d3")}</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -766,7 +767,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                             type="button"
                             onClick={() => deleteBank(acc.id)}
                             className="w-10 h-10 rounded-xl border border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition flex items-center justify-center"
-                            aria-label="حذف"
+                            aria-label={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <FontAwesomeIcon icon={faTrashAlt} />
                           </button>
@@ -810,8 +811,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
               <FontAwesomeIcon icon={faClipboardList} className="text-primary" />
             </div>
             <div>
-              <p className="font-bold text-dark">سفارش‌های من</p>
-              <p className="text-xs text-gray-500">پیگیری و مشاهده سفارش‌ها</p>
+              <p className="font-bold text-dark">{tFrontendAuto("fe.af826736405e")}</p>
+              <p className="text-xs text-gray-500">{tFrontendAuto("fe.fa1c38b345bc")}</p>
             </div>
           </Link>
           {storeCategorySlug === "reservation" && (
@@ -823,8 +824,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 <FontAwesomeIcon icon={faClipboardList} className="text-amber-600" />
               </div>
               <div>
-                <p className="font-bold text-dark">رزرو آنلاین</p>
-                <p className="text-xs text-gray-500">ثبت رزرو جدید</p>
+                <p className="font-bold text-dark">{tFrontendAuto("fe.046848c29a29")}</p>
+                <p className="text-xs text-gray-500">{tFrontendAuto("fe.a3aded501afa")}</p>
               </div>
             </Link>
           )}
@@ -837,8 +838,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 <FontAwesomeIcon icon={faPlayCircle} className="text-blue-600" />
               </div>
               <div>
-                <p className="font-bold text-dark">ویدیوهای خریداری‌شده</p>
-                <p className="text-xs text-gray-500">تماشای آنلاین</p>
+                <p className="font-bold text-dark">{tFrontendAuto("fe.82d303d1d0fc")}</p>
+                <p className="text-xs text-gray-500">{tFrontendAuto("fe.b73c768ac75c")}</p>
               </div>
             </Link>
           )}
@@ -851,8 +852,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 <FontAwesomeIcon icon={faDownload} className="text-green-600" />
               </div>
               <div>
-                <p className="font-bold text-dark">دانلودهای من</p>
-                <p className="text-xs text-gray-500">فایل‌های خریداری‌شده</p>
+                <p className="font-bold text-dark">{tFrontendAuto("fe.9fa10e1b5995")}</p>
+                <p className="text-xs text-gray-500">{tFrontendAuto("fe.a2384b51965d")}</p>
               </div>
             </Link>
           )}
@@ -869,8 +870,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                   />
                 </div>
                 <div>
-                  <p className="font-bold text-dark">لیست علاقه‌مندی‌ها</p>
-                  <p className="text-xs text-gray-500">محصولات ذخیره شده</p>
+                  <p className="font-bold text-dark">{tFrontendAuto("fe.e3bc523bbd19")}</p>
+                  <p className="text-xs text-gray-500">{tFrontendAuto("fe.8fc4b3eed0e8")}</p>
                 </div>
               </Link>
               <Link
@@ -881,8 +882,8 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                   <FontAwesomeIcon icon={faShoppingBag} className="text-secondary" />
                 </div>
                 <div>
-                  <p className="font-bold text-dark">سبد خرید</p>
-                  <p className="text-xs text-gray-500">ادامه خرید</p>
+                  <p className="font-bold text-dark">{tFrontendAuto("fe.807f37218e5a")}</p>
+                  <p className="text-xs text-gray-500">{tFrontendAuto("fe.f98b7a097e05")}</p>
                 </div>
               </Link>
             </>
@@ -902,7 +903,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                 type="button"
                 onClick={closeAddressDialog}
                 className="w-10 h-10 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-dark transition flex items-center justify-center"
-                aria-label="بستن"
+                aria-label={tFrontendAuto("fe.53df25bd0b3b")}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>
@@ -926,7 +927,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                       recipient_fullname: e.target.value,
                     }))
                   }
-                  placeholder="نام و نام خانوادگی"
+                  placeholder={tFrontendAuto("fe.ccb4d3ccb062")}
                   className={inputBase}
                 />
               </div>
@@ -957,7 +958,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                   onChange={(e) => handleProvinceChange(e.target.value)}
                   className={inputBase}
                 >
-                  <option value="">انتخاب استان</option>
+                  <option value="">{tFrontendAuto("fe.1afe110b90bd")}</option>
                   {provinces.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
@@ -977,7 +978,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                   disabled={!selectedProvince}
                   className={inputBase}
                 >
-                  <option value="">انتخاب شهر</option>
+                  <option value="">{tFrontendAuto("fe.05a28b35a9a1")}</option>
                   {cities.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
@@ -998,7 +999,7 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
                       address_line1: e.target.value,
                     }))
                   }
-                  placeholder="آدرس کامل پستی"
+                  placeholder={tFrontendAuto("fe.e2016fb65b67")}
                   className={inputBase + " resize-none"}
                 />
               </div>
@@ -1056,12 +1057,12 @@ export default function Profile({ config }: { config?: WidgetConfig }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full">
             <div className="border-b border-gray-100 px-6 py-4 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-dark">افزودن حساب بانکی</h3>
+              <h3 className="text-lg font-bold text-dark">{tFrontendAuto("fe.79c8f9474633")}</h3>
               <button
                 type="button"
                 onClick={closeBankDialog}
                 className="w-10 h-10 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-dark transition flex items-center justify-center"
-                aria-label="بستن"
+                aria-label={tFrontendAuto("fe.53df25bd0b3b")}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>

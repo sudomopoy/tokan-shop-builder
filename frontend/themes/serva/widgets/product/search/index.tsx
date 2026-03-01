@@ -43,6 +43,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -249,7 +250,7 @@ function ProductSearchCard({
               }}
             >
               <Chip
-                label="ناموجود"
+                label={tFrontendAuto("fe.6d56e8170def")}
                 sx={{ bgcolor: "error.main", color: "white", fontWeight: 600 }}
               />
             </Box>
@@ -592,7 +593,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         })
         .catch((err) => {
           console.error("Product search error:", err);
-          setError("خطا در جستجو. لطفا دوباره تلاش کنید.");
+          setError(tFrontendAuto("fe.5697ed15b37e"));
           setProducts([]);
           setNextPage(null);
         })
@@ -659,7 +660,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
       })
       .catch((err) => {
         console.error("Product search error:", err);
-        setError("خطا در جستجو. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.5697ed15b37e"));
         setProducts([]);
         setNextPage(null);
       })
@@ -686,7 +687,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         syncUrl({ sort: v });
       })
       .catch(() => {
-        setError("خطا در بارگذاری.");
+        setError(tFrontendAuto("fe.a48a3c70e8f7"));
         setProducts([]);
       })
       .finally(() => setLoading(false));
@@ -710,7 +711,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         syncUrl({ categories: next });
       })
       .catch(() => {
-        setError("خطا در بارگذاری.");
+        setError(tFrontendAuto("fe.a48a3c70e8f7"));
         setProducts([]);
       })
       .finally(() => setLoading(false));
@@ -731,7 +732,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         syncUrl({ inStockOnly: v });
       })
       .catch(() => {
-        setError("خطا در بارگذاری.");
+        setError(tFrontendAuto("fe.a48a3c70e8f7"));
         setProducts([]);
       })
       .finally(() => setLoading(false));
@@ -759,7 +760,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         setNextPage(res.next ? 2 : null);
       })
       .catch(() => {
-        setError("خطا در بارگذاری.");
+        setError(tFrontendAuto("fe.a48a3c70e8f7"));
         setProducts([]);
       })
       .finally(() => setLoading(false));
@@ -838,10 +839,10 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
           </Typography>
           <Stack direction="row" alignItems="center" spacing={1.5} flexWrap="wrap">
             <FormControl size="small" sx={{ minWidth: 160 }} disabled={loading}>
-              <InputLabel>مرتب‌سازی</InputLabel>
+              <InputLabel>{tFrontendAuto("fe.8cbd9427ad8d")}</InputLabel>
               <Select
                 value={sort}
-                label="مرتب‌سازی"
+                label={tFrontendAuto("fe.8cbd9427ad8d")}
                 onChange={handleSortChange}
                 sx={{ borderRadius: 2 }}
               >
@@ -977,7 +978,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
                 {loadingMore && (
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Loader2 size={24} style={{ animation: "spin 1s linear infinite" }} />
-                    <Typography variant="body2">در حال بارگذاری...</Typography>
+                    <Typography variant="body2">{tFrontendAuto("fe.3e07344c65a3")}</Typography>
                   </Stack>
                 )}
                 {!loadingMore && nextPage && products.length > 0 && (
@@ -1001,7 +1002,7 @@ export default function ProductsSearch({ config }: { config?: WidgetConfig }) {
         }}
       >
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-          <Typography variant="h6">فیلتر محصولات</Typography>
+          <Typography variant="h6">{tFrontendAuto("fe.a5165013f2f8")}</Typography>
           <IconButton onClick={() => setFilterDrawerOpen(false)}>
             <X size={20} />
           </IconButton>

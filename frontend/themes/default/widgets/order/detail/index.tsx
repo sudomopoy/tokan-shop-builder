@@ -31,6 +31,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -150,7 +151,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
       } catch (err) {
         if (isMounted) {
           console.error("Order load error:", err);
-          setError("سفارش یافت نشد یا دسترسی به آن ندارید.");
+          setError(tFrontendAuto("fe.dd8cc3bfe74d"));
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -168,7 +169,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
       setOrder((prev) => prev ? { ...prev, status: "cancelled" } : null);
     } catch (err) {
       console.error("Cancel order error:", err);
-      setError("خطا در لغو سفارش.");
+      setError(tFrontendAuto("fe.b333618c4023"));
     } finally {
       setCancelling(false);
     }
@@ -178,7 +179,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
     return (
       <Container maxWidth="lg" sx={{ py: 8, px: 2 }}>
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", py: 8 }}>
-          <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>لطفا برای مشاهده جزئیات سفارش وارد شوید</Typography>
+          <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>{tFrontendAuto("fe.c60e8aec3ce9")}</Typography>
           <Button
             variant="contained"
             onClick={() => router.push(`/login?next=${encodeURIComponent(pathname || "/")}`)}
@@ -194,7 +195,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
   if (!orderCode) {
     return (
       <Container maxWidth="lg" sx={{ py: 8, px: 2 }}>
-        <Alert severity="info">شماره سفارش مشخص نشده است.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.f35872cd57a2")}</Alert>
       </Container>
     );
   }
@@ -256,7 +257,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Card variant="outlined" sx={{ borderRadius: 3 }}>
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>کالاهای سفارش</Typography>
+              <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>{tFrontendAuto("fe.3cf9e6e5cbfb")}</Typography>
               <Stack spacing={2}>
                 {items?.map((item) => {
                   const prod = item.product as { id?: string; title?: string; main_image?: { file?: string } };
@@ -318,10 +319,10 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
           <Stack spacing={2}>
             <Card variant="outlined" sx={{ borderRadius: 3 }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>خلاصه سفارش</Typography>
+                <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>{tFrontendAuto("fe.aa69600564cc")}</Typography>
                 <Divider sx={{ mb: 2 }} />
                 <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1.5 }}>
-                  <Typography variant="body2" color="text.secondary">قیمت کالاها</Typography>
+                  <Typography variant="body2" color="text.secondary">{tFrontendAuto("fe.1ea35e715a0b")}</Typography>
                   <Typography>{formatPrice(productsTotal)} تومان</Typography>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1.5 }}>
@@ -330,7 +331,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
                 </Box>
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <Typography fontWeight="bold">مبلغ قابل پرداخت</Typography>
+                  <Typography fontWeight="bold">{tFrontendAuto("fe.2e6cbd8c252b")}</Typography>
                   <Typography variant="h6" fontWeight="bold" color="primary.main">
                     {formatPrice(payableAmount)} تومان
                   </Typography>
@@ -340,7 +341,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
 
             <Card variant="outlined" sx={{ borderRadius: 3 }}>
               <CardContent sx={{ p: 3 }}>
-                <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>آدرس تحویل</Typography>
+                <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>{tFrontendAuto("fe.9bcf7053ca59")}</Typography>
                 <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
                   <MapPin size={20} style={{ flexShrink: 0, marginTop: 2 }} />
                   <Typography variant="body2">{addressStr || "—"}</Typography>
@@ -351,7 +352,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
             {order.shipping_tracking_code && order.shipping_tracking_url && (
               <Card variant="outlined" sx={{ borderRadius: 3 }}>
                 <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>پیگیری ارسال</Typography>
+                  <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>{tFrontendAuto("fe.eff85c8b9036")}</Typography>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexWrap: "wrap" }}>
                     <Typography variant="body2">{order.shipping_tracking_code}</Typography>
                     <Button

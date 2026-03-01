@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { Maximize2, Minimize2 } from "lucide-react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
@@ -59,7 +60,7 @@ export default function JsonEditorField({
           onClick={handleOpenModal}
           disabled={disabled}
           className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          title="بزرگ نمایی"
+          title={tFrontendAuto("fe.bff9870068fb")}
         >
           <Maximize2 className="h-4 w-4" />
         </button>
@@ -126,7 +127,7 @@ export default function JsonEditorField({
               type="button"
               onClick={() => handleCloseModal(false)}
               className="p-1.5 text-gray-500 hover:text-gray-700"
-              title="بستن"
+              title={tFrontendAuto("fe.53df25bd0b3b")}
             >
               <Minimize2 className="h-5 w-5" />
             </button>
@@ -157,7 +158,7 @@ export default function JsonEditorField({
           </div>
         </DialogContent>
         <DialogActions sx={{ px: 3, py: 2 }}>
-          <Button onClick={() => handleCloseModal(false)}>انصراف</Button>
+          <Button onClick={() => handleCloseModal(false)}>{tFrontendAuto("fe.9ea072503092")}</Button>
           <Button variant="contained" onClick={() => handleCloseModal(true)}>
             اعمال تغییرات
           </Button>

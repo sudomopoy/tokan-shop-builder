@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Plus, Pencil, Trash2, Eye, FolderOpen } from "lucide-react";
 import { articleApi, categoryApi } from "@/lib/api";
 import type { Article } from "@/lib/api/articleApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
@@ -62,7 +63,7 @@ export default function BlogPage() {
   };
 
   const handleDelete = async (article: Article) => {
-    if (!confirm(`آیا از حذف مقاله «${article.title}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.8b5f401c3ffc", { p1: article.title }))) return;
     try {
       await articleApi.delete(article.slug);
       setArticles((prev) => prev.filter((a) => a.id !== article.id));
@@ -75,7 +76,7 @@ export default function BlogPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h1 className="text-3xl font-bold">مدیریت بلاگ و محتوا</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.f5fb8d7b4d78")}</h1>
         <div className="flex gap-2">
           <Link
             href="/dashboard/blog/new"
@@ -97,7 +98,7 @@ export default function BlogPage() {
       <form onSubmit={handleSearch} className="flex flex-wrap gap-3">
         <input
           type="text"
-          placeholder="جستجوی مقاله..."
+          placeholder={tFrontendAuto("fe.34a0085722be")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="flex-1 min-w-48 px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -107,16 +108,16 @@ export default function BlogPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
         >
-          <option value="all">همه وضعیت‌ها</option>
-          <option value="draft">پیش‌نویس</option>
-          <option value="public">منتشر شده</option>
+          <option value="all">{tFrontendAuto("fe.333174e52f41")}</option>
+          <option value="draft">{tFrontendAuto("fe.e979266b88e7")}</option>
+          <option value="public">{tFrontendAuto("fe.e5533711a140")}</option>
         </select>
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
           className="px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
         >
-          <option value="">همه دسته‌ها</option>
+          <option value="">{tFrontendAuto("fe.e1790250c94f")}</option>
           {categories.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -214,21 +215,21 @@ export default function BlogPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="مشاهده"
+                            title={tFrontendAuto("fe.36366e8aac29")}
                           >
                             <Eye className="h-4 w-4" />
                           </a>
                           <Link
                             href={`/dashboard/blog/${encodeURIComponent(article.slug)}/edit`}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="ویرایش"
+                            title={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <Pencil className="h-4 w-4" />
                           </Link>
                           <button
                             onClick={() => handleDelete(article)}
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

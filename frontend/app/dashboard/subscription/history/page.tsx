@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { subscriptionApi, type SubscriptionPaymentHistoryItem } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "در انتظار",
@@ -72,7 +73,7 @@ export default function SubscriptionHistoryPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-        <p className="mt-3 text-sm text-gray-500">در حال بارگذاری...</p>
+        <p className="mt-3 text-sm text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
       </div>
     );
   }
@@ -80,7 +81,7 @@ export default function SubscriptionHistoryPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-xl font-bold text-gray-900">تاریخچه اشتراک‌ها</h1>
+        <h1 className="text-xl font-bold text-gray-900">{tFrontendAuto("fe.c69b95c92052")}</h1>
         <Link
           href="/dashboard/subscription"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700"
@@ -92,7 +93,7 @@ export default function SubscriptionHistoryPage() {
 
       {items.length === 0 ? (
         <div className="card p-8 text-center">
-          <p className="text-gray-500">هنوز پرداختی ثبت نشده است.</p>
+          <p className="text-gray-500">{tFrontendAuto("fe.ed2b116d8cb2")}</p>
           <Link
             href="/dashboard/subscription"
             className="mt-4 inline-block text-blue-600 hover:text-blue-700 font-medium"
@@ -140,7 +141,7 @@ export default function SubscriptionHistoryPage() {
                     </td>
                     <td className="px-4 py-3 text-sm tabular-nums text-gray-700">
                       {formatPrice(item.amount)}
-                      <span className="text-xs text-gray-400 mr-1">تومان</span>
+                      <span className="text-xs text-gray-400 mr-1">{tFrontendAuto("fe.d95175effeea")}</span>
                     </td>
                     <td className="px-4 py-3">{statusBadge(item.status)}</td>
                   </tr>

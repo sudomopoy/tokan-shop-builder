@@ -10,6 +10,7 @@ import FormFieldsEditor, {
 } from "@/components/dashboard/FormFieldsEditor";
 import { RichTextEditor } from "@/components/dashboard/RichTextEditor";
 import type {
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
   WidgetBuilderOption,
   WidgetStylePresetDto,
   WidgetTypeDto,
@@ -64,7 +65,7 @@ function getNestedValue(source: Record<string, unknown>, keyPath: string): unkno
   return current;
 }
 
-function setNestedValue(source: Record<string, unknown>, keyPath: string, value: unknown): Record<string, unknown> {
+function setNestedValue(source: Record<string, unknown>{tFrontendAuto("fe.13c242c40a55")}<string, unknown> {
   const keys = keyPath.split(".").filter(Boolean);
   if (keys.length === 0) return source;
   const output = { ...source };
@@ -310,7 +311,7 @@ export default function WidgetVisualEditor({
             value={String(value ?? "")}
             onChange={(nextValue) => updateFieldValue(target, field, nextValue)}
             disabled={disabled}
-            placeholder="Select from list..."
+            placeholder={tFrontendAuto("fe.c7e2edbb4cb7")}
             searchPlaceholder="Search..."
           />
           {field.help_text && <p className="text-xs text-gray-500 mt-1">{field.help_text}</p>}

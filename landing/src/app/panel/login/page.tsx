@@ -12,6 +12,7 @@ import {
   faKey,
 } from "@fortawesome/free-solid-svg-icons";
 import * as api from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function normalizeMobile(value: string): string {
   const digits = value.replace(/\D/g, "");
@@ -91,14 +92,14 @@ export default function PanelLoginPage() {
           <div className="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center">
             <Image
               src="/logo.jpg"
-              alt="توکان"
+              alt={tLandingAuto("ld.989871906ce6")}
               width={32}
               height={32}
               className="rounded-lg"
             />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-slate-900">ورود به پنل مدیریت</h1>
+            <h1 className="text-2xl font-black text-slate-900">{tLandingAuto("ld.ef1483d1edd0")}</h1>
             <p className="text-slate-600 text-sm">
               کیف پول، دعوت و پاداش، فروشگاه‌ها
             </p>
@@ -122,7 +123,7 @@ export default function PanelLoginPage() {
                   type="tel"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
-                  placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+                  placeholder={tLandingAuto("ld.6fca2ef51aae")}
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-left"
                   required
                   dir="ltr"
@@ -151,7 +152,7 @@ export default function PanelLoginPage() {
                   type="text"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  placeholder="۱۲۳۴۵۶"
+                  placeholder={tLandingAuto("ld.52a4b6088fa6")}
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-center font-mono text-lg"
                   required
                   dir="ltr"

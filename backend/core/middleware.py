@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from urllib.parse import urlparse
 from django.conf import settings
+from django.utils import translation
 import threading
 from store.models import Store
 
@@ -18,6 +19,33 @@ EXCLUDED_PATHS = [
 SUPER_STORE_PANEL_DOMAIN = "panel.tokan.app"
 # Panel / localhost - no store context
 NO_STORE_DOMAINS = {"panel.tokan.app", "localhost", "127.0.0.1"}
+
+
+class DeploymentLocaleMiddleware:
+    """
+    Force a single locale for the whole deployment.
+    Runtime user language switching is intentionally disabled.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+        raw_locale = str(getattr(settings, "DEPLOY_LOCALE", "fa")).strip().lower()
+        if raw_locale.startswith("en"):
+            self.locale = "en"
+        elif raw_locale.startswith("fa"):
+            self.locale = "fa"
+        else:
+            self.locale = "fa"
+
+    def __call__(self, request):
+        translation.activate(self.locale)
+        request.LANGUAGE_CODE = self.locale
+        try:
+            response = self.get_response(request)
+        finally:
+            translation.deactivate()
+        response.headers.setdefault("Content-Language", self.locale)
+        return response
 
 
 def get_current_request():

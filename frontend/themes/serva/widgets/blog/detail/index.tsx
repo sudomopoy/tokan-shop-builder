@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { WidgetConfig } from "@/themes/types";
 import { articleApi, type Article } from "@/lib/api/articleApi";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -36,7 +37,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
   useEffect(() => {
     if (!slug) {
       setLoading(false);
-      setError("شناسه مقاله مشخص نیست.");
+      setError(tFrontendAuto("fe.4ab0afc4820f"));
       return;
     }
     if (ssrArticle && ssrArticle.slug === slug) {
@@ -56,7 +57,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
       .catch((e) => {
         console.error(e);
         if (!mounted) return;
-        setError("مقاله یافت نشد.");
+        setError(tFrontendAuto("fe.aa44e19d9863"));
       })
       .finally(() => mounted && setLoading(false));
     return () => {
@@ -83,7 +84,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
   if (loading) {
     return (
       <section className="container py-12">
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       </section>
     );
   }
@@ -115,7 +116,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
               وبلاگ
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">مقاله</span>
+            <span className="text-dark">{tFrontendAuto("fe.9e0e07a14f64")}</span>
           </nav>
         </div>
       </div>
@@ -144,12 +145,12 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
 
             {/* Comments (template-like placeholder) */}
             <div className="bg-white rounded-xl p-8 mt-6">
-              <h3 className="text-xl font-bold text-dark mb-6">نظرات</h3>
-              <p className="text-gray-600 text-sm mb-6">سیستم نظرات در حال حاضر فعال نیست.</p>
+              <h3 className="text-xl font-bold text-dark mb-6">{tFrontendAuto("fe.e6dc985b15cf")}</h3>
+              <p className="text-gray-600 text-sm mb-6">{tFrontendAuto("fe.47fa8e0eb1ad")}</p>
               <form>
                 <textarea
                   rows={4}
-                  placeholder="نظر خود را بنویسید..."
+                  placeholder={tFrontendAuto("fe.e335e6f3d1ea")}
                   className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none mb-4"
                 />
                 <button type="button" className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
@@ -161,7 +162,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
 
           <aside className="lg:col-span-1">
             <div className="bg-white rounded-xl p-6 sticky top-24">
-              <h3 className="font-bold text-dark mb-4">مقالات مرتبط</h3>
+              <h3 className="font-bold text-dark mb-4">{tFrontendAuto("fe.2632bb34cace")}</h3>
               <div className="space-y-4">
                 {related.slice(0, 6).map((r) => {
                   const img =

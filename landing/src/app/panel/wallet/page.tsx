@@ -12,6 +12,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   getPanelInfo,
   getWalletTransactions,
   getWalletChargeGateways,
@@ -189,11 +190,11 @@ export default function PanelWalletPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <h1 className="text-2xl font-bold text-slate-900">کیف پول توکان</h1>
+      <h1 className="text-2xl font-bold text-slate-900">{tLandingAuto("ld.8444c94aee74")}</h1>
 
       {/* موجودی */}
       <div className="glass rounded-2xl p-6 border border-slate-200">
-        <p className="text-sm text-slate-500 mb-1">موجودی قابل برداشت</p>
+        <p className="text-sm text-slate-500 mb-1">{tLandingAuto("ld.42795967f525")}</p>
         <p className="text-3xl font-bold text-brand-700">{formatPrice(balance)} تومان</p>
       </div>
 
@@ -206,18 +207,18 @@ export default function PanelWalletPage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-600 mb-1">مبلغ (تومان)</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.973d53486906")}</label>
               <input
                 type="text"
                 value={chargeAmount}
                 onChange={(e) => setChargeAmount(e.target.value)}
-                placeholder="۱۰۰۰۰"
+                placeholder={tLandingAuto("ld.93fbaf189179")}
                 className="w-full px-3 py-2 rounded-xl border border-slate-200"
                 dir="ltr"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-600 mb-1">درگاه</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.2f24afaef65c")}</label>
               <select
                 value={selectedGateway}
                 onChange={(e) => setSelectedGateway(e.target.value)}
@@ -249,18 +250,18 @@ export default function PanelWalletPage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">مبلغ برداشت (تومان)</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.578fd5f60650")}</label>
             <input
               type="text"
               value={withdrawAmount}
               onChange={(e) => setWithdrawAmount(e.target.value)}
-              placeholder="۵۰۰۰۰"
+              placeholder={tLandingAuto("ld.c3fdf928f53b")}
               className="w-full px-3 py-2 rounded-xl border border-slate-200"
               dir="ltr"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">شماره شبا یا کارت</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.d5724ce5b495")}</label>
             <input
               type="text"
               value={withdrawSheba}
@@ -271,27 +272,27 @@ export default function PanelWalletPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">نام بانک</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.294d0f7d2f23")}</label>
             <input
               type="text"
               value={withdrawBank}
               onChange={(e) => setWithdrawBank(e.target.value)}
-              placeholder="مثال: ملی"
+              placeholder={tLandingAuto("ld.1e80c808c45a")}
               className="w-full px-3 py-2 rounded-xl border border-slate-200"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">صاحب حساب</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.88270442599b")}</label>
             <input
               type="text"
               value={withdrawHolder}
               onChange={(e) => setWithdrawHolder(e.target.value)}
-              placeholder="نام صاحب حساب"
+              placeholder={tLandingAuto("ld.252f8954331c")}
               className="w-full px-3 py-2 rounded-xl border border-slate-200"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-slate-600 mb-1">توضیحات (اختیاری)</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.d0f1ac7134b4")}</label>
             <input
               type="text"
               value={withdrawDesc}
@@ -321,16 +322,16 @@ export default function PanelWalletPage() {
       {withdrawRequests.length > 0 && (
         <section className="glass rounded-2xl overflow-hidden border border-slate-200">
           <div className="px-4 py-3 border-b border-slate-100">
-            <h2 className="font-bold text-slate-900">درخواست‌های برداشت من</h2>
+            <h2 className="font-bold text-slate-900">{tLandingAuto("ld.302e7e2564d0")}</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-100 text-sm">
               <thead>
                 <tr>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">مبلغ</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">تاریخ</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">وضعیت</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">دلیل رد</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.37313fd7bc42")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.18ec78dc6258")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.8cd9ad8fbfb2")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.d2d7bab75fc7")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -357,7 +358,7 @@ export default function PanelWalletPage() {
         <section className="glass rounded-2xl overflow-hidden border border-slate-200">
           <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
             <FontAwesomeIcon icon={faHistory} className="text-slate-500" />
-            <h2 className="font-bold text-slate-900">آخرین تراکنش‌ها</h2>
+            <h2 className="font-bold text-slate-900">{tLandingAuto("ld.b463640ce27b")}</h2>
           </div>
           <div className="divide-y divide-slate-50">
             {transactions.slice(0, 10).map((tx) => (

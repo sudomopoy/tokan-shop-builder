@@ -8,6 +8,7 @@ import { articleApi, categoryApi, tagApi } from "@/lib/api";
 import type { Media } from "@/lib/api/productApi";
 import { ArticleImageFields } from "@/components/dashboard/ArticleImageFields";
 import { RichTextEditor } from "@/components/dashboard/RichTextEditor";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const inputClass =
   "w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
@@ -118,7 +119,7 @@ export default function NewArticlePage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">مقاله جدید</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.27dfc8ac93d4")}</h1>
         </div>
         <div className="flex gap-3">
           <button
@@ -144,20 +145,20 @@ export default function NewArticlePage() {
           {/* Main content */}
           <div className="lg:col-span-2 space-y-6">
             <div className="card p-6 space-y-4">
-              <h2 className="text-lg font-semibold">محتوای اصلی</h2>
+              <h2 className="text-lg font-semibold">{tFrontendAuto("fe.a2f3ceacc859")}</h2>
               <div>
-                <label className={labelClass}>عنوان *</label>
+                <label className={labelClass}>{tFrontendAuto("fe.a83c261c5577")}</label>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                   className={inputClass}
-                  placeholder="عنوان مقاله"
+                  placeholder={tFrontendAuto("fe.10a8e9a70913")}
                   required
                 />
               </div>
               <div>
-                <label className={labelClass}>اسلاگ (اختیاری)</label>
+                <label className={labelClass}>{tFrontendAuto("fe.21127e4741c6")}</label>
                 <input
                   type="text"
                   value={form.slug}
@@ -168,11 +169,11 @@ export default function NewArticlePage() {
                 />
               </div>
               <div>
-                <label className={labelClass}>محتوا</label>
+                <label className={labelClass}>{tFrontendAuto("fe.85b3403cdeca")}</label>
                 <RichTextEditor
                   value={form.description}
                   onChange={(v) => setForm((f) => ({ ...f, description: v }))}
-                  placeholder="متن مقاله را بنویسید..."
+                  placeholder={tFrontendAuto("fe.c64ec55e144a")}
                 />
               </div>
             </div>
@@ -181,7 +182,7 @@ export default function NewArticlePage() {
           {/* Sidebar */}
           <div className="space-y-6">
             <div className="card p-6">
-              <h2 className="text-lg font-semibold mb-4">تصاویر</h2>
+              <h2 className="text-lg font-semibold mb-4">{tFrontendAuto("fe.2467aa45516f")}</h2>
               <ArticleImageFields
                 mainImage={mainImage}
                 thumbnailImage={thumbnailImage}
@@ -191,9 +192,9 @@ export default function NewArticlePage() {
             </div>
 
             <div className="card p-6 space-y-4">
-              <h2 className="text-lg font-semibold">انتشار</h2>
+              <h2 className="text-lg font-semibold">{tFrontendAuto("fe.fb2530214671")}</h2>
               <div>
-                <label className={labelClass}>وضعیت</label>
+                <label className={labelClass}>{tFrontendAuto("fe.b56dc5016988")}</label>
                 <select
                   value={form.status}
                   onChange={(e) =>
@@ -201,22 +202,22 @@ export default function NewArticlePage() {
                   }
                   className={inputClass}
                 >
-                  <option value="draft">پیش‌نویس</option>
-                  <option value="public">منتشر شده</option>
+                  <option value="draft">{tFrontendAuto("fe.e979266b88e7")}</option>
+                  <option value="public">{tFrontendAuto("fe.e5533711a140")}</option>
                 </select>
               </div>
             </div>
 
             <div className="card p-6 space-y-4">
-              <h2 className="text-lg font-semibold">دسته‌بندی و برچسب</h2>
+              <h2 className="text-lg font-semibold">{tFrontendAuto("fe.7399f1e6fa08")}</h2>
               <div>
-                <label className={labelClass}>دسته‌بندی</label>
+                <label className={labelClass}>{tFrontendAuto("fe.6c76efc8a63e")}</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
                   className={inputClass}
                 >
-                  <option value="">بدون دسته</option>
+                  <option value="">{tFrontendAuto("fe.dabdaa630209")}</option>
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
@@ -229,7 +230,7 @@ export default function NewArticlePage() {
                     value={newCatName}
                     onChange={(e) => setNewCatName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleCreateCategory())}
-                    placeholder="دسته‌بندی جدید"
+                    placeholder={tFrontendAuto("fe.c7519b499eb4")}
                     className="flex-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     disabled={creatingCat}
                   />
@@ -245,10 +246,10 @@ export default function NewArticlePage() {
                 </div>
               </div>
               <div>
-                <label className={labelClass}>برچسب‌ها</label>
+                <label className={labelClass}>{tFrontendAuto("fe.3222ea2c45bc")}</label>
                 <div className="max-h-40 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-0">
                   {allTags.length === 0 ? (
-                    <p className="text-sm text-gray-500 py-2">برچسبی یافت نشد.</p>
+                    <p className="text-sm text-gray-500 py-2">{tFrontendAuto("fe.444bbd3acef0")}</p>
                   ) : (
                     allTags.map((t) => (
                       <label
@@ -276,7 +277,7 @@ export default function NewArticlePage() {
                     value={newTagName}
                     onChange={(e) => setNewTagName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleCreateTag())}
-                    placeholder="تگ جدید"
+                    placeholder={tFrontendAuto("fe.f8e2d7a6513e")}
                     className="flex-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     disabled={creatingTag}
                   />
@@ -294,24 +295,24 @@ export default function NewArticlePage() {
             </div>
 
             <div className="card p-6 space-y-4">
-              <h2 className="text-lg font-semibold">SEO (اختیاری)</h2>
+              <h2 className="text-lg font-semibold">{tFrontendAuto("fe.3464a90de1b7")}</h2>
               <div>
-                <label className={labelClass}>عنوان متا</label>
+                <label className={labelClass}>{tFrontendAuto("fe.7e8bf63d008a")}</label>
                 <input
                   type="text"
                   value={form.meta_title}
                   onChange={(e) => setForm((f) => ({ ...f, meta_title: e.target.value }))}
                   className={inputClass}
-                  placeholder="عنوان برای موتورهای جستجو"
+                  placeholder={tFrontendAuto("fe.561a2ac43214")}
                 />
               </div>
               <div>
-                <label className={labelClass}>توضیحات متا</label>
+                <label className={labelClass}>{tFrontendAuto("fe.37b3baa32877")}</label>
                 <textarea
                   value={form.meta_description}
                   onChange={(e) => setForm((f) => ({ ...f, meta_description: e.target.value }))}
                   className={`${inputClass} min-h-[80px]`}
-                  placeholder="خلاصه کوتاه برای نتایج جستجو"
+                  placeholder={tFrontendAuto("fe.b785127752e1")}
                   rows={3}
                 />
               </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { PageConfig } from "@/themes/types";
+import { pickByLocale } from "@/lib/i18n/localize";
 
 import { apiClient } from "./apiClient";
 
@@ -279,7 +280,10 @@ export const pageApi = {
         err?.response?.data?.detail ??
         (Array.isArray(err?.response?.data) ? err.response.data.join(", ") : null) ??
         err?.message ??
-        "خطا در راه‌اندازی صفحات پیش‌فرض";
+        pickByLocale({
+          fa: "خطا در راه‌اندازی صفحات پیش‌فرض",
+          en: "Failed to initialize default pages",
+        });
       return { created: 0, skipped: 0, errors: [String(msg)] };
     }
   },

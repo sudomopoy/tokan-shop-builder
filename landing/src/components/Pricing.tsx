@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   faFlagCheckered,
   faBoxesStacked,
   faCertificate,
@@ -60,8 +61,8 @@ export function Pricing() {
           <div className="glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm text-slate-600">پلن اشتراک</div>
-                <div className="mt-1 text-2xl font-black text-slate-900">عادی</div>
+                <div className="text-sm text-slate-600">{tLandingAuto("ld.967ef7cba32e")}</div>
+                <div className="mt-1 text-2xl font-black text-slate-900">{tLandingAuto("ld.ef521ff7bf99")}</div>
               </div>
               <span className="text-xs px-3 py-1.5 rounded-full glass text-slate-600 border border-slate-200">
                 برای کسب‌وکارهای در حال رشد
@@ -86,8 +87,8 @@ export function Pricing() {
           <div className="glass rounded-[2.2rem] p-6 md:p-8 border-2 border-brand-400 shadow-soft">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm text-slate-600">پلن اشتراک</div>
-                <div className="mt-1 text-2xl font-black text-slate-900">طلایی</div>
+                <div className="text-sm text-slate-600">{tLandingAuto("ld.967ef7cba32e")}</div>
+                <div className="mt-1 text-2xl font-black text-slate-900">{tLandingAuto("ld.a2b47c55f333")}</div>
               </div>
               <span className="text-xs px-3 py-1.5 rounded-full btn-grad text-white font-bold">
                 پیشنهادی
@@ -112,7 +113,7 @@ export function Pricing() {
 
         <div className="mt-10 grid lg:grid-cols-3 gap-6">
           <div className="glass rounded-3xl p-6 lg:col-span-2 border border-slate-200">
-            <h3 className="text-xl font-black text-slate-900">خدمات تکمیلی</h3>
+            <h3 className="text-xl font-black text-slate-900">{tLandingAuto("ld.234960f09ab2")}</h3>
             <p className="mt-2 text-slate-600 leading-7">
               این موارد در صورت نیاز به صورت جداگانه به پروژه اضافه می‌شوند.
             </p>
@@ -134,19 +135,19 @@ export function Pricing() {
           </div>
 
           <div className="glass rounded-3xl p-6 border border-slate-200">
-            <h3 className="text-xl font-black text-slate-900">شرایط پرداخت</h3>
+            <h3 className="text-xl font-black text-slate-900">{tLandingAuto("ld.e8ada2da697a")}</h3>
             <ul className="mt-4 space-y-3 text-slate-700 leading-7 text-sm">
               <li className="flex items-start gap-2">
                 <FontAwesomeIcon icon={faCircleCheck} className="text-brand-500 mt-0.5 flex-shrink-0" />
-                <span>پرداخت نقدی: <b>۱۰٪ تخفیف</b></span>
+                <span>{tLandingAuto("ld.51c79fdba653")}<b>{tLandingAuto("ld.968db26bbbb5")}</b></span>
               </li>
               <li className="flex items-start gap-2">
                 <FontAwesomeIcon icon={faCircleCheck} className="text-brand-500 mt-0.5 flex-shrink-0" />
-                <span>پرداخت اقساطی: <b>۴ قسط</b> (قسط اول نقدی) با ارسال چک صیادی بنفش</span>
+                <span>{tLandingAuto("ld.88279e5a4f0c")}<b>{tLandingAuto("ld.d2867c59a74e")}</b>{tLandingAuto("ld.b8a9bbd5e672")}</span>
               </li>
               <li className="flex items-start gap-2">
                 <FontAwesomeIcon icon={faCircleCheck} className="text-brand-500 mt-0.5 flex-shrink-0" />
-                <span>می‌توانید بخشی از مبلغ را از موجودی کیف پول (در صورت وجود) پرداخت کنید.</span>
+                <span>{tLandingAuto("ld.54e23ee506ec")}</span>
               </li>
             </ul>
             <Link

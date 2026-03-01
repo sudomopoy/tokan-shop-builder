@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from .models import (
     AffiliateConfig,
     UserAffiliateSettings,
@@ -44,7 +45,7 @@ class AffiliateEarningAdmin(admin.ModelAdmin):
             e.status = "completed"
             e.completed_at = timezone.now()
             e.save()
-            # واریز به کیف پول
+            # Deposit commission into inviter wallet.
             from wallet.models import Wallet
             try:
                 wallet, _ = Wallet.objects.get_or_create(user=e.invite.inviter)
@@ -52,8 +53,11 @@ class AffiliateEarningAdmin(admin.ModelAdmin):
                 updated += 1
             except Exception:
                 pass
-        self.message_user(request, f"{updated} کمیسیون واریز شد.")
-    mark_completed.short_description = "واریز به کیف پول"
+        self.message_user(
+            request,
+            _("%(count)s commissions were deposited to wallet.") % {"count": updated},
+        )
+    mark_completed.short_description = _("Deposit to wallet")
 
 
 @admin.register(ManualAffiliateCredit)
@@ -77,5 +81,8 @@ class ManualAffiliateCreditAdmin(admin.ModelAdmin):
                 updated += 1
             except Exception:
                 pass
-        self.message_user(request, f"{updated} مورد واریز شد.")
-    apply_to_wallet.short_description = "واریز به کیف پول"
+        self.message_user(
+            request,
+            _("%(count)s records were deposited to wallet.") % {"count": updated},
+        )
+    apply_to_wallet.short_description = _("Deposit to wallet")

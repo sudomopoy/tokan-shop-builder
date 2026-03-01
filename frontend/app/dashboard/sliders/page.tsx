@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2, List } from "lucide-react";
 import { sliderApi } from "@/lib/api";
 import type { SliderListItem } from "@/lib/api/sliderApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function SlidersPage() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function SlidersPage() {
     } catch (err) {
       console.error(err);
       setSliders([]);
-      setError("خطا در دریافت لیست اسلایدرها");
+      setError(tFrontendAuto("fe.d7291a135bfe"));
     } finally {
       setLoading(false);
     }
@@ -61,7 +62,7 @@ export default function SlidersPage() {
   };
 
   const handleDelete = async (slider: SliderListItem) => {
-    if (!confirm(`آیا از حذف اسلایدر «${slider.title}» اطمینان دارید؟ این کار تمام اسلایدها را نیز حذف می‌کند.`))
+    if (!confirm(tFrontendAuto("fe.f40e21ecdb6f", { p1: slider.title })))
       return;
     try {
       await sliderApi.delete(slider.id);
@@ -75,23 +76,23 @@ export default function SlidersPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold">مدیریت اسلایدرها</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.7c9da5090e6e")}</h1>
       </div>
 
       <form onSubmit={handleCreate} className="card max-w-3xl space-y-4">
-        <h2 className="text-lg font-semibold">ایجاد اسلایدر جدید</h2>
+        <h2 className="text-lg font-semibold">{tFrontendAuto("fe.30f719fce715")}</h2>
 
         {error && (
           <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">عنوان *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.a83c261c5577")}</label>
           <input
             value={createForm.title}
             onChange={(e) => setCreateForm((f) => ({ ...f, title: e.target.value }))}
             required
-            placeholder="مثلاً: اسلایدر صفحه اصلی"
+            placeholder={tFrontendAuto("fe.1e1053af42fe")}
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -105,7 +106,7 @@ export default function SlidersPage() {
             }
             className="rounded border-gray-300"
           />
-          <span className="text-sm">فعال</span>
+          <span className="text-sm">{tFrontendAuto("fe.e3d927082524")}</span>
         </label>
 
         <div className="flex gap-3 pt-2">
@@ -182,14 +183,14 @@ export default function SlidersPage() {
                           <Link
                             href={`/dashboard/sliders/${slider.id}`}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="مدیریت اسلایدها"
+                            title={tFrontendAuto("fe.8933719a4a46")}
                           >
                             <List className="h-4 w-4" />
                           </Link>
                           <button
                             onClick={() => handleDelete(slider)}
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

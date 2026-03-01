@@ -1,6 +1,7 @@
 "use client";
 
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value : "";
@@ -59,7 +60,7 @@ export default function ServaTextWidget({ config }: { config?: WidgetConfig }) {
               {body ? (
                 <div className="prose max-w-none text-slate-700" dangerouslySetInnerHTML={{ __html: body }} />
               ) : (
-                <p className="text-sm text-slate-500">No body content provided.</p>
+                <p className="text-sm text-slate-500">{tFrontendAuto("fe.9f743e251598")}</p>
               )}
             </div>
           </div>

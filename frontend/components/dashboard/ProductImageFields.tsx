@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, X, FolderOpen } from "lucide-react";
 import type { Media } from "@/lib/api/productApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
@@ -61,7 +62,7 @@ export function ProductImageFields({
                 type="button"
                 onClick={removeMainImage}
                 className="absolute top-1 left-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                aria-label="حذف تصویر"
+                aria-label={tFrontendAuto("fe.ec33c2179e06")}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -73,7 +74,7 @@ export function ProductImageFields({
               className="w-64 h-64 sm:w-80 sm:h-80 flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
             >
               <FolderOpen className="h-8 w-8 text-gray-400" />
-              <span className="text-xs text-gray-500">انتخاب از فایل‌ها</span>
+              <span className="text-xs text-gray-500">{tFrontendAuto("fe.3ac060279bfd")}</span>
             </button>
           )}
           {mainImage && (
@@ -105,7 +106,7 @@ export function ProductImageFields({
                 type="button"
                 onClick={() => removeGalleryImage(idx)}
                 className="absolute -top-1 -right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                aria-label="حذف"
+                aria-label={tFrontendAuto("fe.fc1d9d323674")}
               >
                 <X className="h-3 w-3" />
               </button>

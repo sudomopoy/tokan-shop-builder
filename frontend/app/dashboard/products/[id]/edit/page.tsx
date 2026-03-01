@@ -17,6 +17,7 @@ import {
 } from "@/components/dashboard/ProductFormLayout";
 import type { FormVariant } from "@/components/dashboard/ProductVariantSection";
 import type { DownloadableFileEntry } from "@/components/dashboard/DownloadableFilesEditor";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function EditProductPage() {
   const router = useRouter();
@@ -227,7 +228,7 @@ export default function EditProductPage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">ویرایش محصول</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.025a6f4fe202")}</h1>
         </div>
         <div className="flex gap-3">
           <button

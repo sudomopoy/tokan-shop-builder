@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import "@/css/style.css";
 import Providers from "./providers";
 import StorefrontAdminBar from "@/components/StorefrontAdminBar";
+import { DEPLOY_DIRECTION, DEPLOY_LANG } from "@/lib/i18n/deployment";
+import { tFrontend } from "@/lib/i18n/messages";
 
 export const metadata: Metadata = {
-  title: { default: "فروشگاه توکان" },
-  description: "فروشگاه آنلاین",
+  title: tFrontend("app.layout.title"),
+  description: tFrontend("app.layout.description"),
 };
 
 async function RootLayout({
@@ -13,7 +15,7 @@ async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-    return <html lang="fa" dir="rtl" className="h-full">
+    return <html lang={DEPLOY_LANG} dir={DEPLOY_DIRECTION} className="h-full">
         <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         </head>

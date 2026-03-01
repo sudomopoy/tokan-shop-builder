@@ -14,6 +14,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { announcementApi, type SystemAnnouncement } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const typeConfig = {
   info: { icon: Info, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200" },
@@ -121,7 +122,7 @@ export function DashboardNotificationsSection() {
       ) : items.length === 0 ? (
         <div className="py-12 text-center text-gray-500">
           <Bell className="h-16 w-16 mx-auto mb-4 text-gray-200" />
-          <p className="font-medium text-gray-600">اعلانی برای نمایش وجود ندارد</p>
+          <p className="font-medium text-gray-600">{tFrontendAuto("fe.7b09cca768c8")}</p>
           <p className="text-sm mt-1">
             اعلان‌های مهم فروشگاه شما اینجا نمایش داده می‌شوند. لطفاً گاهی سر بزنید!
           </p>
@@ -137,7 +138,7 @@ export function DashboardNotificationsSection() {
         <div className="py-10 text-center">
           <div className="py-4 px-4 mb-4 bg-green-50 border border-green-200 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-4">
             <CheckCircle className="h-12 w-12 text-green-500 shrink-0" />
-            <p className="font-medium text-green-800">همه اعلانات را خوانده‌اید</p>
+            <p className="font-medium text-green-800">{tFrontendAuto("fe.3fb32d1c659b")}</p>
           </div>
           <Link
             href="/dashboard/notifications"

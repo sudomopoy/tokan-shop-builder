@@ -14,6 +14,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function imageUrl(file: string | undefined): string {
   if (!file) return "";
@@ -96,7 +97,7 @@ export default function ServaSliderWidget({ config }: { config?: WidgetConfig })
       .catch((e) => {
         if (!cancelled) {
           console.error(e);
-          setError("خطا در بارگذاری اسلایدر.");
+          setError(tFrontendAuto("fe.ebfe77ee1a18"));
         }
       })
       .finally(() => {
@@ -208,14 +209,14 @@ export default function ServaSliderWidget({ config }: { config?: WidgetConfig })
         {/* دکمه‌های ناوبری - دسکتاپ */}
         <button
           type="button"
-          aria-label="اسلاید بعدی"
+          aria-label={tFrontendAuto("fe.1a5d8735b5c8")}
           className="serva-slider-next absolute top-1/2 -translate-y-1/2 right-4 md:right-6 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center text-dark transition-all disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <FontAwesomeIcon icon={faChevronRight} className="text-lg" />
         </button>
         <button
           type="button"
-          aria-label="اسلاید قبلی"
+          aria-label={tFrontendAuto("fe.6ce26f2ee1b5")}
           className="serva-slider-prev absolute top-1/2 -translate-y-1/2 left-4 md:left-6 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center text-dark transition-all disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <FontAwesomeIcon icon={faChevronLeft} className="text-lg" />

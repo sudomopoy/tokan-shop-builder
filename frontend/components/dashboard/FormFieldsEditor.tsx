@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus, Trash2 } from "lucide-react";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export type FormFieldType = "text" | "textarea" | "email" | "tel" | "number";
 
@@ -74,14 +75,14 @@ export default function FormFieldsEditor({ value, onChange, disabled = false }: 
   return (
     <div className="space-y-3">
       {fields.length === 0 && (
-        <p className="text-xs text-gray-500">No form fields yet.</p>
+        <p className="text-xs text-gray-500">{tFrontendAuto("fe.e43d6856ea8d")}</p>
       )}
 
       {fields.map((field, index) => (
         <div key={`${field.id}-${index}`} className="rounded-lg border border-gray-200 p-3 space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Field ID</label>
+              <label className="block text-xs font-medium text-gray-700 mb-1">{tFrontendAuto("fe.3c686b41b11a")}</label>
               <input
                 value={field.id}
                 onChange={(e) => updateField(index, { id: e.target.value })}

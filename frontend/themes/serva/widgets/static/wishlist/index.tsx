@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function StaticWishlist() {
   return (
@@ -13,14 +14,14 @@ export default function StaticWishlist() {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">لیست علاقه‌مندی‌ها</span>
+            <span className="text-dark">{tFrontendAuto("fe.e3bc523bbd19")}</span>
           </nav>
         </div>
       </div>
 
       <section className="container py-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-dark">لیست علاقه‌مندی‌ها</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-dark">{tFrontendAuto("fe.e3bc523bbd19")}</h1>
           <button type="button" className="text-red-500 hover:text-red-600 transition text-sm opacity-60 cursor-not-allowed">
             پاک کردن همه
           </button>
@@ -30,8 +31,8 @@ export default function StaticWishlist() {
           <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl text-gray-400">
             ❤
           </div>
-          <h3 className="text-xl font-bold text-dark mb-2">لیست علاقه‌مندی‌های شما خالی است</h3>
-          <p className="text-gray-600 mb-6">محصولات مورد علاقه خود را به این لیست اضافه کنید</p>
+          <h3 className="text-xl font-bold text-dark mb-2">{tFrontendAuto("fe.4b9d1544a2fa")}</h3>
+          <p className="text-gray-600 mb-6">{tFrontendAuto("fe.9c0ba410da9f")}</p>
           <Link href="/products/search" className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
             مشاهده محصولات
           </Link>

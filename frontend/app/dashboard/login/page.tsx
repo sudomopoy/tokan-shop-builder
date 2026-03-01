@@ -6,6 +6,7 @@ import { Phone, Lock, Eye, EyeOff } from "lucide-react";
 import { authApi } from "@/lib/api";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setJwtAuth, setTokenAuth } from "@/lib/auth/authService";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type LoginMode = "sms" | "password";
 
@@ -284,7 +285,7 @@ export default function DashboardLoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="رمز عبور"
+                placeholder={tFrontendAuto("fe.4fb2a8ca7a45")}
                 required
                 disabled={loading}
                 className="w-full pr-10 pl-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"

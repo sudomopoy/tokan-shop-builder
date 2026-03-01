@@ -6,6 +6,7 @@ import Link from "next/link";
 import { menuApi, type Menu, type MenuItem } from "@/lib/api/menuApi";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value : "";
@@ -78,7 +79,7 @@ export default function ServaMenuWidget({ config }: { config?: WidgetConfig }) {
       .catch((err) => {
         if (!mounted) return;
         console.error("Serva menu widget error:", err);
-        setError("Failed to load menu.");
+        setError(tFrontendAuto("fe.c4b0666bcf0a"));
       })
       .finally(() => {
         if (mounted) setLoading(false);
@@ -110,7 +111,7 @@ export default function ServaMenuWidget({ config }: { config?: WidgetConfig }) {
   if (loading) {
     return (
       <section className="px-4 py-10">
-        <div className="mx-auto max-w-6xl text-sm text-slate-500">Loading menu...</div>
+        <div className="mx-auto max-w-6xl text-sm text-slate-500">{tFrontendAuto("fe.0423c6acd237")}</div>
       </section>
     );
   }

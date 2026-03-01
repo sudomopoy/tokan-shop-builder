@@ -1,11 +1,15 @@
 "use client";
 
 import type { WidgetConfig } from "@/themes/types";
+import { DEPLOY_DIRECTION } from "@/lib/i18n/deployment";
+import { localizedString } from "@/lib/i18n/localize";
+import { tFrontend } from "@/lib/i18n/messages";
 
 function alignClass(align: unknown): string {
   if (align === "center") return "text-center";
-  if (align === "end") return "text-right";
-  return "text-right";
+  if (align === "end") return DEPLOY_DIRECTION === "rtl" ? "text-left" : "text-right";
+  if (align === "start") return DEPLOY_DIRECTION === "rtl" ? "text-right" : "text-left";
+  return DEPLOY_DIRECTION === "rtl" ? "text-right" : "text-left";
 }
 
 function asString(value: unknown): string {
@@ -13,9 +17,9 @@ function asString(value: unknown): string {
 }
 
 export default function ContentTextWidget({ config }: { config?: WidgetConfig }) {
-  const title = asString(config?.widgetConfig?.title);
-  const subtitle = asString(config?.widgetConfig?.subtitle);
-  const body = asString(config?.widgetConfig?.body);
+  const title = localizedString(config?.widgetConfig?.title);
+  const subtitle = localizedString(config?.widgetConfig?.subtitle);
+  const body = localizedString(config?.widgetConfig?.body);
   const styleKey = asString(config?.widgetConfig?.style_key) || "classic";
   const align = alignClass(config?.widgetConfig?.align);
 
@@ -23,7 +27,7 @@ export default function ContentTextWidget({ config }: { config?: WidgetConfig })
     return (
       <section className="px-4 py-8">
         <div className="mx-auto max-w-6xl rounded-2xl border border-dashed border-gray-300 p-8 text-center text-sm text-gray-500">
-          This text widget is empty. Add title/body from the page builder.
+          {tFrontend("widget.text.empty")}
         </div>
       </section>
     );
@@ -60,7 +64,9 @@ export default function ContentTextWidget({ config }: { config?: WidgetConfig })
               dangerouslySetInnerHTML={{ __html: body }}
             />
           ) : (
-            <p className="text-sm text-gray-500">No body text provided.</p>
+            <p className="text-sm text-gray-500">
+              {tFrontend("widget.text.noBody")}
+            </p>
           )}
         </div>
       </section>

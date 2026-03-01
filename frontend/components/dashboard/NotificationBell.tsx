@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { announcementApi, type SystemAnnouncement } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const typeConfig = {
   info: { icon: Info, color: "text-blue-600", bg: "bg-blue-50" },
@@ -129,7 +130,7 @@ export function NotificationBell({ variant = "light" }: { variant?: "light" | "d
       {open && (
         <div className="absolute left-0 mt-2 w-96 max-h-[420px] bg-white rounded-xl shadow-xl border border-gray-200 z-50 flex flex-col">
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-            <h3 className="font-semibold text-gray-900">اعلانات</h3>
+            <h3 className="font-semibold text-gray-900">{tFrontendAuto("fe.29e0cf131788")}</h3>
             {items.some((a) => !a.read) && (
               <button
                 onClick={handleMarkAllRead}

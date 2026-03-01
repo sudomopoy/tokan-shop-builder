@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStore, faPlus, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { getPanelInfo } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 export default function PanelStoresPage() {
   const [info, setInfo] = useState<Awaited<ReturnType<typeof getPanelInfo>> | null>(null);
@@ -30,7 +31,7 @@ export default function PanelStoresPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">فروشگاه‌های من</h1>
+        <h1 className="text-2xl font-bold text-slate-900">{tLandingAuto("ld.1e080ec0bd98")}</h1>
         <Link
           href="/setup"
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl btn-grad text-white font-medium"
@@ -43,7 +44,7 @@ export default function PanelStoresPage() {
       {stores.length === 0 ? (
         <div className="glass rounded-2xl p-12 text-center border border-slate-200">
           <FontAwesomeIcon icon={faStore} className="h-12 w-12 text-slate-300 mb-4" />
-          <p className="text-slate-600 mb-4">هنوز فروشگاهی نساخته‌اید.</p>
+          <p className="text-slate-600 mb-4">{tLandingAuto("ld.11ac49c0ec12")}</p>
           <Link href="/setup" className="text-brand-600 hover:underline font-medium">
             ساخت فروشگاه
           </Link>

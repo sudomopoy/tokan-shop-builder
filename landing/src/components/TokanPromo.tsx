@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   faRocket,
   faCircleCheck,
   faArrowLeft,
@@ -53,7 +54,7 @@ export function TokanPromo({ variant = "default" }: { variant?: TokanPromoVarian
     return (
       <div className="rounded-2xl p-4 bg-gradient-to-l from-brand-50 to-white border border-brand-100">
         <p className="text-slate-700 text-sm leading-7">
-          <strong className="text-slate-900">توکان</strong>—ساخت فروشگاه زیر ۲ دقیقه با فقط هزینه هاستینگ.
+          <strong className="text-slate-900">{tLandingAuto("ld.989871906ce6")}</strong>—ساخت فروشگاه زیر ۲ دقیقه با فقط هزینه هاستینگ.
           بدون طراحی و راه‌اندازی اولیه. {" "}
           <Link href="#contact" className="text-brand-600 font-bold hover:underline">
             برای شروع پیام دهید

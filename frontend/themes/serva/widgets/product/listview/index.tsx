@@ -10,6 +10,7 @@ import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faHeart, faPlus, faStar } from "@fortawesome/free-solid-svg-icons";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => new Intl.NumberFormat("fa-IR").format(price);
 
@@ -109,7 +110,7 @@ function ProductCard({
           <button
             type="button"
             className="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"
-            title="افزودن به علاقه‌مندی"
+            title={tFrontendAuto("fe.e5c092d22967")}
             aria-label="favorite"
           >
             <FontAwesomeIcon icon={faHeart} />
@@ -117,7 +118,7 @@ function ProductCard({
           <Link
             href={url}
             className="w-10 h-10 bg-white text-gray-500 rounded-xl shadow-lg hover:bg-primary hover:text-white transition flex items-center justify-center"
-            title="مشاهده"
+            title={tFrontendAuto("fe.36366e8aac29")}
             aria-label="view"
           >
             <FontAwesomeIcon icon={faEye} />
@@ -134,7 +135,7 @@ function ProductCard({
       </div>
 
       <div className="flex-1 flex flex-col">
-        <div className="text-xs text-gray-400 mb-2 font-medium">محصول</div>
+        <div className="text-xs text-gray-400 mb-2 font-medium">{tFrontendAuto("fe.67b7ace0b172")}</div>
 
         <h3 className="font-bold font-sans text-dark text-sm leading-relaxed mb-3 line-clamp-2 group-hover:text-primary transition cursor-pointer">
           <Link href={url}>{product.title}</Link>
@@ -165,7 +166,7 @@ function ProductCard({
             ) : null}
             <div className="flex items-center gap-1 text-primary font-black font-sans text-lg">
               <span>{formatPrice(product.price)}</span>
-              <span className="text-xs font-normal text-gray-500">تومان</span>
+              <span className="text-xs font-normal text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
             </div>
           </div>
 
@@ -174,7 +175,7 @@ function ProductCard({
             disabled={!product.inStock || adding}
             onClick={() => onAddToBasket(product.id)}
             className="w-11 h-11 rounded-xl bg-gray-50 text-primary hover:bg-primary hover:text-white transition flex items-center justify-center group/btn disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="add to basket"
+            aria-label={tFrontendAuto("fe.d460a8f2afb1")}
           >
             <FontAwesomeIcon icon={faPlus} className="transition-transform group-hover/btn:rotate-90" />
           </button>
@@ -224,7 +225,7 @@ export default function ProductsListView({ config }: { config?: WidgetConfig }) 
       .catch((e) => {
         console.error(e);
         if (!mounted) return;
-        setError("خطا در بارگذاری محصولات.");
+        setError(tFrontendAuto("fe.104bd9ef1a68"));
       })
       .finally(() => mounted && setLoading(false));
     return () => {
@@ -261,11 +262,11 @@ export default function ProductsListView({ config }: { config?: WidgetConfig }) 
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       ) : error ? (
         <div className="bg-white rounded-2xl p-8 text-center text-red-600">{error}</div>
       ) : products.length === 0 ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">محصولی یافت نشد.</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.a24f6e197e0c")}</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((p) => (

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from .models import Page, Widget, WidgetType, Theme, WidgetStyle
+from core.i18n import get_deploy_direction, get_deploy_locale, localize_value
 from .widget_builder_catalog import (
     get_default_payload,
     get_style_presets,
@@ -131,7 +132,12 @@ class PageSerializer(serializers.ModelSerializer):
         }
         if path_params_serializable:
             result['pathParams'] = path_params_serializable
-        return result
+
+        localized = localize_value(result)
+        if isinstance(localized, dict):
+            localized["deployLocale"] = get_deploy_locale()
+            localized["deployDirection"] = get_deploy_direction()
+        return localized
 
 
 class ThemeSerializer(serializers.ModelSerializer):
@@ -212,6 +218,9 @@ class ThemeSerializer(serializers.ModelSerializer):
             })
         return result
 
+    def to_representation(self, instance):
+        return localize_value(super().to_representation(instance))
+
 
 class WidgetStyleSerializer(serializers.ModelSerializer):
     preview_url = serializers.SerializerMethodField()
@@ -249,6 +258,9 @@ class WidgetStyleSerializer(serializers.ModelSerializer):
         if obj.preview_image and obj.preview_image.file:
             return self._file_to_url(obj.preview_image.file)
         return None
+
+    def to_representation(self, instance):
+        return localize_value(super().to_representation(instance))
 
 
 class WidgetTypeSerializer(serializers.ModelSerializer):
@@ -308,6 +320,9 @@ class WidgetTypeSerializer(serializers.ModelSerializer):
             return WidgetStyleSerializer(styles, many=True, context=self.context).data
         return get_style_presets(obj.name)
 
+    def to_representation(self, instance):
+        return localize_value(super().to_representation(instance))
+
 
 class WidgetSerializer(serializers.ModelSerializer):
     """
@@ -319,3 +334,6 @@ class WidgetSerializer(serializers.ModelSerializer):
         model = Widget
         fields = ['id', 'page','widget_config', 'widget_type', 'widget_type_name', 'index', 
                 'is_active', 'components_config', 'extra_request_params']
+
+    def to_representation(self, instance):
+        return localize_value(super().to_representation(instance))

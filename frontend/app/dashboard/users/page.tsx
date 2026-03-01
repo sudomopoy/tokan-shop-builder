@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { storeUserApi, storeApi } from "@/lib/api";
 import type { StoreUser, AdminPermissions, PlanInfo } from "@/lib/api/storeUserApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const LEVEL_LABELS: Record<number, string> = {
   0: "مشتری",
@@ -117,7 +118,7 @@ export default function UsersPage() {
   };
 
   const handleRemoveAdmin = async (u: StoreUser) => {
-    if (!confirm("آیا از حذف این کاربر از ادمینی مطمئن هستید؟")) return;
+    if (!confirm(tFrontendAuto("fe.6c8890330167"))) return;
     setActionLoading(u.id);
     try {
       await storeUserApi.removeAdmin(u.id);
@@ -142,7 +143,7 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">مدیریت کاربران</h1>
+      <h1 className="text-3xl font-bold">{tFrontendAuto("fe.23f39ce809d8")}</h1>
 
       {planInfo && planInfo.max_admins > 0 && (
         <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
@@ -216,9 +217,9 @@ export default function UsersPage() {
                       </td>
                       <td className="px-6 py-4 text-sm">
                         {user.is_blocked ? (
-                          <span className="text-red-600">مسدود</span>
+                          <span className="text-red-600">{tFrontendAuto("fe.ed83479b2f32")}</span>
                         ) : (
-                          <span className="text-green-600">فعال</span>
+                          <span className="text-green-600">{tFrontendAuto("fe.e3d927082524")}</span>
                         )}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">
@@ -337,7 +338,7 @@ export default function UsersPage() {
                     onChange={(e) => togglePerm("media_delete", e.target.checked)}
                     className="h-4 w-4 rounded"
                   />
-                  <span className="text-sm">امکان حذف فایل</span>
+                  <span className="text-sm">{tFrontendAuto("fe.ee8619fdc78d")}</span>
                 </label>
               </div>
             </div>

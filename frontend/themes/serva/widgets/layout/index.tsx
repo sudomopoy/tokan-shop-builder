@@ -4,6 +4,7 @@ import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import type { WidgetConfig } from "@/themes/types";
 import ServaHeader from "./header";
 import ServaFooter from "./footer";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ServaLayoutProps = PropsWithChildren<{
   config?: WidgetConfig;
@@ -42,7 +43,7 @@ export default function ServaLayout({ children, config }: ServaLayoutProps) {
         type="button"
         id="backToTop"
         className={backToTopClass}
-        aria-label="بازگشت به بالا"
+        aria-label={tFrontendAuto("fe.43ecde95c6cc")}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         <span className="text-base font-black">↑</span>

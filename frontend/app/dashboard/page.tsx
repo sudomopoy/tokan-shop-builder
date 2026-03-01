@@ -6,6 +6,7 @@ import { Package, Users, BookOpen, Images, DollarSign, ShoppingCart, TrendingUp 
 import { productApi, storeUserApi, articleApi, sliderApi, orderApi } from "@/lib/api";
 import Link from "next/link";
 import { DashboardNotificationsSection } from "@/components/dashboard/DashboardNotificationsSection";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const SetupTasksSection = dynamic(
   () => import("@/components/dashboard/SetupTasksSection").then((m) => m.default),
@@ -140,7 +141,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">داشبورد</h1>
+      <h1 className="text-3xl font-bold">{tFrontendAuto("fe.b309fd74c951")}</h1>
 
       <SetupTasksSection />
 
@@ -152,7 +153,7 @@ export default function DashboardPage() {
         <>
           {financeCards.length > 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-gray-700 mb-3">آمار فروش و درآمد</h2>
+              <h2 className="text-lg font-semibold text-gray-700 mb-3">{tFrontendAuto("fe.2c997e2a56d8")}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {financeCards.map((card) => (
                   <Link
@@ -180,7 +181,7 @@ export default function DashboardPage() {
             </div>
           )}
           <div>
-            <h2 className="text-lg font-semibold text-gray-700 mb-3">محتوای فروشگاه</h2>
+            <h2 className="text-lg font-semibold text-gray-700 mb-3">{tFrontendAuto("fe.d7b6ad083b51")}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {statCards.map((card) => (
                 <Link

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Plus, Pencil, Trash2, X } from "lucide-react";
 import { tagApi } from "@/lib/api";
 import type { Tag } from "@/lib/api/tagApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function ProductTagsPage() {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -77,7 +78,7 @@ export default function ProductTagsPage() {
   };
 
   const handleDelete = async (tag: Tag) => {
-    if (!confirm(`آیا از حذف تگ «${tag.name}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.c0ffb6635ed9", { p1: tag.name }))) return;
     try {
       await tagApi.delete(tag.id);
       setTags((prev) => prev.filter((t) => t.id !== tag.id));
@@ -98,7 +99,7 @@ export default function ProductTagsPage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت به محصولات
           </Link>
-          <h1 className="text-3xl font-bold">تگ‌های محصولات</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.0f33881951ea")}</h1>
         </div>
         <button onClick={openCreate} className="btn-primary inline-flex items-center gap-2">
           <Plus className="h-5 w-5" />
@@ -144,14 +145,14 @@ export default function ProductTagsPage() {
                           <button
                             onClick={() => openEdit(tag)}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="ویرایش"
+                            title={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <Pencil className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(tag)}
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -184,13 +185,13 @@ export default function ProductTagsPage() {
                 <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">نام تگ</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.a43e6bc0774a")}</label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm({ name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="مثال: تخفیف ویژه"
+                  placeholder={tFrontendAuto("fe.a78d3a95c2b9")}
                   required
                 />
               </div>

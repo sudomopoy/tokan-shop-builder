@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export type SearchableSelectOption = {
   value: string;
@@ -27,7 +28,7 @@ export default function SearchableSelect({
   options,
   value,
   onChange,
-  placeholder = "انتخاب کنید...",
+  placeholder = {tFrontendAuto("fe.102da55e19a2")},
   disabled = false,
   searchPlaceholder = "جستجو...",
   className = "",
@@ -113,7 +114,7 @@ export default function SearchableSelect({
               className="max-h-64 overflow-y-auto py-1"
             >
               {filtered.length === 0 ? (
-                <p className="px-4 py-3 text-sm text-gray-500">موردی یافت نشد</p>
+                <p className="px-4 py-3 text-sm text-gray-500">{tFrontendAuto("fe.8cee2709e588")}</p>
               ) : (
                 <>
                   {filtered.map((opt) => (

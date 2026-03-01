@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import * as api from "@/lib/api";
 import type { ThemeCatalog } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function normalizeMobile(value: string): string {
   const digits = value.replace(/\D/g, "");
@@ -204,11 +205,11 @@ function SetupPageContent() {
 
         <div className="flex items-center gap-3 mb-8">
           <div className="h-12 w-12 rounded-2xl btn-grad flex items-center justify-center">
-            <Image src="/logo.jpg" alt="توکان" width={32} height={32} className="rounded-lg" />
+            <Image src="/logo.jpg" alt={tLandingAuto("ld.989871906ce6")} width={32} height={32} className="rounded-lg" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-slate-900">راه‌اندازی فروشگاه</h1>
-            <p className="text-slate-600 text-sm">مراحل را طی کنید تا فروشگاهتان آماده شود</p>
+            <h1 className="text-2xl font-black text-slate-900">{tLandingAuto("ld.991cebd4036a")}</h1>
+            <p className="text-slate-600 text-sm">{tLandingAuto("ld.de016f802cab")}</p>
           </div>
         </div>
 
@@ -236,7 +237,7 @@ function SetupPageContent() {
           <div className="glass rounded-3xl p-6 md:p-8 border border-slate-200">
             {otpStep === "mobile" ? (
               <form onSubmit={handleRequestOTP}>
-                <label className="block text-sm font-medium text-slate-700 mb-2">شماره موبایل</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.584cd947eae4")}</label>
                 <input
                   type="tel"
                   value={mobile}
@@ -256,7 +257,7 @@ function SetupPageContent() {
               </form>
             ) : (
               <form onSubmit={handleVerifyOTP}>
-                <label className="block text-sm font-medium text-slate-700 mb-2">کد تایید (۵ رقم)</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.c96c39703bba")}</label>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -289,21 +290,21 @@ function SetupPageContent() {
 
         {step === 1 && (
           <div className="glass rounded-3xl p-6 md:p-8 border border-slate-200">
-            <h2 className="text-lg font-bold text-slate-900 mb-4">اطلاعات فروشگاه</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{tLandingAuto("ld.d17cbbf65084")}</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">نام فروشگاه *</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.a01c868d5672")}</label>
                 <input
                   type="text"
                   value={storeTitle}
                   onChange={(e) => setStoreTitle(e.target.value)}
-                  placeholder="مثلاً فروشگاه من"
+                  placeholder={tLandingAuto("ld.7fb7f6a417ef")}
                   required
                   className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">آدرس موقت فروشگاه (برای پیش نمایش سایت) *</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.1f8273d56b74")}</label>
                 <input
                   type="text"
                   value={storeName}
@@ -318,30 +319,30 @@ function SetupPageContent() {
                   </p>
                 )}
                 {storeNameStatus === "ok" && (
-                  <p className="text-emerald-600 text-sm mt-2 flex items-center gap-2">✓ آدرس قابل استفاده است</p>
+                  <p className="text-emerald-600 text-sm mt-2 flex items-center gap-2">{tLandingAuto("ld.d3fe4e578ef6")}</p>
                 )}
                 {storeNameStatus === "fail" && storeName && (
-                  <p className="text-red-600 text-sm mt-2">آدرس قابل استفاده نیست یا قبلاً ثبت شده</p>
+                  <p className="text-red-600 text-sm mt-2">{tLandingAuto("ld.537285dd636c")}</p>
                 )}
                 <div className="mt-4 p-4 rounded-xl bg-slate-50/80 border border-slate-200">
-                  <p className="text-xs font-medium text-slate-500 mb-1">آدرس موقت فروشگاه</p>
+                  <p className="text-xs font-medium text-slate-500 mb-1">{tLandingAuto("ld.b99b04a45d63")}</p>
                   <p className="text-base font-mono font-bold text-slate-800 break-all">
                     {cleanStoreName ? (
                       <span>{cleanStoreName}.tokan.app</span>
                     ) : (
-                      <span className="text-slate-400">آدرس را وارد کنید</span>
+                      <span className="text-slate-400">{tLandingAuto("ld.073b8cc0d5b2")}</span>
                     )}
                   </p>
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">نوع فروشگاه</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.2b93d74458a4")}</label>
                 <select
                   value={storeCategory}
                   onChange={(e) => setStoreCategory(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none"
                 >
-                  <option value="">انتخاب کنید</option>
+                  <option value="">{tLandingAuto("ld.c682022d6ac6")}</option>
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>{c.title}</option>
                   ))}
@@ -360,24 +361,24 @@ function SetupPageContent() {
 
         {step === 2 && (
           <div className="glass rounded-3xl p-6 md:p-8 border border-slate-200">
-            <h2 className="text-lg font-bold text-slate-900 mb-4">شعار و توضیحات (اختیاری)</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{tLandingAuto("ld.475d0b03d6db")}</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">شعار فروشگاه</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.0ff103c10f5f")}</label>
                 <input
                   type="text"
                   value={slogan}
                   onChange={(e) => setSlogan(e.target.value)}
-                  placeholder="مثلاً بهترین کیفیت"
+                  placeholder={tLandingAuto("ld.4edfab294089")}
                   className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">توضیحات</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{tLandingAuto("ld.3599a9b4c677")}</label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="درباره فروشگاه بنویسید..."
+                  placeholder={tLandingAuto("ld.816224c194a3")}
                   rows={3}
                   className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none resize-none"
                 />
@@ -404,8 +405,8 @@ function SetupPageContent() {
                 <FontAwesomeIcon icon={faPalette} className="h-5 w-5 text-brand-600" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">ظاهر و تم فروشگاه</h2>
-                <p className="text-sm text-slate-500">تم مورد نظر خود را انتخاب کنید (فقط تم‌های رایگان)</p>
+                <h2 className="text-lg font-bold text-slate-900">{tLandingAuto("ld.46e355a2ea63")}</h2>
+                <p className="text-sm text-slate-500">{tLandingAuto("ld.88e200db6300")}</p>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
@@ -467,7 +468,7 @@ function SetupPageContent() {
                             isActive ? "bg-brand-100 text-brand-700 cursor-default" : "btn-grad text-white hover:opacity-90"
                           }`}
                         >
-                          {isActive ? <><FontAwesomeIcon icon={faCheck} className="h-4 w-4" /> انتخاب شده</> : "انتخاب"}
+                          {isActive ? <><FontAwesomeIcon icon={faCheck} className="h-4 w-4" />{tLandingAuto("ld.8a6c594d95c6")}</> : "انتخاب"}
                         </button>
                       </div>
                     </div>
@@ -476,7 +477,7 @@ function SetupPageContent() {
               })}
             </div>
             {themes.length === 0 && (
-              <div className="py-8 text-center text-slate-500 text-sm">تمی یافت نشد (تم پیش‌فرض استفاده می‌شود)</div>
+              <div className="py-8 text-center text-slate-500 text-sm">{tLandingAuto("ld.f11234658209")}</div>
             )}
             <div className="flex gap-3">
               <button onClick={() => setStep(2)} className="flex-1 py-3 rounded-xl glass border border-slate-200 font-bold text-slate-700">
@@ -498,7 +499,7 @@ function SetupPageContent() {
             <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
               <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-slate-50 shrink-0">
                 <h3 className="text-lg font-bold text-slate-900">{themeDetail.name}</h3>
-                <button type="button" onClick={() => setThemeDetail(null)} className="p-2 rounded-lg hover:bg-slate-200" aria-label="بستن">
+                <button type="button" onClick={() => setThemeDetail(null)} className="p-2 rounded-lg hover:bg-slate-200" aria-label={tLandingAuto("ld.3af7576fd554")}>
                   <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
                 </button>
               </div>
@@ -521,7 +522,7 @@ function SetupPageContent() {
                     {themeDetail.gallery_expanded.map((item, i) => (
                       <div key={i} className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border-2 border-slate-200">
                         {item.url ? (
-                          <img src={item.url} alt="" className="w-full h-full object-cover" />
+                          <img src={item.url} alt={tLandingAuto("ld.acc4e3615818")}w-full h-full object-cover" />
                         ) : (
                           <div className="w-full h-full bg-slate-200 flex items-center justify-center">
                             <FontAwesomeIcon icon={faImages} className="h-5 w-5 text-slate-400" />
@@ -533,13 +534,13 @@ function SetupPageContent() {
                 )}
                 {themeDetail.description && (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-700 mb-2">توضیحات</h4>
+                    <h4 className="text-sm font-semibold text-slate-700 mb-2">{tLandingAuto("ld.3599a9b4c677")}</h4>
                     <p className="text-sm text-slate-600 leading-relaxed">{themeDetail.description}</p>
                   </div>
                 )}
                 {themeDetail.tags && themeDetail.tags.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-700 mb-2">ویژگی‌ها</h4>
+                    <h4 className="text-sm font-semibold text-slate-700 mb-2">{tLandingAuto("ld.321f3a487460")}</h4>
                     <div className="flex flex-wrap gap-1.5">
                       {themeDetail.tags.map((tag) => (
                         <span key={tag} className="px-2 py-1 rounded-md bg-slate-100 text-slate-700 text-xs">
@@ -577,16 +578,16 @@ function SetupPageContent() {
 
         {step === 4 && (
           <div className="glass rounded-3xl p-6 md:p-8 border border-slate-200">
-            <h2 className="text-lg font-bold text-slate-900 mb-4">ساخت فروشگاه</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{tLandingAuto("ld.59bfa1695af0")}</h2>
             <p className="text-slate-600 text-sm mb-4">
               فروشگاه شما با پلن رایگان یک ماهه ساخته می‌شود.
             </p>
             <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-brand-50 to-slate-50 border border-brand-200">
-              <p className="text-xs font-medium text-slate-500 mb-2">آدرس موقت فروشگاه</p>
+              <p className="text-xs font-medium text-slate-500 mb-2">{tLandingAuto("ld.b99b04a45d63")}</p>
               <p className="text-lg font-mono font-bold text-brand-700 break-all">
                 {cleanStoreName}.tokan.app
               </p>
-              <p className="text-xs text-slate-500 mt-2">این آدرس برای پیش‌نمایش سایت شما استفاده می‌شود</p>
+              <p className="text-xs text-slate-500 mt-2">{tLandingAuto("ld.a77bb516a61e")}</p>
             </div>
             <form onSubmit={handleCreateStore}>
               <button
@@ -594,7 +595,7 @@ function SetupPageContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl btn-grad font-extrabold text-white text-lg disabled:opacity-60 flex items-center justify-center gap-2"
               >
-                {loading ? <FontAwesomeIcon icon={faSpinner} spin /> : <><FontAwesomeIcon icon={faRocket} /> ساخت فروشگاه</>}
+                {loading ? <FontAwesomeIcon icon={faSpinner} spin /> : <><FontAwesomeIcon icon={faRocket} />{tLandingAuto("ld.59bfa1695af0")}</>}
               </button>
             </form>
             <button onClick={() => setStep(3)} className="mt-4 w-full py-2 text-slate-600 text-sm">
@@ -609,7 +610,7 @@ function SetupPageContent() {
 
 export default function SetupPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-slate-500">در حال بارگذاری...</div></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-slate-500">{tLandingAuto("ld.0ef7f18ca905")}</div></div>}>
       <SetupPageContent />
     </Suspense>
   );

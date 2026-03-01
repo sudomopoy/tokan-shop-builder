@@ -9,6 +9,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { orderApi } from "@/lib/api/orderApi";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type DownloadFile = { title: string; description?: string; download_url: string };
 type DownloadItem = {
@@ -49,8 +50,8 @@ export default function ProfileMyDownloads({ config }: { config?: WidgetConfig }
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
             <FontAwesomeIcon icon={faUser} className="text-2xl text-gray-400" />
           </div>
-          <h2 className="text-xl font-bold text-dark mb-2">ورود به حساب کاربری</h2>
-          <p className="text-gray-600 text-sm mb-4">برای مشاهده دانلودهای خود وارد شوید.</p>
+          <h2 className="text-xl font-bold text-dark mb-2">{tFrontendAuto("fe.7927c7ed375b")}</h2>
+          <p className="text-gray-600 text-sm mb-4">{tFrontendAuto("fe.eb43a5d13afe")}</p>
           <Link
             href={`/login?next=${encodeURIComponent(pathname || "/my-downloads")}`}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-bold"
@@ -66,14 +67,14 @@ export default function ProfileMyDownloads({ config }: { config?: WidgetConfig }
     <section className="container py-8 md:py-12">
       <div className="mb-6">
         <nav className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-          <Link href="/" className="hover:text-primary">خانه</Link>
+          <Link href="/" className="hover:text-primary">{tFrontendAuto("fe.0efc869315f1")}</Link>
           <span>‹</span>
-          <Link href="/profile" className="hover:text-primary">پروفایل</Link>
+          <Link href="/profile" className="hover:text-primary">{tFrontendAuto("fe.e68a4edf84ec")}</Link>
           <span>‹</span>
-          <span className="text-dark font-medium">دانلودهای من</span>
+          <span className="text-dark font-medium">{tFrontendAuto("fe.9fa10e1b5995")}</span>
         </nav>
-        <h1 className="text-2xl md:text-3xl font-black text-dark">دانلودهای من</h1>
-        <p className="text-gray-600 text-sm mt-1">فایل‌های خریداری‌شده خود را دانلود کنید</p>
+        <h1 className="text-2xl md:text-3xl font-black text-dark">{tFrontendAuto("fe.9fa10e1b5995")}</h1>
+        <p className="text-gray-600 text-sm mt-1">{tFrontendAuto("fe.728a80856d0c")}</p>
       </div>
 
       {loading ? (
@@ -83,7 +84,7 @@ export default function ProfileMyDownloads({ config }: { config?: WidgetConfig }
       ) : items.length === 0 ? (
         <div className="bg-white rounded-xl p-12 text-center border border-gray-100">
           <FontAwesomeIcon icon={faDownload} className="text-4xl text-gray-300 mb-4" />
-          <p className="text-gray-600">هنوز فایل خریداری‌شده‌ای ندارید.</p>
+          <p className="text-gray-600">{tFrontendAuto("fe.e2db00cdfbbb")}</p>
           <Link href="/" className="inline-block mt-4 text-primary font-bold hover:underline">
             خرید محصول دانلودی
           </Link>

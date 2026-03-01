@@ -9,6 +9,7 @@ import type { Media } from "@/lib/api/productApi";
 import { ProductFormLayout } from "@/components/dashboard/ProductFormLayout";
 import type { FormVariant } from "@/components/dashboard/ProductVariantSection";
 import type { DownloadableFileEntry } from "@/components/dashboard/DownloadableFilesEditor";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -165,7 +166,7 @@ export default function NewProductPage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">افزودن محصول</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.e701fae26148")}</h1>
         </div>
         <div className="flex gap-3">
           <button

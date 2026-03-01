@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function StaticContact() {
   return (
@@ -14,13 +15,13 @@ export default function StaticContact() {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">تماس با ما</span>
+            <span className="text-dark">{tFrontendAuto("fe.960c719464fb")}</span>
           </nav>
         </div>
       </div>
 
       <section className="container py-12">
-        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-8 text-center">تماس با ما</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-8 text-center">{tFrontendAuto("fe.960c719464fb")}</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info */}
@@ -31,8 +32,8 @@ export default function StaticContact() {
                   📍
                 </div>
                 <div>
-                  <h3 className="font-bold text-dark">آدرس</h3>
-                  <p className="text-sm text-gray-600">تهران، خیابان ولیعصر، پلاک ۱۲۳۴</p>
+                  <h3 className="font-bold text-dark">{tFrontendAuto("fe.889f46873df4")}</h3>
+                  <p className="text-sm text-gray-600">{tFrontendAuto("fe.6fb1084ffe00")}</p>
                 </div>
               </div>
             </div>
@@ -43,7 +44,7 @@ export default function StaticContact() {
                   ☎
                 </div>
                 <div>
-                  <h3 className="font-bold text-dark">تلفن</h3>
+                  <h3 className="font-bold text-dark">{tFrontendAuto("fe.5e60ebaff02d")}</h3>
                   <p className="text-sm text-gray-600" dir="ltr">
                     021-1234-5678
                   </p>
@@ -60,7 +61,7 @@ export default function StaticContact() {
                   ✉
                 </div>
                 <div>
-                  <h3 className="font-bold text-dark">ایمیل</h3>
+                  <h3 className="font-bold text-dark">{tFrontendAuto("fe.48ebc456a416")}</h3>
                   <p className="text-sm text-gray-600" dir="ltr">
                     info@shop.com
                   </p>
@@ -72,24 +73,24 @@ export default function StaticContact() {
           {/* Form + Map */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-xl p-6">
-              <h2 className="text-xl font-bold text-dark mb-6">ارسال پیام</h2>
+              <h2 className="text-xl font-bold text-dark mb-6">{tFrontendAuto("fe.84476eec1743")}</h2>
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-dark mb-2">نام</label>
+                    <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.7df075e3256b")}</label>
                     <input className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-dark mb-2">ایمیل</label>
+                    <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.48ebc456a416")}</label>
                     <input className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark mb-2">موضوع</label>
+                  <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.8362c770000d")}</label>
                   <input className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark mb-2">پیام</label>
+                  <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.4e1f075dafb3")}</label>
                   <textarea rows={5} className="w-full px-4 py-3 border rounded-lg focus:border-primary focus:outline-none" />
                 </div>
                 <button type="button" className="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition font-bold">
@@ -99,7 +100,7 @@ export default function StaticContact() {
             </div>
 
             <div className="bg-white rounded-xl p-6">
-              <h2 className="text-xl font-bold text-dark mb-4">موقعیت روی نقشه</h2>
+              <h2 className="text-xl font-bold text-dark mb-4">{tFrontendAuto("fe.2d4ee9050e4d")}</h2>
               <div className="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
                 نقشه (placeholder)
               </div>

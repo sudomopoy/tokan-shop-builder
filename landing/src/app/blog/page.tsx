@@ -14,6 +14,7 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { getArticles, resolveArticleImageUrl, type Article } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function stripHtml(html: string, maxLen = 120): string {
   if (!html) return "";
@@ -107,7 +108,7 @@ export default function BlogPage() {
       })
       .catch(() => {
         if (isMounted) {
-          setError("خطا در بارگذاری مطالب. لطفاً دوباره تلاش کنید.");
+          setError(tLandingAuto("ld.41faead2eaa0"));
           setArticles([]);
         }
       })
@@ -177,7 +178,7 @@ export default function BlogPage() {
                     icon={faNewspaper}
                     className="text-5xl text-slate-400"
                   />
-                  <p className="mt-4 text-slate-600">هنوز مطلبی منتشر نشده است.</p>
+                  <p className="mt-4 text-slate-600">{tLandingAuto("ld.4cd64b7b4f67")}</p>
                   <p className="mt-2 text-sm text-slate-500">
                     به زودی مطالب آموزشی و خبری در اینجا قرار می‌گیرد.
                   </p>

@@ -1,3 +1,5 @@
+import { DEPLOY_LOCALE } from "@/lib/i18n";
+
 const API_BASE = (process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080").replace(/\/$/, "");
 
 function getAuthHeader(): string | null {
@@ -19,6 +21,7 @@ export async function api<T>(
   const { json, ...init } = options;
   const headers: Record<string, string> = {
     Accept: "application/json",
+    "Accept-Language": DEPLOY_LOCALE,
     ...(init.headers as Record<string, string>),
   };
   if (json) {

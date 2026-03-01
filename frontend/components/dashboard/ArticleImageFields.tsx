@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, FolderOpen } from "lucide-react";
 import type { Media } from "@/lib/api/productApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
@@ -42,7 +43,7 @@ export function ArticleImageFields({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">تصویر اصلی</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">{tFrontendAuto("fe.0ea012425367")}</label>
         {mainImage ? (
           <div className="relative group">
             <img
@@ -72,7 +73,7 @@ export function ArticleImageFields({
             className="w-full aspect-video flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
           >
             <FolderOpen className="h-10 w-10 text-gray-400" />
-            <span className="text-sm text-gray-500">انتخاب تصویر</span>
+            <span className="text-sm text-gray-500">{tFrontendAuto("fe.facfb3d039a7")}</span>
           </button>
         )}
       </div>
@@ -109,7 +110,7 @@ export function ArticleImageFields({
             className="w-full aspect-video flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
           >
             <FolderOpen className="h-10 w-10 text-gray-400" />
-            <span className="text-sm text-gray-500">انتخاب تصویر</span>
+            <span className="text-sm text-gray-500">{tFrontendAuto("fe.facfb3d039a7")}</span>
           </button>
         )}
       </div>

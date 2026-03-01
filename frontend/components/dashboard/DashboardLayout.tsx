@@ -44,6 +44,7 @@ import AdminToolbar from "./AdminToolbar";
 import { accountApi, storeApi, announcementApi } from "@/lib/api";
 import type { User } from "@/lib/api/accountApi";
 import type { StoreListItem } from "@/lib/api/storeApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const SETTINGS_TABS_BASE = [
   { id: "general", name: "اطلاعات کلی", href: "/dashboard/settings?tab=general", icon: Store },
@@ -691,7 +692,7 @@ export default function DashboardLayout({
                           <Banknote className="h-4 w-4 text-blue-600" />
                         </div>
                         <div className="text-right">
-                          <p className="font-medium">کیف پول</p>
+                          <p className="font-medium">{tFrontendAuto("fe.7763144e9064")}</p>
                           <p className="text-xs text-gray-500 tabular-nums">
                             {user.wallet
                               ? `${formatPersianNumber(
@@ -710,7 +711,7 @@ export default function DashboardLayout({
                       className="flex items-center gap-3 w-full px-4 py-3 hover:bg-red-50 text-red-600 transition text-left"
                     >
                       <LogOut className="h-5 w-5" />
-                      <span className="font-medium">خروج</span>
+                      <span className="font-medium">{tFrontendAuto("fe.f04c5878defe")}</span>
                     </button>
                   </div>
                 )}
@@ -745,7 +746,7 @@ export default function DashboardLayout({
                       <CalendarCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
                     </div>
                     <div className="text-left min-w-0 hidden sm:block">
-                      <p className="text-[10px] font-medium tracking-wide opacity-90">اشتراک فروشگاه</p>
+                      <p className="text-[10px] font-medium tracking-wide opacity-90">{tFrontendAuto("fe.f9a76e7edd50")}</p>
                       <p className="text-sm font-bold tabular-nums truncate">{labelText}</p>
                     </div>
                     <div className="sm:hidden text-xs font-bold tabular-nums truncate max-w-[55px] xsm:max-w-[70px]">
@@ -759,13 +760,13 @@ export default function DashboardLayout({
               <Link
                 href="/dashboard/wallet"
                 className="flex items-center gap-2 sm:gap-2.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-all cursor-pointer min-w-0 text-blue-800"
-                title="کیف پول توکان (سراسری)"
+                title={tFrontendAuto("fe.f028e62128b6")}
               >
                 <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-blue-200/60 flex items-center justify-center">
                   <Banknote className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-blue-700" />
                 </div>
                 <div className="text-left min-w-0 hidden sm:block">
-                  <p className="text-[10px] font-medium tracking-wide opacity-90">کیف پول توکان</p>
+                  <p className="text-[10px] font-medium tracking-wide opacity-90">{tFrontendAuto("fe.97a9decd6f19")}</p>
                   <p className="text-sm font-bold tabular-nums truncate">
                     {user.wallet
                       ? formatPersianNumber(
@@ -805,7 +806,7 @@ export default function DashboardLayout({
             ? "bg-violet-600 text-white"
             : "bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-500 hover:to-indigo-500"
         }`}
-        title="راهنمای این صفحه"
+        title={tFrontendAuto("fe.ace3b3600777")}
       >
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20">
           <Sparkles className="h-5 w-5" />

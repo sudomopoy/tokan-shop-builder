@@ -6,6 +6,7 @@ import { reviewApi, productApi, type ProductReview, type Product } from "@/lib/a
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { Star } from "lucide-react";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ProductReviewsProps = {
   productId: string;
@@ -63,7 +64,7 @@ export function ProductReviews({
       return;
     }
     if (formRating < 1 || formRating > 5) {
-      setError("لطفاً امتیاز (۱ تا ۵ ستاره) انتخاب کنید.");
+      setError(tFrontendAuto("fe.da45956880e0"));
       return;
     }
     setSubmitting(true);
@@ -118,7 +119,7 @@ export function ProductReviews({
 
         {/* Review form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <h4 className="font-bold text-dark">ثبت نظر</h4>
+          <h4 className="font-bold text-dark">{tFrontendAuto("fe.c4dc3bb38d81")}</h4>
           {!isAuthenticated ? (
             <p className="text-sm text-gray-500">
               برای ثبت نظر باید در سایت ثبت‌نام کنید.
@@ -150,7 +151,7 @@ export function ProductReviews({
           <textarea
             value={formBody}
             onChange={(e) => setFormBody(e.target.value)}
-            placeholder="متن نظر (اختیاری)"
+            placeholder={tFrontendAuto("fe.b180f309d9ff")}
             rows={4}
             disabled={!isAuthenticated || submitting}
             className="w-full border border-gray-200 rounded-xl p-4 text-sm focus:ring-2 focus:ring-primary focus:border-primary resize-none disabled:opacity-60"
@@ -168,9 +169,9 @@ export function ProductReviews({
         {/* Reviews list */}
         <div className="space-y-4">
           {loading ? (
-            <p className="text-gray-500 text-sm">در حال بارگذاری...</p>
+            <p className="text-gray-500 text-sm">{tFrontendAuto("fe.3e07344c65a3")}</p>
           ) : reviews.length === 0 ? (
-            <p className="text-gray-500 text-sm">هنوز نظری ثبت نشده است.</p>
+            <p className="text-gray-500 text-sm">{tFrontendAuto("fe.344c9479b32d")}</p>
           ) : (
             reviews.map((r) => (
               <div
@@ -234,7 +235,7 @@ export function ProductReviews({
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-        <h4 className="font-semibold">ثبت نظر</h4>
+        <h4 className="font-semibold">{tFrontendAuto("fe.c4dc3bb38d81")}</h4>
         {!isAuthenticated ? (
           <p className="text-sm text-gray-500">
             برای ثبت نظر باید در سایت ثبت‌نام کنید.
@@ -266,7 +267,7 @@ export function ProductReviews({
         <textarea
           value={formBody}
           onChange={(e) => setFormBody(e.target.value)}
-          placeholder="متن نظر (اختیاری)"
+          placeholder={tFrontendAuto("fe.b180f309d9ff")}
           rows={4}
           disabled={!isAuthenticated || submitting}
           className="w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary resize-none disabled:opacity-60"
@@ -283,9 +284,9 @@ export function ProductReviews({
 
       <div className="space-y-4">
         {loading ? (
-          <p className="text-gray-500 text-sm">در حال بارگذاری...</p>
+          <p className="text-gray-500 text-sm">{tFrontendAuto("fe.3e07344c65a3")}</p>
         ) : reviews.length === 0 ? (
-          <p className="text-gray-500 text-sm">هنوز نظری ثبت نشده است.</p>
+          <p className="text-gray-500 text-sm">{tFrontendAuto("fe.344c9479b32d")}</p>
         ) : (
           reviews.map((r) => (
             <div key={r.id} className="border-b border-gray-200 pb-4">

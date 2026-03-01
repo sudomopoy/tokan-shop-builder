@@ -9,6 +9,7 @@ import type { Slider, Slide } from "@/lib/api/sliderApi";
 import type { Media } from "@/lib/api/productApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import { FolderOpen } from "lucide-react";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
@@ -57,7 +58,7 @@ export default function SliderSlidesPage() {
       console.error(err);
       setSlider(null);
       setSlides([]);
-      setError("خطا در دریافت اسلایدر");
+      setError(tFrontendAuto("fe.0c419c78a978"));
     } finally {
       setLoading(false);
     }
@@ -113,7 +114,7 @@ export default function SliderSlidesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id || !form.desktop_image) {
-      setError("تصویر دسکتاپ الزامی است.");
+      setError(tFrontendAuto("fe.e71c7e4afc3e"));
       return;
     }
     setError(null);
@@ -153,7 +154,7 @@ export default function SliderSlidesPage() {
   };
 
   const handleDelete = async (slide: Slide) => {
-    if (!confirm(`آیا از حذف این اسلاید اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.7719f39adabf"))) return;
     try {
       await sliderApi.deleteSlide(slide.id);
       await fetchSlider();
@@ -274,14 +275,14 @@ export default function SliderSlidesPage() {
                           <button
                             onClick={() => openEdit(slide)}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="ویرایش"
+                            title={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <Pencil className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(slide)}
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -344,7 +345,7 @@ export default function SliderSlidesPage() {
                         className="w-full aspect-video flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50"
                       >
                         <FolderOpen className="h-10 w-10 text-gray-400" />
-                        <span className="text-sm text-gray-500">انتخاب تصویر دسکتاپ</span>
+                        <span className="text-sm text-gray-500">{tFrontendAuto("fe.f19053e01fdf")}</span>
                       </button>
                     )}
                   </div>
@@ -381,47 +382,47 @@ export default function SliderSlidesPage() {
                         className="w-full aspect-video flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50"
                       >
                         <FolderOpen className="h-10 w-10 text-gray-400" />
-                        <span className="text-sm text-gray-500">انتخاب تصویر موبایل</span>
+                        <span className="text-sm text-gray-500">{tFrontendAuto("fe.4c5ed599312a")}</span>
                       </button>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">عنوان</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.1b32651b420d")}</label>
                   <input
                     value={form.title}
                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    placeholder="عنوان اسلاید"
+                    placeholder={tFrontendAuto("fe.f2c214005f9f")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">توضیح</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.62da13f5cdc8")}</label>
                   <input
                     value={form.description}
                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    placeholder="متن توضیحی اسلاید"
+                    placeholder={tFrontendAuto("fe.228d7a207dde")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Alt (متن جایگزین تصویر)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.eda0b1e7ea20")}</label>
                   <input
                     value={form.alt}
                     onChange={(e) => setForm((f) => ({ ...f, alt: e.target.value }))}
                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    placeholder="متن جایگزین برای سئو"
+                    placeholder={tFrontendAuto("fe.ab2ddbaabdfa")}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">لینک</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.0093767757d9")}</label>
                   <input
                     value={form.url}
                     onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
                     dir="ltr"
                     className="w-full ltr text-left px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono"
-                    placeholder="/products یا https://..."
+                    placeholder={tFrontendAuto("fe.1ab3df2bf732")}
                   />
                 </div>
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -431,7 +432,7 @@ export default function SliderSlidesPage() {
                     onChange={(e) => setForm((f) => ({ ...f, show_button: e.target.checked }))}
                     className="rounded border-gray-300"
                   />
-                  <span className="text-sm">نمایش دکمه فراخوان</span>
+                  <span className="text-sm">{tFrontendAuto("fe.824bd621ff22")}</span>
                 </label>
                 {form.show_button && (
                   <div>
@@ -442,7 +443,7 @@ export default function SliderSlidesPage() {
                       value={form.button_text}
                       onChange={(e) => setForm((f) => ({ ...f, button_text: e.target.value }))}
                       className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="مثال: مشاهده محصولات، خرید کنید"
+                      placeholder={tFrontendAuto("fe.9b0a440fdfeb")}
                     />
                   </div>
                 )}
@@ -453,7 +454,7 @@ export default function SliderSlidesPage() {
                     onChange={(e) => setForm((f) => ({ ...f, is_active: e.target.checked }))}
                     className="rounded border-gray-300"
                   />
-                  <span className="text-sm">فعال</span>
+                  <span className="text-sm">{tFrontendAuto("fe.e3d927082524")}</span>
                 </label>
 
                 <div className="flex gap-3 pt-4">

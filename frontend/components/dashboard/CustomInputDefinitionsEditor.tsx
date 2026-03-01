@@ -2,6 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 import type { CustomInputDefinition } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const inputClass =
   "w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm";
@@ -61,7 +62,7 @@ export function CustomInputDefinitionsEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <label className={labelClass}>ورودی‌های سفارشی</label>
+        <label className={labelClass}>{tFrontendAuto("fe.2ed90e2a04cf")}</label>
         <button
           type="button"
           onClick={addItem}
@@ -101,37 +102,37 @@ export function CustomInputDefinitionsEditor({
                   type="button"
                   onClick={() => removeItem(index)}
                   className="p-1.5 text-red-500 hover:bg-red-50 rounded transition-colors"
-                  title="حذف"
+                  title={tFrontendAuto("fe.fc1d9d323674")}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className={labelClass}>کلید (فنی)</label>
+                  <label className={labelClass}>{tFrontendAuto("fe.ee50896917aa")}</label>
                   <input
                     type="text"
                     value={item.key}
                     onChange={(e) => updateItem(index, "key", e.target.value)}
-                    placeholder="مثلاً: email"
+                    placeholder={tFrontendAuto("fe.5449bfd2646e")}
                     className={inputClass}
                     dir="ltr"
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>برچسب (نمایشی)</label>
+                  <label className={labelClass}>{tFrontendAuto("fe.bd88e6303ea6")}</label>
                   <input
                     type="text"
                     value={item.label}
                     onChange={(e) => updateItem(index, "label", e.target.value)}
-                    placeholder="مثلاً: ایمیل"
+                    placeholder={tFrontendAuto("fe.2e8cb987003a")}
                     className={inputClass}
                   />
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-4">
                 <div className="min-w-[140px]">
-                  <label className={labelClass}>نوع فیلد</label>
+                  <label className={labelClass}>{tFrontendAuto("fe.13f576e67a03")}</label>
                   <select
                     value={item.type}
                     onChange={(e) => updateItem(index, "type", e.target.value)}
@@ -151,7 +152,7 @@ export function CustomInputDefinitionsEditor({
                     onChange={(e) => updateItem(index, "required", e.target.checked)}
                     className="w-4 h-4 rounded border-gray-300 text-blue-600"
                   />
-                  <span className="text-sm text-gray-700">اجباری</span>
+                  <span className="text-sm text-gray-700">{tFrontendAuto("fe.15856230f031")}</span>
                 </label>
               </div>
             </div>

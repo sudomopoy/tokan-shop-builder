@@ -7,6 +7,7 @@ import { categoryApi, type Category } from "@/lib/api/categoryApi";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolder } from "@fortawesome/free-solid-svg-icons";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function flattenCategoryTree(items: Category[]): Category[] {
   const out: Category[] = [];
@@ -95,7 +96,7 @@ export default function CategoryListView({ config }: { config?: WidgetConfig }) 
       .catch((e) => {
         console.error(e);
         if (!mounted) return;
-        setError("خطا در بارگذاری دسته‌بندی‌ها.");
+        setError(tFrontendAuto("fe.e3ebbbaa2d1b"));
       })
       .finally(() => mounted && setLoading(false));
     return () => {
@@ -112,11 +113,11 @@ export default function CategoryListView({ config }: { config?: WidgetConfig }) 
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       ) : error ? (
         <div className="bg-white rounded-2xl p-8 text-center text-red-600">{error}</div>
       ) : shown.length === 0 ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">دسته‌بندی‌ای یافت نشد.</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.f460f71ab096")}</div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {shown.map((cat) => (

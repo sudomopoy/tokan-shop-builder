@@ -9,6 +9,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { getPanelInfo, getAffiliateInvites, getAffiliateEarnings } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function formatPrice(v: string | number): string {
   const n = typeof v === "string" ? parseFloat(v) || 0 : v;
@@ -68,7 +69,7 @@ export default function PanelAffiliatePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <h1 className="text-2xl font-bold text-slate-900">دعوت و کسب درآمد</h1>
+      <h1 className="text-2xl font-bold text-slate-900">{tLandingAuto("ld.77e8ae85e214")}</h1>
 
       {/* لینک و کد دعوت */}
       <section className="glass rounded-2xl p-6 border border-slate-200">
@@ -78,7 +79,7 @@ export default function PanelAffiliatePage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">لینک دعوت</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.952f20eca6d5")}</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -96,7 +97,7 @@ export default function PanelAffiliatePage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-1">کد دعوت</label>
+            <label className="block text-sm font-medium text-slate-600 mb-1">{tLandingAuto("ld.daabf47534bb")}</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -120,11 +121,11 @@ export default function PanelAffiliatePage() {
       {earnings && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="glass p-5 rounded-2xl border border-emerald-100 bg-emerald-50/50">
-            <p className="text-sm text-slate-600">واریز شده</p>
+            <p className="text-sm text-slate-600">{tLandingAuto("ld.6b6bd849eb8a")}</p>
             <p className="text-2xl font-bold text-emerald-700">{formatPrice(earnings.total_completed)} تومان</p>
           </div>
           <div className="glass p-5 rounded-2xl border border-amber-100 bg-amber-50/50">
-            <p className="text-sm text-slate-600">در انتظار واریز</p>
+            <p className="text-sm text-slate-600">{tLandingAuto("ld.7ebe6037b53b")}</p>
             <p className="text-2xl font-bold text-amber-700">{formatPrice(earnings.total_pending)} تومان</p>
           </div>
         </div>
@@ -134,21 +135,21 @@ export default function PanelAffiliatePage() {
       <section className="glass rounded-2xl overflow-hidden border border-slate-200">
         <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
           <FontAwesomeIcon icon={faUsers} className="text-slate-500" />
-          <h2 className="font-bold text-slate-900">دعوت‌شده‌ها</h2>
+          <h2 className="font-bold text-slate-900">{tLandingAuto("ld.19fe1e3869fe")}</h2>
         </div>
         <div className="overflow-x-auto">
           {invites.length === 0 ? (
-            <div className="px-4 py-10 text-center text-slate-500 text-sm">هنوز کسی را دعوت نکرده‌اید.</div>
+            <div className="px-4 py-10 text-center text-slate-500 text-sm">{tLandingAuto("ld.48d07d34a8c4")}</div>
           ) : (
             <table className="min-w-full divide-y divide-slate-100 text-sm">
               <thead>
                 <tr>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">کاربر</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">تاریخ</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">کمیسیون</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">کل خرید</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">درآمد</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">وضعیت</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.bae2448cc2df")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.18ec78dc6258")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.7c12525e98e8")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.09a9b6bdec33")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.1fea1cfd1dcd")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-slate-500">{tLandingAuto("ld.8cd9ad8fbfb2")}</th>
                 </tr>
               </thead>
               <tbody>

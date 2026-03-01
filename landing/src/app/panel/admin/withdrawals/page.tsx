@@ -13,6 +13,7 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import {
+import { tLandingAuto } from "@/lib/autoMessages";
   getPanelInfo,
   getWithdrawRequests,
   getWithdrawRequestDetail,
@@ -97,7 +98,7 @@ function WithdrawDetailView({
 
   const handleReject = async () => {
     if (!id || !rejectReason.trim()) {
-      setError("دلیل رد را وارد کنید.");
+      setError(tLandingAuto("ld.02f8976a2677"));
       return;
     }
     setActionLoading("reject");
@@ -116,7 +117,7 @@ function WithdrawDetailView({
 
   const handleDeposited = async () => {
     if (!id || !depositRef.trim()) {
-      setError("شناسه واریز را وارد کنید.");
+      setError(tLandingAuto("ld.3f5adfa99833"));
       return;
     }
     setActionLoading("deposited");
@@ -145,7 +146,7 @@ function WithdrawDetailView({
   if (!detail) {
     return (
       <div className="max-w-xl mx-auto text-center py-12">
-        <p className="text-slate-600 mb-4">درخواست یافت نشد.</p>
+        <p className="text-slate-600 mb-4">{tLandingAuto("ld.ffb1dfa1f2cd")}</p>
         <button onClick={onBack} className="text-brand-600 hover:underline">
           بازگشت به لیست
         </button>
@@ -166,54 +167,54 @@ function WithdrawDetailView({
         بازگشت به لیست
       </button>
 
-      <h1 className="text-2xl font-bold text-slate-900 mb-6">جزئیات درخواست برداشت</h1>
+      <h1 className="text-2xl font-bold text-slate-900 mb-6">{tLandingAuto("ld.3904540af465")}</h1>
 
       <div className="glass rounded-2xl p-6 border border-slate-200 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-slate-500">کاربر</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.bae2448cc2df")}</p>
             <p className="font-medium">{detail.user_mobile || detail.user_username || "—"}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">مبلغ</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.37313fd7bc42")}</p>
             <p className="font-bold text-lg">{formatPrice(detail.amount)} تومان</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">شماره شبا/کارت</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.88fa68c71c4a")}</p>
             <p className="font-mono text-sm" dir="ltr">{detail.bank_sheba_or_card}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">نام بانک</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.294d0f7d2f23")}</p>
             <p className="font-medium">{detail.bank_name}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">صاحب حساب</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.88270442599b")}</p>
             <p className="font-medium">{detail.account_holder}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">وضعیت</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.8cd9ad8fbfb2")}</p>
             <p className="font-medium">{STATUS_LABELS[detail.status] || detail.status}</p>
           </div>
           <div>
-            <p className="text-xs text-slate-500">تاریخ ثبت</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.3a67a31c0da7")}</p>
             <p>{formatDate(detail.created_at)}</p>
           </div>
         </div>
         {detail.description && (
           <div>
-            <p className="text-xs text-slate-500">توضیحات درخواست</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.32a7c1ba16f6")}</p>
             <p className="text-sm">{detail.description}</p>
           </div>
         )}
         {detail.rejection_reason && (
           <div className="p-3 rounded-xl bg-red-50 border border-red-100">
-            <p className="text-xs text-red-600 font-medium">دلیل رد (نمایش به کاربر)</p>
+            <p className="text-xs text-red-600 font-medium">{tLandingAuto("ld.12ddfc5c54df")}</p>
             <p className="text-sm text-red-800">{detail.rejection_reason}</p>
           </div>
         )}
         {detail.deposit_reference_id && (
           <div>
-            <p className="text-xs text-slate-500">شناسه واریز</p>
+            <p className="text-xs text-slate-500">{tLandingAuto("ld.789b8e0f52ff")}</p>
             <p className="font-mono">{detail.deposit_reference_id}</p>
           </div>
         )}
@@ -243,7 +244,7 @@ function WithdrawDetailView({
                 type="text"
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
-                placeholder="دلیل رد (الزامی، به کاربر نمایش داده می‌شود)"
+                placeholder={tLandingAuto("ld.9f39d0a1d69a")}
                 className="px-3 py-2 rounded-xl border border-slate-200 min-w-[220px]"
               />
               <button
@@ -268,7 +269,7 @@ function WithdrawDetailView({
               type="text"
               value={depositRef}
               onChange={(e) => setDepositRef(e.target.value)}
-              placeholder="شناسه واریز"
+              placeholder={tLandingAuto("ld.789b8e0f52ff")}
               className="px-3 py-2 rounded-xl border border-slate-200 min-w-[180px]"
               dir="ltr"
             />
@@ -288,7 +289,7 @@ function WithdrawDetailView({
         )}
 
         {(detail.status === "rejected" || detail.status === "deposited") && (
-          <p className="text-slate-500 text-sm">این درخواست قبلاً پردازش شده است.</p>
+          <p className="text-slate-500 text-sm">{tLandingAuto("ld.dd0c4a652bea")}</p>
         )}
       </div>
     </div>
@@ -362,17 +363,17 @@ function AdminWithdrawalsContent() {
 
       <div className="mt-6 glass rounded-2xl overflow-hidden border border-slate-200">
         {requests.length === 0 ? (
-          <div className="px-4 py-12 text-center text-slate-500">هنوز درخواستی ثبت نشده است.</div>
+          <div className="px-4 py-12 text-center text-slate-500">{tLandingAuto("ld.d565c1605b8e")}</div>
         ) : (
           <table className="min-w-full divide-y divide-slate-100 text-sm">
             <thead>
               <tr>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">کاربر</th>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">مبلغ</th>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">بانک</th>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">تاریخ</th>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">وضعیت</th>
-                <th className="px-4 py-3 text-right font-medium text-slate-500">عملیات</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.bae2448cc2df")}</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.37313fd7bc42")}</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.9c9772dc607f")}</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.18ec78dc6258")}</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.8cd9ad8fbfb2")}</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-500">{tLandingAuto("ld.56e8e8e08db4")}</th>
               </tr>
             </thead>
             <tbody>

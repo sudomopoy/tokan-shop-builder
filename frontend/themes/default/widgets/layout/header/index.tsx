@@ -44,6 +44,7 @@ import {
   selectIsAuthenticated,
 } from "@/lib/store/authSlice";
 import { logout } from "@/lib/auth/authService";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type NavItem = {
   id: string | number;
@@ -303,7 +304,7 @@ export default function Header() {
             <IconButton
               color="inherit"
               edge="start"
-              aria-label="منو"
+              aria-label={tFrontendAuto("fe.2a29783c67ee")}
               onClick={handleDrawerToggle}
               sx={{ display: { xs: "block", md: "none" }, marginInlineStart: 1 }}
             >
@@ -376,7 +377,7 @@ export default function Header() {
                 name="q"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="جستجو محصولات..."
+                placeholder={tFrontendAuto("fe.b71e42b35f7e")}
                 className="flex-1 px-4 py-2"
                 sx={{
                   "& .MuiInputBase-input": {
@@ -529,16 +530,16 @@ export default function Header() {
                   >
                     <MenuItem onClick={handleUserMenuClose}>
                       <User size={18} />
-                      <Typography variant="body2">پروفایل من</Typography>
+                      <Typography variant="body2">{tFrontendAuto("fe.9ccec5d1dbd8")}</Typography>
                     </MenuItem>
                     <MenuItem onClick={handleUserMenuClose}>
                       <Settings size={18} />
-                      <Typography variant="body2">تنظیمات</Typography>
+                      <Typography variant="body2">{tFrontendAuto("fe.1cff677453b2")}</Typography>
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleLogout}>
                       <LogOut size={18} />
-                      <Typography variant="body2">خروج</Typography>
+                      <Typography variant="body2">{tFrontendAuto("fe.f04c5878defe")}</Typography>
                     </MenuItem>
                   </Menu>
                 </>
@@ -608,7 +609,7 @@ export default function Header() {
                   name="q"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="جستجو محصولات..."
+                  placeholder={tFrontendAuto("fe.b71e42b35f7e")}
                   className="flex-1 px-4 py-2"
                   autoFocus
                   sx={{

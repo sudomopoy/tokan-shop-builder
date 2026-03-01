@@ -7,6 +7,7 @@ import { ArrowRight, FolderOpen } from "lucide-react";
 import { apiClient } from "@/lib/api/apiClient";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import type { Media } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const inputClass = "w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500";
 const labelClass = "block text-sm font-medium text-gray-700 mb-1";
@@ -85,13 +86,13 @@ export default function EditProviderPage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">ویرایش ارائه‌دهنده</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.ab500af02d11")}</h1>
         </div>
         <div className="flex gap-3">
           <button type="submit" form="provider-form" disabled={saving || !form.title} className="btn-primary disabled:opacity-50">
             {saving ? "در حال ذخیره..." : "ذخیره"}
           </button>
-          <Link href="/dashboard/reservation/providers" className="btn-secondary">انصراف</Link>
+          <Link href="/dashboard/reservation/providers" className="btn-secondary">{tFrontendAuto("fe.9ea072503092")}</Link>
         </div>
       </div>
 
@@ -99,9 +100,9 @@ export default function EditProviderPage() {
         {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>}
 
         <div className="card p-6 space-y-4">
-          <h2 className="text-lg font-semibold">اطلاعات ارائه‌دهنده</h2>
+          <h2 className="text-lg font-semibold">{tFrontendAuto("fe.b7b49e4c2bc3")}</h2>
           <div>
-            <label className={labelClass}>عنوان *</label>
+            <label className={labelClass}>{tFrontendAuto("fe.a83c261c5577")}</label>
             <input
               type="text"
               value={form.title}
@@ -111,7 +112,7 @@ export default function EditProviderPage() {
             />
           </div>
           <div>
-            <label className={labelClass}>توضیحات</label>
+            <label className={labelClass}>{tFrontendAuto("fe.8593a9f18909")}</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
@@ -120,11 +121,11 @@ export default function EditProviderPage() {
             />
           </div>
           <div>
-            <label className={labelClass}>تصویر (آواتار)</label>
+            <label className={labelClass}>{tFrontendAuto("fe.f1031f8fd33b")}</label>
             {avatar ? (
               <div className="flex items-center gap-3">
-                <img src={getImageUrl(avatar)} alt="" className="w-16 h-16 rounded-full object-cover" />
-                <button type="button" onClick={() => setAvatar(null)} className="text-red-600 text-sm">حذف</button>
+                <img src={getImageUrl(avatar)} alt={tFrontendAuto("fe.868af833cab1")}w-16 h-16 rounded-full object-cover" />
+                <button type="button" onClick={() => setAvatar(null)} className="text-red-600 text-sm">{tFrontendAuto("fe.fc1d9d323674")}</button>
               </div>
             ) : (
               <button type="button" onClick={() => setFileManagerOpen(true)} className="flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-gray-600 hover:bg-gray-50">
@@ -134,7 +135,7 @@ export default function EditProviderPage() {
             )}
           </div>
           <div>
-            <label className={labelClass}>ترتیب نمایش</label>
+            <label className={labelClass}>{tFrontendAuto("fe.43b9d39131fa")}</label>
             <input
               type="number"
               value={form.sort_order}

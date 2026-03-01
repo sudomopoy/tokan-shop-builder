@@ -7,6 +7,7 @@ import { apiClient } from "@/lib/api/apiClient";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
 import { useRouter } from "next/navigation";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ServiceProvider = {
   id: string;
@@ -108,7 +109,7 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
       });
       router.push("/profile?tab=appointments");
     } catch {
-      setError("ثبت رزرو ناموفق بود.");
+      setError(tFrontendAuto("fe.6ba18313b2d4"));
     } finally {
       setSubmitting(false);
     }
@@ -118,7 +119,7 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
     return (
       <section className="container py-12">
         <div className="bg-white rounded-xl p-6 text-center">
-          <h2 className="text-xl font-bold text-dark mb-4">برای رزرو وارد شوید</h2>
+          <h2 className="text-xl font-bold text-dark mb-4">{tFrontendAuto("fe.29721133dacd")}</h2>
           <button
             onClick={() => router.push("/login?next=/reservation")}
             className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
@@ -133,7 +134,7 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
   if (loading && step === "providers") {
     return (
       <section className="container py-12">
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       </section>
     );
   }
@@ -141,11 +142,11 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
   return (
     <section className="container py-8">
       <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
-        <Link href="/" className="hover:text-primary">خانه</Link>
+        <Link href="/" className="hover:text-primary">{tFrontendAuto("fe.0efc869315f1")}</Link>
         <span>‹</span>
-        <span className="text-dark">رزرو آنلاین</span>
+        <span className="text-dark">{tFrontendAuto("fe.046848c29a29")}</span>
       </nav>
-      <h1 className="text-2xl font-bold text-dark mb-6">رزرو آنلاین</h1>
+      <h1 className="text-2xl font-bold text-dark mb-6">{tFrontendAuto("fe.046848c29a29")}</h1>
 
       {error && (
         <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">{error}</div>
@@ -183,7 +184,7 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
           </button>
           <h2 className="text-lg font-bold text-dark mb-4">سرویس‌های {selectedProvider.title}</h2>
           {loading ? (
-            <p className="text-gray-500">در حال بارگذاری...</p>
+            <p className="text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
           ) : (
             <div className="space-y-4">
               {services.map((s) => (
@@ -217,9 +218,9 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
           </button>
           <h2 className="text-lg font-bold text-dark mb-4">انتخاب زمان - {selectedService.title}</h2>
           {loading ? (
-            <p className="text-gray-500">در حال بارگذاری...</p>
+            <p className="text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
           ) : slots.length === 0 ? (
-            <p className="text-gray-600">بازه‌ای برای این تاریخ یافت نشد.</p>
+            <p className="text-gray-600">{tFrontendAuto("fe.81b58e8f632f")}</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
               {slots.map((slot) => {
@@ -249,20 +250,20 @@ export default function ReservationWidget({ config }: { config?: WidgetConfig })
 
       {step === "confirm" && selectedSlot && selectedService && (
         <div className="bg-white rounded-xl p-6 max-w-md">
-          <h2 className="text-lg font-bold text-dark mb-4">تایید رزرو</h2>
+          <h2 className="text-lg font-bold text-dark mb-4">{tFrontendAuto("fe.9d609e8b9b58")}</h2>
           <div className="space-y-2 mb-4">
             <p>
-              <strong>ارائه‌دهنده:</strong> {selectedSlot.service.provider.title}
+              <strong>{tFrontendAuto("fe.92e86cdff577")}</strong> {selectedSlot.service.provider.title}
             </p>
             <p>
-              <strong>سرویس:</strong> {selectedService.title} - {formatPrice(parseFloat(selectedService.price))} تومان
+              <strong>{tFrontendAuto("fe.0cf54d7734d2")}</strong> {selectedService.title} - {formatPrice(parseFloat(selectedService.price))} تومان
             </p>
             <p>
-              <strong>زمان:</strong> {selectedSlot.date} - {selectedSlot.start_time.slice(0, 5)}
+              <strong>{tFrontendAuto("fe.d300485eb19d")}</strong> {selectedSlot.date} - {selectedSlot.start_time.slice(0, 5)}
             </p>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-dark mb-2">یادداشت (اختیاری)</label>
+            <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.ff8598970b8f")}</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}

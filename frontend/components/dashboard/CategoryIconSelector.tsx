@@ -5,6 +5,7 @@ import { ImageIcon, Upload, FolderOpen, X } from "lucide-react";
 import { categoryApi, type CategoryIconChoice } from "@/lib/api/categoryApi";
 import type { Media } from "@/lib/api/productApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
@@ -174,7 +175,7 @@ export function CategoryIconSelector({ value, onChange }: CategoryIconSelectorPr
             type="button"
             onClick={selectNone}
             className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded"
-            title="حذف آیکون"
+            title={tFrontendAuto("fe.c4db7bec0beb")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -184,7 +185,7 @@ export function CategoryIconSelector({ value, onChange }: CategoryIconSelectorPr
       {/* Default icon grid + color picker */}
       {value.type === "default" && (
         <div className="space-y-3 border border-gray-200 rounded-lg p-4 bg-white">
-          <p className="text-xs font-medium text-gray-500">انتخاب آیکون</p>
+          <p className="text-xs font-medium text-gray-500">{tFrontendAuto("fe.bac2a310109d")}</p>
           {loadingIcons ? (
             <div className="h-24 flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
@@ -215,7 +216,7 @@ export function CategoryIconSelector({ value, onChange }: CategoryIconSelectorPr
           )}
 
           <div className="pt-2 border-t border-gray-100">
-            <p className="text-xs font-medium text-gray-500 mb-2">انتخاب رنگ</p>
+            <p className="text-xs font-medium text-gray-500 mb-2">{tFrontendAuto("fe.360cdd4bc1d6")}</p>
             <div className="flex flex-wrap items-center gap-2">
               {PRESET_COLORS.map((c) => (
                 <button
@@ -249,7 +250,7 @@ export function CategoryIconSelector({ value, onChange }: CategoryIconSelectorPr
                   }}
                   className="w-10 h-10 rounded-lg border border-gray-200 cursor-pointer p-0"
                 />
-                <span className="text-xs text-gray-600">پالت رنگ</span>
+                <span className="text-xs text-gray-600">{tFrontendAuto("fe.9061b21fa33b")}</span>
               </label>
             </div>
           </div>
@@ -264,7 +265,7 @@ export function CategoryIconSelector({ value, onChange }: CategoryIconSelectorPr
           className="w-full flex flex-col items-center justify-center gap-2 py-8 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50/50 transition-colors"
         >
           <FolderOpen className="h-10 w-10 text-gray-400" />
-          <span className="text-sm text-gray-600">انتخاب یا آپلود تصویر</span>
+          <span className="text-sm text-gray-600">{tFrontendAuto("fe.9f49ea75349f")}</span>
         </button>
       )}
 

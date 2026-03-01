@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="{{ deploy_locale }}" dir="{{ deploy_direction }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پرداخت ناموفق | توکان</title>
+    <title>{% if deploy_locale == "en" %}Payment Failed | Tokan{% else %}پرداخت ناموفق | توکان{% endif %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 24px;
-            direction: rtl;
+            direction: {{ deploy_direction }};
             display: flex;
             align-items: center;
             justify-content: center;
@@ -143,26 +143,34 @@
             <i class="fas fa-times-circle"></i>
             {% endif %}
         </div>
-        <h1>پرداخت انجام نشد</h1>
+        <h1>{% if deploy_locale == "en" %}Payment Was Not Completed{% else %}پرداخت انجام نشد{% endif %}</h1>
         <p class="desc" id="message">
             {% if failure_reason == 'cancelled' %}
+            {% if deploy_locale == "en" %}
+            You cancelled the payment. You can try again if needed.
+            {% else %}
             شما پرداخت را لغو کردید. در صورت نیاز می‌توانید مجدداً تلاش کنید.
+            {% endif %}
+            {% else %}
+            {% if deploy_locale == "en" %}
+            Your payment failed. Please try again or contact support.
             {% else %}
             متأسفانه پرداخت شما با خطا مواجه شد. لطفاً مجدداً تلاش کنید یا با پشتیبانی تماس بگیرید.
+            {% endif %}
             {% endif %}
         </p>
 
         <div class="actions">
             {% if payment_type == 'order' %}
-            <a href="{{ website_url_base }}/cart" class="btn-primary">بازگشت به سبد خرید</a>
+            <a href="{{ website_url_base }}/cart" class="btn-primary">{% if deploy_locale == "en" %}Back to Cart{% else %}بازگشت به سبد خرید{% endif %}</a>
             {% elif payment_type == 'wallet' %}
-            <a href="{{ website_url_base }}/dashboard/wallet" class="btn-primary">تلاش مجدد در کیف پول</a>
+            <a href="{{ website_url_base }}/dashboard/wallet" class="btn-primary">{% if deploy_locale == "en" %}Retry in Wallet{% else %}تلاش مجدد در کیف پول{% endif %}</a>
             {% elif payment_type == 'subscription' %}
-            <a href="{{ website_url_base }}/dashboard/subscription" class="btn-primary">تلاش مجدد در اشتراک</a>
+            <a href="{{ website_url_base }}/dashboard/subscription" class="btn-primary">{% if deploy_locale == "en" %}Retry Subscription{% else %}تلاش مجدد در اشتراک{% endif %}</a>
             {% else %}
-            <a href="{{ website_url_base }}/dashboard" class="btn-primary">بازگشت به داشبورد</a>
+            <a href="{{ website_url_base }}/dashboard" class="btn-primary">{% if deploy_locale == "en" %}Back to Dashboard{% else %}بازگشت به داشبورد{% endif %}</a>
             {% endif %}
-            <a href="{{ website_url_base }}/" class="btn-secondary">صفحه اصلی</a>
+            <a href="{{ website_url_base }}/" class="btn-secondary">{% if deploy_locale == "en" %}Home{% else %}صفحه اصلی{% endif %}</a>
         </div>
     </div>
 </body>

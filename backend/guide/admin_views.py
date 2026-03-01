@@ -4,18 +4,19 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import path, reverse
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from .models import DocSection
 from .markdown_import import parse_markdown_to_sections, _parse_tags_from_string
 
 
 class MarkdownImportForm(forms.Form):
-    """فرم آپلود/ورود مارک‌داون برای تبدیل به DocSection"""
+    """Markdown upload/input form to create DocSection records."""
 
     markdown_file = forms.FileField(
         required=False,
-        label="فایل مارک‌داون",
-        help_text="می‌توانید یک فایل .md آپلود کنید یا متن را در کادر زیر پیست کنید.",
+        label=_("Markdown file"),
+        help_text=_("Upload a .md file or paste markdown text below."),
         widget=forms.FileInput(attrs={"accept": ".md,.markdown,text/markdown,text/plain"}),
     )
     content = forms.CharField(
@@ -24,48 +25,48 @@ class MarkdownImportForm(forms.Form):
             attrs={
                 "rows": 20,
                 "class": "vLargeTextField",
-                "placeholder": "# عنوان اول\n\nمتن بخش اول...\n\n## عنوان دوم\n\nمتن بخش دوم...\n\n---\n\nمی‌توانید از frontmatter هم استفاده کنید:\n---\ntags:\n  - سئو\n  - صفحات\n---",
+                "placeholder": "# Main title\n\nSection body...\n\n## Second title\n\nSection body...\n\n---\n\nYou can also use frontmatter:\n---\ntags:\n  - seo\n  - pages\n---",
             }
         ),
-        label="متن مارک‌داون",
-        help_text="عنوان‌های اصلی (# یا ##) به عنوان title هر سکشن استفاده می‌شوند. برای تگ‌های پیش‌فرض از YAML frontmatter یا فیلد زیر استفاده کنید.",
+        label=_("Markdown content"),
+        help_text=_("Use # or ## headings for section titles. Set default tags via YAML frontmatter or the field below."),
     )
     default_tags = forms.CharField(
         required=False,
         max_length=500,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "سئو, صفحات, راهنما",
+                "placeholder": "seo, pages, docs",
                 "class": "vTextField",
             }
         ),
-        label="تگ پیش‌فرض (اختیاری)",
-        help_text="تگ‌های جدا شده با کاما - برای تمام سکشن‌ها اعمال می‌شود.",
+        label=_("Default tags (optional)"),
+        help_text=_("Comma-separated tags applied to all imported sections."),
     )
     def clean(self):
         data = super().clean()
         content = data.get("content", "").strip()
         if not content and not self.files.get("markdown_file"):
-            raise forms.ValidationError("لطفاً متن مارک‌داون را وارد کنید یا فایل آپلود کنید.")
+            raise forms.ValidationError(_("Please provide markdown text or upload a file."))
         return data
 
     replace_existing = forms.BooleanField(
         required=False,
         initial=False,
-        label="جایگزینی سکشن‌های فعلی",
-        help_text="در صورت تیک زدن، تمام DocSection های موجود حذف و با سکشن‌های جدید جایگزین می‌شوند.",
+        label=_("Replace existing sections"),
+        help_text=_("When enabled, all existing DocSection records are deleted before import."),
     )
 
 
 def import_markdown_view(request):
-    """ویژه آپلود مارک‌داون و تبدیل به DocSection"""
+    """Upload markdown and convert it to DocSection rows."""
     if not request.user.is_staff:
         from django.contrib.auth.views import redirect_to_login
 
         return redirect_to_login(request.get_full_path())
 
     form = MarkdownImportForm(request.POST or None, request.FILES or None)
-    # اگر فایل آپلود شده، محتوا را از فایل بخوان
+    # If a file was uploaded, read markdown content from file.
     if request.method == "POST" and request.FILES.get("markdown_file"):
         f = request.FILES["markdown_file"]
         try:
@@ -85,24 +86,33 @@ def import_markdown_view(request):
         try:
             sections = parse_markdown_to_sections(content, default_tags=default_tags)
         except Exception as e:
-            messages.error(request, f"خطا در پردازش مارک‌داون: {e}")
+            messages.error(
+                request,
+                _("Failed to parse markdown: %(error)s") % {"error": e},
+            )
             return render(
                 request,
                 "admin/guide/docsection/import_markdown.html",
-                {"form": form, "title": "ورود از مارک‌داون"},
+                {"form": form, "title": _("Import from markdown")},
             )
 
         if not sections:
-            messages.warning(request, "هیچ سکشنی در مارک‌داون یافت نشد. حداقل یک عنوان (# یا ##) قرار دهید.")
+            messages.warning(
+                request,
+                _("No sections found in markdown. Add at least one # or ## heading."),
+            )
             return render(
                 request,
                 "admin/guide/docsection/import_markdown.html",
-                {"form": form, "title": "ورود از مارک‌داون"},
+                {"form": form, "title": _("Import from markdown")},
             )
 
         if replace:
             deleted, _ = DocSection.objects.all().delete()
-            messages.info(request, f"{deleted} سکشن قبلی حذف شد.")
+            messages.info(
+                request,
+                _("%(count)s previous sections were deleted.") % {"count": deleted},
+            )
             max_order = 0
         else:
             max_order = DocSection.objects.aggregate(max_o=Max("order"))["max_o"] or 0
@@ -118,11 +128,14 @@ def import_markdown_view(request):
             )
             created += 1
 
-        messages.success(request, f"{created} سکشن با موفقیت ایجاد شد.")
+        messages.success(
+            request,
+            _("%(count)s sections were created successfully.") % {"count": created},
+        )
         return redirect(reverse("admin:guide_docsection_changelist"))
 
     return render(
         request,
         "admin/guide/docsection/import_markdown.html",
-        {"form": form, "title": "ورود از مارک‌داون"},
+        {"form": form, "title": _("Import from markdown")},
     )

@@ -30,6 +30,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faInstagram, faLinkedinIn, faTelegram, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type NavItem = {
   id: string | number;
@@ -319,7 +320,7 @@ export default function ServaHeader() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="جستجو در بین هزاران محصول..."
+                placeholder={tFrontendAuto("fe.844ca9145230")}
                 className="w-full py-3.5 px-5 pr-12 rounded-2xl bg-gray-100 border border-transparent focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder-gray-400 text-sm"
               />
               <button
@@ -385,7 +386,7 @@ export default function ServaHeader() {
                       <span className="font-bold text-gray-800 text-sm truncate max-w-[120px]" dir={user?.mobile && !user?.name ? "ltr" : "auto"}>
                         {userDisplayLabel}
                       </span>
-                      <span className="text-xs text-gray-500 font-medium">حساب من</span>
+                      <span className="text-xs text-gray-500 font-medium">{tFrontendAuto("fe.ed83bf914c7d")}</span>
                     </div>
                     <FontAwesomeIcon
                       icon={faChevronDown}
@@ -400,7 +401,7 @@ export default function ServaHeader() {
                         className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary transition"
                       >
                         <FontAwesomeIcon icon={faUser} className="text-primary w-5" />
-                        <span className="font-medium">پروفایل من</span>
+                        <span className="font-medium">{tFrontendAuto("fe.9ccec5d1dbd8")}</span>
                       </Link>
                       <Link
                         href="/profile?tab=settings"
@@ -408,7 +409,7 @@ export default function ServaHeader() {
                         className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary transition"
                       >
                         <FontAwesomeIcon icon={faUserCog} className="text-gray-500 w-5" />
-                        <span className="font-medium">تنظیمات</span>
+                        <span className="font-medium">{tFrontendAuto("fe.1cff677453b2")}</span>
                       </Link>
                       <div className="border-t border-gray-100 my-2" />
                       <button
@@ -417,7 +418,7 @@ export default function ServaHeader() {
                         className="flex items-center gap-3 w-full px-4 py-3 hover:bg-red-50 text-red-600 transition text-right"
                       >
                         <FontAwesomeIcon icon={faRightFromBracket} className="w-5" />
-                        <span className="font-medium">خروج</span>
+                        <span className="font-medium">{tFrontendAuto("fe.f04c5878defe")}</span>
                       </button>
                     </div>
                   )}
@@ -428,7 +429,7 @@ export default function ServaHeader() {
                   className="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-primary transition font-bold text-sm border border-transparent hover:border-gray-100"
                 >
                   <FontAwesomeIcon icon={faUser} className="text-lg" />
-                  <span>ورود | ثبت‌نام</span>
+                  <span>{tFrontendAuto("fe.a44557e4df0b")}</span>
                 </Link>
               )}
 
@@ -437,7 +438,7 @@ export default function ServaHeader() {
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
                 className="md:hidden w-12 h-12 rounded-xl bg-gray-50 hover:bg-gray-100 text-gray-700 flex items-center justify-center transition"
-                aria-label="open menu"
+                aria-label={tFrontendAuto("fe.60c637db07e9")}
               >
                 <FontAwesomeIcon icon={faBars} className="text-xl" />
               </button>
@@ -523,7 +524,7 @@ export default function ServaHeader() {
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               className="w-8 h-8 rounded-full bg-white text-gray-500 hover:text-red-500 flex items-center justify-center shadow-sm transition"
-              aria-label="close menu"
+              aria-label={tFrontendAuto("fe.df2a80400e09")}
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>

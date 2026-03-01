@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { apiClient } from "@/lib/api/apiClient";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const inputClass = "w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500";
 const labelClass = "block text-sm font-medium text-gray-700 mb-1";
@@ -63,13 +64,13 @@ export default function NewServicePage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">سرویس جدید</h1>
+          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.ad68d2548f73")}</h1>
         </div>
         <div className="flex gap-3">
           <button type="submit" form="service-form" disabled={loading || !form.title || !form.provider} className="btn-primary disabled:opacity-50">
             {loading ? "در حال ذخیره..." : "ذخیره"}
           </button>
-          <Link href="/dashboard/reservation/services" className="btn-secondary">انصراف</Link>
+          <Link href="/dashboard/reservation/services" className="btn-secondary">{tFrontendAuto("fe.9ea072503092")}</Link>
         </div>
       </div>
 
@@ -77,37 +78,37 @@ export default function NewServicePage() {
         {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>}
 
         <div className="card p-6 space-y-4">
-          <h2 className="text-lg font-semibold">اطلاعات سرویس</h2>
+          <h2 className="text-lg font-semibold">{tFrontendAuto("fe.805fc8ebf908")}</h2>
           <div>
-            <label className={labelClass}>ارائه‌دهنده *</label>
+            <label className={labelClass}>{tFrontendAuto("fe.dae3fe2ecc1a")}</label>
             <select
               value={form.provider}
               onChange={(e) => setForm((f) => ({ ...f, provider: e.target.value }))}
               className={inputClass}
               required
             >
-              <option value="">انتخاب کنید</option>
+              <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
               {providers.map((p) => (
                 <option key={p.id} value={p.id}>{p.title}</option>
               ))}
             </select>
             {providers.length === 0 && (
-              <p className="text-sm text-amber-600 mt-1">ابتدا یک ارائه‌دهنده اضافه کنید.</p>
+              <p className="text-sm text-amber-600 mt-1">{tFrontendAuto("fe.4c2b71567dd4")}</p>
             )}
           </div>
           <div>
-            <label className={labelClass}>عنوان سرویس *</label>
+            <label className={labelClass}>{tFrontendAuto("fe.2f811bde9972")}</label>
             <input
               type="text"
               value={form.title}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
               className={inputClass}
-              placeholder="مثال: ویزیت اول"
+              placeholder={tFrontendAuto("fe.c4ee372607a8")}
               required
             />
           </div>
           <div>
-            <label className={labelClass}>توضیحات</label>
+            <label className={labelClass}>{tFrontendAuto("fe.8593a9f18909")}</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
@@ -117,7 +118,7 @@ export default function NewServicePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className={labelClass}>مدت زمان (دقیقه)</label>
+              <label className={labelClass}>{tFrontendAuto("fe.462ffc481c7b")}</label>
               <input
                 type="number"
                 value={form.duration_minutes}
@@ -127,7 +128,7 @@ export default function NewServicePage() {
               />
             </div>
             <div>
-              <label className={labelClass}>قیمت (تومان)</label>
+              <label className={labelClass}>{tFrontendAuto("fe.b8f408dfd74d")}</label>
               <input
                 type="text"
                 dir="ltr"
@@ -139,7 +140,7 @@ export default function NewServicePage() {
             </div>
           </div>
           <div>
-            <label className={labelClass}>ترتیب نمایش</label>
+            <label className={labelClass}>{tFrontendAuto("fe.43b9d39131fa")}</label>
             <input
               type="number"
               value={form.sort_order}

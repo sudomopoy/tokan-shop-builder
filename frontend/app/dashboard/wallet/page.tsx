@@ -10,6 +10,7 @@ import {
   History,
 } from "lucide-react";
 import { accountApi, walletApi, type User } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function formatPrice(v: string | number): string {
   const n = typeof v === "string" ? parseFloat(v) || 0 : v;
@@ -120,7 +121,7 @@ export default function WalletPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-        <p className="mt-3 text-sm text-gray-500">در حال بارگذاری...</p>
+        <p className="mt-3 text-sm text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
       </div>
     );
   }
@@ -150,7 +151,7 @@ export default function WalletPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-5">
       <div>
-        <h1 className="text-xl font-bold text-gray-900">کیف پول توکان</h1>
+        <h1 className="text-xl font-bold text-gray-900">{tFrontendAuto("fe.97a9decd6f19")}</h1>
         <p className="text-sm text-gray-500 mt-1">
           کیف پول سراسری — در تمام فروشگاه‌های توکان یکسان است و به فروشگاه خاصی تعلق ندارد.
         </p>
@@ -165,9 +166,9 @@ export default function WalletPage() {
               <Wallet className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">موجودی قابل استفاده</p>
+              <p className="text-xs text-gray-500 mb-0.5">{tFrontendAuto("fe.6065c5ff79d9")}</p>
               <p className="text-2xl font-bold text-gray-900 tabular-nums">
-                {formatPrice(availableBalance)} <span className="text-sm font-normal text-gray-500">تومان</span>
+                {formatPrice(availableBalance)} <span className="text-sm font-normal text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
               </p>
               <div className="flex gap-4 mt-1.5 text-xs text-gray-500">
                 <span>قابل برداشت: {formatPrice(withdrawableBalance)}</span>
@@ -179,7 +180,7 @@ export default function WalletPage() {
           {/* فرم شارژ */}
           <div id="charge" className="flex flex-col sm:flex-row gap-3 sm:items-end shrink-0">
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">مبلغ شارژ</label>
+              <label className="block text-xs font-medium text-gray-600 mb-1">{tFrontendAuto("fe.51e42ad73499")}</label>
               <input
                 type="text"
                 value={chargeAmount}
@@ -187,7 +188,7 @@ export default function WalletPage() {
                   const ascii = digitsToAscii(e.target.value).replace(/\D/g, "");
                   setChargeAmount(ascii ? parseInt(ascii, 10).toLocaleString("fa-IR") : "");
                 }}
-                placeholder="۵۰,۰۰۰"
+                placeholder={tFrontendAuto("fe.895487a749c3")}
                 className="w-32 px-3 py-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
@@ -221,16 +222,16 @@ export default function WalletPage() {
       <div className="card overflow-hidden p-0">
         <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
           <History className="h-4 w-4 text-gray-500" />
-          <h2 className="font-bold text-gray-900">تراکنش‌ها</h2>
+          <h2 className="font-bold text-gray-900">{tFrontendAuto("fe.2ae3c8658b34")}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100 text-sm">
             <thead>
               <tr>
-                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">نوع</th>
-                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">مبلغ</th>
-                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">وضعیت</th>
-                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">تاریخ</th>
+                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.3f216d58db33")}</th>
+                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.3747dab0ba22")}</th>
+                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.b56dc5016988")}</th>
+                <th className="px-4 py-2.5 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.f93805684cab")}</th>
               </tr>
             </thead>
             <tbody>

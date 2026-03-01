@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { apiClient } from "@/lib/api/apiClient";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ServiceProvider = { id: string; title: string };
 type Service = {
@@ -42,7 +43,7 @@ export default function ReservationServicesPage() {
   }, []);
 
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`آیا از حذف سرویس «${title}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.8b4c1af00bf4", { p1: title }))) return;
     try {
       await apiClient.delete(`/reservation/services/${id}/`);
       setServices((prev) => prev.filter((s) => s.id !== id));
@@ -54,7 +55,7 @@ export default function ReservationServicesPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h1 className="text-3xl font-bold">سرویس‌های رزرو</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.432ce730071e")}</h1>
         <Link
           href="/dashboard/reservation/services/new"
           className="btn-primary inline-flex items-center gap-2 w-fit"
@@ -86,10 +87,10 @@ export default function ReservationServicesPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">سرویس</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">ارائه‌دهنده</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">مدت (دقیقه)</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">قیمت</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.1ad5b79eda2a")}</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.faa167cc3b58")}</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.8ea2e146aa45")}</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500">{tFrontendAuto("fe.87abd947fa44")}</th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 sticky right-0 bg-gray-50 z-10">
                       عملیات
                     </th>
@@ -107,7 +108,7 @@ export default function ReservationServicesPage() {
                           <Link
                             href={`/dashboard/reservation/services/${s.id}`}
                             className="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
-                            title="ویرایش"
+                            title={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <Pencil className="h-4 w-4" />
                           </Link>
@@ -115,7 +116,7 @@ export default function ReservationServicesPage() {
                             type="button"
                             onClick={() => handleDelete(s.id, s.title)}
                             className="p-2 rounded-lg hover:bg-red-50 text-red-600"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

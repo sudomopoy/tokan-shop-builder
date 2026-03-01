@@ -16,6 +16,7 @@ import { ArrowRight, Calendar, Eye } from "lucide-react";
 import { articleApi, type Article } from "@/lib/api/articleApi";
 import type { WidgetConfig } from "@/themes/types";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatDate = (dateStr: string): string => {
   if (!dateStr) return "";
@@ -70,7 +71,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
       .catch((err) => {
         if (isMounted) {
           console.error("Blog detail error:", err);
-          setError("مطلب یافت نشد یا دسترسی به آن ندارید.");
+          setError(tFrontendAuto("fe.c740bdacdf1b"));
         }
       })
       .finally(() => {
@@ -82,7 +83,7 @@ export default function BlogDetail({ config }: { config?: WidgetConfig }) {
   if (!slug) {
     return (
       <Container maxWidth="md" sx={{ py: 8, px: 2 }}>
-        <Alert severity="info">آدرس مطلب مشخص نشده است.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.d774fc588180")}</Alert>
       </Container>
     );
   }

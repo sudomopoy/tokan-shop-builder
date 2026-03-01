@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Video, Send, Bot, User, Pause, Maximize2, Minimize2 } from "lucide-react";
 import { guideApi, type PageGuide } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const DRAWER_WIDTH = 420;
 const PIP_MIN = { w: 180, h: 120 };
@@ -93,7 +94,7 @@ function VideoPiP({
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
       >
-        <span className="text-white text-xs">ویدیو</span>
+        <span className="text-white text-xs">{tFrontendAuto("fe.65ec1a4f834b")}</span>
       </div>
       <video
         ref={videoRef}
@@ -109,7 +110,7 @@ function VideoPiP({
             onStop();
           }}
           className="p-1.5 rounded text-white hover:bg-white/20 active:bg-white/30"
-          aria-label="توقف"
+          aria-label={tFrontendAuto("fe.60f08904afd9")}
         >
           <Pause className="h-4 w-4" />
         </button>
@@ -123,7 +124,7 @@ function VideoPiP({
         <button
           onClick={onClose}
           className="p-1.5 rounded text-white hover:bg-white/20 active:bg-white/30"
-          aria-label="بستن"
+          aria-label={tFrontendAuto("fe.53df25bd0b3b")}
         >
           <X className="h-4 w-4" />
         </button>
@@ -261,7 +262,7 @@ export default function VideoHelpDrawer({
         <button
           onClick={handleClose}
           className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-700"
-          aria-label="بستن"
+          aria-label={tFrontendAuto("fe.53df25bd0b3b")}
         >
           <X className="h-5 w-5" />
         </button>
@@ -294,7 +295,7 @@ export default function VideoHelpDrawer({
                 )}
                 {hasDescription && (
                   <div className={hasVideo ? "mt-4" : ""}>
-                    <h3 className="mb-2 text-sm font-semibold text-gray-700">توضیحات</h3>
+                    <h3 className="mb-2 text-sm font-semibold text-gray-700">{tFrontendAuto("fe.8593a9f18909")}</h3>
                     <p className="text-sm leading-relaxed text-gray-600">{guide?.description}</p>
                   </div>
                 )}
@@ -306,13 +307,13 @@ export default function VideoHelpDrawer({
         <div className="flex flex-1 flex-col border-t border-gray-100">
           <div className="flex shrink-0 items-center gap-2 border-b border-gray-100 bg-gray-50 px-4 py-3">
             <Bot className="h-5 w-5 text-blue-600" />
-            <h3 className="font-semibold text-gray-800">سوال از هوش مصنوعی</h3>
+            <h3 className="font-semibold text-gray-800">{tFrontendAuto("fe.658dad1545d6")}</h3>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[200px]">
             {chatMessages.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <Bot className="mb-3 h-12 w-12 text-gray-300" />
-                <p className="text-sm text-gray-500">سوال خود را درباره این بخش بپرسید</p>
+                <p className="text-sm text-gray-500">{tFrontendAuto("fe.1da94c2dd45a")}</p>
                 <p className="mt-1 text-xs text-gray-400">
                   پاسخ بر اساس مستندات راهنما تولید می‌شود
                 </p>
@@ -358,7 +359,7 @@ export default function VideoHelpDrawer({
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder="سوال خود را بنویسید..."
+                placeholder={tFrontendAuto("fe.431ab19bfe6e")}
                 className="flex-1 rounded-lg border border-gray-200 px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 disabled={isSending}
               />

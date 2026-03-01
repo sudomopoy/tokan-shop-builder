@@ -22,6 +22,31 @@ load_dotenv("../.env")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SUPPORTED_DEPLOY_LOCALES = {"fa", "en"}
+
+
+def normalize_deploy_locale(value: str | None) -> str:
+    raw = (value or "").strip().lower()
+    if raw.startswith("en"):
+        return "en"
+    if raw.startswith("fa"):
+        return "fa"
+    return "fa"
+
+
+DEPLOY_LOCALE = normalize_deploy_locale(os.environ.get("APP_LOCALE", "fa"))
+if DEPLOY_LOCALE not in SUPPORTED_DEPLOY_LOCALES:
+    DEPLOY_LOCALE = "fa"
+
+DEPLOY_DIRECTION_BY_LOCALE = {
+    "fa": "rtl",
+    # Requirement: English deployment must also be RTL.
+    "en": "rtl",
+}
+DEPLOY_DIRECTION = (os.environ.get("APP_DIRECTION") or DEPLOY_DIRECTION_BY_LOCALE[DEPLOY_LOCALE]).strip().lower()
+if DEPLOY_DIRECTION not in {"rtl", "ltr"}:
+    DEPLOY_DIRECTION = DEPLOY_DIRECTION_BY_LOCALE[DEPLOY_LOCALE]
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -129,15 +154,15 @@ MIDDLEWARE = [
     "core.middleware.DynamicCorsMiddleware",  # Must be before CorsMiddleware to handle external domains on OPTIONS
     "corsheaders.middleware.CorsMiddleware",  # Must be before CommonMiddleware (django-cors-headers)
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "core.middleware.DeploymentLocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "core.middleware.StoreDomainMiddleware",
 ]
 
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "fa-ir" if DEPLOY_LOCALE == "fa" else "en-us"
 
 USE_I18N = True
 
@@ -145,6 +170,7 @@ LANGUAGES = (
     ("fa", "Persian"),
     ("en", "English"),
 )
+LOCALE_PATHS = [BASE_DIR / "locale"]
 MODULES_CHOICES = (
     ("STORE", "Store"),
     ("BLOG", "Blog"),
@@ -187,6 +213,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.deployment_i18n",
             ],
         },
     },
@@ -249,11 +276,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Asia/Tehran"
-
-USE_I18N = True
 
 USE_TZ = True
 

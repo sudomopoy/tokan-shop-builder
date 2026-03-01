@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Trash2, FolderOpen, File as FileIcon } from "lucide-react";
 import type { Media } from "@/lib/api/productApi";
 import { FileManagerModal } from "@/components/FileManagerModal";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export type DownloadableFileEntry = {
   media_id: string;
@@ -75,7 +76,7 @@ export function DownloadableFilesEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <label className={labelClass}>فایل‌های دانلودی</label>
+        <label className={labelClass}>{tFrontendAuto("fe.d0d693ec4a05")}</label>
         <button
           type="button"
           onClick={() => {
@@ -105,7 +106,7 @@ export function DownloadableFilesEditor({
           tabIndex={0}
         >
           <FolderOpen className="h-12 w-12 mx-auto mb-2 text-gray-400" />
-          <p className="text-sm">هنوز فایلی اضافه نشده. روی «افزودن فایل» کلیک کنید.</p>
+          <p className="text-sm">{tFrontendAuto("fe.b412f141b860")}</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -127,29 +128,29 @@ export function DownloadableFilesEditor({
                   type="button"
                   onClick={() => removeItem(index)}
                   className="p-1.5 text-red-500 hover:bg-red-50 rounded transition-colors"
-                  title="حذف"
+                  title={tFrontendAuto("fe.fc1d9d323674")}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className={labelClass}>عنوان (اختیاری)</label>
+                  <label className={labelClass}>{tFrontendAuto("fe.590e6375092e")}</label>
                   <input
                     type="text"
                     value={item.title}
                     onChange={(e) => updateItem(index, "title", e.target.value)}
-                    placeholder="مثلاً: راهنمای نصب"
+                    placeholder={tFrontendAuto("fe.9b2a72462799")}
                     className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>توضیحات (اختیاری)</label>
+                  <label className={labelClass}>{tFrontendAuto("fe.2dc3afe54449")}</label>
                   <input
                     type="text"
                     value={item.description}
                     onChange={(e) => updateItem(index, "description", e.target.value)}
-                    placeholder="توضیح کوتاه"
+                    placeholder={tFrontendAuto("fe.cd07f2cfe6a9")}
                     className={inputClass}
                   />
                 </div>

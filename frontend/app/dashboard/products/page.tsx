@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Plus, Pencil, Trash2, CheckSquare, Square, Check, X } from "lucide-react";
 import { productApi } from "@/lib/api";
 import type { Product } from "@/lib/api/productApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,7 +36,7 @@ export default function ProductsPage() {
   }, []);
 
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`آیا از حذف محصول «${title}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.7752d547f27a", { p1: title }))) return;
     try {
       await productApi.delete(id);
       setProducts((prev) => prev.filter((p) => p.id !== id));
@@ -95,7 +96,7 @@ export default function ProductsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h1 className="text-3xl font-bold">مدیریت محصولات</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.f8ded3ffbc4c")}</h1>
         <Link
           href="/dashboard/products/new"
           className="btn-primary inline-flex items-center gap-2 w-fit"
@@ -108,7 +109,7 @@ export default function ProductsPage() {
       <form onSubmit={handleSearch} className="flex gap-2">
         <input
           type="text"
-          placeholder="جستجوی محصول..."
+          placeholder={tFrontendAuto("fe.ecb93a414f80")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="flex-1 px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -259,7 +260,7 @@ export default function ProductsPage() {
                           <Link
                             href={`/dashboard/products/${product.id}/edit`}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="ویرایش"
+                            title={tFrontendAuto("fe.de21bfe62ab5")}
                           >
                             <Pencil className="h-4 w-4" />
                           </Link>
@@ -268,7 +269,7 @@ export default function ProductsPage() {
                               handleDelete(product.id, product.title)
                             }
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

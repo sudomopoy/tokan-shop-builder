@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { announcementApi, type SystemAnnouncement } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const typeConfig = {
   info: {
@@ -114,7 +115,7 @@ export default function NotificationsPage() {
       ) : items.length === 0 ? (
         <div className="card py-16 text-center">
           <Bell className="h-20 w-20 mx-auto mb-4 text-gray-200" />
-          <p className="font-medium text-gray-600 text-lg">اعلانی برای نمایش وجود ندارد</p>
+          <p className="font-medium text-gray-600 text-lg">{tFrontendAuto("fe.7b09cca768c8")}</p>
           <p className="text-sm text-gray-500 mt-2">
             اعلان‌های مهم فروشگاه شما اینجا نمایش داده می‌شوند. لطفاً گاهی سر بزنید!
           </p>

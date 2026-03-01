@@ -10,6 +10,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -64,7 +65,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
       .catch((err) => {
         if (isMounted) {
           console.error("Product detail error:", err);
-          setError("محصول یافت نشد یا دسترسی به آن ندارید.");
+          setError(tFrontendAuto("fe.51cdbb0c893c"));
         }
       })
       .finally(() => {
@@ -122,7 +123,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
   if (!id) {
     return (
       <section className="container py-12">
-        <div className="bg-white rounded-xl p-6 text-gray-600">شناسه محصول مشخص نشده است.</div>
+        <div className="bg-white rounded-xl p-6 text-gray-600">{tFrontendAuto("fe.064b218af17a")}</div>
       </section>
     );
   }
@@ -130,7 +131,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
   if (loading) {
     return (
       <section className="container py-12">
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       </section>
     );
   }
@@ -221,7 +222,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
                       aria-label={`thumbnail-${idx + 1}`}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={img} alt="" className="w-full rounded-lg mix-blend-multiply" />
+                      <img src={img} alt={tFrontendAuto("fe.868af833cab1")}w-full rounded-lg mix-blend-multiply" />
                     </button>
                   );
                 })}
@@ -260,7 +261,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
                 {/* Attributes placeholder */}
                 <div className="space-y-6">
                   <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                    <h3 className="font-bold text-dark mb-3 text-sm">ویژگی‌های بارز</h3>
+                    <h3 className="font-bold text-dark mb-3 text-sm">{tFrontendAuto("fe.4cd863cff4e0")}</h3>
                     <ul className="space-y-2 text-xs font-medium text-gray-600">
                       <li className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 bg-gray-300 rounded-full" />
@@ -292,7 +293,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
                     ) : null}
                     <div className="flex items-center gap-2">
                       <span className="text-3xl font-black font-sans text-dark">{formatPrice(sellPrice)}</span>
-                      <span className="text-sm font-bold text-gray-500">تومان</span>
+                      <span className="text-sm font-bold text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
                       {hasDiscount ? (
                         <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md mr-auto">
                           {Math.round(((originalPrice - sellPrice) / originalPrice) * 100)}%
@@ -380,19 +381,19 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
             <div className="p-6 md:p-10">
               {activeTab === "description" ? (
                 <div className="prose max-w-none text-gray-600 leading-loose">
-                  <div dangerouslySetInnerHTML={{ __html: product.description || "<p>توضیحی ثبت نشده است.</p>" }} />
+                  <div dangerouslySetInnerHTML={{ __html: product.description || "<p>{tFrontendAuto("fe.952eb9361d3a")}</p>" }} />
                 </div>
               ) : null}
 
               {activeTab === "specifications" ? (
                 <div>
-                  <h3 className="text-xl font-black text-dark mb-8">مشخصات فنی کامل</h3>
+                  <h3 className="text-xl font-black text-dark mb-8">{tFrontendAuto("fe.bc91f0f7155e")}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                     <div>
-                      <h4 className="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100">مشخصات کلی</h4>
+                      <h4 className="font-bold text-primary text-lg mb-4 pb-2 border-b border-gray-100">{tFrontendAuto("fe.519d4b4cebbb")}</h4>
                       <ul className="space-y-4 text-sm">
                         <li className="grid grid-cols-3">
-                          <span className="text-gray-400 col-span-1">شناسه</span>
+                          <span className="text-gray-400 col-span-1">{tFrontendAuto("fe.0230582a53fd")}</span>
                           <span className="text-dark font-bold col-span-2">{String(product.id)}</span>
                         </li>
                       </ul>
@@ -417,7 +418,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
 
               {activeTab === "questions" ? (
                 <div className="text-center py-10 text-gray-500">
-                  <p>هنوز پرسشی ثبت نشده است.</p>
+                  <p>{tFrontendAuto("fe.cc484500caf2")}</p>
                 </div>
               ) : null}
             </div>
@@ -428,7 +429,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
       {/* Related products */}
       <section className="container pb-16">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-black text-dark">محصولات مشابه</h2>
+          <h2 className="text-2xl font-black text-dark">{tFrontendAuto("fe.f1479c4e46d3")}</h2>
           <Link href="/products/search" className="text-primary font-bold hover:gap-2 transition-all flex items-center gap-1 text-sm">
             مشاهده همه <span aria-hidden>←</span>
           </Link>
@@ -447,7 +448,7 @@ export default function ProductsDetail({ config }: { config?: WidgetConfig }) {
                 </h3>
                 <div className="flex items-center gap-1 text-primary font-bold font-sans text-sm">
                   <span>{formatPrice(parseFloat(p.sell_price))}</span>
-                  <span className="text-xs text-gray-500">تومان</span>
+                  <span className="text-xs text-gray-500">{tFrontendAuto("fe.d95175effeea")}</span>
                 </div>
               </div>
             );

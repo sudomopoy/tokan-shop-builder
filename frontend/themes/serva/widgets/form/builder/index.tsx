@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 
 import { apiClient } from "@/lib/api/apiClient";
 import type { WidgetConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type BuilderField = {
   id: string;
@@ -133,7 +134,7 @@ export default function ServaFormBuilderWidget({ config }: { config?: WidgetConf
           <div className="bg-slate-900 text-white p-8 md:p-10">
             <h2 className="text-3xl font-black">{title}</h2>
             {description ? <p className="mt-4 text-slate-300 leading-7">{description}</p> : null}
-            <p className="mt-5 text-sm text-orange-300">Serva design form variation</p>
+            <p className="mt-5 text-sm text-orange-300">{tFrontendAuto("fe.230ef7b86fbe")}</p>
           </div>
           <form className="p-8 md:p-10 space-y-4" onSubmit={handleSubmit}>
             {fields.map((field) => (

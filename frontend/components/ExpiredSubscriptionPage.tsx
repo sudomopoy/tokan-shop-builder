@@ -1,5 +1,8 @@
 "use client";
 
+import { DEPLOY_DIRECTION } from "@/lib/i18n/deployment";
+import { tFrontend } from "@/lib/i18n/messages";
+
 export default function ExpiredSubscriptionPage({
   storeTitle,
 }: {
@@ -8,7 +11,7 @@ export default function ExpiredSubscriptionPage({
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 p-6"
-      dir="rtl"
+      dir={DEPLOY_DIRECTION}
     >
       <div className="max-w-lg w-full text-center space-y-8">
         <div className="w-24 h-24 mx-auto rounded-full bg-amber-100 flex items-center justify-center">
@@ -29,20 +32,24 @@ export default function ExpiredSubscriptionPage({
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-800 mb-2">
-            اشتراک فروشگاه منقضی شده
+            {tFrontend("subscription.expired.title")}
           </h1>
           <p className="text-slate-600">
             {storeTitle ? (
-              <>اشتراک فروشگاه «{storeTitle}» به پایان رسیده است.</>
+              <>
+                {tFrontend("subscription.expired.withStore", { store: storeTitle })}
+              </>
             ) : (
-              <>اشتراک این فروشگاه به پایان رسیده است.</>
+              <>
+                {tFrontend("subscription.expired.withoutStore")}
+              </>
             )}{" "}
-            لطفاً جهت تمدید با مدیر فروشگاه تماس بگیرید.
+            {tFrontend("subscription.expired.contactAdmin")}
           </p>
         </div>
         <div className="pt-4">
           <p className="text-sm text-slate-500">
-            در صورت نیاز به تمدید، وارد پنل مدیریت فروشگاه شوید و از بخش اشتراک اقدام کنید.
+            {tFrontend("subscription.expired.hint")}
           </p>
         </div>
       </div>

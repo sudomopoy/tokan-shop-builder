@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { DEPLOY_OG_LOCALE } from "@/lib/i18n";
+import { tLanding } from "@/lib/messages";
 
 export const metadata: Metadata = {
-  title: "بلاگ توکان | مطالب آموزشی و خبری",
-  description:
-    "مطالب آموزشی درباره فروشگاه آنلاین، سئو، رشد کسب‌وکار و راهنمای استفاده از توکان.",
+  title: tLanding("blog.layout.title"),
+  description: tLanding("blog.layout.description"),
   openGraph: {
-    title: "بلاگ توکان | مطالب آموزشی و خبری",
-    description:
-      "مطالب آموزشی درباره فروشگاه آنلاین، سئو و رشد کسب‌وکار با توکان.",
+    title: tLanding("blog.layout.title"),
+    description: tLanding("blog.layout.ogDescription"),
     type: "website",
-    locale: "fa_IR",
+    locale: DEPLOY_OG_LOCALE,
   },
 };
 

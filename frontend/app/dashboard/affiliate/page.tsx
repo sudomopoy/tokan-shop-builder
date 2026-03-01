@@ -11,6 +11,7 @@ import {
   Check,
 } from "lucide-react";
 import { affiliateApi, type AffiliateInvite, type AffiliateEarning } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function formatPrice(v: string | number): string {
   const n = typeof v === "string" ? parseFloat(v) || 0 : v;
@@ -76,14 +77,14 @@ export default function AffiliatePage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-        <p className="mt-3 text-sm text-gray-500">در حال بارگذاری...</p>
+        <p className="mt-3 text-sm text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">دعوت و پاداش</h1>
+      <h1 className="text-xl font-bold text-gray-900">{tFrontendAuto("fe.88a00ff04717")}</h1>
       <p className="text-sm text-gray-500">
         با لینک دعوت خود، کاربران جدید را به توکان بیاورید. به ازای هر خرید دعوت‌شده‌ها،
         {config ? `${config.default_commission_percent}%` : "۱۰٪"} کمیسیون تا{" "}
@@ -98,7 +99,7 @@ export default function AffiliatePage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">لینک دعوت</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">{tFrontendAuto("fe.40469b4fb7c3")}</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -116,7 +117,7 @@ export default function AffiliatePage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">کد دعوت</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">{tFrontendAuto("fe.2f9742535fed")}</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -140,13 +141,13 @@ export default function AffiliatePage() {
       {earnings && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="card p-4 bg-emerald-50 border-emerald-100">
-            <p className="text-sm text-gray-600">واریز شده</p>
+            <p className="text-sm text-gray-600">{tFrontendAuto("fe.8f3f1f1ad3fa")}</p>
             <p className="text-2xl font-bold text-emerald-700">
               {formatPrice(earnings.total_completed)} تومان
             </p>
           </div>
           <div className="card p-4 bg-amber-50 border-amber-100">
-            <p className="text-sm text-gray-600">در انتظار واریز</p>
+            <p className="text-sm text-gray-600">{tFrontendAuto("fe.d9b12daef750")}</p>
             <p className="text-2xl font-bold text-amber-700">
               {formatPrice(earnings.total_pending)} تومان
             </p>
@@ -158,7 +159,7 @@ export default function AffiliatePage() {
       <div className="card overflow-hidden">
         <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
           <Users className="h-4 w-4 text-gray-500" />
-          <h2 className="font-bold text-gray-900">دعوت‌شده‌ها</h2>
+          <h2 className="font-bold text-gray-900">{tFrontendAuto("fe.78a9f63479bb")}</h2>
         </div>
         <div className="overflow-x-auto">
           {invites.length === 0 ? (
@@ -169,12 +170,12 @@ export default function AffiliatePage() {
             <table className="min-w-full divide-y divide-gray-100 text-sm">
               <thead>
                 <tr>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">کاربر</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">تاریخ</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">کمیسیون</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">کل خرید</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">درآمد</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">وضعیت</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.2b8fc79c7ad0")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.f93805684cab")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.c74f8b079d6a")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.a8e869b768d8")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.0bcea1084940")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.b56dc5016988")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -213,7 +214,7 @@ export default function AffiliatePage() {
       <div className="card overflow-hidden">
         <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
           <History className="h-4 w-4 text-gray-500" />
-          <h2 className="font-bold text-gray-900">تاریخچه کمیسیون</h2>
+          <h2 className="font-bold text-gray-900">{tFrontendAuto("fe.e8ed0b54adc4")}</h2>
         </div>
         <div className="overflow-x-auto">
           {!earnings || earnings.earnings.length === 0 ? (
@@ -224,11 +225,11 @@ export default function AffiliatePage() {
             <table className="min-w-full divide-y divide-gray-100 text-sm">
               <thead>
                 <tr>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">تاریخ</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">موضوع</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">مبلغ خرید</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">کمیسیون</th>
-                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">وضعیت</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.f93805684cab")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.8362c770000d")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.8a938c6985da")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.c74f8b079d6a")}</th>
+                  <th className="px-4 py-2.5 text-right font-medium text-gray-500">{tFrontendAuto("fe.b56dc5016988")}</th>
                 </tr>
               </thead>
               <tbody>

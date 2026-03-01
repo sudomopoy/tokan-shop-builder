@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Video, Send, Bot, User } from "lucide-react";
 import { guideApi, type PageGuide } from "@/lib/api";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ChatMessage = {
   id: string;
@@ -120,7 +121,7 @@ export default function SetupGuideModal({
             <button
               onClick={onClose}
               className="p-2 rounded-lg text-gray-500 hover:bg-gray-200 hover:text-gray-700"
-              aria-label="بستن"
+              aria-label={tFrontendAuto("fe.53df25bd0b3b")}
             >
               <X className="h-5 w-5" />
             </button>
@@ -151,7 +152,7 @@ export default function SetupGuideModal({
                     )}
                     {hasDescription && (
                       <div className={hasVideo ? "mt-4" : ""}>
-                        <h3 className="mb-2 text-sm font-semibold text-gray-700">توضیحات</h3>
+                        <h3 className="mb-2 text-sm font-semibold text-gray-700">{tFrontendAuto("fe.8593a9f18909")}</h3>
                         <p className="text-sm leading-relaxed text-gray-600 whitespace-pre-wrap">{guide?.description}</p>
                       </div>
                     )}
@@ -163,13 +164,13 @@ export default function SetupGuideModal({
             <div className="flex flex-1 flex-col border-t border-gray-100 min-h-[200px]">
               <div className="flex shrink-0 items-center gap-2 border-b border-gray-100 bg-gray-50 px-6 py-3">
                 <Bot className="h-5 w-5 text-blue-600" />
-                <h3 className="font-semibold text-gray-800">سوال از هوش مصنوعی</h3>
+                <h3 className="font-semibold text-gray-800">{tFrontendAuto("fe.658dad1545d6")}</h3>
               </div>
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {chatMessages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <Bot className="mb-3 h-12 w-12 text-gray-300" />
-                    <p className="text-sm text-gray-500">سوال خود را درباره این مرحله بپرسید</p>
+                    <p className="text-sm text-gray-500">{tFrontendAuto("fe.fcee0c24a2e3")}</p>
                   </div>
                 ) : (
                   chatMessages.map((msg) => (
@@ -212,7 +213,7 @@ export default function SetupGuideModal({
                     type="text"
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
-                    placeholder="سوال خود را بنویسید..."
+                    placeholder={tFrontendAuto("fe.431ab19bfe6e")}
                     className="flex-1 rounded-lg border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     disabled={isSending}
                   />

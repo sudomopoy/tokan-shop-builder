@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Plus, Pencil, Trash2, List } from "lucide-react";
 import { menuApi } from "@/lib/api";
 import type { Menu } from "@/lib/api/menuApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 export default function DashboardMenusPage() {
   const [menus, setMenus] = useState<Menu[]>([]);
@@ -28,7 +29,7 @@ export default function DashboardMenusPage() {
     } catch (err) {
       console.error(err);
       setMenus([]);
-      setError("خطا در دریافت لیست منوها");
+      setError(tFrontendAuto("fe.d48ba43e35aa"));
     } finally {
       setLoading(false);
     }
@@ -65,7 +66,7 @@ export default function DashboardMenusPage() {
   };
 
   const handleDelete = async (menu: Menu) => {
-    if (!confirm(`آیا از حذف منوی «${menu.title}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.2830da519496", { p1: menu.title }))) return;
     try {
       await menuApi.delete(menu.id);
       setMenus((prev) => prev.filter((m) => m.id !== menu.id));
@@ -78,11 +79,11 @@ export default function DashboardMenusPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold">مدیریت منوها</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.c484b662da01")}</h1>
       </div>
 
       <form onSubmit={handleCreate} className="card max-w-3xl space-y-4">
-        <h2 className="text-lg font-semibold">ایجاد منوی جدید</h2>
+        <h2 className="text-lg font-semibold">{tFrontendAuto("fe.d37bde2dd5c2")}</h2>
 
         {error && (
           <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
@@ -90,12 +91,12 @@ export default function DashboardMenusPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">عنوان *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.a83c261c5577")}</label>
             <input
               value={createForm.title}
               onChange={(e) => setCreateForm((f) => ({ ...f, title: e.target.value }))}
               required
-              placeholder="مثلاً: منوی اصلی"
+              placeholder={tFrontendAuto("fe.c25cc825e2c3")}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -106,7 +107,7 @@ export default function DashboardMenusPage() {
             <input
               value={createForm.key}
               onChange={(e) => setCreateForm((f) => ({ ...f, key: e.target.value }))}
-              placeholder="header, footer"
+              placeholder={tFrontendAuto("fe.b3b993843869")}
               dir="ltr"
               className="w-full ltr text-left px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
             />
@@ -117,11 +118,11 @@ export default function DashboardMenusPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">توضیحات</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{tFrontendAuto("fe.8593a9f18909")}</label>
           <textarea
             value={createForm.description}
             onChange={(e) => setCreateForm((f) => ({ ...f, description: e.target.value }))}
-            placeholder="توضیحات اختیاری"
+            placeholder={tFrontendAuto("fe.c845ae3e2c7f")}
             rows={2}
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -137,7 +138,7 @@ export default function DashboardMenusPage() {
               }
               className="rounded border-gray-300"
             />
-            <span className="text-sm">فعال</span>
+            <span className="text-sm">{tFrontendAuto("fe.e3d927082524")}</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -148,7 +149,7 @@ export default function DashboardMenusPage() {
               }
               className="rounded border-gray-300"
             />
-            <span className="text-sm">منوی اصلی</span>
+            <span className="text-sm">{tFrontendAuto("fe.2a878dcbfce7")}</span>
           </label>
         </div>
 
@@ -231,21 +232,21 @@ export default function DashboardMenusPage() {
                           <Link
                             href={`/dashboard/menus/${menu.id}`}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="مدیریت آیتم‌های منو"
+                            title={tFrontendAuto("fe.e7df86eae76d")}
                           >
                             <List className="h-4 w-4" />
                           </Link>
                           <Link
                             href={`/dashboard/menus/${menu.id}/edit`}
                             className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                            title="ویرایش منو"
+                            title={tFrontendAuto("fe.82416e0d1d72")}
                           >
                             <Pencil className="h-4 w-4" />
                           </Link>
                           <button
                             onClick={() => handleDelete(menu)}
                             className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                            title="حذف"
+                            title={tFrontendAuto("fe.fc1d9d323674")}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

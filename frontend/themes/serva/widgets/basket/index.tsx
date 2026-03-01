@@ -7,6 +7,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { basketApi, type Basket } from "@/lib/api/basketApi";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => new Intl.NumberFormat("fa-IR").format(price);
 
@@ -29,7 +30,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       setBasket(b);
     } catch (e) {
       console.error(e);
-      setError("خطا در بارگذاری سبد خرید.");
+      setError(tFrontendAuto("fe.e6b682b21dab"));
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       setBasket(updated);
     } catch (e) {
       console.error(e);
-      setError("خطا در بروزرسانی تعداد.");
+      setError(tFrontendAuto("fe.22850eb65f0f"));
     } finally {
       setBusyItemId(null);
     }
@@ -74,7 +75,7 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
       setBasket(updated);
     } catch (e) {
       console.error(e);
-      setError("خطا در حذف آیتم.");
+      setError(tFrontendAuto("fe.334063cdb3a6"));
     } finally {
       setBusyItemId(null);
     }
@@ -90,23 +91,23 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">سبد خرید</span>
+            <span className="text-dark">{tFrontendAuto("fe.807f37218e5a")}</span>
           </nav>
         </div>
       </div>
 
       <section className="container py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">سبد خرید</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">{tFrontendAuto("fe.807f37218e5a")}</h1>
 
         {!isAuthenticated ? (
           <div className="bg-white rounded-xl p-6">
-            <p className="text-gray-600 mb-4">برای مشاهده سبد خرید، ابتدا وارد حساب کاربری شوید.</p>
+            <p className="text-gray-600 mb-4">{tFrontendAuto("fe.23cc4208b12b")}</p>
             <button onClick={goLogin} className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
               ورود
             </button>
           </div>
         ) : loading ? (
-          <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+          <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
         ) : error ? (
           <div className="bg-white rounded-xl p-6">
             <div className="bg-red-50 text-red-700 rounded-lg p-4 mb-4">{error}</div>
@@ -206,14 +207,14 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
             {/* Summary */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-xl p-6 sticky top-24">
-                <h2 className="font-bold text-lg text-dark mb-6">خلاصه سفارش</h2>
+                <h2 className="font-bold text-lg text-dark mb-6">{tFrontendAuto("fe.aa69600564cc")}</h2>
 
                 <div className="mb-6 pb-6 border-b">
-                  <label className="block text-sm font-medium text-dark mb-2">کد تخفیف</label>
+                  <label className="block text-sm font-medium text-dark mb-2">{tFrontendAuto("fe.4a93ff0edf3d")}</label>
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="کد تخفیف را وارد کنید"
+                      placeholder={tFrontendAuto("fe.3193d9be5cd4")}
                       className="flex-1 px-4 py-2 border rounded-lg text-sm focus:border-primary focus:outline-none"
                       disabled
                     />
@@ -221,23 +222,23 @@ export default function BasketWidget({ config }: { config?: WidgetConfig }) {
                       اعمال
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">فعلاً کد تخفیف فعال نیست.</p>
+                  <p className="text-xs text-gray-500 mt-2">{tFrontendAuto("fe.a547d78cfb52")}</p>
                 </div>
 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">جمع کل کالاها:</span>
+                    <span className="text-gray-600">{tFrontendAuto("fe.14d33b52d34c")}</span>
                     <span className="font-medium">{formatPrice(subtotal)} تومان</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">هزینه ارسال:</span>
-                    <span className="font-medium">در تسویه حساب مشخص می‌شود</span>
+                    <span className="text-gray-600">{tFrontendAuto("fe.8ad37a1a880f")}</span>
+                    <span className="font-medium">{tFrontendAuto("fe.bdfaeeca806f")}</span>
                   </div>
                 </div>
 
                 <div className="border-t pt-4 mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="font-bold text-lg">مبلغ قابل پرداخت:</span>
+                    <span className="font-bold text-lg">{tFrontendAuto("fe.2e8a2c608d45")}</span>
                     <span className="font-bold text-2xl text-primary">{formatPrice(subtotal)} تومان</span>
                   </div>
                 </div>

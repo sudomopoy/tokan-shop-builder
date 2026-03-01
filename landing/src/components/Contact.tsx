@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { submitSupportRequest } from "@/lib/api";
+import { tLandingAuto } from "@/lib/autoMessages";
 
 function validatePhone(phone: string) {
   return /^(\+98|0)?9\d{9}$/.test((phone || "").trim());
@@ -87,7 +88,7 @@ export function Contact() {
                     <FontAwesomeIcon icon={faTelegram} className="text-white" />
                   </div>
                   <div>
-                    <div className="font-extrabold text-slate-900">تلگرام</div>
+                    <div className="font-extrabold text-slate-900">{tLandingAuto("ld.cf1a31f63e99")}</div>
                     <div className="text-sm text-slate-600">t.me/tokan_app</div>
                   </div>
                 </div>
@@ -102,8 +103,8 @@ export function Contact() {
                     <FontAwesomeIcon icon={faEnvelope} className="text-white" />
                   </div>
                   <div>
-                    <div className="font-extrabold text-slate-900">فرم درخواست</div>
-                    <div className="text-sm text-slate-600">ثبت درخواست مشاوره و تماس</div>
+                    <div className="font-extrabold text-slate-900">{tLandingAuto("ld.77b3f6238afd")}</div>
+                    <div className="text-sm text-slate-600">{tLandingAuto("ld.36ae3acad518")}</div>
                   </div>
                 </div>
               </a>
@@ -112,7 +113,7 @@ export function Contact() {
 
           <div className="glass rounded-[2.2rem] p-6 md:p-8 border border-slate-200">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-black text-slate-900">فرم درخواست</h3>
+              <h3 className="text-xl font-black text-slate-900">{tLandingAuto("ld.77b3f6238afd")}</h3>
               <span className="text-xs text-slate-600">{status}</span>
             </div>
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -125,7 +126,7 @@ export function Contact() {
                     id="leadName"
                     name="name"
                     className="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900 focus:outline-none"
-                    placeholder="مثلاً محمد رضایی"
+                    placeholder={tLandingAuto("ld.94d08fed5030")}
                   />
                 </div>
                 <div>
@@ -150,10 +151,10 @@ export function Contact() {
                   name="type"
                   className="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900 focus:outline-none"
                 >
-                  <option value="محصول فیزیکی">محصول فیزیکی</option>
-                  <option value="محصول دیجیتال">محصول دیجیتال</option>
-                  <option value="خدمات">خدمات (رزرو/ثبت‌نام/پیش‌خرید)</option>
-                  <option value="سایر">سایر</option>
+                  <option value="محصول فیزیکی">{tLandingAuto("ld.42634319b399")}</option>
+                  <option value="محصول دیجیتال">{tLandingAuto("ld.333bd6682203")}</option>
+                  <option value="خدمات">{tLandingAuto("ld.c11eba505257")}</option>
+                  <option value="سایر">{tLandingAuto("ld.65336224ad14")}</option>
                 </select>
               </div>
               <div>
@@ -165,7 +166,7 @@ export function Contact() {
                   name="message"
                   rows={4}
                   className="mt-2 w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 focus-ring text-slate-900 focus:outline-none"
-                  placeholder="کمی درباره نیاز و هدف‌تان بنویسید..."
+                  placeholder={tLandingAuto("ld.76cde86bc064")}
                 />
               </div>
 

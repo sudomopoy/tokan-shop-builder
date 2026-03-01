@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { WidgetConfig } from "@/themes/types";
 import { articleApi, type Article } from "@/lib/api/articleApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -42,7 +43,7 @@ export default function BlogListView({ config }: { config?: WidgetConfig }) {
       .catch((e) => {
         console.error(e);
         if (!mounted) return;
-        setError("خطا در بارگذاری مقالات.");
+        setError(tFrontendAuto("fe.7fff3d747ff5"));
       })
       .finally(() => mounted && setLoading(false));
     return () => {
@@ -62,11 +63,11 @@ export default function BlogListView({ config }: { config?: WidgetConfig }) {
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       ) : error ? (
         <div className="bg-white rounded-2xl p-8 text-center text-red-600">{error}</div>
       ) : shown.length === 0 ? (
-        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">مطلبی یافت نشد.</div>
+        <div className="bg-white rounded-2xl p-8 text-center text-gray-500">{tFrontendAuto("fe.54ca9cd5a189")}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {shown.map((a) => {
@@ -93,7 +94,7 @@ export default function BlogListView({ config }: { config?: WidgetConfig }) {
                 </Link>
                 <div className="flex items-center gap-4 text-xs text-gray-400 mb-3 font-medium">
                   <span>{formatDate(a.created_at)}</span>
-                  <span>۵ دقیقه مطالعه</span>
+                  <span>{tFrontendAuto("fe.796cce4226d0")}</span>
                 </div>
                 <h3 className="font-bold font-sans text-dark text-lg mb-3 leading-tight group-hover:text-primary transition">
                   <Link href={`/blog/${a.slug}`}>{a.title}</Link>

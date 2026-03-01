@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type FaqItem = { q: string; a: string };
 
@@ -37,13 +38,13 @@ export default function StaticFaq() {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">سوالات متداول</span>
+            <span className="text-dark">{tFrontendAuto("fe.a6a817d2166d")}</span>
           </nav>
         </div>
       </div>
 
       <section className="container py-12">
-        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-8 text-center">سوالات متداول</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-8 text-center">{tFrontendAuto("fe.a6a817d2166d")}</h1>
 
         <div className="max-w-3xl mx-auto space-y-4">
           {FAQS.map((f, idx) => {

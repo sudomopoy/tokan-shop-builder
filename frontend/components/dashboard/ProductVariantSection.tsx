@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { variantApi } from "@/lib/api";
 import type {
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
   VariantAttribute,
   VariantAttributeValue,
   VariantSelection,
@@ -310,7 +311,7 @@ export function ProductVariantSection({
     <div className="space-y-6">
       {/* Variant types */}
       <div className="border border-gray-200 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-gray-900 mb-1">انواع ویژگی (رنگ، سایز، …)</h3>
+        <h3 className="text-lg font-medium text-gray-900 mb-1">{tFrontendAuto("fe.d344b0d737aa")}</h3>
         <p className="text-sm text-gray-500 mb-3">
           ویژگی‌هایی که برای این محصول استفاده می‌کنید را انتخاب کنید. فقط ویژگی‌های انتخاب‌شده در قسمت تنوع نمایش داده می‌شوند.
         </p>
@@ -332,7 +333,7 @@ export function ProductVariantSection({
                       onChange={() => toggleProductAttr(attr.id)}
                       className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-600">برای این محصول</span>
+                    <span className="text-sm text-gray-600">{tFrontendAuto("fe.bd14d902755a")}</span>
                   </label>
                   <span className="font-medium">{attr.title}</span>
                 </div>
@@ -382,7 +383,7 @@ export function ProductVariantSection({
                       onChange={(e) =>
                         setNewValueByAttr((n) => ({ ...n, [attr.id]: e.target.value }))
                       }
-                      placeholder="مقدار جدید"
+                      placeholder={tFrontendAuto("fe.770a824b5b8c")}
                       className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm"
                       onKeyDown={(e) =>
                         e.key === "Enter" && (e.preventDefault(), handleAddValue(attr.id))
@@ -405,7 +406,7 @@ export function ProductVariantSection({
               type="text"
               value={newAttrTitle}
               onChange={(e) => setNewAttrTitle(e.target.value)}
-              placeholder="نوع ویژگی جدید (مثلاً حجم)"
+              placeholder={tFrontendAuto("fe.aa338270b258")}
               className="flex-1 px-3 py-2 border border-gray-200 rounded-lg"
               onKeyDown={(e) =>
                 e.key === "Enter" && (e.preventDefault(), handleAddAttribute())
@@ -426,7 +427,7 @@ export function ProductVariantSection({
 
       {/* Product variants */}
       <div className="border border-gray-200 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-gray-900 mb-1">تنوع محصول</h3>
+        <h3 className="text-lg font-medium text-gray-900 mb-1">{tFrontendAuto("fe.82dbaa0e0488")}</h3>
         {productAttrs.length > 0 ? (
           <p className="text-sm text-gray-500 mb-3">
             تنوع‌ها بر اساس ویژگی‌های انتخاب‌شده: {productAttrs.map((a) => a.title).join("، ")}
@@ -439,7 +440,7 @@ export function ProductVariantSection({
 
         {variants.length > 0 && (
           <div className="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200 flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-gray-700">اعمال به همه:</span>
+            <span className="text-sm font-medium text-gray-700">{tFrontendAuto("fe.5078d81abfe5")}</span>
             <input
               type={applyToAllField === "stock" ? "number" : "text"}
               value={applyToAllValue}
@@ -462,10 +463,10 @@ export function ProductVariantSection({
               }
               className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm"
             >
-              <option value="price">قیمت</option>
-              <option value="sell_price">قیمت فروش</option>
-              <option value="stock">موجودی</option>
-              <option value="stock_unlimited">موجودی نامحدود</option>
+              <option value="price">{tFrontendAuto("fe.87abd947fa44")}</option>
+              <option value="sell_price">{tFrontendAuto("fe.26567f6fcad7")}</option>
+              <option value="stock">{tFrontendAuto("fe.f02d402cab22")}</option>
+              <option value="stock_unlimited">{tFrontendAuto("fe.5bdae7e630f6")}</option>
             </select>
             <button
               type="button"
@@ -619,7 +620,7 @@ function VariantEditForm({
       </div>
       <div className="grid grid-cols-3 gap-2">
         <div>
-          <label className="block text-xs text-gray-600 mb-0.5">قیمت</label>
+          <label className="block text-xs text-gray-600 mb-0.5">{tFrontendAuto("fe.87abd947fa44")}</label>
           <input
             type="text"
             value={price}
@@ -628,7 +629,7 @@ function VariantEditForm({
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-0.5">قیمت فروش</label>
+          <label className="block text-xs text-gray-600 mb-0.5">{tFrontendAuto("fe.26567f6fcad7")}</label>
           <input
             type="text"
             value={sellPrice}
@@ -637,7 +638,7 @@ function VariantEditForm({
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-600 mb-0.5">موجودی</label>
+          <label className="block text-xs text-gray-600 mb-0.5">{tFrontendAuto("fe.f02d402cab22")}</label>
           <label className="flex items-center gap-1.5 mb-1 cursor-pointer">
             <input
               type="checkbox"
@@ -645,7 +646,7 @@ function VariantEditForm({
               onChange={(e) => setStockUnlimited(e.target.checked)}
               className="w-3.5 h-3.5 rounded border-gray-300 text-blue-600"
             />
-            <span className="text-xs text-gray-600">نامحدود</span>
+            <span className="text-xs text-gray-600">{tFrontendAuto("fe.3d526e5875e4")}</span>
           </label>
           <input
             type="number"

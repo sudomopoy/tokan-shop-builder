@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from .models import Store, Plan, SettingDefinition, StoreSetting, StoreCategory, SystemConfig, SmartSetupRequest, SmartSetupPayment, DomainChangeRequest
 from import_export.admin import ImportExportModelAdmin
 
@@ -8,9 +9,9 @@ ModelAdmin = admin.ModelAdmin
 
 
 class StoreCategoryAdminForm(forms.ModelForm):
-    """فرم با dropdown برای نوع فروشگاه (slug)"""
+    """Form with dropdown for store type (slug)."""
     slug = forms.ChoiceField(
-        label="نوع فروشگاه",
+        label=_("Store type"),
         choices=StoreCategory.SLUG_CHOICES,
         required=False,
         widget=forms.Select(attrs={"class": "vTextField"}),
@@ -24,7 +25,9 @@ class StoreCategoryAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk and self.instance.slug:
             if self.instance.slug not in [c[0] for c in StoreCategory.SLUG_CHOICES if c[0]]:
-                self.fields["slug"].choices = list(StoreCategory.SLUG_CHOICES) + [(self.instance.slug, f"سایر: {self.instance.slug}")]
+                self.fields["slug"].choices = list(StoreCategory.SLUG_CHOICES) + [
+                    (self.instance.slug, _("Other: %(slug)s") % {"slug": self.instance.slug})
+                ]
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -105,7 +108,7 @@ class DomainChangeRequestAdmin(ModelAdmin):
     search_fields = ["store__name", "store__title", "requested_domain"]
     actions = ["approve_requests", "reject_requests"]
 
-    @admin.action(description="تایید درخواست‌های انتخاب‌شده")
+    @admin.action(description=_("Approve selected requests"))
     def approve_requests(self, request, queryset):
         pending = queryset.filter(status=DomainChangeRequest.STATUS_PENDING)
         for req in pending:
@@ -116,9 +119,13 @@ class DomainChangeRequestAdmin(ModelAdmin):
             req.store.external_domain = req.requested_domain
             req.store.is_shared_store = False
             req.store.save()
-        self.message_user(request, f"{pending.count()} درخواست تایید و دامنه ثبت شد.")
+        self.message_user(
+            request,
+            _("%(count)s requests approved and domain applied.")
+            % {"count": pending.count()},
+        )
 
-    @admin.action(description="رد درخواست‌های انتخاب‌شده")
+    @admin.action(description=_("Reject selected requests"))
     def reject_requests(self, request, queryset):
         pending = queryset.filter(status=DomainChangeRequest.STATUS_PENDING)
         for req in pending:
@@ -126,4 +133,7 @@ class DomainChangeRequestAdmin(ModelAdmin):
             req.reviewed_at = timezone.now()
             req.reviewed_by = request.user
             req.save()
-        self.message_user(request, f"{pending.count()} درخواست رد شد.")
+        self.message_user(
+            request,
+            _("%(count)s requests were rejected.") % {"count": pending.count()},
+        )

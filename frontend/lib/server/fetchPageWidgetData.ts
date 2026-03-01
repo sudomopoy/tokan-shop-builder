@@ -1,5 +1,6 @@
 import type { PageConfig, WidgetConfig } from "@/themes/types";
 import { createServerApi } from "@/lib/api/serverApi";
+import { localizeValue } from "@/lib/i18n/localize";
 
 export type WidgetDataMap = Record<string, unknown>;
 
@@ -47,7 +48,7 @@ export async function fetchPageWidgetData(
         if (id != null) {
           promises.push(
             api.getProduct(id).then((p) => {
-              if (p) setNested(result, "product.detail", p);
+              if (p) setNested(result, "product.detail", localizeValue(p));
             })
           );
         }
@@ -55,7 +56,7 @@ export async function fetchPageWidgetData(
       case "product.listview":
         promises.push(
           api.getProductList(cfg.extraRequestParams?.["product/"] as Record<string, unknown>).then((r) => {
-            setNested(result, "product.listview", r);
+            setNested(result, "product.listview", localizeValue(r));
           })
         );
         break;
@@ -64,7 +65,7 @@ export async function fetchPageWidgetData(
         const mod = (wc.module as string) || "STORE";
         promises.push(
           api.getCategoryTree(mod).then((tree) => {
-            setNested(result, `category.tree.${mod}`, tree);
+            setNested(result, `category.tree.${mod}`, localizeValue(tree));
           })
         );
         break;
@@ -73,7 +74,7 @@ export async function fetchPageWidgetData(
         if (slug) {
           promises.push(
             api.getArticle(String(slug)).then((a) => {
-              if (a) setNested(result, "blog.detail", a);
+              if (a) setNested(result, "blog.detail", localizeValue(a));
             })
           );
         }
@@ -82,7 +83,7 @@ export async function fetchPageWidgetData(
         if (sliderId) {
           promises.push(
             api.getSlider(sliderId).then((s) => {
-              if (s) setNested(result, `slider.${sliderId}`, s);
+              if (s) setNested(result, `slider.${sliderId}`, localizeValue(s));
             })
           );
         }
@@ -91,7 +92,7 @@ export async function fetchPageWidgetData(
         if (menuId) {
           promises.push(
             api.getMenu(menuId).then((menu) => {
-              if (menu) setNested(result, `menu.${menuId}`, menu);
+              if (menu) setNested(result, `menu.${menuId}`, localizeValue(menu));
             })
           );
         }

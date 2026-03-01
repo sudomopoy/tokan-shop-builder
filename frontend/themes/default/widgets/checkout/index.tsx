@@ -41,6 +41,7 @@ import { metaApi, type Province, type City } from "@/lib/api/metaApi";
 import type { WidgetConfig } from "@/themes/types";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("fa-IR").format(price);
@@ -132,7 +133,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
         }
       } catch (err) {
         console.error("Checkout load error:", err);
-        setError("خطا در بارگذاری اطلاعات. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.0223865b884e"));
       } finally {
         setLoading(false);
       }
@@ -255,7 +256,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
   const handleAddAddress = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newAddress.recipient_fullname || !newAddress.phone_number || !newAddress.address_line1 || !newAddress.province || !newAddress.city) {
-      setError("لطفا تمام فیلدهای ضروری را پر کنید.");
+      setError(tFrontendAuto("fe.45f671375270"));
       return;
     }
     setAddingAddress(true);
@@ -285,11 +286,11 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
   const handleSubmitOrder = async () => {
     if (!selectedAddressId || !selectedShippingId) {
-      setError("لطفا آدرس و روش ارسال را انتخاب کنید.");
+      setError(tFrontendAuto("fe.383fe87b996f"));
       return;
     }
     if (!selectedGatewayId) {
-      setError("لطفا درگاه پرداخت را انتخاب کنید.");
+      setError(tFrontendAuto("fe.cc595c628d02"));
       return;
     }
 
@@ -312,7 +313,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
       if (payment_link) {
         window.location.href = payment_link;
       } else {
-        setError("خطا در اتصال به درگاه پرداخت.");
+        setError(tFrontendAuto("fe.2279a5dbe19e"));
       }
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { error?: string; detail?: string } } };
@@ -395,21 +396,21 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                   sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}
                 >
                   <TextField
-                    label="نام تحویل‌گیرنده"
+                    label={tFrontendAuto("fe.ac1ff094272f")}
                     value={newAddress.recipient_fullname}
                     onChange={(e) => setNewAddress((a) => ({ ...a, recipient_fullname: e.target.value }))}
                     required
                     fullWidth
                   />
                   <TextField
-                    label="شماره تماس"
+                    label={tFrontendAuto("fe.7b7e803a0df9")}
                     value={newAddress.phone_number}
                     onChange={(e) => setNewAddress((a) => ({ ...a, phone_number: e.target.value }))}
                     required
                     fullWidth
                   />
                   <TextField
-                    label="آدرس"
+                    label={tFrontendAuto("fe.889f46873df4")}
                     value={newAddress.address_line1}
                     onChange={(e) => setNewAddress((a) => ({ ...a, address_line1: e.target.value }))}
                     required
@@ -418,7 +419,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                     rows={2}
                   />
                   <TextField
-                    label="کد پستی"
+                    label={tFrontendAuto("fe.de246976c5ed")}
                     value={newAddress.postcode}
                     onChange={(e) => setNewAddress((a) => ({ ...a, postcode: e.target.value }))}
                     fullWidth
@@ -426,14 +427,14 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                   <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
                     <TextField
                       select
-                      label="استان"
+                      label={tFrontendAuto("fe.f1402dc45f3f")}
                       value={newAddress.province}
                       onChange={(e) => setNewAddress((a) => ({ ...a, province: e.target.value, city: "" }))}
                       required
                       fullWidth
                       SelectProps={{ native: true }}
                     >
-                      <option value="">انتخاب استان</option>
+                      <option value="">{tFrontendAuto("fe.1afe110b90bd")}</option>
                       {provinces.map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.name}
@@ -442,7 +443,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                     </TextField>
                     <TextField
                       select
-                      label="شهر"
+                      label={tFrontendAuto("fe.9ddae2219b7e")}
                       value={newAddress.city}
                       onChange={(e) => setNewAddress((a) => ({ ...a, city: e.target.value }))}
                       required
@@ -450,7 +451,7 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
                       disabled={!newAddress.province}
                       SelectProps={{ native: true }}
                     >
-                      <option value="">انتخاب شهر</option>
+                      <option value="">{tFrontendAuto("fe.05a28b35a9a1")}</option>
                       {cities.map((c) => (
                         <option key={c.id} value={c.id}>
                           {c.name}
@@ -608,16 +609,16 @@ export default function CheckoutWidget({ config }: { config?: WidgetConfig }) {
 
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-                <Typography color="text.secondary">قیمت کالاها</Typography>
+                <Typography color="text.secondary">{tFrontendAuto("fe.1ea35e715a0b")}</Typography>
                 <Typography>{formatPrice(totalPrice)} تومان</Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-                <Typography color="text.secondary">هزینه ارسال</Typography>
+                <Typography color="text.secondary">{tFrontendAuto("fe.c580b95eac6e")}</Typography>
                 <Typography>{formatPrice(shippingCost)} تومان</Typography>
               </Box>
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                <Typography fontWeight="bold">مبلغ قابل پرداخت</Typography>
+                <Typography fontWeight="bold">{tFrontendAuto("fe.2e6cbd8c252b")}</Typography>
                 <Typography variant="h6" fontWeight="bold" color="primary.main">
                   {formatPrice(payableAmount)} تومان
                 </Typography>

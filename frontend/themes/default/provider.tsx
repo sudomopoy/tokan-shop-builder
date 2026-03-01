@@ -3,6 +3,7 @@
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { DEPLOY_DIRECTION } from "@/lib/i18n/deployment";
 
 // Import Swiper styles
 import "swiper/css";
@@ -33,7 +34,7 @@ export default function DefaultThemeProvider({ children }: PropsWithChildren) {
   const theme = useMemo(
     () =>
       createTheme({
-        direction: "rtl",
+        direction: DEPLOY_DIRECTION,
         palette: {
           mode: "light",
           primary: {

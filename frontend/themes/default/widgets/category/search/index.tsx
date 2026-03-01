@@ -24,6 +24,7 @@ import { Search, Folder, ArrowRight } from "lucide-react";
 import { categoryApi, type Category } from "@/lib/api/categoryApi";
 import type { WidgetConfig } from "@/themes/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function getCategoryLink(cat: Category, module: string): string {
   const id = cat.id;
@@ -104,7 +105,7 @@ export default function CategorySearch({ config }: { config?: WidgetConfig }) {
         setCategories(results);
       } catch (err) {
         console.error("Category search error:", err);
-        setError("خطا در جستجو. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.5697ed15b37e"));
         setCategories([]);
       } finally {
         setLoading(false);
@@ -135,7 +136,7 @@ export default function CategorySearch({ config }: { config?: WidgetConfig }) {
       <Box component="form" onSubmit={handleSearch} sx={{ mb: 4 }}>
         <TextField
           fullWidth
-          placeholder="نام دسته‌بندی را جستجو کنید..."
+          placeholder={tFrontendAuto("fe.018ac9f161d9")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           InputProps={{
@@ -182,7 +183,7 @@ export default function CategorySearch({ config }: { config?: WidgetConfig }) {
           </Typography>
         </Box>
       ) : categories.length === 0 ? (
-        <Alert severity="info">دسته‌بندی‌ای با این عبارت یافت نشد.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.9f7f08cdb3d0")}</Alert>
       ) : (
         <>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>

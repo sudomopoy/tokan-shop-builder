@@ -6,6 +6,7 @@ import { Eye, Pencil, Plus, Sparkles, Trash2 } from "lucide-react";
 import { pageApi, storeApi } from "@/lib/api";
 import { revalidateStorePages } from "@/lib/server/storefrontCache";
 import type { PageConfig } from "@/themes/types";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ManagedPage = PageConfig & {
   id?: string | number;
@@ -44,7 +45,7 @@ export default function DashboardPagesPage() {
     } catch (err) {
       console.error(err);
       setPages([]);
-      setError("خطا در دریافت لیست صفحات");
+      setError(tFrontendAuto("fe.ca65a3861238"));
     } finally {
       setLoading(false);
     }
@@ -101,7 +102,7 @@ export default function DashboardPagesPage() {
       alert("برای این صفحه شناسه (id) دریافت نشد.");
       return;
     }
-    if (!confirm(`آیا از حذف صفحه «${path}» اطمینان دارید؟`)) return;
+    if (!confirm(tFrontendAuto("fe.077acf7a7f3d", { p1: path }))) return;
     try {
       await pageApi.delete(id);
       setPages((prev) => prev.filter((p) => p.id !== id));
@@ -114,7 +115,7 @@ export default function DashboardPagesPage() {
   };
 
   const handleSetupDefault = async () => {
-    if (!confirm("صفحات و ویجت‌های پیشنهادی برای یک فروشگاه استاندارد ساخته می‌شوند. صفحات موجود تغییر نخواهند کرد. ادامه دهید؟")) return;
+    if (!confirm(tFrontendAuto("fe.7200e6971c1d"))) return;
     setSetupBusy(true);
     setError(null);
     try {
@@ -145,7 +146,7 @@ export default function DashboardPagesPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold">صفحه‌ساز</h1>
+        <h1 className="text-3xl font-bold">{tFrontendAuto("fe.3598dc7c8e62")}</h1>
         <button
           type="button"
           onClick={handleSetupDefault}
@@ -158,7 +159,7 @@ export default function DashboardPagesPage() {
       </div>
 
       <form onSubmit={handleCreate} className="card max-w-3xl space-y-4">
-        <h2 className="text-lg font-semibold">ایجاد صفحه جدید</h2>
+        <h2 className="text-lg font-semibold">{tFrontendAuto("fe.a774f97c34e6")}</h2>
 
         {error && (
           <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
@@ -178,8 +179,8 @@ export default function DashboardPagesPage() {
               className="w-full ltr text-left px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
             />
             <p className="text-xs text-gray-500 mt-1">
-              مثال: <code>/</code> ، <code>/about</code> ، یا مسیر داینامیک مثل{" "}
-              <code>/product/:id:number/:slug?:string</code>
+              مثال: <code>/</code>{tFrontendAuto("fe.c6b213e41696")}<code>/about</code> ، یا مسیر داینامیک مثل{" "}
+              <code>{tFrontendAuto("fe.7c16162ac749")}</code>
             </p>
           </div>
           <div>
@@ -189,7 +190,7 @@ export default function DashboardPagesPage() {
             <input
               value={createForm.title}
               onChange={(e) => setCreateForm((f) => ({ ...f, title: e.target.value }))}
-              placeholder="عنوان صفحه"
+              placeholder={tFrontendAuto("fe.e134feb58249")}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -270,7 +271,7 @@ export default function DashboardPagesPage() {
                             <Link
                               href={path}
                               className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                              title="پیش‌نمایش"
+                              title={tFrontendAuto("fe.5634e166b244")}
                               target="_blank"
                             >
                               <Eye className="h-4 w-4" />
@@ -280,14 +281,14 @@ export default function DashboardPagesPage() {
                               <Link
                                 href={`/dashboard/pages/${id}/edit`}
                                 className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                                title="ویرایش صفحه و ویجت‌ها"
+                                title={tFrontendAuto("fe.bef6f2d691de")}
                               >
                                 <Pencil className="h-4 w-4" />
                               </Link>
                             ) : (
                               <button
                                 className="p-2 text-gray-300 rounded cursor-not-allowed"
-                                title="شناسه صفحه موجود نیست"
+                                title={tFrontendAuto("fe.180a16e6e9bb")}
                                 disabled
                               >
                                 <Pencil className="h-4 w-4" />
@@ -297,7 +298,7 @@ export default function DashboardPagesPage() {
                             <button
                               onClick={() => handleDelete(p)}
                               className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded"
-                              title="حذف"
+                              title={tFrontendAuto("fe.fc1d9d323674")}
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { themeApi } from "@/lib/api";
 import type { ThemeCatalog } from "@/lib/api/themeApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 type ThemeSettingsSectionProps = {
   currentThemeSlug: string;
@@ -58,7 +59,7 @@ export function ThemeSettingsSection({
           <Palette className="h-6 w-6 text-blue-600" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-gray-800">ظاهر و تم فروشگاه</h2>
+          <h2 className="text-lg font-bold text-gray-800">{tFrontendAuto("fe.d057c6a083ee")}</h2>
           <p className="text-sm text-gray-500">
             تم مورد نظر خود را انتخاب کرده و فروشگاه را شخصی‌سازی کنید
           </p>
@@ -219,7 +220,7 @@ function ThemeDetailModal({
             type="button"
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-200 transition-colors"
-            aria-label="بستن"
+            aria-label={tFrontendAuto("fe.53df25bd0b3b")}
           >
             <X className="h-5 w-5" />
           </button>
@@ -281,7 +282,7 @@ function ThemeDetailModal({
           {/* توضیحات */}
           {theme.description && (
             <div>
-              <h4 className="text-sm font-semibold text-gray-700 mb-2">توضیحات</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">{tFrontendAuto("fe.8593a9f18909")}</h4>
               <p className="text-sm text-gray-600 leading-relaxed">
                 {theme.description}
               </p>
@@ -292,13 +293,13 @@ function ThemeDetailModal({
           <div className="grid grid-cols-2 gap-3">
             {theme.category && (
               <div className="p-3 rounded-lg bg-gray-50">
-                <span className="text-xs text-gray-500 block mb-0.5">دسته‌بندی</span>
+                <span className="text-xs text-gray-500 block mb-0.5">{tFrontendAuto("fe.6c76efc8a63e")}</span>
                 <span className="text-sm font-medium text-gray-800">{theme.category}</span>
               </div>
             )}
             {theme.tags?.length > 0 && (
               <div className="p-3 rounded-lg bg-gray-50 col-span-2">
-                <span className="text-xs text-gray-500 block mb-2">تگ‌ها</span>
+                <span className="text-xs text-gray-500 block mb-2">{tFrontendAuto("fe.9d2c836e5ed9")}</span>
                 <div className="flex flex-wrap gap-1.5">
                   {theme.tags.map((tag) => (
                     <span
@@ -312,7 +313,7 @@ function ThemeDetailModal({
               </div>
             )}
             <div className="p-3 rounded-lg bg-gray-50">
-              <span className="text-xs text-gray-500 block mb-0.5">نوع</span>
+              <span className="text-xs text-gray-500 block mb-0.5">{tFrontendAuto("fe.3f216d58db33")}</span>
               <span className="text-sm font-medium">
                 {theme.is_paid
                   ? theme.price

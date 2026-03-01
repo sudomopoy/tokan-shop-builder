@@ -7,6 +7,7 @@ import { storeApi, getStoreSetting } from "@/lib/api";
 import type { StoreDetail } from "@/lib/api/storeApi";
 import { faClock, faCube, faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram, faLinkedinIn, faTelegram, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
 const toPersianDigits = (str: string): string =>
@@ -97,7 +98,7 @@ export default function ServaFooter() {
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">خدمات مشتریان</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">{tFrontendAuto("fe.8413c626f244")}</h4>
             <ul className="space-y-3 text-gray-400 text-sm font-medium">
               <li>
                 <Link href="/faq" className="hover:text-primary transition block hover:translate-x-1">
@@ -123,7 +124,7 @@ export default function ServaFooter() {
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">راهنمای خرید</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">{tFrontendAuto("fe.89969a9fee95")}</h4>
             <ul className="space-y-3 text-gray-400 text-sm font-medium">
               <li>
                 <a href="#" className="hover:text-primary transition block hover:translate-x-1">
@@ -149,7 +150,7 @@ export default function ServaFooter() {
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">اطلاعات تماس</h4>
+            <h4 className="font-bold text-lg mb-6 text-white">{tFrontendAuto("fe.a8b2658b0e2f")}</h4>
             <ul className="space-y-4 text-gray-400 text-sm font-medium">
               {address && (
                 <li className="flex items-start gap-3">

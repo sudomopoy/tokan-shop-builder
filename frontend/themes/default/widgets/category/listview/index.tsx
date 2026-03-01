@@ -18,6 +18,7 @@ import { Folder, ArrowRight } from "lucide-react";
 import { categoryApi, type Category } from "@/lib/api/categoryApi";
 import type { WidgetConfig } from "@/themes/types";
 import { usePageRuntime } from "@/themes/runtime/PageRuntimeProvider";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function flattenCategoryTree(items: Category[]): Category[] {
   const out: Category[] = [];
@@ -189,7 +190,7 @@ export default function CategoryListView({ config }: { config?: WidgetConfig }) 
       .catch((err) => {
         if (isMounted) {
           console.error("Category list error:", err);
-          setError("خطا در بارگذاری دسته‌بندی‌ها. لطفا دوباره تلاش کنید.");
+          setError(tFrontendAuto("fe.577dc080e3c8"));
         }
       })
       .finally(() => {
@@ -216,7 +217,7 @@ export default function CategoryListView({ config }: { config?: WidgetConfig }) 
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : categories.length === 0 ? (
-        <Alert severity="info">دسته‌بندی‌ای یافت نشد.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.f460f71ab096")}</Alert>
       ) : parentOnly ? (
         <Stack spacing={4}>
           {categories.map((cat) => (

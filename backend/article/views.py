@@ -17,6 +17,7 @@ import uuid
 import hashlib
 from urllib.parse import urlencode
 from rest_framework.exceptions import PermissionDenied
+from core.i18n import get_deploy_locale
 
 class ArticleViewSet(BaseStoreViewSet):
     queryset = Article.objects.all().order_by('created_at')
@@ -42,6 +43,7 @@ class ArticleViewSet(BaseStoreViewSet):
     def _build_list_cache_key(self, request) -> str:
         store = getattr(request, "store", None)
         store_key = str(getattr(store, "pk", "no_store"))
+        locale = get_deploy_locale()
 
         pairs: list[tuple[str, str]] = []
         for key in sorted(request.query_params.keys()):
@@ -49,7 +51,7 @@ class ArticleViewSet(BaseStoreViewSet):
                 pairs.append((key, value))
         query_string = urlencode(pairs, doseq=True)
         digest = hashlib.sha256(query_string.encode("utf-8")).hexdigest()
-        return f"articles_{store_key}_{digest}"
+        return f"articles_{store_key}_{locale}_{digest}"
 
     @swagger_auto_schema(
         manual_parameters=[
@@ -135,7 +137,7 @@ class ArticleViewSet(BaseStoreViewSet):
         except Exception as e:
             logging.error(str(e))
 
-        cache_key = f'article_{article_id}'
+        cache_key = f'article_{get_deploy_locale()}_{article_id}'
         cached_article = cache.get(cache_key)
         if cached_article:
             return Response(cached_article)

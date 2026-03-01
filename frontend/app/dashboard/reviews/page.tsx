@@ -13,6 +13,7 @@ import {
 import { reviewApi } from "@/lib/api";
 import type { ProductReviewAdmin } from "@/lib/api/reviewApi";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "در انتظار تایید",
@@ -106,7 +107,7 @@ export default function ReviewsPage() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">نظرات کاربران</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{tFrontendAuto("fe.8dc079691c98")}</h1>
             <p className="text-sm text-gray-500 mt-1">
               نظرات در انتظار تایید را بررسی و تایید یا رد کنید.
             </p>
@@ -137,7 +138,7 @@ export default function ReviewsPage() {
         ) : reviews.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
             <MessageSquare className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">هنوز نظری ثبت نشده است.</p>
+            <p className="text-gray-500">{tFrontendAuto("fe.344c9479b32d")}</p>
           </div>
         ) : (
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -186,7 +187,7 @@ export default function ReviewsPage() {
                       {r.body ? (
                         <p className="text-sm text-gray-600 leading-relaxed">{r.body}</p>
                       ) : (
-                        <p className="text-sm text-gray-400 italic">بدون متن</p>
+                        <p className="text-sm text-gray-400 italic">{tFrontendAuto("fe.6d88a807d347")}</p>
                       )}
                     </div>
                     {r.status === "pending" ? (

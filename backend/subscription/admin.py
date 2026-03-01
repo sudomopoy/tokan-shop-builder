@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from .models import (
     SubscriptionPlan,
     SubscriptionPlanDuration,
@@ -30,9 +31,9 @@ class SubscriptionPlanDurationAdmin(admin.ModelAdmin):
     list_filter = ["plan", "is_active"]
 
     def final_price_display(self, obj):
-        return f"{obj.final_price:,.0f} تومان"
+        return _("%(amount)s Toman") % {"amount": f"{obj.final_price:,.0f}"}
 
-    final_price_display.short_description = "قیمت نهایی"
+    final_price_display.short_description = _("Final price")
 
 
 @admin.register(SubscriptionDiscountCode)

@@ -11,6 +11,7 @@ import { DownloadableFilesEditor, type DownloadableFileEntry } from "./Downloada
 import { RichTextEditor } from "./RichTextEditor";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import type { Category } from "@/lib/api/categoryApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 function getMediaUrl(media: Media): string {
@@ -44,10 +45,10 @@ function StreamingVideoField({ value, onChange }: { value: Media | null; onChang
           className="w-full flex items-center gap-3 p-4 border-2 border-dashed border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50/50 transition"
         >
           <FolderOpen className="w-8 h-8 text-gray-400" />
-          <span className="text-sm text-gray-600">انتخاب ویدیو از گالری یا آپلود</span>
+          <span className="text-sm text-gray-600">{tFrontendAuto("fe.6c3eaaaede0f")}</span>
         </button>
       )}
-      <p className="text-xs text-gray-500">ویدیو پس از ذخیره به فرمت HLS تبدیل می‌شود و امن پخش می‌شود.</p>
+      <p className="text-xs text-gray-500">{tFrontendAuto("fe.e29663785b13")}</p>
       <FileManagerModal open={open} onClose={() => setOpen(false)} onSelect={(m) => { onChange(m); setOpen(false); }} mode="single" accept="video" />
     </div>
   );
@@ -203,15 +204,15 @@ function CategorySection({
 
   return (
     <section className="card p-4 space-y-4">
-      <h3 className="text-base font-semibold text-gray-900 mb-4">انتخاب دسته‌بندی</h3>
+      <h3 className="text-base font-semibold text-gray-900 mb-4">{tFrontendAuto("fe.b045980215b7")}</h3>
       <div>
-        <label className={labelClass}>دسته‌بندی‌ها</label>
+        <label className={labelClass}>{tFrontendAuto("fe.90418a312e66")}</label>
         <p className="text-xs text-gray-500 mb-2">
           با انتخاب هر دسته، تمام دسته‌های والد آن به‌صورت خودکار اضافه می‌شوند.
         </p>
         <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-0">
           {categoriesTree.length === 0 ? (
-            <p className="text-sm text-gray-500 py-2">دسته‌بندی‌ای یافت نشد.</p>
+            <p className="text-sm text-gray-500 py-2">{tFrontendAuto("fe.f460f71ab096")}</p>
           ) : (
             categoriesTree.map((c) => (
               <ProductCategoryCheckbox
@@ -231,7 +232,7 @@ function CategorySection({
               value={newCatName}
               onChange={(e) => setNewCatName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleCreateCategory())}
-              placeholder="دسته‌بندی جدید"
+              placeholder={tFrontendAuto("fe.c7519b499eb4")}
               className="flex-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               disabled={creatingCat}
             />
@@ -287,12 +288,12 @@ function TagSection({
 
   return (
     <section className="card p-4 space-y-4">
-      <h3 className="text-base font-semibold text-gray-900 mb-4">برچسب‌ها</h3>
+      <h3 className="text-base font-semibold text-gray-900 mb-4">{tFrontendAuto("fe.3222ea2c45bc")}</h3>
       <div>
-        <label className={labelClass}>انتخاب برچسب‌ها</label>
+        <label className={labelClass}>{tFrontendAuto("fe.6f5117d1cbdb")}</label>
         <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-0">
           {allTags.length === 0 ? (
-            <p className="text-sm text-gray-500 py-2">برچسبی یافت نشد.</p>
+            <p className="text-sm text-gray-500 py-2">{tFrontendAuto("fe.444bbd3acef0")}</p>
           ) : (
             allTags.map((t) => (
               <label
@@ -317,7 +318,7 @@ function TagSection({
               value={newTagName}
               onChange={(e) => setNewTagName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleCreateTag())}
-              placeholder="تگ جدید"
+              placeholder={tFrontendAuto("fe.f8e2d7a6513e")}
               className="flex-1 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               disabled={creatingTag}
             />
@@ -434,7 +435,7 @@ export function ProductFormLayout({
       <aside className="lg:col-span-1 space-y-6 order-2 lg:order-1">
         {/* Images */}
         <section className="card p-4">
-          <h3 className="text-base font-semibold text-gray-900 mb-4">تصاویر</h3>
+          <h3 className="text-base font-semibold text-gray-900 mb-4">{tFrontendAuto("fe.2467aa45516f")}</h3>
           <ProductImageFields
             mainImage={mainImage}
             galleryImages={galleryImages}
@@ -467,7 +468,7 @@ export function ProductFormLayout({
 
           {/* Publish status */}
           <div>
-            <label className={labelClass}>وضعیت انتشار</label>
+            <label className={labelClass}>{tFrontendAuto("fe.565f50d0ee7c")}</label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -492,34 +493,34 @@ export function ProductFormLayout({
           </h3>
 
           <div>
-            <label className={labelClass}>عنوان *</label>
+            <label className={labelClass}>{tFrontendAuto("fe.a83c261c5577")}</label>
             <input
               type="text"
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
               required
               className={inputClass}
-              placeholder="عنوان محصول"
+              placeholder={tFrontendAuto("fe.7327fc94fbca")}
             />
           </div>
 
           <div>
-            <label className={labelClass}>توضیح کوتاه</label>
+            <label className={labelClass}>{tFrontendAuto("fe.cd07f2cfe6a9")}</label>
             <input
               type="text"
               value={shortDescription}
               onChange={(e) => onShortDescriptionChange(e.target.value)}
               className={inputClass}
-              placeholder="توضیح کوتاه برای نمایش در لیست"
+              placeholder={tFrontendAuto("fe.599a024ea25f")}
             />
           </div>
 
           <div>
-            <label className={labelClass}>توضیحات</label>
+            <label className={labelClass}>{tFrontendAuto("fe.8593a9f18909")}</label>
             <RichTextEditor
               value={description}
               onChange={onDescriptionChange}
-              placeholder="توضیحات کامل محصول را بنویسید..."
+              placeholder={tFrontendAuto("fe.7430ff841b29")}
             />
           </div>
         </section>
@@ -538,7 +539,7 @@ export function ProductFormLayout({
           )}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className={labelClass}>قیمت (تومان)</label>
+              <label className={labelClass}>{tFrontendAuto("fe.b8f408dfd74d")}</label>
               <input
                 type="number"
                 min="0"
@@ -550,7 +551,7 @@ export function ProductFormLayout({
               />
             </div>
             <div>
-              <label className={labelClass}>قیمت فروش (تومان)</label>
+              <label className={labelClass}>{tFrontendAuto("fe.aeed5d507cf3")}</label>
               <input
                 type="number"
                 min="0"
@@ -562,7 +563,7 @@ export function ProductFormLayout({
               />
             </div>
             <div>
-              <label className={labelClass}>موجودی</label>
+              <label className={labelClass}>{tFrontendAuto("fe.f02d402cab22")}</label>
               <label className="flex items-center gap-2 mb-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -571,7 +572,7 @@ export function ProductFormLayout({
                   disabled={hasVariantsEnabled}
                   className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 disabled:opacity-60"
                 />
-                <span className="text-sm text-gray-700">موجودی نامحدود</span>
+                <span className="text-sm text-gray-700">{tFrontendAuto("fe.5bdae7e630f6")}</span>
               </label>
               <input
                 type="number"
@@ -590,16 +591,16 @@ export function ProductFormLayout({
         {/* Digital product fields */}
         {isDigital && (
           <section className="card p-4 space-y-4">
-            <h3 className="text-base font-semibold text-gray-900">تنظیمات محصول دیجیتال</h3>
+            <h3 className="text-base font-semibold text-gray-900">{tFrontendAuto("fe.8bf0524ba66b")}</h3>
             {onDigitalSubtypeChange && (
               <div>
-                <label className={labelClass}>نوع محصول دیجیتال</label>
+                <label className={labelClass}>{tFrontendAuto("fe.a2237d4603e2")}</label>
                 <select
                   value={digitalSubtype ?? ""}
                   onChange={(e) => onDigitalSubtypeChange(e.target.value)}
                   className={inputClass}
                 >
-                  <option value="">انتخاب کنید</option>
+                  <option value="">{tFrontendAuto("fe.b3128f65dc93")}</option>
                   {getDigitalSubtypes(storeCategorySlug).map((s) => (
                     <option key={s.value} value={s.value}>
                       {s.label}
@@ -620,20 +621,20 @@ export function ProductFormLayout({
               <>
                 {onStreamingSourceChange && (
                   <div>
-                    <label className={labelClass}>منبع استریم</label>
+                    <label className={labelClass}>{tFrontendAuto("fe.37b004a90294")}</label>
                     <select
                       value={streamingSource ?? "external_link"}
                       onChange={(e) => onStreamingSourceChange(e.target.value as "external_link" | "uploaded")}
                       className={inputClass}
                     >
-                      <option value="external_link">لینک استریم خارجی</option>
-                      <option value="uploaded">آپلود ویدیو (تبدیل به HLS)</option>
+                      <option value="external_link">{tFrontendAuto("fe.de9268593609")}</option>
+                      <option value="uploaded">{tFrontendAuto("fe.61ed3dafd614")}</option>
                     </select>
                   </div>
                 )}
                 {streamingSource === "external_link" && onStreamingUrlChange && (
                   <div>
-                    <label className={labelClass}>لینک استریم</label>
+                    <label className={labelClass}>{tFrontendAuto("fe.5decfea09f74")}</label>
                     <input
                       type="url"
                       value={streamingUrl ?? ""}
@@ -645,7 +646,7 @@ export function ProductFormLayout({
                 )}
                 {streamingSource === "uploaded" && onStreamingVideoChange && (
                   <div>
-                    <label className={labelClass}>فایل ویدیو</label>
+                    <label className={labelClass}>{tFrontendAuto("fe.e0d9ce1d712e")}</label>
                     <StreamingVideoField
                       value={streamingVideo}
                       onChange={onStreamingVideoChange}
@@ -673,7 +674,7 @@ export function ProductFormLayout({
               انواع ویژگی‌ها و تنوع‌ها
             </h3>
             <label className="flex items-center gap-2 cursor-pointer">
-              <span className="text-sm text-gray-700">محصول من تنوع دارد؟</span>
+              <span className="text-sm text-gray-700">{tFrontendAuto("fe.07ae2a817ebe")}</span>
               <input
                 type="checkbox"
                 checked={hasVariantsEnabled}

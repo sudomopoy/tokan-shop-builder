@@ -15,6 +15,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 function WarningFallback({ title, description, code }: { title: string; description: string; code?: string }) {
   return (
@@ -185,7 +186,7 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
           return;
         }
         console.error("Error fetching slider:", err);
-        setError("خطا در بارگذاری اسلایدر. لطفا دوباره تلاش کنید.");
+        setError(tFrontendAuto("fe.d115f4f0c7d6"));
         setLoading(false);
       });
 
@@ -197,8 +198,8 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
   if (!sliderId) {
     return (
       <WarningFallback
-        title="ویجت اسلایدر"
-        description="اسلایدر آیدی تعریف نشده است. لطفاً در تنظیمات ویجت، `slider_id` را تعیین کنید."
+        title={tFrontendAuto("fe.ad94d0e9bfba")}
+        description={tFrontendAuto("fe.c476cf42a8fa")}
       />
     );
   }
@@ -224,8 +225,8 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
   if (sliderFound === false) {
     return (
       <WarningFallback
-        title="ویجت اسلایدر"
-        description="اسلایدر مورد نظر حذف شده یا غیرفعال است."
+        title={tFrontendAuto("fe.ad94d0e9bfba")}
+        description={tFrontendAuto("fe.da4ccf55f535")}
         code={`slider_id: ${sliderId}`}
       />
     );
@@ -235,7 +236,7 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
   if (sliderFound === true && resolvedSlides.length === 0) {
     return (
       <Box className="py-6">
-        <Alert severity="info">برای این اسلایدر، اسلاید فعالی وجود ندارد.</Alert>
+        <Alert severity="info">{tFrontendAuto("fe.dceea560895f")}</Alert>
       </Box>
     );
   }
@@ -400,7 +401,7 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
           <IconButton
             onClick={handlePrev}
             disabled={isBeginning}
-            aria-label="اسلاید قبلی"
+            aria-label={tFrontendAuto("fe.6ce26f2ee1b5")}
             sx={{
               position: "absolute",
               insetInlineEnd: 0,
@@ -435,7 +436,7 @@ export default function Slider({ config }: { config?: WidgetConfig }) {
           <IconButton
             onClick={handleNext}
             disabled={isEnd}
-            aria-label="اسلاید بعدی"
+            aria-label={tFrontendAuto("fe.1a5d8735b5c8")}
             sx={{
               position: "absolute",
               insetInlineStart: 0,

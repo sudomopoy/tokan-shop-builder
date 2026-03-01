@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { WidgetConfig } from "@/themes/types";
 import { orderApi, type Order } from "@/lib/api/orderApi";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => new Intl.NumberFormat("fa-IR").format(price);
 const ensureNumber = (v: unknown): number => (typeof v === "string" ? parseFloat(v) || 0 : typeof v === "number" ? v : 0);
@@ -88,7 +89,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
       setOrder(data);
     } catch (e) {
       console.error(e);
-      setError("سفارش یافت نشد.");
+      setError(tFrontendAuto("fe.bd476c98aaaf"));
       setOrder(null);
     } finally {
       setLoading(false);
@@ -105,21 +106,21 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
               خانه
             </Link>
             <span className="text-xs opacity-60">‹</span>
-            <span className="text-dark">پیگیری سفارش</span>
+            <span className="text-dark">{tFrontendAuto("fe.a9326a29b69c")}</span>
           </nav>
         </div>
       </div>
 
       <section className="container py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">پیگیری سفارش</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">{tFrontendAuto("fe.a9326a29b69c")}</h1>
 
         <div className="bg-white rounded-xl p-6 mb-8">
-          <h2 className="text-lg font-bold text-dark mb-4">جستجوی سفارش</h2>
+          <h2 className="text-lg font-bold text-dark mb-4">{tFrontendAuto("fe.b1cecad97e68")}</h2>
           <div className="flex flex-col md:flex-row gap-4">
             <input
               value={orderCode}
               onChange={(e) => setOrderCode(e.target.value)}
-              placeholder="کد سفارش را وارد کنید"
+              placeholder={tFrontendAuto("fe.8f6213d86db5")}
               className="flex-1 px-4 py-3 border rounded-lg focus:border-primary focus:outline-none"
             />
             <button
@@ -154,7 +155,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
               </div>
 
               <div className="border-t pt-6">
-                <h3 className="font-bold text-dark mb-6">وضعیت سفارش</h3>
+                <h3 className="font-bold text-dark mb-6">{tFrontendAuto("fe.4b945c1ab47c")}</h3>
                 <div className="space-y-6">
                   {timeline.map((t) => {
                     const dotCls =
@@ -182,7 +183,7 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
 
               {/* خلاصه فاکتور */}
               <div className="border-t pt-6 mt-6">
-                <h3 className="font-bold text-dark mb-4">خلاصه سفارش</h3>
+                <h3 className="font-bold text-dark mb-4">{tFrontendAuto("fe.aa69600564cc")}</h3>
                 <div className="space-y-2 mb-4">
                   {order.items?.map((item) => {
                     const prod = item.product as { title?: string } | undefined;
@@ -200,15 +201,15 @@ export default function OrderDetail({ config }: { config?: WidgetConfig }) {
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">قیمت کالاها</span>
+                    <span className="text-gray-600">{tFrontendAuto("fe.1ea35e715a0b")}</span>
                     <span>{formatPrice(ensureNumber(order.products_total_amount))} تومان</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">هزینه ارسال</span>
+                    <span className="text-gray-600">{tFrontendAuto("fe.c580b95eac6e")}</span>
                     <span>{formatPrice(ensureNumber(order.delivery_amount))} تومان</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg pt-2 border-t">
-                    <span>مبلغ قابل پرداخت</span>
+                    <span>{tFrontendAuto("fe.2e6cbd8c252b")}</span>
                     <span className="text-primary">{formatPrice(ensureNumber(order.payable_amount))} تومان</span>
                   </div>
                 </div>

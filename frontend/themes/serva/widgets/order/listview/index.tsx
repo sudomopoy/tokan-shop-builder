@@ -7,6 +7,7 @@ import type { WidgetConfig } from "@/themes/types";
 import { orderApi, type Order } from "@/lib/api/orderApi";
 import { useAppSelector } from "@/lib/store/hooks";
 import { selectIsAuthenticated } from "@/lib/store/authSlice";
+import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const formatPrice = (price: number): string => new Intl.NumberFormat("fa-IR").format(price);
 const ensureNumber = (v: unknown): number => (typeof v === "string" ? parseFloat(v) || 0 : typeof v === "number" ? v : 0);
@@ -66,7 +67,7 @@ export default function OrderListView({ config }: { config?: WidgetConfig }) {
       .then((res) => mounted && setOrders(res))
       .catch((e) => {
         console.error(e);
-        mounted && setError("خطا در بارگذاری سفارش‌ها.");
+        mounted && setError(tFrontendAuto("fe.d771d724e830"));
       })
       .finally(() => mounted && setLoading(false));
     return () => {
@@ -78,7 +79,7 @@ export default function OrderListView({ config }: { config?: WidgetConfig }) {
     return (
       <section className="container py-12">
         <div className="bg-white rounded-xl p-6 text-center">
-          <h2 className="text-xl font-bold text-dark mb-4">برای مشاهده سفارش‌ها وارد شوید</h2>
+          <h2 className="text-xl font-bold text-dark mb-4">{tFrontendAuto("fe.f3669791fd4f")}</h2>
           <button onClick={() => router.push(`/login?next=/orders`)} className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
             ورود
           </button>
@@ -89,16 +90,16 @@ export default function OrderListView({ config }: { config?: WidgetConfig }) {
 
   return (
     <section className="container py-8">
-      <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">سفارش‌های من</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-dark mb-6">{tFrontendAuto("fe.af826736405e")}</h1>
 
       {loading ? (
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">در حال بارگذاری...</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.3e07344c65a3")}</div>
       ) : error ? (
         <div className="bg-white rounded-xl p-6">
           <div className="bg-red-50 text-red-700 rounded-lg p-4">{error}</div>
         </div>
       ) : orders.length === 0 ? (
-        <div className="bg-white rounded-xl p-10 text-center text-gray-500">سفارشی یافت نشد.</div>
+        <div className="bg-white rounded-xl p-10 text-center text-gray-500">{tFrontendAuto("fe.aacd189b0ca2")}</div>
       ) : (
         <div className="bg-white rounded-xl p-6 space-y-4">
           {orders.map((o) => (
