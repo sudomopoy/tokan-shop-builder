@@ -91,7 +91,9 @@ const BLOG_TABS = [
 const RESERVATION_TABS = [
   { id: "appointments", name: "لیست رزروها", href: "/dashboard/reservation", icon: CalendarDays },
   { id: "providers", name: "ارائه‌دهندگان", href: "/dashboard/reservation/providers", icon: Users },
+  { id: "categories", name: "دسته‌بندی خدمات", href: "/dashboard/reservation/categories", icon: FolderOpen },
   { id: "services", name: "سرویس‌ها", href: "/dashboard/reservation/services", icon: Package },
+  { id: "capacity", name: "ظرفیت و تقویم", href: "/dashboard/reservation/capacity", icon: SlidersHorizontal },
 ] as const;
 
 /** نقشه مسیر به بخش برای فیلتر دسترسی ادمین */
@@ -404,6 +406,8 @@ export default function DashboardLayout({
                     ? pathname?.startsWith("/dashboard/products")
                     : expandKey === "blog"
                       ? pathname?.startsWith("/dashboard/blog")
+                      : expandKey === "reservation"
+                        ? pathname?.startsWith("/dashboard/reservation")
                       : false;
               const isExpanded = expandKey && expandedSection === expandKey;
 
@@ -433,7 +437,7 @@ export default function DashboardLayout({
                         {item.children.map((child: { id: string; name: string; href: string; icon: React.ComponentType<{ className?: string }> }) => {
                           const isChildActive = expandKey === "settings"
                             ? pathname === "/dashboard/settings" && currentTab === child.id
-                            : pathname === child.href;
+                            : pathname === child.href || pathname?.startsWith(`${child.href}/`);
                           return (
                             <Link
                               key={child.id}
@@ -530,6 +534,8 @@ export default function DashboardLayout({
                     ? pathname?.startsWith("/dashboard/products")
                     : expandKey === "blog"
                       ? pathname?.startsWith("/dashboard/blog")
+                      : expandKey === "reservation"
+                        ? pathname?.startsWith("/dashboard/reservation")
                       : false;
               const isExpanded = expandKey && expandedSection === expandKey;
 
@@ -559,7 +565,7 @@ export default function DashboardLayout({
                       {item.children.map((child: { id: string; name: string; href: string; icon: React.ComponentType<{ className?: string }> }) => {
                         const isChildActive = expandKey === "settings"
                           ? pathname === "/dashboard/settings" && currentTab === child.id
-                          : pathname === child.href;
+                          : pathname === child.href || pathname?.startsWith(`${child.href}/`);
                         return (
                           <Link
                             key={child.id}

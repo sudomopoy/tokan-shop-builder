@@ -7,16 +7,18 @@ import { ArrowRight, FolderOpen } from "lucide-react";
 import { apiClient } from "@/lib/api/apiClient";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import type { Media } from "@/lib/api/productApi";
-import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
-const inputClass = "w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500";
+const inputClass =
+  "w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500";
 const labelClass = "block text-sm font-medium text-gray-700 mb-1";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 function getImageUrl(media: Media | null): string {
   if (!media?.file) return "";
-  const f = media.file;
-  return f.startsWith("http") ? f : `${API_BASE.replace(/\/$/, "")}${f.startsWith("/") ? "" : "/"}${f}`;
+  const filePath = media.file;
+  return filePath.startsWith("http")
+    ? filePath
+    : `${API_BASE.replace(/\/$/, "")}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
 }
 
 export default function NewProviderPage() {
@@ -29,6 +31,7 @@ export default function NewProviderPage() {
     title: "",
     description: "",
     sort_order: "0",
+    is_active: true,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,10 +44,14 @@ export default function NewProviderPage() {
         description: form.description || "",
         avatar: avatar?.id ?? null,
         sort_order: parseInt(form.sort_order, 10) || 0,
+        is_active: form.is_active,
       });
       router.push("/dashboard/reservation/providers");
     } catch (err: any) {
-      const msg = err?.response?.data?.title?.[0] || err?.response?.data?.detail || "خطا در ایجاد ارائه‌دهنده";
+      const msg =
+        err?.response?.data?.title?.[0] ||
+        err?.response?.data?.detail ||
+        "خطا در ایجاد ارائه‌دهنده";
       setError(Array.isArray(msg) ? msg.join(", ") : String(msg));
     } finally {
       setLoading(false);
@@ -59,13 +66,20 @@ export default function NewProviderPage() {
             <ArrowRight className="h-5 w-5" />
             بازگشت
           </Link>
-          <h1 className="text-3xl font-bold">{tFrontendAuto("fe.563cb6f5ea28")}</h1>
+          <h1 className="text-3xl font-bold">افزودن ارائه‌دهنده</h1>
         </div>
         <div className="flex gap-3">
-          <button type="submit" form="provider-form" disabled={loading || !form.title} className="btn-primary disabled:opacity-50">
+          <button
+            type="submit"
+            form="provider-form"
+            disabled={loading || !form.title}
+            className="btn-primary disabled:opacity-50"
+          >
             {loading ? "در حال ذخیره..." : "ذخیره"}
           </button>
-          <Link href="/dashboard/reservation/providers" className="btn-secondary">{tFrontendAuto("fe.9ea072503092")}</Link>
+          <Link href="/dashboard/reservation/providers" className="btn-secondary">
+            انصراف
+          </Link>
         </div>
       </div>
 
@@ -73,60 +87,77 @@ export default function NewProviderPage() {
         {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>}
 
         <div className="card p-6 space-y-4">
-          <h2 className="text-lg font-semibold">{tFrontendAuto("fe.b7b49e4c2bc3")}</h2>
           <div>
-            <label className={labelClass}>{tFrontendAuto("fe.a83c261c5577")}</label>
+            <label className={labelClass}>نام ارائه‌دهنده</label>
             <input
               type="text"
               value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+              onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
               className={inputClass}
-              placeholder={tFrontendAuto("fe.ae1b13c29fd4")}
+              placeholder="مثلاً: دکتر احمدی"
               required
             />
           </div>
+
           <div>
-            <label className={labelClass}>{tFrontendAuto("fe.8593a9f18909")}</label>
+            <label className={labelClass}>توضیح</label>
             <textarea
               value={form.description}
-              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+              onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
               className={inputClass}
               rows={3}
-              placeholder={tFrontendAuto("fe.f858a6cb795c")}
+              placeholder="توضیح کوتاه"
             />
           </div>
+
           <div>
-            <label className={labelClass}>{tFrontendAuto("fe.f1031f8fd33b")}</label>
+            <label className={labelClass}>تصویر پروفایل</label>
             {avatar ? (
               <div className="flex items-center gap-3">
-                <img src={getImageUrl(avatar)} alt={tFrontendAuto("fe.868af833cab1")}w-16 h-16 rounded-full object-cover" />
-                <button type="button" onClick={() => setAvatar(null)} className="text-red-600 text-sm">{tFrontendAuto("fe.fc1d9d323674")}</button>
+                <img src={getImageUrl(avatar)} alt={form.title || "provider"} className="w-16 h-16 rounded-full object-cover" />
+                <button type="button" onClick={() => setAvatar(null)} className="text-red-600 text-sm">
+                  حذف تصویر
+                </button>
               </div>
             ) : (
-              <button type="button" onClick={() => setFileManagerOpen(true)} className="flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-gray-600 hover:bg-gray-50">
+              <button
+                type="button"
+                onClick={() => setFileManagerOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg text-gray-600 hover:bg-gray-50"
+              >
                 <FolderOpen className="h-5 w-5" />
                 انتخاب از گالری
               </button>
             )}
           </div>
+
           <div>
-            <label className={labelClass}>{tFrontendAuto("fe.43b9d39131fa")}</label>
+            <label className={labelClass}>ترتیب نمایش</label>
             <input
               type="number"
               value={form.sort_order}
-              onChange={(e) => setForm((f) => ({ ...f, sort_order: e.target.value }))}
+              onChange={(e) => setForm((prev) => ({ ...prev, sort_order: e.target.value }))}
               className={inputClass}
               min={0}
             />
           </div>
+
+          <label className="flex items-center gap-2 text-sm text-gray-700">
+            <input
+              type="checkbox"
+              checked={form.is_active}
+              onChange={(e) => setForm((prev) => ({ ...prev, is_active: e.target.checked }))}
+            />
+            فعال باشد
+          </label>
         </div>
       </form>
 
       <FileManagerModal
         open={fileManagerOpen}
         onClose={() => setFileManagerOpen(false)}
-        onSelect={(m) => {
-          setAvatar(m);
+        onSelect={(media) => {
+          setAvatar(media);
           setFileManagerOpen(false);
         }}
         accept="image"
