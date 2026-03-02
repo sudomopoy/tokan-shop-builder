@@ -1,11 +1,15 @@
+﻿from decimal import Decimal
+
 from rest_framework import serializers
-from .models import Order, OrderItem, ShippingMethod, ShippingMethodDefinition
-from product.serializers import OrderItemVariantSerializer, OrderItemProductSerializer
-from product.models import Variant, Product
-from decimal import Decimal
-from media.serializers import MediaSerializer
+
 from account.models import Address
-from meta.serializers import ProvinceSerializer, CitySerializer
+from media.serializers import MediaSerializer
+from meta.serializers import CitySerializer, ProvinceSerializer
+from product.models import Product, Variant
+from product.pricing import calculate_cart_pricing, calculate_line_pricing
+from product.serializers import OrderItemProductSerializer, OrderItemVariantSerializer
+
+from .models import Order, OrderItem, ShippingMethod, ShippingMethodDefinition
 
 
 class ShippingMethodDefinitionSerializer(serializers.ModelSerializer):
@@ -21,8 +25,13 @@ class OrderAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = [
-            "id", "recipient_fullname", "phone_number", "address_line1",
-            "postcode", "province", "city",
+            "id",
+            "recipient_fullname",
+            "phone_number",
+            "address_line1",
+            "postcode",
+            "province",
+            "city",
         ]
 
 
@@ -36,8 +45,6 @@ class ShippingMethodSerializer(serializers.ModelSerializer):
 
 
 class ShippingMethodUpdateSerializer(serializers.ModelSerializer):
-    """For PATCH: store can update name, description, prices, is_active, etc."""
-
     class Meta:
         model = ShippingMethod
         fields = (
@@ -55,8 +62,6 @@ class ShippingMethodUpdateSerializer(serializers.ModelSerializer):
 
 
 class ShippingMethodCreateSerializer(serializers.ModelSerializer):
-    """For POST: store adds a custom shipping method (no definition)."""
-
     class Meta:
         model = ShippingMethod
         fields = (
@@ -75,9 +80,9 @@ class ShippingMethodCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get("request")
         if not request or not getattr(request, "store", None):
-            raise serializers.ValidationError("فروشگاه مشخص نیست.")
+            raise serializers.ValidationError("Store is not resolved.")
         validated_data["store"] = request.store
-        validated_data["definition"] = None  # custom method
+        validated_data["definition"] = None
         return super().create(validated_data)
 
 
@@ -91,14 +96,19 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = [
-            "id", "variant", "variant_id", "product", "product_id",
-            "quantity", "unit_price", "custom_input_values",
+            "id",
+            "variant",
+            "variant_id",
+            "product",
+            "product_id",
+            "quantity",
+            "unit_price",
+            "custom_input_values",
         ]
         read_only_fields = ["unit_price"]
 
 
 class OrderStoreUserSerializer(serializers.Serializer):
-    """Minimal customer info for order list (store admin view)."""
     id = serializers.UUIDField(read_only=True)
     display_name = serializers.CharField(read_only=True)
     user_mobile = serializers.SerializerMethodField()
@@ -121,6 +131,8 @@ class OrderSerializer(serializers.ModelSerializer):
             "code",
             "is_payed",
             "products_total_amount",
+            "cart_discount_percent",
+            "cart_discount_amount",
             "payable_amount",
             "delivery_amount",
             "status",
@@ -138,6 +150,8 @@ class OrderSerializer(serializers.ModelSerializer):
             "code",
             "status",
             "products_total_amount",
+            "cart_discount_percent",
+            "cart_discount_amount",
             "payable_amount",
             "delivery_amount",
             "shipping_tracking_code",
@@ -147,68 +161,115 @@ class OrderSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
+        request = self.context.get("request")
+        store = getattr(request, "store", None) if request else None
+        store_user = getattr(request, "store_user", None) if request else None
+
         items = data.get("items", [])
         if not items:
-            raise serializers.ValidationError("Order must have at least one item")
+            raise serializers.ValidationError("Order must have at least one item.")
 
-        # Calculate total amount and validate variants; detect if any physical product
-        products_total_amount = Decimal("0")
         has_physical = False
+        line_pricings = []
+
         for item in items:
             product_id = item.get("product_id")
-            variant_id = item.get("variant_id", None)
-            quantity = item.get("quantity", 0)
-            try:
-                product = Product.objects.get(id=product_id)
-            except Product.DoesNotExist:
-                raise serializers.ValidationError(
-                    f"Product {product_id} does not exist"
-                )
-            if not product.is_digital:
-                has_physical = True
+            variant_id = item.get("variant_id")
+            quantity = int(item.get("quantity") or 0)
+
+            if quantity < 1:
+                raise serializers.ValidationError({"items": "Quantity must be at least 1."})
+
+            product_qs = Product.objects.filter(id=product_id)
+            if store:
+                product_qs = product_qs.filter(store=store)
+            product = product_qs.first()
+            if not product:
+                raise serializers.ValidationError(f"Product {product_id} does not exist in this store.")
+
+            if not product.is_active:
+                raise serializers.ValidationError(f"Product {product_id} is not active.")
+
+            variant = None
             if variant_id:
-                try:
-                    variant = Variant.objects.get(id=variant_id)
-                    if variant.product.id != product.id:
-                        raise serializers.ValidationError(
-                            f"Product and variant most be same {variant_id}"
-                        )
-                    if not getattr(variant, "stock_unlimited", False) and variant.stock < quantity:
-                        raise serializers.ValidationError(
-                            f"Insufficient stock for variant {variant_id}"
-                        )
-                    item["unit_price"] = variant.sell_price
-                    products_total_amount += variant.sell_price * quantity
-                except Variant.DoesNotExist:
+                variant = Variant.objects.filter(id=variant_id, product=product).first()
+                if not variant:
                     raise serializers.ValidationError(
-                        f"Product variant {variant_id} does not exist"
+                        f"Product variant {variant_id} does not exist for this product."
                     )
             else:
-                if product.main_variant or Variant.objects.filter(product__id=product.pk).exists():
-                    raise serializers.ValidationError('Product with variant most order with variant')
-                if not getattr(product, "stock_unlimited", False) and (product.stock or 0) < quantity:
-                    raise serializers.ValidationError(f"Insufficient stock for product {product_id}")
-                item["unit_price"] = product.sell_price
-                products_total_amount += product.sell_price * quantity
+                if not product.is_wholesale_mode and product.variants.exists():
+                    raise serializers.ValidationError(
+                        "Products with variants must be ordered using a variant_id."
+                    )
+
+            try:
+                line_pricing = calculate_line_pricing(
+                    product=product,
+                    variant=variant,
+                    quantity=quantity,
+                    store_user=store_user,
+                )
+            except PermissionError as exc:
+                raise serializers.ValidationError({"items": str(exc)})
+            except ValueError as exc:
+                raise serializers.ValidationError({"items": str(exc)})
+
+            stock_target = variant or product
+            if not getattr(stock_target, "stock_unlimited", False):
+                available = stock_target.stock or 0
+                if quantity > available:
+                    raise serializers.ValidationError(
+                        {"items": f"Insufficient stock for product {product_id}."}
+                    )
+
+            item["unit_price"] = line_pricing.unit_price
+            line_pricings.append(line_pricing)
+            if not product.is_digital:
+                has_physical = True
+
+        if not store:
+            raise serializers.ValidationError("Store context is required.")
+
+        cart_pricing = calculate_cart_pricing(
+            store=store,
+            lines=line_pricings,
+            store_user=store_user,
+        )
+
+        products_total_amount = cart_pricing.total
+        data["products_total_amount"] = products_total_amount
+        data["cart_discount_percent"] = cart_pricing.cart_discount_percent
+        data["cart_discount_amount"] = cart_pricing.cart_discount_amount
 
         shipping_method = data.get("shipping_method")
         delivery_address = data.get("delivery_address")
 
         if has_physical:
             if not shipping_method:
-                raise serializers.ValidationError({"shipping_method": "برای محصولات فیزیکی روش ارسال الزامی است."})
+                raise serializers.ValidationError(
+                    {"shipping_method": "Shipping method is required for physical products."}
+                )
+            if shipping_method.store_id != store.id:
+                raise serializers.ValidationError({"shipping_method": "Invalid shipping method."})
+            if not shipping_method.is_active:
+                raise serializers.ValidationError({"shipping_method": "Selected shipping method is inactive."})
+
             if not delivery_address:
-                raise serializers.ValidationError({"delivery_address": "برای محصولات فیزیکی آدرس تحویل الزامی است."})
+                raise serializers.ValidationError(
+                    {"delivery_address": "Delivery address is required for physical products."}
+                )
+            if store_user and delivery_address.store_user_id != store_user.id:
+                raise serializers.ValidationError({"delivery_address": "Invalid delivery address."})
+
             data["delivery_amount"] = shipping_method.base_shipping_price
             data["payable_amount"] = products_total_amount + shipping_method.base_shipping_price
         else:
-            # Digital-only order: no shipping
             data["shipping_method"] = None
             data["delivery_address"] = None
             data["delivery_amount"] = Decimal("0")
             data["payable_amount"] = products_total_amount
 
-        data["products_total_amount"] = products_total_amount
         return data
 
     def create(self, validated_data):
@@ -220,6 +281,7 @@ class OrderSerializer(serializers.ModelSerializer):
             product_id = item_data.pop("product_id")
             custom_input_values = item_data.pop("custom_input_values", {})
             OrderItem.objects.create(
+                store=order.store,
                 order=order,
                 product_id=product_id,
                 variant_id=variant_id,
@@ -231,13 +293,11 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailSerializer(OrderSerializer):
-    """Expanded serializer for order retrieve - includes nested shipping_method and delivery_address."""
     shipping_method = ShippingMethodSerializer(read_only=True)
     delivery_address = OrderAddressSerializer(read_only=True)
 
 
 class OrderStoreUpdateSerializer(serializers.ModelSerializer):
-    """For store admin to update order status and tracking code."""
     class Meta:
         model = Order
         fields = ("status", "shipping_tracking_code")
@@ -245,5 +305,5 @@ class OrderStoreUpdateSerializer(serializers.ModelSerializer):
     def validate_status(self, value):
         valid = {"pending", "paid", "processing", "completed", "delivered", "cancelled", "failed"}
         if value not in valid:
-            raise serializers.ValidationError(f"وضعیت نامعتبر: {value}")
+            raise serializers.ValidationError(f"Invalid status: {value}")
         return value

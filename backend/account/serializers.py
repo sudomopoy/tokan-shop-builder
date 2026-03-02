@@ -18,11 +18,18 @@ class StoreAdminPermissionSerializer(serializers.ModelSerializer):
         )
 
 
+class CustomerGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerGroup
+        fields = ("id", "name", "slug", "description", "is_default", "is_active")
+
+
 class StoreUserSerializer(serializers.ModelSerializer):
     user_mobile = serializers.CharField(source="user.mobile", read_only=True)
     user_username = serializers.CharField(source="user.username", read_only=True)
     user_is_banned = serializers.BooleanField(source="user.is_banned", read_only=True)
     admin_permissions = serializers.SerializerMethodField()
+    customer_groups = CustomerGroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = StoreUser
@@ -43,6 +50,7 @@ class StoreUserSerializer(serializers.ModelSerializer):
             "is_blocked",
             "is_vendor",
             "email_is_verified",
+            "customer_groups",
             "admin_permissions",
         )
 
@@ -59,6 +67,7 @@ class StoreUserListSerializer(serializers.ModelSerializer):
     user_username = serializers.CharField(source="user.username", read_only=True)
     user_is_banned = serializers.BooleanField(source="user.is_banned", read_only=True)
     admin_permissions = serializers.SerializerMethodField()
+    customer_groups = CustomerGroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = StoreUser
@@ -75,6 +84,7 @@ class StoreUserListSerializer(serializers.ModelSerializer):
             "is_blocked",
             "register_at",
             "last_login",
+            "customer_groups",
             "admin_permissions",
         )
 
@@ -88,6 +98,15 @@ class StoreUserListSerializer(serializers.ModelSerializer):
 class MakeAdminSerializer(serializers.Serializer):
     """سریالایزر برای تعیین ادمین با دسترسی‌ها."""
     permissions = StoreAdminPermissionSerializer(required=True)
+
+
+class SetStoreUserGroupsSerializer(serializers.Serializer):
+    group_ids = serializers.ListField(
+        child=serializers.UUIDField(),
+        required=False,
+        allow_empty=True,
+        default=list,
+    )
 
 
 class AccountInfoSerializer(serializers.ModelSerializer):

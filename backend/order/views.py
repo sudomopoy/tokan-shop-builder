@@ -130,21 +130,13 @@ class OrderViewSet(BaseStoreViewSet):
     @action(detail=False, methods=["post"])
     @transaction.atomic
     def create_pre_order(self, request, *args, **kwargs):
-        try:
-            # Create order with serializer
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save(
-                store=request.store,
-                store_user=request.store_user
-            )
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        except Exception as e:
-            return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        order = serializer.save(store=request.store, store_user=request.store_user)
+        return Response(
+            self.get_serializer(order).data,
+            status=status.HTTP_201_CREATED,
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(

@@ -1,22 +1,30 @@
-from django.db import models
-from core.abstract_models import BaseStoreModel, BaseModel
-from helper.sms import send_template_sms
+﻿from django.db import models
 from django.db import transaction as trx
+
+from core.abstract_models import BaseStoreModel
+from helper.sms import send_template_sms
 
 
 class ShippingMethodDefinition(models.Model):
-    """Global definition of a shipping method. Each store gets one ShippingMethod per definition (store settings)."""
+    """Global definition of a shipping method. Each store gets one ShippingMethod per definition."""
+
     slug = models.SlugField(max_length=80, unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     default_shipping_payment_on_delivery = models.BooleanField(default=False)
     default_product_payment_on_delivery = models.BooleanField(default=False)
     default_max_payment_on_delivery = models.DecimalField(
-        max_digits=20, decimal_places=2, null=True, default=None, blank=True
+        max_digits=20,
+        decimal_places=2,
+        null=True,
+        default=None,
+        blank=True,
     )
     default_base_shipping_price = models.DecimalField(max_digits=20, decimal_places=2)
     default_shipping_price_per_extra_kilograms = models.DecimalField(
-        max_digits=20, decimal_places=2, default=0.0
+        max_digits=20,
+        decimal_places=2,
+        default=0.0,
     )
     default_tracking_code_base_url = models.CharField(max_length=500, default="")
 
@@ -50,16 +58,22 @@ class ShippingMethod(BaseStoreModel):
     shipping_payment_on_delivery = models.BooleanField(default=False)
     product_payment_on_delivery = models.BooleanField(default=False)
     max_payment_on_delivery = models.DecimalField(
-        max_digits=20, decimal_places=2, null=True, default=None, blank=True
+        max_digits=20,
+        decimal_places=2,
+        null=True,
+        default=None,
+        blank=True,
     )
     base_shipping_price = models.DecimalField(max_digits=20, decimal_places=2)
     shipping_price_per_extra_kilograms = models.DecimalField(
-        max_digits=20, decimal_places=2, default=0.0
+        max_digits=20,
+        decimal_places=2,
+        default=0.0,
     )
     tracking_code_base_url = models.CharField(max_length=500, null=True, blank=True)
     is_active = models.BooleanField(
         default=True,
-        help_text="غیرفعال کردن روش ارسال بدون حذف آن.",
+        help_text="Disable a shipping method without deleting it.",
     )
 
     class Meta:
@@ -67,11 +81,11 @@ class ShippingMethod(BaseStoreModel):
 
     @property
     def is_system_method(self):
-        """True if this method comes from a definition (cannot be deleted by store)."""
         return self.definition_id is not None
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.name} {self.store.name}"
+
 
 class Order(BaseStoreModel):
     PAYMENT_METHOD_CHOICES = [
@@ -88,31 +102,27 @@ class Order(BaseStoreModel):
         ("cancelled", "Cancelled"),
         ("failed", "Failed"),
     ]
-    is_payed = models.BooleanField(default=False)
-    is_completed= models.BooleanField(default=False)
-    is_delivered= models.BooleanField(default=False)
-    is_canceled= models.BooleanField(default=False)
-    is_failed= models.BooleanField(default=False)
 
-    store_user = models.ForeignKey("account.StoreUser", on_delete=models.CASCADE,null=True)
+    is_payed = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+    is_delivered = models.BooleanField(default=False)
+    is_canceled = models.BooleanField(default=False)
+    is_failed = models.BooleanField(default=False)
+
+    store_user = models.ForeignKey("account.StoreUser", on_delete=models.CASCADE, null=True)
 
     products_total_amount = models.DecimalField(max_digits=20, decimal_places=2)
     payable_amount = models.DecimalField(max_digits=20, decimal_places=2)
+    cart_discount_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    cart_discount_amount = models.DecimalField(max_digits=20, decimal_places=2, default=0)
 
     delivery_amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
-    # The `status` field in the `Order` model is used to track the current status of an order. It is a
-    # CharField with choices defined in the `STATUS_CHOICES` list. The possible status values for an
-    # order are:
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     code = models.IntegerField(unique=True, editable=False, null=True, blank=True)
     shipping_tracking_code = models.CharField(max_length=50, null=True, blank=True)
-    shipping_method = models.ForeignKey(
-        "ShippingMethod", null=True, on_delete=models.RESTRICT
-    )
-    delivery_address = models.ForeignKey(
-        "account.Address", null=True, on_delete=models.CASCADE
-    )
-    transaction = models.ForeignKey('wallet.Transaction', null=True,on_delete=models.RESTRICT)
+    shipping_method = models.ForeignKey("ShippingMethod", null=True, on_delete=models.RESTRICT)
+    delivery_address = models.ForeignKey("account.Address", null=True, on_delete=models.CASCADE)
+    transaction = models.ForeignKey("wallet.Transaction", null=True, on_delete=models.RESTRICT)
 
     @property
     def shipping_tracking_url(self):
@@ -122,7 +132,6 @@ class Order(BaseStoreModel):
         return base_url.replace("%tracking_code%", self.shipping_tracking_code or "")
 
     def save(self, *args, **kwargs):
-        # Track previous status to detect changes
         if self.pk:
             try:
                 previous = Order.objects.get(pk=self.pk)
@@ -133,12 +142,9 @@ class Order(BaseStoreModel):
             previous_status = None
 
         if not self.code:
-            # Get the maximum code value from the database
             max_id = Order.objects.all().aggregate(models.Max("code"))["code__max"]
-            # If no records exist yet, start with 10000, otherwise increment by 1
             self.code = max_id + 1 if max_id is not None else 10000
-        
-        # ارسال پیامک برای وضعیت paid
+
         if self.status == "paid" and previous_status != "paid":
             send_template_sms(
                 [
@@ -150,7 +156,7 @@ class Order(BaseStoreModel):
                 self.store_user.user.mobile,
                 983777,
             )
-        
+
         if self.status == "completed" and previous_status == "delivered" and not self.is_completed:
             self.is_completed = True
 
@@ -163,59 +169,125 @@ class Order(BaseStoreModel):
         return f"Order {self.code} by {self.store_user}"
 
     def _deduct_stock(self):
+        from product.models import InventoryAdjustmentLog
+
+        actor_store_user = self.store_user
+        actor_user = actor_store_user.user if actor_store_user else None
+
         for item in self.items.all():
             if item.variant:
                 if not getattr(item.variant, "stock_unlimited", False):
-                    if item.variant.stock < item.quantity:
-                        raise ValueError(f'موجودی کافی نیست: {item.variant}')
-                    item.variant.stock -= item.quantity
-                    item.variant.save()
+                    before = item.variant.stock or 0
+                    if before < item.quantity:
+                        raise ValueError(f"Insufficient stock: {item.variant}")
+                    after = before - item.quantity
+                    item.variant.stock = after
+                    item.variant.save(update_fields=["stock", "updated_at"])
+                    InventoryAdjustmentLog.objects.create(
+                        store=self.store,
+                        product=item.product,
+                        variant=item.variant,
+                        reason=InventoryAdjustmentLog.REASON_ORDER_DEDUCT,
+                        quantity_before=before,
+                        quantity_after=after,
+                        quantity_change=after - before,
+                        actor_store_user=actor_store_user,
+                        actor_user=actor_user,
+                        order=self,
+                    )
             else:
                 if not getattr(item.product, "stock_unlimited", False):
-                    stock = item.product.stock or 0
-                    if stock < item.quantity:
-                        raise ValueError(f'موجودی کافی نیست: {item.product}')
-                    item.product.stock = stock - item.quantity
-                    item.product.save(update_fields=['stock'])
+                    before = item.product.stock or 0
+                    if before < item.quantity:
+                        raise ValueError(f"Insufficient stock: {item.product}")
+                    after = before - item.quantity
+                    item.product.stock = after
+                    item.product.save(update_fields=["stock", "updated_at"])
+                    InventoryAdjustmentLog.objects.create(
+                        store=self.store,
+                        product=item.product,
+                        variant=None,
+                        reason=InventoryAdjustmentLog.REASON_ORDER_DEDUCT,
+                        quantity_before=before,
+                        quantity_after=after,
+                        quantity_change=after - before,
+                        actor_store_user=actor_store_user,
+                        actor_user=actor_user,
+                        order=self,
+                    )
 
     def _restore_stock(self):
+        from product.models import InventoryAdjustmentLog
+
+        actor_store_user = self.store_user
+        actor_user = actor_store_user.user if actor_store_user else None
+
         for item in self.items.all():
             if item.variant:
                 if not getattr(item.variant, "stock_unlimited", False):
-                    item.variant.stock += item.quantity
-                    item.variant.save()
+                    before = item.variant.stock or 0
+                    after = before + item.quantity
+                    item.variant.stock = after
+                    item.variant.save(update_fields=["stock", "updated_at"])
+                    InventoryAdjustmentLog.objects.create(
+                        store=self.store,
+                        product=item.product,
+                        variant=item.variant,
+                        reason=InventoryAdjustmentLog.REASON_ORDER_RESTORE,
+                        quantity_before=before,
+                        quantity_after=after,
+                        quantity_change=after - before,
+                        actor_store_user=actor_store_user,
+                        actor_user=actor_user,
+                        order=self,
+                    )
             else:
                 if not getattr(item.product, "stock_unlimited", False):
-                    item.product.stock = (item.product.stock or 0) + item.quantity
-                    item.product.save(update_fields=['stock'])
+                    before = item.product.stock or 0
+                    after = before + item.quantity
+                    item.product.stock = after
+                    item.product.save(update_fields=["stock", "updated_at"])
+                    InventoryAdjustmentLog.objects.create(
+                        store=self.store,
+                        product=item.product,
+                        variant=None,
+                        reason=InventoryAdjustmentLog.REASON_ORDER_RESTORE,
+                        quantity_before=before,
+                        quantity_after=after,
+                        quantity_change=after - before,
+                        actor_store_user=actor_store_user,
+                        actor_user=actor_user,
+                        order=self,
+                    )
 
     @trx.atomic
     def complete_from_payment(self):
-        """تکمیل سفارش پس از پرداخت موفق در درگاه (کسر موجودی، وضعیت paid)"""
         if self.status != "pending":
             return
+
         self._deduct_stock()
         self.status = "paid"
         self.is_payed = True
         self.save()
-        # کمیسیون افیلیت (فقط خرید، نه واریز کیف پول)
+
         try:
             from affiliate.services import process_affiliate_commission_for_order
+
             process_affiliate_commission_for_order(self)
         except Exception:
             pass
 
     @trx.atomic
     def cancel_order(self):
-        """لغو سفارش و بازگشت موجودی"""
-        if self.status in ['delivered', 'completed']:
-            raise ValueError('سفارش ارسال شده یا تکمیل شده قابل لغو نیست.')
-        if self.status in ['cancelled', 'failed']:
-            raise ValueError('سفارش قبلاً لغو شده است.')
+        if self.status in ["delivered", "completed"]:
+            raise ValueError("Delivered/completed orders cannot be cancelled.")
+        if self.status in ["cancelled", "failed"]:
+            raise ValueError("Order is already cancelled/failed.")
 
-        if self.status in ['paid', 'processing']:
+        if self.status in ["paid", "processing"]:
             self._restore_stock()
-        self.status = 'cancelled'
+
+        self.status = "cancelled"
         self.is_canceled = True
         self.save()
         return True
@@ -223,22 +295,23 @@ class Order(BaseStoreModel):
 
 class OrderItem(BaseStoreModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    product = models.ForeignKey("product.Product",null=True, on_delete=models.PROTECT)
-    
-    variant = models.ForeignKey("product.Variant",null=True,blank=True, on_delete=models.PROTECT)
+    product = models.ForeignKey("product.Product", null=True, on_delete=models.PROTECT)
+    variant = models.ForeignKey("product.Variant", null=True, blank=True, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=20, decimal_places=2)
     custom_input_values = models.JSONField(
         default=dict,
         blank=True,
-        help_text="مقادیر ورودی سفارشی برای محصولات دیجیتال (key->value)",
+        help_text="Custom input values for digital products (key -> value).",
     )
+
     def save(self, *args, **kwargs):
-        if (self.variant):
-            self.unit_price = self.variant.sell_price
-        else:
-            self.unit_price = self.product.sell_price
-            
+        if self.unit_price is None:
+            if self.variant:
+                self.unit_price = self.variant.sell_price
+            else:
+                self.unit_price = self.product.sell_price
         return super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.quantity}x {self.variant} in Order {self.order.id}"

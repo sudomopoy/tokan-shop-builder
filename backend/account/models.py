@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.abstract_models import BaseStoreModel
+from django.utils.text import slugify
+from core.abstract_models import BaseStoreModel, BaseModel
 from account.managers import UserManager
 import uuid
 import secrets
@@ -131,6 +132,36 @@ class StoreAdminPermission(models.Model):
         verbose_name_plural = "دسترسی‌های ادمین فروشگاه"
 
 
+class CustomerGroup(BaseStoreModel):
+    """
+    Store-level user group used for B2B visibility and pricing segmentation.
+    """
+
+    name = models.CharField(max_length=120)
+    slug = models.SlugField(max_length=140, blank=True)
+    description = models.TextField(blank=True, default="")
+    is_default = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ("store", "slug")
+        ordering = ("name",)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name) or "group"
+            candidate = base_slug
+            index = 1
+            while CustomerGroup.objects.filter(store=self.store, slug=candidate).exclude(pk=self.pk).exists():
+                index += 1
+                candidate = f"{base_slug}-{index}"
+            self.slug = candidate
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.store.name} / {self.name}"
+
+
 class StoreUser(BaseStoreModel):
     user = models.ForeignKey('User', on_delete=models.RESTRICT)
     entry_source = models.CharField(max_length=300, default="unknown")
@@ -153,6 +184,12 @@ class StoreUser(BaseStoreModel):
 
     is_vendor = models.BooleanField(default=False)
     email_is_verified = models.BooleanField(default=False)
+    customer_groups = models.ManyToManyField(
+        CustomerGroup,
+        through="StoreUserGroupMembership",
+        related_name="store_users",
+        blank=True,
+    )
 
     def __str__(self):
         return f"{self.store.name} {self.user.mobile}"
@@ -190,6 +227,40 @@ class StoreUser(BaseStoreModel):
             return False
         attr = f"{section}_{action}"
         return getattr(perms, attr, False)
+
+    @property
+    def active_group_ids(self):
+        return list(
+            self.group_memberships.filter(customer_group__is_active=True).values_list(
+                "customer_group_id", flat=True
+            )
+        )
+
+
+class StoreUserGroupMembership(BaseModel):
+    store_user = models.ForeignKey(
+        "StoreUser", on_delete=models.CASCADE, related_name="group_memberships"
+    )
+    customer_group = models.ForeignKey(
+        "CustomerGroup", on_delete=models.CASCADE, related_name="memberships"
+    )
+
+    class Meta:
+        unique_together = ("store_user", "customer_group")
+
+    def clean(self):
+        if self.store_user_id and self.customer_group_id:
+            if self.store_user.store_id != self.customer_group.store_id:
+                raise ValidationError("Store user and customer group must belong to the same store.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.store_user} -> {self.customer_group.name}"
+
+
 class Address(BaseStoreModel):
     store_user = models.ForeignKey("account.StoreUser", on_delete=models.CASCADE,null=True)
 
@@ -212,6 +283,7 @@ class Address(BaseStoreModel):
 
 
 # account/models.py
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 

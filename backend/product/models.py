@@ -1,6 +1,8 @@
 # models.py
 from django.db import models
 from django.db.models import JSONField
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from ckeditor.fields import RichTextField
 from core.abstract_models import BaseStoreModel, BaseModel
 
@@ -242,6 +244,16 @@ class Product(BaseStoreModel):
     tags = models.ManyToManyField(
         "tag.Tag", blank=True, related_name="products"
     )
+    allowed_customer_groups = models.ManyToManyField(
+        "account.CustomerGroup",
+        blank=True,
+        related_name="allowed_products",
+    )
+    is_wholesale_mode = models.BooleanField(default=False)
+    min_order_quantity = models.PositiveIntegerField(null=True, blank=True)
+    max_order_quantity = models.PositiveIntegerField(null=True, blank=True)
+    pack_size = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    min_pack_count = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
     is_active = models.BooleanField(default=True)
     is_accepted_to_dsiaply_on_super_store = models.BooleanField(default=False)
@@ -282,6 +294,23 @@ class Product(BaseStoreModel):
         if not self.code:
             max_id = Product.objects.all().aggregate(models.Max("code"))["code__max"]
             self.code = max_id + 1 if max_id is not None else 10000
+
+        if self.min_order_quantity is not None and self.min_order_quantity < 1:
+            raise ValidationError("min_order_quantity must be at least 1.")
+        if self.max_order_quantity is not None and self.max_order_quantity < 1:
+            raise ValidationError("max_order_quantity must be at least 1.")
+        if (
+            self.min_order_quantity is not None
+            and self.max_order_quantity is not None
+            and self.max_order_quantity < self.min_order_quantity
+        ):
+            raise ValidationError("max_order_quantity must be greater than or equal to min_order_quantity.")
+        if self.pack_size < 1:
+            raise ValidationError("pack_size must be at least 1.")
+        if self.min_pack_count < 1:
+            raise ValidationError("min_pack_count must be at least 1.")
+        if self.is_wholesale_mode and self.main_variant_id:
+            raise ValidationError("Wholesale products cannot have a main variant.")
         
         if self.main_variant:
             self.price = self.main_variant.price
@@ -302,3 +331,204 @@ class Product(BaseStoreModel):
 
     def __str__(self):
         return f"{self.code} {self.title}"
+
+
+class ProductGroupPrice(BaseStoreModel):
+    """
+    Optional group specific pricing for a product (and optionally for a variant).
+    """
+
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="group_prices"
+    )
+    variant = models.ForeignKey(
+        Variant,
+        on_delete=models.CASCADE,
+        related_name="group_prices",
+        null=True,
+        blank=True,
+    )
+    customer_group = models.ForeignKey(
+        "account.CustomerGroup",
+        on_delete=models.CASCADE,
+        related_name="product_group_prices",
+    )
+    price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    sell_price = models.DecimalField(max_digits=20, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ("product", "variant", "customer_group")
+        ordering = ("product_id", "variant_id", "customer_group_id")
+
+    def clean(self):
+        if self.variant_id and self.variant.product_id != self.product_id:
+            raise ValidationError("Selected variant does not belong to product.")
+        if self.customer_group_id and self.customer_group.store_id != self.store_id:
+            raise ValidationError("Customer group must belong to the same store.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        variant_label = f" / variant:{self.variant_id}" if self.variant_id else ""
+        return f"{self.product_id}{variant_label} / group:{self.customer_group_id} -> {self.sell_price}"
+
+
+class ProductTierDiscount(BaseStoreModel):
+    """
+    Quantity based discount for a product, optionally scoped to a customer group.
+    """
+
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="quantity_discounts"
+    )
+    customer_group = models.ForeignKey(
+        "account.CustomerGroup",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="product_tier_discounts",
+    )
+    min_quantity = models.PositiveIntegerField(default=1)
+    max_quantity = models.PositiveIntegerField(null=True, blank=True)
+    discount_percent = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("-min_quantity", "-discount_percent")
+
+    def clean(self):
+        if self.max_quantity is not None and self.max_quantity < self.min_quantity:
+            raise ValidationError("max_quantity must be greater than or equal to min_quantity.")
+        if self.customer_group_id and self.customer_group.store_id != self.store_id:
+            raise ValidationError("Customer group must belong to the same store.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.product_id} qty {self.min_quantity}-{self.max_quantity or 'inf'} => {self.discount_percent}%"
+
+
+class StoreCartTierDiscount(BaseStoreModel):
+    """
+    Cart level tier discount by total amount or total items count.
+    """
+
+    CRITERION_AMOUNT = "amount"
+    CRITERION_ITEMS_COUNT = "items_count"
+    CRITERION_CHOICES = (
+        (CRITERION_AMOUNT, "Amount"),
+        (CRITERION_ITEMS_COUNT, "Items count"),
+    )
+
+    criterion = models.CharField(max_length=20, choices=CRITERION_CHOICES)
+    min_value = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    max_value = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    discount_percent = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
+    customer_group = models.ForeignKey(
+        "account.CustomerGroup",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="cart_tier_discounts",
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("criterion", "-min_value", "-discount_percent")
+
+    def clean(self):
+        if self.max_value is not None and self.max_value < self.min_value:
+            raise ValidationError("max_value must be greater than or equal to min_value.")
+        if self.customer_group_id and self.customer_group.store_id != self.store_id:
+            raise ValidationError("Customer group must belong to the same store.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.store_id} {self.criterion} {self.min_value}-{self.max_value or 'inf'} => {self.discount_percent}%"
+
+
+class InventoryAdjustmentLog(BaseStoreModel):
+    """
+    Tracks inventory changes for auditing and dashboard stock management.
+    """
+
+    REASON_MANUAL_SET = "manual_set"
+    REASON_MANUAL_INCREASE = "manual_increase"
+    REASON_MANUAL_DECREASE = "manual_decrease"
+    REASON_ORDER_DEDUCT = "order_deduct"
+    REASON_ORDER_RESTORE = "order_restore"
+
+    REASON_CHOICES = (
+        (REASON_MANUAL_SET, "Manual set"),
+        (REASON_MANUAL_INCREASE, "Manual increase"),
+        (REASON_MANUAL_DECREASE, "Manual decrease"),
+        (REASON_ORDER_DEDUCT, "Order deduct"),
+        (REASON_ORDER_RESTORE, "Order restore"),
+    )
+
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="inventory_logs"
+    )
+    variant = models.ForeignKey(
+        Variant,
+        on_delete=models.CASCADE,
+        related_name="inventory_logs",
+        null=True,
+        blank=True,
+    )
+    reason = models.CharField(max_length=40, choices=REASON_CHOICES)
+    quantity_before = models.IntegerField()
+    quantity_after = models.IntegerField()
+    quantity_change = models.IntegerField()
+    note = models.TextField(blank=True, default="")
+    actor_store_user = models.ForeignKey(
+        "account.StoreUser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="inventory_logs",
+    )
+    actor_user = models.ForeignKey(
+        "account.User",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="created_inventory_logs",
+    )
+    order = models.ForeignKey(
+        "order.Order",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="inventory_logs",
+    )
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def clean(self):
+        if self.variant_id and self.variant.product_id != self.product_id:
+            raise ValidationError("Selected variant does not belong to product.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.product_id} {self.reason} {self.quantity_before}->{self.quantity_after}"

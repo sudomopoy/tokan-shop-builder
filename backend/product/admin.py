@@ -38,3 +38,53 @@ class ProductAdminForm(forms.ModelForm):
 class ProductAdmin( ImportExportModelAdmin):
     search_fields = ["title", "code"]
     form = ProductAdminForm
+
+
+@admin.register(ProductGroupPrice)
+class ProductGroupPriceAdmin(ImportExportModelAdmin):
+    list_display = ["product", "variant", "customer_group", "sell_price", "is_active"]
+    list_filter = ["is_active", "customer_group"]
+    search_fields = ["product__title", "customer_group__name"]
+
+
+@admin.register(ProductTierDiscount)
+class ProductTierDiscountAdmin(ImportExportModelAdmin):
+    list_display = [
+        "product",
+        "customer_group",
+        "min_quantity",
+        "max_quantity",
+        "discount_percent",
+        "is_active",
+    ]
+    list_filter = ["is_active", "customer_group"]
+    search_fields = ["product__title", "customer_group__name"]
+
+
+@admin.register(StoreCartTierDiscount)
+class StoreCartTierDiscountAdmin(ImportExportModelAdmin):
+    list_display = [
+        "store",
+        "criterion",
+        "min_value",
+        "max_value",
+        "discount_percent",
+        "customer_group",
+        "is_active",
+    ]
+    list_filter = ["criterion", "is_active", "customer_group"]
+
+
+@admin.register(InventoryAdjustmentLog)
+class InventoryAdjustmentLogAdmin(ImportExportModelAdmin):
+    list_display = [
+        "product",
+        "variant",
+        "reason",
+        "quantity_before",
+        "quantity_after",
+        "quantity_change",
+        "created_at",
+    ]
+    list_filter = ["reason", "created_at"]
+    search_fields = ["product__title", "variant__id", "note"]

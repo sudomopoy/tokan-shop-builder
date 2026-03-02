@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import User, StoreUser, StoreAdminPermission, Address
+from .models import (
+    User,
+    StoreUser,
+    StoreAdminPermission,
+    Address,
+    CustomerGroup,
+    StoreUserGroupMembership,
+)
 from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
 
@@ -25,8 +32,20 @@ class StoreAdminPermissionAdmin(admin.ModelAdmin):
     list_display = ["store_user", "products_read", "users_read", "orders_read", "blog_read", "reservation_read", "media_delete"]
 
 
+@admin.register(CustomerGroup)
+class CustomerGroupAdmin(ImportExportModelAdmin):
+    list_display = ["name", "store", "slug", "is_active", "is_default"]
+    search_fields = ["name", "slug", "store__name", "store__title"]
+    list_filter = ["is_active", "is_default", "store"]
+
+
+@admin.register(StoreUserGroupMembership)
+class StoreUserGroupMembershipAdmin(ImportExportModelAdmin):
+    list_display = ["store_user", "customer_group"]
+    search_fields = ["store_user__user__mobile", "customer_group__name", "customer_group__slug"]
+
+
 @admin.register(Address)
 class AddressAdmin( ImportExportModelAdmin):
     pass
-
 
