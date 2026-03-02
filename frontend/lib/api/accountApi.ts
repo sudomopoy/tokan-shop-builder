@@ -1,4 +1,5 @@
 import { apiClient } from "./apiClient";
+import type { CustomerGroup } from "./customerGroupApi";
 
 export type AdminPermissions = {
   products_read: boolean;
@@ -44,6 +45,7 @@ export type User = {
     is_admin_active: boolean;
     is_vendor: boolean;
     email_is_verified: boolean;
+    customer_groups?: CustomerGroup[];
     admin_permissions?: AdminPermissions | null;
   } | null;
 };

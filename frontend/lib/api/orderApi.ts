@@ -42,6 +42,8 @@ export type Order = {
   code?: number;
   is_payed: boolean;
   products_total_amount: string | number;
+  cart_discount_percent?: string | number;
+  cart_discount_amount?: string | number;
   payable_amount: string | number;
   delivery_amount: string | number;
   status: string;

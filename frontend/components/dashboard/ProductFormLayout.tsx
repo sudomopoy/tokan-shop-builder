@@ -8,9 +8,15 @@ import { ProductImageFields } from "./ProductImageFields";
 import { ProductVariantSection } from "./ProductVariantSection";
 import { CustomInputDefinitionsEditor } from "./CustomInputDefinitionsEditor";
 import { DownloadableFilesEditor, type DownloadableFileEntry } from "./DownloadableFilesEditor";
+import {
+  ProductB2BSection,
+  type ProductGroupPriceInput,
+  type ProductQuantityDiscountInput,
+} from "./ProductB2BSection";
 import { RichTextEditor } from "./RichTextEditor";
 import { FileManagerModal } from "@/components/FileManagerModal";
 import type { Category } from "@/lib/api/categoryApi";
+import type { CustomerGroup } from "@/lib/api/customerGroupApi";
 import { tFrontendAuto } from "@/lib/i18n/autoMessages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
@@ -107,6 +113,23 @@ type ProductFormLayoutProps = {
   onFormVariantsChange: (v: FormVariant[]) => void;
   hasVariantsEnabled: boolean;
   onHasVariantsEnabledChange: (v: boolean) => void;
+  customerGroups?: CustomerGroup[];
+  isWholesaleMode?: boolean;
+  onIsWholesaleModeChange?: (v: boolean) => void;
+  minOrderQuantity?: string;
+  onMinOrderQuantityChange?: (v: string) => void;
+  maxOrderQuantity?: string;
+  onMaxOrderQuantityChange?: (v: string) => void;
+  packSize?: string;
+  onPackSizeChange?: (v: string) => void;
+  minPackCount?: string;
+  onMinPackCountChange?: (v: string) => void;
+  allowedCustomerGroupIds?: string[];
+  onAllowedCustomerGroupIdsChange?: (v: string[]) => void;
+  groupPrices?: ProductGroupPriceInput[];
+  onGroupPricesChange?: (rows: ProductGroupPriceInput[]) => void;
+  quantityDiscounts?: ProductQuantityDiscountInput[];
+  onQuantityDiscountsChange?: (rows: ProductQuantityDiscountInput[]) => void;
   existingVariants?: unknown[];
 };
 
@@ -400,10 +423,27 @@ export function ProductFormLayout({
   onFormVariantsChange,
   hasVariantsEnabled,
   onHasVariantsEnabledChange,
+  customerGroups = [],
+  isWholesaleMode = false,
+  onIsWholesaleModeChange,
+  minOrderQuantity = "",
+  onMinOrderQuantityChange,
+  maxOrderQuantity = "",
+  onMaxOrderQuantityChange,
+  packSize = "1",
+  onPackSizeChange,
+  minPackCount = "1",
+  onMinPackCountChange,
+  allowedCustomerGroupIds = [],
+  onAllowedCustomerGroupIdsChange,
+  groupPrices = [],
+  onGroupPricesChange,
+  quantityDiscounts = [],
+  onQuantityDiscountsChange,
   existingVariants = [],
 }: ProductFormLayoutProps) {
   const isDigital = ["digital", "download", "streaming"].includes(storeCategorySlug ?? "") || productType === "digital";
-  const hasVariants = hasVariantsEnabled && formVariants.length > 0;
+  const hasVariants = !isWholesaleMode && hasVariantsEnabled && formVariants.length > 0;
   const computedFromVariants = hasVariants
     ? (() => {
         const prices = formVariants.map((v) => parseFloat(v.price) || 0);
@@ -587,6 +627,38 @@ export function ProductFormLayout({
             </div>
           </div>
         </section>
+
+        {!isDigital &&
+          onIsWholesaleModeChange &&
+          onMinOrderQuantityChange &&
+          onMaxOrderQuantityChange &&
+          onPackSizeChange &&
+          onMinPackCountChange &&
+          onAllowedCustomerGroupIdsChange &&
+          onGroupPricesChange &&
+          onQuantityDiscountsChange && (
+            <ProductB2BSection
+              customerGroups={customerGroups}
+              hasVariantsEnabled={hasVariantsEnabled}
+              variants={formVariants}
+              isWholesaleMode={isWholesaleMode}
+              onIsWholesaleModeChange={onIsWholesaleModeChange}
+              minOrderQuantity={minOrderQuantity}
+              onMinOrderQuantityChange={onMinOrderQuantityChange}
+              maxOrderQuantity={maxOrderQuantity}
+              onMaxOrderQuantityChange={onMaxOrderQuantityChange}
+              packSize={packSize}
+              onPackSizeChange={onPackSizeChange}
+              minPackCount={minPackCount}
+              onMinPackCountChange={onMinPackCountChange}
+              allowedCustomerGroupIds={allowedCustomerGroupIds}
+              onAllowedCustomerGroupIdsChange={onAllowedCustomerGroupIdsChange}
+              groupPrices={groupPrices}
+              onGroupPricesChange={onGroupPricesChange}
+              quantityDiscounts={quantityDiscounts}
+              onQuantityDiscountsChange={onQuantityDiscountsChange}
+            />
+          )}
 
         {/* Digital product fields */}
         {isDigital && (

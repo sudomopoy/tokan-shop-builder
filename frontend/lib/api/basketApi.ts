@@ -9,8 +9,12 @@ export type BasketItem = {
   quantity: number;
   product_details: Product;
   variant_details: Variant | null;
-  unit_price: number;
-  total_price: number;
+  unit_price: string | number;
+  line_subtotal: string | number;
+  line_discount_amount: string | number;
+  quantity_discount_percent: string | number;
+  applied_group_price_id: string | null;
+  total_price: string | number;
 };
 
 export type Basket = {
@@ -18,7 +22,10 @@ export type Basket = {
   store: string;
   store_user: string;
   items: BasketItem[];
-  total_price: number;
+  subtotal: string | number;
+  cart_discount_percent: string | number;
+  cart_discount_amount: string | number;
+  total_price: string | number;
   total_items: number;
   created_at: string;
   updated_at: string;

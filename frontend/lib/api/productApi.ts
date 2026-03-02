@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { apiClient } from "./apiClient";
 
 export type Media = {
@@ -54,6 +52,80 @@ export type Variant = {
   attribute_values: unknown[];
 };
 
+export type CustomerGroupLite = {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  is_default?: boolean;
+  is_active?: boolean;
+};
+
+export type ProductGroupPrice = {
+  id: string;
+  customer_group?: CustomerGroupLite;
+  customer_group_id?: string;
+  variant?: string | null;
+  variant_id?: string | null;
+  price: string | null;
+  sell_price: string;
+  is_active: boolean;
+};
+
+export type ProductTierDiscount = {
+  id: string;
+  customer_group?: CustomerGroupLite | null;
+  customer_group_id?: string | null;
+  min_quantity: number;
+  max_quantity: number | null;
+  discount_percent: string;
+  is_active: boolean;
+};
+
+export type StoreCartTierDiscount = {
+  id: string;
+  criterion: "amount" | "items_count";
+  min_value: string;
+  max_value: string | null;
+  discount_percent: string;
+  customer_group?: CustomerGroupLite | null;
+  customer_group_id?: string | null;
+  is_active: boolean;
+};
+
+export type InventoryAdjustmentMode = "set" | "increase" | "decrease";
+
+export type ProductInventoryAdjustPayload = {
+  mode: InventoryAdjustmentMode;
+  quantity: number;
+  note?: string;
+  variant_id?: string | null;
+};
+
+export type ProductInventoryAdjustResponse = {
+  product_id: string;
+  variant_id: string | null;
+  quantity_before: number;
+  quantity_after: number;
+  log_id: string;
+};
+
+export type InventoryAdjustmentLog = {
+  id: string;
+  product: string;
+  variant: string | null;
+  reason: string;
+  quantity_before: number;
+  quantity_after: number;
+  quantity_change: number;
+  note: string;
+  actor_store_user: string | null;
+  actor_user: string | null;
+  actor_mobile: string;
+  order: string | null;
+  created_at: string;
+};
+
 export type CustomInputDefinition = {
   key: string;
   label: string;
@@ -90,6 +162,14 @@ export type Product = {
   price: string;
   sell_price: string;
   cooperate_price: string | null;
+  allowed_customer_groups?: CustomerGroupLite[];
+  is_wholesale_mode?: boolean;
+  min_order_quantity?: number | null;
+  max_order_quantity?: number | null;
+  pack_size?: number;
+  min_pack_count?: number;
+  group_prices?: ProductGroupPrice[];
+  quantity_discounts?: ProductTierDiscount[];
   variants: Variant[];
   main_image: Media | null;
   list_images: Media[];
@@ -146,6 +226,68 @@ export const productApi = {
     const { data } = await apiClient.post<{ updated?: number; deleted?: number; message: string }>(
       "/product/bulk-action/",
       { ids, action }
+    );
+    return data;
+  },
+
+  async listCartTierDiscounts(): Promise<StoreCartTierDiscount[]> {
+    const { data } = await apiClient.get<StoreCartTierDiscount[]>("/product/cart-tier-discounts/");
+    return Array.isArray(data) ? data : [];
+  },
+
+  async createCartTierDiscount(
+    payload: Partial<{
+      criterion: "amount" | "items_count";
+      min_value: string | number;
+      max_value: string | number | null;
+      discount_percent: string | number;
+      customer_group_id: string | null;
+      is_active: boolean;
+    }>
+  ): Promise<StoreCartTierDiscount> {
+    const { data } = await apiClient.post<StoreCartTierDiscount>(
+      "/product/cart-tier-discounts/",
+      payload
+    );
+    return data;
+  },
+
+  async updateCartTierDiscount(
+    id: string,
+    payload: Partial<{
+      criterion: "amount" | "items_count";
+      min_value: string | number;
+      max_value: string | number | null;
+      discount_percent: string | number;
+      customer_group_id: string | null;
+      is_active: boolean;
+    }>
+  ): Promise<StoreCartTierDiscount> {
+    const { data } = await apiClient.patch<StoreCartTierDiscount>(
+      `/product/cart-tier-discounts/${id}/`,
+      payload
+    );
+    return data;
+  },
+
+  async deleteCartTierDiscount(id: string): Promise<void> {
+    await apiClient.delete(`/product/cart-tier-discounts/${id}/`);
+  },
+
+  async getInventoryLogs(productId: string): Promise<InventoryAdjustmentLog[]> {
+    const { data } = await apiClient.get<InventoryAdjustmentLog[]>(
+      `/product/${productId}/inventory-logs/`
+    );
+    return Array.isArray(data) ? data : [];
+  },
+
+  async adjustInventory(
+    productId: string,
+    payload: ProductInventoryAdjustPayload
+  ): Promise<ProductInventoryAdjustResponse> {
+    const { data } = await apiClient.post<ProductInventoryAdjustResponse>(
+      `/product/${productId}/adjust-inventory/`,
+      payload
     );
     return data;
   },

@@ -4,6 +4,7 @@ export { pageApi } from "./pageApi";
 export { productApi } from "./productApi";
 export { storeApi, getStoreSetting } from "./storeApi";
 export { storeUserApi } from "./storeUserApi";
+export { customerGroupApi } from "./customerGroupApi";
 export { sliderApi } from "./sliderApi";
 export { authApi } from "./authApi";
 export { accountApi } from "./accountApi";
@@ -24,7 +25,22 @@ export { walletApi } from "./walletApi";
 export { subscriptionApi } from "./subscriptionApi";
 export { affiliateApi } from "./affiliateApi";
 export { reviewApi } from "./reviewApi";
-export type { Product, ProductListResponse, Media, Store, Category, Variant } from "./productApi";
+export type {
+  Product,
+  ProductListResponse,
+  Media,
+  Store,
+  Category,
+  Variant,
+  CustomerGroupLite,
+  ProductGroupPrice,
+  ProductTierDiscount,
+  StoreCartTierDiscount,
+  InventoryAdjustmentLog,
+  ProductInventoryAdjustPayload,
+  ProductInventoryAdjustResponse,
+} from "./productApi";
+export type { CustomerGroup } from "./customerGroupApi";
 export type { ProductReview, ProductReviewAdmin } from "./reviewApi";
 export type {
   VariantAttribute,
@@ -45,4 +61,3 @@ export type {
 export type { User, Address, BankAccount } from "./accountApi";
 export type { PageGuide } from "./guideApi";
 export type { Province, City } from "./metaApi";
-

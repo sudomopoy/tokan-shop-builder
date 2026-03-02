@@ -1,4 +1,5 @@
 import { apiClient } from "./apiClient";
+import type { CustomerGroup } from "./customerGroupApi";
 
 export type AdminPermissions = {
   products_read: boolean;
@@ -35,6 +36,7 @@ export type StoreUser = {
   is_blocked: boolean;
   register_at: string;
   last_login: string | null;
+  customer_groups?: CustomerGroup[];
   admin_permissions?: AdminPermissions | null;
 };
 
@@ -129,6 +131,14 @@ export const storeUserApi = {
   async getPlanInfo(): Promise<PlanInfo> {
     const { data } = await apiClient.get<PlanInfo>(
       "/account/store-users/plan_info/"
+    );
+    return data;
+  },
+
+  async setGroups(id: string, groupIds: string[]): Promise<StoreUser> {
+    const { data } = await apiClient.post<StoreUser>(
+      `/account/store-users/${id}/set_groups/`,
+      { group_ids: groupIds }
     );
     return data;
   },
