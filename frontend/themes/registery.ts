@@ -3,6 +3,7 @@ import { ThemeManifest } from "./types";
 const themeRegistry = {
     default: () => import("./default/manifest"),
     serva: () => import("./serva/manifest"),
+    digitokan: () => import("./digitokan/manifest"),
 };
 
 /**
